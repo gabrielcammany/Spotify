@@ -37,9 +37,11 @@ public class Finestra_login extends JFrame {
 		JPanel jpLog = new JPanel();
 		
 		//color negre del fons
-		jpLog.setBackground(new Color(29,29,23));
+		//jpLog.setBackground(new Color(29,29,23));
 		//per alinear al mig
 		jpLog.setLayout(new MigLayout("al center center, wrap, gapy 10"));
+		//per  fer-lo transparent i que es vegi el fons
+		jpLog.setOpaque(false);
 		
 		
 		
@@ -65,15 +67,13 @@ public class Finestra_login extends JFrame {
 		jbRegistre.setText("Registra't");
 		
 		//Logo
-		ImageIcon logo = new ImageIcon("espotify_Client/Images/logoSpotyfai.png");
+		ImageIcon logo = new ImageIcon("/espotify_Client/Images/logoSpotyfai.png");
 		JLabel jlLogo = new JLabel();
-		ImageIcon icono = new ImageIcon(logo.getImage().getScaledInstance(200, 50, Image.SCALE_DEFAULT));
+		ImageIcon icono = new ImageIcon(logo.getImage().getScaledInstance(200, 60, Image.SCALE_DEFAULT));
 		jlLogo.setIcon(icono);
 		
-
-		 
-		          
-			
+		
+	
 		//afegim els jtarea al jpanel log
 		jpLog.add(jlLogo, "span 2, grow, wrap");
 		jpLog.add(jtfUsuari, "span 2, grow, wrap");
@@ -81,7 +81,14 @@ public class Finestra_login extends JFrame {
 		//afegim els botons al jpanel log
 		jpLog.add(jbInicia, "span 2, grow, wrap");
 		jpLog.add(jbRegistre, "span 2, grow, wrap");
-
+		
+		
+		//background
+		ImageIcon bk = new ImageIcon("espotify_Client/Images/backGround.jpg");
+		JLabel jlBk = new JLabel(new ImageIcon(bk.getImage().getScaledInstance(350, 350, Image.SCALE_DEFAULT)));
+		jlBk.setLayout(new MigLayout("al center center, wrap, gapy 10"));
+		jfLog.setContentPane(jlBk);
+		
 		//afegim el jpanel log al jFrame
 		jfLog.add(jpLog);
 		
