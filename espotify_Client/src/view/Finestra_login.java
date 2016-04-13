@@ -25,15 +25,16 @@ import net.miginfocom.swing.MigLayout;
 
 
 public class Finestra_login extends JFrame {
-	JTextField jtfUsuari;
-	JTextField jtfPassword;
-	JButton jbAccedeix;
-	JButton jbRegistre;
-	ControladorFinestres controladorf;
+	private JTextField jtfUsuari;
+	private JTextField jtfPassword;
+	private JButton jbAccedeix;
+	private JButton jbRegistre;
+	private ControladorFinestres controladorf;
+	private JFrame jfLog;
 	
 	public Finestra_login(ControladorFinestres controladorf) {
 		
-		JFrame jfLog = new JFrame("SPOTYFAI - Login");
+		jfLog = new JFrame("SPOTYFAI - Login");
 		JPanel jpLog = new JPanel();
 		
 		//color negre del fons
@@ -114,6 +115,10 @@ public class Finestra_login extends JFrame {
 				
 			}
 		});
+	}
+	
+	public void tancaFinestraLogin() {
+		jfLog.dispose();
 	}
 
 }

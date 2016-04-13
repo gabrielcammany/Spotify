@@ -9,12 +9,12 @@ import view.Finestra_login;
  *
  */
 public class ControladorFinestres {
-	Finestra_login fLogin;
+	Finestra_login jfLogin;
 	Finestra_Registre fRegistre;
 
 	
 	public ControladorFinestres () {
-		this.fLogin = new Finestra_login(this);		
+		this.jfLogin = new Finestra_login(this);		
 	}
 	
 	/**
@@ -23,7 +23,7 @@ public class ControladorFinestres {
 	
 	public void nouRegistre() {
 		//tanquem finestra de login
-		fLogin.dispose();
+		jfLogin.tancaFinestraLogin();
 		fRegistre = new Finestra_Registre();
 		
 	}
