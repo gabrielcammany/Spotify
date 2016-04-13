@@ -39,7 +39,8 @@ public class InfoServidor {
 			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
 			
 			algo(String.valueOf(contrasenya));
-			//doStream.writeUTF("user:" + nom + "/" + String.valueOf(contrasenya));
+			//COMENTARIO DE GABRI PARA EL FINALIZAR EL PASSWORD!!
+			doStream.writeUTF("user:" + nom + "/" + String.valueOf(contrasenya));
 			
 			System.out.println("Enviat");
 			sServidor.close();

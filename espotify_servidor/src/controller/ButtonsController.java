@@ -2,7 +2,8 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import model.Messages;
 import model.User;
@@ -55,6 +56,24 @@ public class ButtonsController implements ActionListener {
 		conn.insertQuery(cad);
 		return true;
 	}
+	public String selectUser(String cad){
+		ResultSet responseServer = conn.selectQuery(cad);
+		String nickname=null;
+		try {
+			while (responseServer.next()) {
+				  nickname = responseServer.getString("nickname");
+				  System.out.println("[Servidor] "+nickname );
+				}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("Peta en el select del user.");
+		}
+		
+		
+		return nickname;
+	}
+	
 	// Aquest metode es invocat pel servei de missatges quan arriba
 	// un nou missatge
 	public void showInformation(String info) {

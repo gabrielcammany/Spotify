@@ -12,7 +12,7 @@ public class User {
 	private String password;
 	private String data_reg;
 	private String data_ult;
-	
+	private ButtonsController controller;
 	
 	private LinkedList<User> lluser;
 	
@@ -75,15 +75,23 @@ public class User {
 		
 	}
 	
-	boolean comprovaUser(User user){
+	boolean insertUser(User user){
 		boolean ok = true;
 		Query q = new Query();
 		String response;
-		ButtonsController controller = new ButtonsController();
+		controller = new ButtonsController();
 		q.queryList(0, user);
 		response = q.queryList(1, user);
 		ok = controller.inserirUser(response);
 		return ok;
+	}
+	String verifyUser(User user){
+		String response;
+		Query q =new Query();
+		String select = q.queryList(2, user);
+		System.out.println("## "+select+" ##");
+		response= controller.selectUser(select);
+		return response;
 	}
 	
 }

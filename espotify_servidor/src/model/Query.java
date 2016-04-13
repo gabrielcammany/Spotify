@@ -24,8 +24,14 @@ public class Query {
 			user.setData_reg(dateFormat.format(date));
 			String cad1= "INSERT INTO usuari(nickname,password,data_reg,data_ult) values('"+user.getNickname()+"','"+user.getPassword()+"','"+user.getData_reg()+"','"+user.getData_reg()+"');";
 			return cad1;
-		case 2://
-			return null;
+		case 2://Select d'un nickname especific
+			String cad2 = "SELECT nickname FROM usuari WHERE nickname = '"+user.getNickname()+"';";
+			
+			//String cad2 = "Select * FROM db_espotifi.usuari AS user;";
+			return cad2;
+		case 3://Select d'un password especific
+			String cad3 = "Select user.nickname FROM db_espotifi.usuari AS user WHERE user.nickname = '"+user.getNickname()+"' AND user.password = '"+user.getPassword()+"';";
+			return cad3;
 		
 		}
 		
