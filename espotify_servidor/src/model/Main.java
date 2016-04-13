@@ -2,6 +2,7 @@ package model;
 
 import javax.swing.SwingUtilities;
 import controller.ButtonsController;
+import view.FinestraServidor;
 import view.MainWindow;
 
 
@@ -10,6 +11,8 @@ public class Main {
 	public static void main(String[] args) {
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run() {
+				
+				/*
 				// Creem la VISTA
 				MainWindow view = new MainWindow();
 				User user = new User();
@@ -19,7 +22,14 @@ public class Main {
 				// Establim la "relacio" VISTA->CONTROLADOR
 				view.registerController(controller);
 				// Mostrem la VISTA
+				view.setVisible(true);*/
+				
+				/*JorgeProva*/
+				// Creem la VISTA
+				FinestraServidor view = new FinestraServidor();
+				// Mostrem la VISTA
 				view.setVisible(true);
+				
 			}
 		});
 	}

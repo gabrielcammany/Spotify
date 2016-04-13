@@ -12,6 +12,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import org.jdesktop.xswingx.PromptSupport;
+
 import controller.ControladorFinestres;
 import net.miginfocom.swing.MigLayout;
 
@@ -36,21 +38,16 @@ public class Finestra_login extends JFrame {
 		//per  fer-lo transparent i que es vegi el fons
 		jpLog.setOpaque(false);
 		
-		
-		
 			
 		jtfUsuari = new JTextField(15);
 		jtfUsuari.setForeground(Color.WHITE);
 		jtfPassword = new JTextField(15);
+		PromptSupport.setPrompt("Nom d'Usuari", jtfUsuari);
 		//color gris dins del text area
 		jtfUsuari.setBackground(new Color(51,51,51));
 		jtfPassword.setBackground(new Color(51,51,51));
 		jtfPassword.setForeground(Color.WHITE);
-		
-		
-		//el que surt dins del text area
-		jtfUsuari.setText("Usuari");
-		jtfPassword.setText("Contrasenya");
+		PromptSupport.setPrompt("Contrasenya", jtfPassword);
 		
 		//creacio botons
 		JButton jbInicia = new JButton ();
