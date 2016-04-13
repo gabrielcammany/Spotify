@@ -67,7 +67,7 @@ public class Finestra_login extends JFrame {
 		jbRegistre.setText("Registra't");
 		
 		//Logo
-		ImageIcon logo = new ImageIcon("/espotify_Client/Images/logoSpotyfai.png");
+		ImageIcon logo = new ImageIcon("Images/logoSpotyfai.png");
 		JLabel jlLogo = new JLabel();
 		ImageIcon icono = new ImageIcon(logo.getImage().getScaledInstance(200, 60, Image.SCALE_DEFAULT));
 		jlLogo.setIcon(icono);
@@ -84,7 +84,7 @@ public class Finestra_login extends JFrame {
 		
 		
 		//background
-		ImageIcon bk = new ImageIcon("espotify_Client/Images/backGround.jpg");
+		ImageIcon bk = new ImageIcon("Images/backGround.jpg");
 		JLabel jlBk = new JLabel(new ImageIcon(bk.getImage().getScaledInstance(350, 350, Image.SCALE_DEFAULT)));
 		jlBk.setLayout(new MigLayout("al center center, wrap, gapy 10"));
 		jfLog.setContentPane(jlBk);
