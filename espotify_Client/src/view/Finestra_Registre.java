@@ -1,7 +1,10 @@
 package view;
 
+import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Image;
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -9,7 +12,10 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import org.jdesktop.xswingx.PromptSupport;
 
 import net.miginfocom.swing.MigLayout;
 /**
@@ -19,6 +25,10 @@ import net.miginfocom.swing.MigLayout;
  */
 
 public class Finestra_Registre {
+	
+	public JButton jbRegistre;
+	public JPasswordField jtfPassword;
+	public JTextField jtfUsuari;
 	
 	public Finestra_Registre() {
 		
@@ -30,17 +40,19 @@ public class Finestra_Registre {
 		//color negre del fons
 		jpRegistre.setBackground(new Color(29,29,23));
 		
-		JTextField jtfUsuari;		
+				
 		jtfUsuari = new JTextField(15);
 		jtfUsuari.setForeground(Color.WHITE);
 		jtfUsuari.setBackground(new Color(51,51,51));
-		jtfUsuari.setText("Nom d'usuari");
+		PromptSupport.setPrompt("Nom d'Usuari", jtfUsuari);
 		
-		JTextField jtfPassword;
-		jtfPassword = new JTextField(15);
+
+		
+		
+		jtfPassword = new JPasswordField(15);
 		jtfPassword.setBackground(new Color(51,51,51));
 		jtfPassword.setForeground(Color.WHITE);
-		jtfPassword.setText("Contrasenya");
+		PromptSupport.setPrompt("Contrasenya", jtfPassword);
 		
 		//Logo
 		ImageIcon logo = new ImageIcon("espotify_Client/Images/logoSpotyfai.png");
@@ -54,7 +66,8 @@ public class Finestra_Registre {
 		jpRegistre.add(jtfPassword,  "span 2, grow, wrap");
 		
 		//boto
-		JButton jbRegistre = new JButton ();
+		jbRegistre = new JButton ();
+		
 		jpRegistre.add(jbRegistre, "span 2, grow, wrap");
 		jbRegistre.setText("Completar registre");
 
