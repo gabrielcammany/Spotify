@@ -75,7 +75,7 @@ public class Finestra_login extends JFrame {
 		
 		//background
 		ImageIcon bk = new ImageIcon("Images/backGround.jpg");
-		JLabel jlBk = new JLabel(new ImageIcon(bk.getImage().getScaledInstance(350, 350, Image.SCALE_DEFAULT)));
+		JLabel jlBk = new JLabel(new ImageIcon(bk.getImage().getScaledInstance(400, 400, Image.SCALE_DEFAULT)));
 		jlBk.setLayout(new MigLayout("al center center, wrap, gapy 10"));
 		jfLog.setContentPane(jlBk);
 		
@@ -86,7 +86,7 @@ public class Finestra_login extends JFrame {
 		
 		
 		jfLog.setVisible(true);
-		jfLog.setSize(350, 350);
+		jfLog.setSize(400, 400);
 		
 		jfLog.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//this.setSize(300,200);

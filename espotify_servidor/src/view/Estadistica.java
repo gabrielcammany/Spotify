@@ -25,11 +25,8 @@ public class Estadistica extends JPanel {
 		int B = 0;
 		int xBarra = 10;
 		int xText = 25;
-		
-		
-		
+	
 		mesGran = Integer.parseInt(valors.get(0));
-		
 		
 		for (int i = 0; i < 10 ; i ++) {
 			g.setColor (new Color (R, G, B));
@@ -41,10 +38,7 @@ public class Estadistica extends JPanel {
 			B+=20;
 			xBarra += 38;
 			xText += 38;
-			
-			
-		}
-		
+					
+		}	
 	}
-
 }
