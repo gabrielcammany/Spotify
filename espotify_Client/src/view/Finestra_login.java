@@ -108,6 +108,16 @@ public class Finestra_login extends JFrame {
 				
 			}
 		});
+		
+		jbInicia.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//Finestra_Registre fReg = new FinestraRegistre();
+				controladorf.Reproduccio();
+				
+			}
+		});
 	}
 	
 	public void tancaFinestraLogin() {

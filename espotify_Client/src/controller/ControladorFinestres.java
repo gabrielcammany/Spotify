@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import network.InfoServidor;
+import view.FinestraReproduccio;
 import view.Finestra_Registre;
 import view.Finestra_login;
 /**
@@ -16,12 +17,13 @@ import view.Finestra_login;
  *
  */
 public class ControladorFinestres {
-	public Finestra_login jfLogin;
+	public Finestra_login fLogin;
 	public Finestra_Registre fRegistre;
+	public FinestraReproduccio fReproduccio;
 
 	
 	public ControladorFinestres () {
-		this.jfLogin = new Finestra_login(this);	
+		this.fLogin = new Finestra_login(this);	
 		
 	}
 	
@@ -30,9 +32,9 @@ public class ControladorFinestres {
 	 */
 	
 	public void nouRegistre() {
-		System.out.println("asd");
+		System.out.println("samu ha estado aqui");
 		//tanquem finestra de login
-		jfLogin.tancaFinestraLogin();
+		fLogin.tancaFinestraLogin();
 		fRegistre = new Finestra_Registre();
 		simulaTAB();
 		fRegistre.getjbRegistre().addActionListener(new ActionListener() {
@@ -50,17 +52,35 @@ public class ControladorFinestres {
 	 * Proces de login
 	 */
 	public void Login() {
-		jfLogin.getjbAccedeix().addActionListener(new ActionListener() {
+		fLogin.getjbAccedeix().addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				InfoServidor info = new InfoServidor();
-				info.enviarUsuari(2, jfLogin.getjtfUsuari().getText(), jfLogin.getjtfPassword().getPassword());
+				info.enviarUsuari(2, fLogin.getjtfUsuari().getText(), fLogin.getjtfPassword().getPassword());
 				
 			}
 			
 			
 		});
+		
+	}
+	
+	/**
+	 * Reproduir la musica
+	 */
+	
+	public void Reproduccio(){
+		/*
+		 * 
+		 * Comprovar dades correctes
+		 * 
+		 * depen de si ve per login o registre tancar la finestra correcte per no fer pataPUM
+		 * 
+		 */
+		
+		fReproduccio = new FinestraReproduccio();
+		
 		
 	}
 	

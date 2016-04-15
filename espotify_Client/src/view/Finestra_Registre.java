@@ -4,6 +4,8 @@ import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.Robot;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
 import javax.swing.BorderFactory;
@@ -17,6 +19,7 @@ import javax.swing.JTextField;
 
 import org.jdesktop.xswingx.PromptSupport;
 
+import controller.ControladorFinestres;
 import net.miginfocom.swing.MigLayout;
 /**
  * Gestio de la finestra encarregada de la introduccio de dades referents al registre. 
@@ -26,13 +29,21 @@ import net.miginfocom.swing.MigLayout;
 
 public class Finestra_Registre {
 	
+	private JFrame jfRegistre;
 	private JButton jbRegistre;
 	private JPasswordField jtfPassword;
 	private JTextField jtfUsuari;
 	
+	private ControladorFinestres controladorf;
+	
 	public Finestra_Registre() {
 		
-		JFrame jfRegistre = new JFrame("SPOTYFAI - Login");
+		jfRegistre = new JFrame("eSpotyfai - Registre");
+		jfRegistre.setVisible(true);
+		jfRegistre.setSize(350, 350);
+		jfRegistre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		jfRegistre.setLocationRelativeTo(null);
+		
 		
 		JPanel jpRegistre = new JPanel();
 		//centrar a la pantalla
@@ -73,13 +84,22 @@ public class Finestra_Registre {
 
 		jfRegistre.add(jpRegistre);
 		
-		jfRegistre.setVisible(true);
-		jfRegistre.setSize(350, 350);
 		
-		jfRegistre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		jfRegistre.setLocationRelativeTo(null);
-		jfRegistre.setTitle("eSpotyfai - Registre");
 		
+		jbRegistre.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//Finestra_Registre fReg = new FinestraRegistre();
+				controladorf.Reproduccio();
+				
+			}
+		});
+		
+	}
+	
+	public void tancaFinestraRegistre() {
+		jfRegistre.dispose();
 	}
 	
 	public JButton getjbRegistre() { 
