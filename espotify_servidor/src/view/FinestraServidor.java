@@ -4,10 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -17,6 +18,10 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.MatteBorder;
+
+import net.miginfocom.swing.MigLayout;
+
+import org.jdesktop.xswingx.PromptSupport;
 
 
 /**
@@ -33,7 +38,6 @@ public class FinestraServidor extends JFrame {
 	
 	private JPanel jpMusica;
 	private Estadistica estadistica;
-
 	
 	
 	public FinestraServidor() {
@@ -88,7 +92,8 @@ public class FinestraServidor extends JFrame {
 		Object titol[] = { "Nom usuari", "Data registre", "Ultim accès", "Numero de llistes", "Numero de cançons",
 				"Numero followers", "Numero following"};
 	    JTable taulaUsuari = new JTable(info, titol);
-	   
+	    taulaUsuari.setEnabled(false);
+
 
 		JScrollPane jspUsuari = new JScrollPane(taulaUsuari);
 		
@@ -144,22 +149,23 @@ public class FinestraServidor extends JFrame {
 		/*
 		 * temporal, vinda de la bbdd
 		 */
-		Object info[][] = { { "Cargol", "Infantil", "Party", "Nuse", "Jorge el puto", "a ti que te importa"},
+		Object info[][] = { {"Cargol", "Infantil", "Party", "Nuse", "Jorge el puto", "a ti que te importa"},
 				{ "Sol solet", "Infantil", "JorgePrivateParty", "Ves tu a saber", "Jorge", "es mia"}
 		};
-		
-		
 		/*
-		 * fiTemporal  FALTA POSAR UN BOTO D'ESBORRAR A LA DRETA DE CADA FILA
+		 * fiTemporal  FALTA POSAR UN BOTO D'ESBORRAR I ESCOLTAR A LA DRETA DE CADA FILA
 		 */
 		
 		Object titol[] = { "Nom canço", "Genere", "Àlbum", "Artistes", "Ubicació"};
 		
 	    JTable taulaMusica = new JTable(info, titol);
+	    
 
 		JScrollPane jspLlistat = new JScrollPane(taulaMusica);
 		
 		jpLlistat.add(jspLlistat, BorderLayout.CENTER);
+	
+		
 		return jpLlistat;
 	}
 	
@@ -174,17 +180,22 @@ public class FinestraServidor extends JFrame {
 		 * 
 		 * FALTA MIGLAYOUT
 		 */
-		JPanel jpAddicio = new JPanel();
+		JPanel jpAddicio = new JPanel(new MigLayout("al center center, wrap, gapy 10"));
 	
-		JTextField jtfcanco = new JTextField("Nom canço", 15);
+		JTextField jtfcanco = new JTextField(15);
+		PromptSupport.setPrompt("Nom canço", jtfcanco);
 		
-		JTextField jtfGenere = new JTextField("Genere", 15);
+		JTextField jtfGenere = new JTextField(15);
+		PromptSupport.setPrompt("Gènere", jtfGenere);
 		
-		JTextField jtfAlbum = new JTextField("Nom album", 15);
+		JTextField jtfAlbum = new JTextField( 15);
+		PromptSupport.setPrompt("Nom album", jtfAlbum);
 		
-		JTextField jtfArtista = new JTextField("Nom artista", 15);
+		JTextField jtfArtista = new JTextField( 15);
+		PromptSupport.setPrompt("Nom artista", jtfArtista);
 		
-		JTextField jtfUbicacio = new JTextField("Ubicació ó path", 15);
+		JTextField jtfUbicacio = new JTextField( 15);
+		PromptSupport.setPrompt("Ubicació o path", jtfUbicacio);
 		
 		JButton jbAddicio = new JButton();
 		jbAddicio.setText("Afegir canço");
@@ -194,7 +205,7 @@ public class FinestraServidor extends JFrame {
 		jpAddicio.add(jtfAlbum);
 		jpAddicio.add(jtfArtista);
 		jpAddicio.add(jtfUbicacio);
-		jpAddicio.add(jbAddicio);
+		jpAddicio.add(jbAddicio, "span , grow");
 	
 		
 		return jpAddicio;
