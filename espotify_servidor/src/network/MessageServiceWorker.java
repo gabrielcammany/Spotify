@@ -47,10 +47,12 @@ public class MessageServiceWorker implements Runnable{
 				// Atenem les connexions
 				diStream = new DataInputStream(sClient.getInputStream());
 				String newMessage = diStream.readUTF();
+				System.out.println(newMessage);
 				aux = newMessage.split("/");
 				data = aux[0].split(":");
 				user = data[1];
-				password = desencripta(data[1].getBytes());
+				System.out.println(aux[1]);
+				password = desencripta(aux[1].getBytes());
 				// Informem a MessageService que sha rebut un nou missatge
 				// ell informara al controlador i el controlador actualitzara la vista.
 				mService.messageReceived("[" + getCurrentTime()+ "] " + "Usuari:" + user + "Contrasenya" + password);

@@ -31,19 +31,21 @@ public class InfoServidor {
 	 * @see         Image
 	 */
 	public void enviarUsuari(int option, String nom, char[] contrasenya){
+		
 		try {
+			String algo;
 			System.out.println("[CLIENT] - Petici� de connexi�..."); 
 			
 			Socket sServidor = new Socket("localhost", 34567);
 
 			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
 			
-			algo(String.valueOf(contrasenya));
+			algo = algo(String.valueOf(contrasenya));
 			//COMENTARIO DE GABRI PARA EL FINALIZAR EL PASSWORD!!
 			switch(option) {
-			case 1: doStream.writeUTF("user:" + nom + "/" + String.valueOf(contrasenya));
+			case 1: doStream.writeUTF("user:" + nom + "/" + algo);
 				break;
-			case 2: doStream.writeUTF("userLog:" + nom + "/" + String.valueOf(contrasenya));
+			case 2: doStream.writeUTF("userLog:" + nom + "/" + algo);
 				break;
 			
 			}
@@ -58,7 +60,7 @@ public class InfoServidor {
 		}
 	}
 	
-	public void algo(String s){
+	public String algo(String s){
 		String keyString = "KA839KJsdDa4sdJSNsdjasid!@$@#$#@$#*&(*&}{234hjuk32432432dsfsdf";
 
         MessageDigest digest;
@@ -74,11 +76,7 @@ public class InfoServidor {
 	        SecretKeySpec keySpec = new SecretKeySpec(key, "AES");
 			cipher.init(Cipher.ENCRYPT_MODE, keySpec, ivSpec);
 	        byte[] encrypted = cipher.doFinal(s.getBytes("UTF-8"));
-	        System.out.println("encrypted: " + new String(encrypted));
-	        
-	        cipher.init(Cipher.DECRYPT_MODE, keySpec, ivSpec);
-	        byte[] decrypted = cipher.doFinal(encrypted);
-	        System.out.println("decrypted: " + new String(decrypted, "UTF-8"));
+	        return new String(encrypted);
 	        
 		} catch (InvalidKeyException | InvalidAlgorithmParameterException e) {
 			e.printStackTrace();
@@ -93,7 +91,8 @@ public class InfoServidor {
 		} catch (NoSuchPaddingException e) {
 			e.printStackTrace();
 		}
-
+		
+		return null;
 
 		
 		
