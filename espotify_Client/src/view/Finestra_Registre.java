@@ -26,9 +26,9 @@ import net.miginfocom.swing.MigLayout;
 
 public class Finestra_Registre {
 	
-	public JButton jbRegistre;
-	public JPasswordField jtfPassword;
-	public JTextField jtfUsuari;
+	private JButton jbRegistre;
+	private JPasswordField jtfPassword;
+	private JTextField jtfUsuari;
 	
 	public Finestra_Registre() {
 		
@@ -80,6 +80,18 @@ public class Finestra_Registre {
 		jfRegistre.setLocationRelativeTo(null);
 		jfRegistre.setTitle("eSpotyfai - Registre");
 		
+	}
+	
+	public JButton getjbRegistre() { 
+		return jbRegistre;
+	}
+	
+	public JPasswordField getjtfPassword() {
+		return jtfPassword;
+	}
+	
+	public JTextField getjtfUsuari() {
+		return jtfUsuari;
 	}
 
 }

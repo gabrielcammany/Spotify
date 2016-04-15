@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import org.jdesktop.xswingx.PromptSupport;
@@ -20,11 +21,14 @@ import net.miginfocom.swing.MigLayout;
 
 public class Finestra_login extends JFrame {
 	private JTextField jtfUsuari;
-	private JTextField jtfPassword;
+	private JPasswordField jtfPassword;
 	private JButton jbAccedeix;
 	private JButton jbRegistre;
 	private ControladorFinestres controladorf;
 	private JFrame jfLog;
+	
+	
+
 	
 	public Finestra_login(ControladorFinestres controladorf) {
 		
@@ -41,7 +45,7 @@ public class Finestra_login extends JFrame {
 			
 		jtfUsuari = new JTextField(15);
 		jtfUsuari.setForeground(Color.WHITE);
-		jtfPassword = new JTextField(15);
+		jtfPassword = new JPasswordField(15);
 		PromptSupport.setPrompt("Nom d'Usuari", jtfUsuari);
 		//color gris dins del text area
 		jtfUsuari.setBackground(new Color(51,51,51));
@@ -108,6 +112,18 @@ public class Finestra_login extends JFrame {
 	
 	public void tancaFinestraLogin() {
 		jfLog.dispose();
+	}
+	
+	public JTextField getjtfUsuari() {
+		return jtfUsuari;
+	}
+	
+	public JPasswordField getjtfPassword() {
+		return jtfPassword;
+	}
+	
+	public JButton getjbAccedeix() {
+		return jbAccedeix;
 	}
 
 }

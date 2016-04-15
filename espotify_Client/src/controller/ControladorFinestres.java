@@ -16,8 +16,8 @@ import view.Finestra_login;
  *
  */
 public class ControladorFinestres {
-	Finestra_login jfLogin;
-	Finestra_Registre fRegistre;
+	public Finestra_login jfLogin;
+	public Finestra_Registre fRegistre;
 
 	
 	public ControladorFinestres () {
@@ -35,14 +35,32 @@ public class ControladorFinestres {
 		jfLogin.tancaFinestraLogin();
 		fRegistre = new Finestra_Registre();
 		simulaTAB();
-		fRegistre.jbRegistre.addActionListener(new ActionListener() {
+		fRegistre.getjbRegistre().addActionListener(new ActionListener() {
  
             public void actionPerformed(ActionEvent e)
             {
                 InfoServidor info = new InfoServidor();
-                info.enviarUsuari(fRegistre.jtfUsuari.getText(),fRegistre.jtfPassword.getPassword());
+                info.enviarUsuari(1, fRegistre.getjtfUsuari().getText(),fRegistre.getjtfPassword().getPassword());
             }
         }); 
+		
+	}
+	
+	/**
+	 * Proces de login
+	 */
+	public void Login() {
+		jfLogin.getjbAccedeix().addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				InfoServidor info = new InfoServidor();
+				info.enviarUsuari(2, jfLogin.getjtfUsuari().getText(), jfLogin.getjtfPassword().getPassword());
+				
+			}
+			
+			
+		});
 		
 	}
 	

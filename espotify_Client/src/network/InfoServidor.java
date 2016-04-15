@@ -30,9 +30,9 @@ public class InfoServidor {
 	 * @return      the image at the specified URL
 	 * @see         Image
 	 */
-	public void enviarUsuari(String nom, char[] contrasenya){
+	public void enviarUsuari(int option, String nom, char[] contrasenya){
 		try {
-			System.out.println("[CLIENT] - Petici— de connexi—..."); 
+			System.out.println("[CLIENT] - Peticiï¿½ de connexiï¿½..."); 
 			
 			Socket sServidor = new Socket("localhost", 34567);
 
@@ -40,7 +40,14 @@ public class InfoServidor {
 			
 			algo(String.valueOf(contrasenya));
 			//COMENTARIO DE GABRI PARA EL FINALIZAR EL PASSWORD!!
-			doStream.writeUTF("user:" + nom + "/" + String.valueOf(contrasenya));
+			switch(option) {
+			case 1: doStream.writeUTF("user:" + nom + "/" + String.valueOf(contrasenya));
+				break;
+			case 2: doStream.writeUTF("userLog:" + nom + "/" + String.valueOf(contrasenya));
+				break;
+			
+			}
+				
 			
 			System.out.println("Enviat");
 			sServidor.close();
