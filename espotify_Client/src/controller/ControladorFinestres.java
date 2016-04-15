@@ -52,17 +52,9 @@ public class ControladorFinestres {
 	 * Proces de login
 	 */
 	public void Login() {
-		fLogin.getjbAccedeix().addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				InfoServidor info = new InfoServidor();
-				info.enviarUsuari(2, fLogin.getjtfUsuari().getText(), fLogin.getjtfPassword().getPassword());
-				
-			}
-			
-			
-		});
+		InfoServidor info = new InfoServidor();
+		info.enviarUsuari(2, fLogin.getjtfUsuari().getText(), fLogin.getjtfPassword().getPassword());
+		Reproduccio();		
 		
 	}
 	

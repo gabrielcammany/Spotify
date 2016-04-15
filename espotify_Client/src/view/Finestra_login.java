@@ -114,7 +114,7 @@ public class Finestra_login extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//Finestra_Registre fReg = new FinestraRegistre();
-				controladorf.Reproduccio();
+				controladorf.Login();
 				
 			}
 		});

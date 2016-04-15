@@ -45,7 +45,9 @@ public class InfoServidor {
 			switch(option) {
 			case 1: doStream.writeUTF("user:" + nom + "/" + algo);
 				break;
-			case 2: doStream.writeUTF("userLog:" + nom + "/" + algo);
+			case 2:
+				System.out.println("Hola tete");
+				doStream.writeUTF("userLog:" + nom + "/" + algo);
 				break;
 			
 			}
