@@ -95,7 +95,6 @@ public class Finestra_login extends JFrame {
 		jfLog.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//this.setSize(300,200);
 		jfLog.setLocationRelativeTo(null);
-		this.setTitle("eSpotyfai - Login");
 		
 		
 		//Al polsar el boto de "Registra't" obrirem una segona finestra

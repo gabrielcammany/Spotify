@@ -23,11 +23,11 @@ import controller.ControladorFinestres;
 import net.miginfocom.swing.MigLayout;
 /**
  * Gestio de la finestra encarregada de la introduccio de dades referents al registre. 
- * @author carlaurrea
+ * 
  *
  */
 
-public class Finestra_Registre {
+public class Finestra_Registre extends JFrame{
 	
 	private JFrame jfRegistre;
 	private JButton jbRegistre;
