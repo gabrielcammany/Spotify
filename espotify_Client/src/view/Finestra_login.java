@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -79,7 +80,7 @@ public class Finestra_login extends JFrame {
 		
 		//background
 		ImageIcon bk = new ImageIcon("Images/backGround.jpg");
-		JLabel jlBk = new JLabel(new ImageIcon(bk.getImage().getScaledInstance(400, 400, Image.SCALE_DEFAULT)));
+		JLabel jlBk = new JLabel(new ImageIcon(bk.getImage().getScaledInstance(600, 500, Image.SCALE_DEFAULT)));
 		jlBk.setLayout(new MigLayout("al center center, wrap, gapy 10"));
 		jfLog.setContentPane(jlBk);
 		
@@ -90,7 +91,7 @@ public class Finestra_login extends JFrame {
 		
 		
 		jfLog.setVisible(true);
-		jfLog.setSize(400, 400);
+		jfLog.setSize(500, 500);
 		
 		jfLog.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//this.setSize(300,200);
@@ -113,7 +114,15 @@ public class Finestra_login extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//Finestra_Registre fReg = new FinestraRegistre();
-				controladorf.Login();
+				if(getjtfUsuari().getText().isEmpty() || String.copyValueOf(getjtfPassword().getPassword()).isEmpty()){
+
+					Font font = new Font("Verdana", Font.BOLD, 12);	
+					getjtfUsuari().setFont(font);
+					//getjt
+					PromptSupport.setPrompt("Camp Buit", getjtfUsuari());
+				}else{
+					controladorf.Login();
+				}
 				
 			}
 		});
