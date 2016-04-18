@@ -88,9 +88,7 @@ public class ControladorFinestres {
 			robot.keyRelease(KeyEvent.VK_TAB);
 			if(i){
 				robot.keyPress(KeyEvent.VK_TAB);
-				robot.keyRelease(KeyEvent.VK_TAB);	
-				robot.keyPress(KeyEvent.VK_TAB);
-				robot.keyRelease(KeyEvent.VK_TAB);	
+				robot.keyRelease(KeyEvent.VK_TAB);
 			}	
 
 		} catch (AWTException e) {

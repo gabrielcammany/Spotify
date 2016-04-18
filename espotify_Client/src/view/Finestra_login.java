@@ -13,6 +13,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 
 import org.jdesktop.xswingx.PromptSupport;
 
@@ -114,15 +115,29 @@ public class Finestra_login extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//Finestra_Registre fReg = new FinestraRegistre();
-				if(getjtfUsuari().getText().isEmpty() || String.copyValueOf(getjtfPassword().getPassword()).isEmpty()){
-
-					Font font = new Font("Verdana", Font.BOLD, 12);	
-					getjtfUsuari().setFont(font);
-					//getjt
+				
+				if(!getjtfUsuari().getText().isEmpty()){	
+					getjtfUsuari().setBorder(new LineBorder(Color.white));
+				}else if(!String.copyValueOf(getjtfPassword().getPassword()).isEmpty()){
+					getjtfUsuari().setBorder(new LineBorder(Color.white));
+				}
+				
+				if(getjtfUsuari().getText().isEmpty() && String.copyValueOf(getjtfPassword().getPassword()).isEmpty()){
+					//Font font = new Font("Verdana", Font.BOLD, 12);	
+					getjtfUsuari().setBorder(new LineBorder(Color.RED));
 					PromptSupport.setPrompt("Camp Buit", getjtfUsuari());
+					getjtfPassword().setBorder(new LineBorder(Color.RED));
+					PromptSupport.setPrompt("Camp Buit", getjtfPassword());
+				}else if(String.copyValueOf(getjtfPassword().getPassword()).isEmpty()){
+					getjtfPassword().setBorder(new LineBorder(Color.RED));
+					PromptSupport.setPrompt("Camp Buit", getjtfPassword());
+				}else if(getjtfUsuari().getText().isEmpty()){
+					getjtfUsuari().setBorder(new LineBorder(Color.RED));
+					PromptSupport.setPrompt("Camp Buit", getjtfUsuari());			
 				}else{
 					controladorf.Login();
 				}
+				
 				
 			}
 		});
