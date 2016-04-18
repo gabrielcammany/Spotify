@@ -34,7 +34,7 @@ public class InfoServidor {
 		
 		try {
 			String algo;
-			System.out.println("[CLIENT] - Petici� de connexi�..."); 
+			System.out.println("[CLIENT] - Peticio de connexio..."); 
 			
 			Socket sServidor = new Socket("localhost", 34567);
 

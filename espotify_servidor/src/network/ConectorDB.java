@@ -2,9 +2,14 @@ package network;
 
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
+
+import controller.ButtonsController;
+
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import javax.swing.JOptionPane;
 
 public class ConectorDB {
 	static String userName;
@@ -13,6 +18,7 @@ public class ConectorDB {
 	static int port;
 	static String url = "jdbc:mysql://projectdpo.ddns.net";
 	static Connection conn = null;
+	public ButtonsController controller;
 	static Statement s;
     
 	public ConectorDB(String usr, String pass, String db, int port) {
@@ -47,10 +53,13 @@ public class ConectorDB {
         	System.out.println(query);
             s =(Statement) conn.createStatement();
             s.executeUpdate(query);
-
         } catch (SQLException ex) {
             System.out.println("Problema al Inserir --> " + ex.getSQLState());
+            //controller = new ButtonsController();
+            //controller.incorrectUser();
+            //JOptionPane.showMessageDialog(null,"Error al inserir usuari"); 
         }
+        
     }
     
     public void updateQuery(String query){
@@ -79,7 +88,12 @@ public class ConectorDB {
     	 try {
              s =(Statement) conn.createStatement();
              rs = s.executeQuery (query);
-             
+             if (!rs.isBeforeFirst()){
+            	 System.out.println("[SERVER] Usuari no disponible.");
+            	 controller = new ButtonsController();
+            	 controller.incorrectUser();
+            	 
+             }
          } catch (SQLException ex) {
              System.out.println("Problema al Recuperar les dades --> " + ex.getSQLState());
          }

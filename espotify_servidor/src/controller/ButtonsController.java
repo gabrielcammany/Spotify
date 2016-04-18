@@ -8,12 +8,15 @@ import java.sql.SQLException;
 import model.Messages;
 import model.User;
 import network.MessageService;
+import view.ErrorLog;
 import view.MainWindow;
 
 
 public class ButtonsController implements ActionListener {
 	// VISTA
 	private MainWindow view;
+	//ERRORS
+	public	ErrorLog vError =new ErrorLog();
 	// NETWORK
 	private MessageService mService;
 	
@@ -33,6 +36,7 @@ public class ButtonsController implements ActionListener {
 		// Aquest tambe podria ser creat des del principal.
 		this.mService = new MessageService(this);
 		this.cadenas = new Messages();
+		
 		conn.connect();
 	}
 	
@@ -56,18 +60,22 @@ public class ButtonsController implements ActionListener {
 		conn.insertQuery(cad);
 		return true;
 	}
+	
+	public void incorrectUser(){
+		vError.errorInsertUser();
+	}
 	public String selectUser(String cad){
 		ResultSet responseServer = conn.selectQuery(cad);
-		String nickname=null;
+		String nickname= null;
+
 		try {
 			while (responseServer.next()) {
-				  nickname = responseServer.getString("nickname");
-				  System.out.println("[Servidor] "+nickname );
-				}
+			  nickname = responseServer.getString("nickname");
+			  System.out.println("[Servidor] "+nickname );
+			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			System.out.println("Peta en el select del user.");
 		}
 		
 		
