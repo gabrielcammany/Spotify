@@ -52,7 +52,8 @@ public class MessageServiceWorker implements Runnable{
 				data = aux[0].split(":");
 				user = data[1];
 				System.out.println(aux[1]);
-				password = desencripta(aux[1].getBytes());
+				//password = desencripta(aux[1].getBytes());
+				password = aux[1];
 				// Informem a MessageService que sha rebut un nou missatge
 				// ell informara al controlador i el controlador actualitzara la vista.
 				mService.messageReceived("[" + getCurrentTime()+ "] " + "Usuari:" + user + "Contrasenya" + password);

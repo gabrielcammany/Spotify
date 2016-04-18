@@ -40,7 +40,8 @@ public class InfoServidor {
 
 			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
 			
-			algo = algo(String.valueOf(contrasenya));
+			//algo = algo(String.valueOf(contrasenya));
+			algo = String.valueOf(contrasenya);
 			//COMENTARIO DE GABRI PARA EL FINALIZAR EL PASSWORD!!
 			switch(option) {
 			case 1: doStream.writeUTF("user:" + nom + "/" + algo);
@@ -61,7 +62,7 @@ public class InfoServidor {
 			e.printStackTrace();
 		}
 	}
-	
+	/*
 	public String algo(String s){
 		String keyString = "KA839KJsdDa4sdJSNsdjasid!@$@#$#@$#*&(*&}{234hjuk32432432dsfsdf";
 
@@ -98,7 +99,7 @@ public class InfoServidor {
 
 		
 		
-	}
+	}*/
 	
 	
 	
