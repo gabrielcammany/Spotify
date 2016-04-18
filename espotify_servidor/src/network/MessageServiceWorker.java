@@ -56,7 +56,7 @@ public class MessageServiceWorker implements Runnable{
 				password = aux[1];
 				// Informem a MessageService que sha rebut un nou missatge
 				// ell informara al controlador i el controlador actualitzara la vista.
-				mService.messageReceived("[" + getCurrentTime()+ "] " + "Usuari:" + user + "Contrasenya" + password);
+				mService.messageReceived("[" + getCurrentTime()+ "] " + "Usuari:" + user + "/" + password);
 				// Tanquem el socket del client
 				sClient.close();
 			} catch (IOException e) { }
@@ -72,6 +72,8 @@ public class MessageServiceWorker implements Runnable{
 		active = false;
 	}
 	
+	//
+	/*
 	public String desencripta(byte[] s){
 		String keyString = "KA839KJsdDa4sdJSNsdjasid!@$@#$#@$#*&(*&}{234hjuk32432432dsfsdf";
 		String desencriptat = null;
@@ -106,6 +108,6 @@ public class MessageServiceWorker implements Runnable{
 			e.printStackTrace();
 		}
 		return desencriptat;
-	}
+	}*/
 
 }

@@ -68,6 +68,7 @@ public class User {
 	
 	public User(){
 		this.lluser =new LinkedList<User>();
+		
 	}
 	
 	
@@ -75,7 +76,7 @@ public class User {
 		
 	}
 	
-	boolean insertUser(User user){
+	public boolean insertUser(User user){
 		boolean ok = true;
 		Query q = new Query();
 		String response;
@@ -85,11 +86,12 @@ public class User {
 		ok = controller.inserirUser(response);
 		return ok;
 	}
-	String verifyUser(User user){
+	public String verifyUser(User user){
 		String response;
 		Query q =new Query();
 		String select = q.queryList(2, user);
 		System.out.println("## "+select+" ##");
+		controller = new ButtonsController();
 		response= controller.selectUser(select);
 		return response;
 	}

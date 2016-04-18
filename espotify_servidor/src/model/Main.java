@@ -2,6 +2,7 @@ package model;
 
 import javax.swing.SwingUtilities;
 import controller.ButtonsController;
+import view.ErrorLog;
 import view.FinestraServidor;
 import view.MainWindow;
 
@@ -27,8 +28,6 @@ public class Main {
 				
 				// Creem la VISTA
 				FinestraServidor viewF = new FinestraServidor();
-				
-				
 				
 			}
 		});
