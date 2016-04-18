@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -35,6 +35,7 @@ public class Finestra_login extends JFrame {
 	public Finestra_login(ControladorFinestres controladorf) {
 		
 		jfLog = new JFrame("SPOTYFAI - Login");
+		jfLog.setUndecorated(false);
 		JPanel jpLog = new JPanel();
 		
 		//color negre del fons
@@ -58,6 +59,7 @@ public class Finestra_login extends JFrame {
 		//creacio botons
 		JButton jbInicia = new JButton ();
 		JButton jbRegistre = new JButton();
+		JButton tanca = new JButton ();
 		
 		jbInicia.setText("Inicia Sessio");
 		jbRegistre.setText("Registra't");
@@ -84,7 +86,7 @@ public class Finestra_login extends JFrame {
 		JLabel jlBk = new JLabel(new ImageIcon(bk.getImage().getScaledInstance(600, 500, Image.SCALE_DEFAULT)));
 		jlBk.setLayout(new MigLayout("al center center, wrap, gapy 10"));
 		jfLog.setContentPane(jlBk);
-		
+
 		//afegim el jpanel log al jFrame
 		jfLog.add(jpLog);
 		
@@ -109,7 +111,7 @@ public class Finestra_login extends JFrame {
 				
 			}
 		});
-		
+		jbInicia.requestFocus();
 		jbInicia.addActionListener(new ActionListener() {
 			
 			@Override
@@ -117,23 +119,22 @@ public class Finestra_login extends JFrame {
 				//Finestra_Registre fReg = new FinestraRegistre();
 				
 				if(!getjtfUsuari().getText().isEmpty()){	
-					getjtfUsuari().setBorder(new LineBorder(Color.white));
+					PromptSupport.setForeground(Color.LIGHT_GRAY, jtfUsuari);
 				}else if(!String.copyValueOf(getjtfPassword().getPassword()).isEmpty()){
-					getjtfUsuari().setBorder(new LineBorder(Color.white));
+					PromptSupport.setForeground(Color.LIGHT_GRAY, jtfPassword);
 				}
 				
 				if(getjtfUsuari().getText().isEmpty() && String.copyValueOf(getjtfPassword().getPassword()).isEmpty()){
 					//Font font = new Font("Verdana", Font.BOLD, 12);	
-					getjtfUsuari().setBorder(new LineBorder(Color.RED));
-					PromptSupport.setPrompt("Camp Buit", getjtfUsuari());
-					getjtfPassword().setBorder(new LineBorder(Color.RED));
-					PromptSupport.setPrompt("Camp Buit", getjtfPassword());
+					PromptSupport.setForeground(new Color(255, 77, 77), jtfUsuari);
+					PromptSupport.setForeground(new Color(255, 77, 77), getjtfPassword());
+	                JOptionPane.showMessageDialog(jtfUsuari, "Camps buits", "Error a iniciar sessió", 0);
 				}else if(String.copyValueOf(getjtfPassword().getPassword()).isEmpty()){
-					getjtfPassword().setBorder(new LineBorder(Color.RED));
-					PromptSupport.setPrompt("Camp Buit", getjtfPassword());
+	                JOptionPane.showMessageDialog(jtfUsuari, "Has d'inserir una contrasenya","Error a iniciar sessió", 0);
+					PromptSupport.setForeground(new Color(255, 77, 77), getjtfPassword());
 				}else if(getjtfUsuari().getText().isEmpty()){
-					getjtfUsuari().setBorder(new LineBorder(Color.RED));
-					PromptSupport.setPrompt("Camp Buit", getjtfUsuari());			
+	                JOptionPane.showMessageDialog(jtfUsuari, "Nom d'usuari obligatori","Error a iniciar sessió", 0);
+					PromptSupport.setForeground(new Color(255, 77, 77), jtfUsuari);		
 				}else{
 					controladorf.Login();
 				}

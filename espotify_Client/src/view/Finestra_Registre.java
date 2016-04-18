@@ -1,10 +1,15 @@
 package view;
 
 import java.awt.Color;
+import java.awt.GradientPaint;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -23,7 +28,7 @@ import net.miginfocom.swing.MigLayout;
  *
  */
 
-public class Finestra_Registre extends JFrame{
+public class Finestra_Registre extends JPanel{
 	
 	private JFrame jfRegistre;
 	private JButton jbRegistre;
@@ -40,12 +45,24 @@ public class Finestra_Registre extends JFrame{
 		jfRegistre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jfRegistre.setLocationRelativeTo(null);
 		
-		
-		JPanel jpRegistre = new JPanel();
+		JPanel jpRegistre = new JPanel(){
+	        @Override
+	        protected void paintComponent(Graphics grphcs) {
+	            super.paintComponent(grphcs);
+	            Graphics2D g2d = (Graphics2D) grphcs;
+	            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+	                    RenderingHints.VALUE_ANTIALIAS_ON);
+	            GradientPaint gp = new GradientPaint(0, 0,
+	                    Color.BLACK, 0, 300, new Color(0, 153, 51));
+	            g2d.setPaint(gp);
+	            g2d.fillRect(0, 0, getWidth(), getHeight()); 
+
+	        }
+
+	    };
 		//centrar a la pantalla
 		jpRegistre.setLayout(new MigLayout("al center center, wrap, gapy 10"));
 		//color negre del fons
-		jpRegistre.setBackground(new Color(29,29,23));
 		
 				
 		jtfUsuari = new JTextField(15);
@@ -80,7 +97,7 @@ public class Finestra_Registre extends JFrame{
 
 		jfRegistre.add(jpRegistre);
 		
-		
+		jfRegistre.requestFocus();
 		
 		jbRegistre.addActionListener(new ActionListener() {
 			
@@ -93,6 +110,7 @@ public class Finestra_Registre extends JFrame{
 		});
 		
 	}
+	
 	
 	public void tancaFinestraRegistre() {
 		jfRegistre.dispose();
