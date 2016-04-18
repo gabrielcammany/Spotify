@@ -3,6 +3,7 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Image;
+import java.io.UnsupportedEncodingException;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
@@ -52,7 +53,7 @@ public class FinestraReproduccio extends JFrame {
 		
 		
 		/*
-		 * ¡
+		 * Â¡
 		 * GET NOM USUARI!!!
 		 * 
 		 */	
@@ -72,7 +73,7 @@ public class FinestraReproduccio extends JFrame {
 		
 		
 		//afegim la columna de l'esquerra, faig un mig layout per fer us dels wrap
-		//“Música disponible”, “Llistes de música pròpies” i “Llistes de música following”
+		//â€œMuÌ�sica disponibleâ€�, â€œLlistes de muÌ�sica proÌ€piesâ€� i â€œLlistes de muÌ�sica followingâ€�
 		
 		JPanel jpGestionar = new JPanel(new MigLayout("wrap"));
 		jpGestionar.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
@@ -82,19 +83,28 @@ public class FinestraReproduccio extends JFrame {
 		JLabel jlBlanc0 = new JLabel("  ");
 		JLabel jlBlanc1 = new JLabel("  ");
 		JLabel jlBlanc2 = new JLabel("  ");
-		JLabel jldisponible = new JLabel("Música disponible");
-		jldisponible.setForeground(new Color(164,164,164));
-		JLabel jlpropies = new JLabel("Ḿsica propia  ");
-		jlpropies.setForeground(new Color(164,164,164));
-		JLabel jlfollowing = new JLabel("Música following");
-		jlfollowing.setForeground(new Color(164,164,164));
-		
-		jpGestionar.add(jlBlanc0, "span 2, grow, wrap ");
-		jpGestionar.add(jldisponible, "span 2, grow, wrap ");
-		jpGestionar.add(jlBlanc1, "span 2, grow, wrap ");
-		jpGestionar.add(jlpropies, "span 2, grow, wrap");
-		jpGestionar.add(jlBlanc2, "span 2, grow, wrap ");
-		jpGestionar.add(jlfollowing, "span 2, grow, wrap");
+		String disponible = "Música disponible";
+		String propies = "Música propia";
+		String following = "Música following";
+		JLabel jldisponible;
+		try {
+			jldisponible = new JLabel(new String(disponible.getBytes("UTF-8"),"UTF-8"));
+			jldisponible.setForeground(new Color(164,164,164));
+			JLabel jlpropies = new JLabel(new String(propies.getBytes("UTF-8"),"UTF-8"));
+			jlpropies.setForeground(new Color(164,164,164));
+			JLabel jlfollowing = new JLabel(new String(following.getBytes("UTF-8"),"UTF-8"));
+			jlfollowing.setForeground(new Color(164,164,164));
+
+			jpGestionar.add(jlBlanc0, "span 2, grow, wrap ");
+			jpGestionar.add(jldisponible, "span 2, grow, wrap ");
+			jpGestionar.add(jlBlanc1, "span 2, grow, wrap ");
+			jpGestionar.add(jlpropies, "span 2, grow, wrap");
+			jpGestionar.add(jlBlanc2, "span 2, grow, wrap ");
+			jpGestionar.add(jlfollowing, "span 2, grow, wrap");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		jpReproduccio.add(jpGestionar, BorderLayout.WEST);
 		
