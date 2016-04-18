@@ -24,6 +24,7 @@ public class ControladorFinestres {
 	
 	public ControladorFinestres () {
 		this.fLogin = new Finestra_login(this);	
+		simulaTAB(true);
 		
 	}
 	
@@ -36,7 +37,7 @@ public class ControladorFinestres {
 		//tanquem finestra de login
 		fLogin.tancaFinestraLogin();
 		fRegistre = new Finestra_Registre();
-		simulaTAB();
+		simulaTAB(false);
 		fRegistre.getjbRegistre().addActionListener(new ActionListener() {
  
             public void actionPerformed(ActionEvent e)
@@ -54,7 +55,7 @@ public class ControladorFinestres {
 	public void Login() {
 		InfoServidor info = new InfoServidor();
 		info.enviarUsuari(2, fLogin.getjtfUsuari().getText(), fLogin.getjtfPassword().getPassword());
-		Reproduccio();		
+		Reproduccio();	
 		
 	}
 	
@@ -74,9 +75,10 @@ public class ControladorFinestres {
 		fReproduccio = new FinestraReproduccio();
 		
 		
+		
 	}
 	
-	public void simulaTAB(){
+	public void simulaTAB(boolean i){
 		Robot robot;
 		try {
 			robot = new Robot();
@@ -84,8 +86,10 @@ public class ControladorFinestres {
 			robot.keyRelease(KeyEvent.VK_TAB);
 			robot.keyPress(KeyEvent.VK_TAB);
 			robot.keyRelease(KeyEvent.VK_TAB);
-			robot.keyPress(KeyEvent.VK_TAB);
-			robot.keyRelease(KeyEvent.VK_TAB);		
+			if(i){
+				robot.keyPress(KeyEvent.VK_TAB);
+				robot.keyRelease(KeyEvent.VK_TAB);
+			}	
 
 		} catch (AWTException e) {
 			// TODO Auto-generated catch block
