@@ -48,7 +48,7 @@ public class Finestra_login extends JFrame {
 			
 		jtfUsuari = new JTextField(15);
 		jtfUsuari.setForeground(Color.WHITE);
-		jtfUsuari.setBackground(new Color(100,100,100));
+		jtfUsuari.setBackground(new Color(51,51,51));
 		PromptSupport.setPrompt("Nom d'Usuari", jtfUsuari);
 
 		jtfPassword = new JPasswordField(15);
