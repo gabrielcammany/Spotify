@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 
 import controller.ControladorFinestres;
 import net.miginfocom.swing.MigLayout;
+import network.InfoServidor;
 
 
 /**
@@ -29,6 +30,7 @@ import net.miginfocom.swing.MigLayout;
 public class FinestraReproduccio extends JFrame {
 	
 	private JFrame jfReproduccio;
+	private InfoServidor ifs ;
 	
 	
 	
@@ -113,10 +115,12 @@ public class FinestraReproduccio extends JFrame {
 	
 		
 		
-	
-		
 		//ho afegim tot al frame general
 		jfReproduccio.add(jpReproduccio);
+		
+		//Realitzem la peticio de cançons al servidor
+		ifs =new InfoServidor();
+		ifs.peticioMusica();
 	}
 	
 }

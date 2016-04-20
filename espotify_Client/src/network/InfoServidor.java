@@ -47,17 +47,27 @@ public class InfoServidor {
 			case 1: doStream.writeUTF("user:" + nom + "/" + algo);
 				break;
 			case 2:
-				System.out.println("Hola tete");
 				doStream.writeUTF("userLog:" + nom + "/" + algo);
 				break;
 			
 			}
-				
-			
 			System.out.println("Enviat");
 			sServidor.close();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	public void peticioMusica(){
+		System.out.println("[CLIENT] - Peticio de connexio..."); 
+		
+		
+		try {
+			Socket sServidor = new Socket("localhost", 34567);
+
+			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
+			doStream.writeUTF("requestMusic:");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

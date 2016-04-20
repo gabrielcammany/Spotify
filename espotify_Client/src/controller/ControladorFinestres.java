@@ -32,7 +32,6 @@ public class ControladorFinestres {
 	 */
 	
 	public void nouRegistre() {
-		System.out.println("samu ha estado aqui");
 		//tanquem finestra de login
 		fLogin.tancaFinestraLogin();
 		fRegistre = new Finestra_Registre();
@@ -72,6 +71,7 @@ public class ControladorFinestres {
 		 */
 		
 		fReproduccio = new FinestraReproduccio();
+		
 		
 		
 		

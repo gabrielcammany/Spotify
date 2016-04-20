@@ -1,6 +1,11 @@
 package model;
 
+import java.util.ArrayList;
+
+import controller.ButtonsController;
+
 public class Canco {
+	private ButtonsController controller;
 	String nom;
 	String genere;
 	String album;
@@ -13,7 +18,7 @@ public class Canco {
 	public void setPath(String path) {
 		this.path = path;
 	}
-	int estrelles;
+	String estrelles;
 	int reproduccions;
 	
 	
@@ -41,11 +46,11 @@ public class Canco {
 	public void setArtista(String artista) {
 		this.artista = artista;
 	}
-	public int getEstrelles() {
+	public String getEstrelles() {
 		return estrelles;
 	}
-	public void setEstrelles(int estrelles) {
-		this.estrelles = estrelles;
+	public void setEstrelles(String string) {
+		this.estrelles = string;
 	}
 	public int getReproduccions() {
 		return reproduccions;
@@ -55,5 +60,12 @@ public class Canco {
 	}
 	
 	void Canco(){}
+	
+	public ArrayList<Canco> consultaTotesCancons(){
+		Query q =new Query();
+		String select = q.queryList(4,null);
+		controller = new ButtonsController();
+		return controller.selectSongs(select);
+	}
 
 }

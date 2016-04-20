@@ -4,7 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
+import model.Canco;
 import model.Messages;
 import model.User;
 import network.MessageService;
@@ -80,6 +82,28 @@ public class ButtonsController implements ActionListener {
 		
 		
 		return nickname;
+	}
+	
+	public ArrayList<Canco> selectSongs(String cad){
+		ResultSet responseServer = conn.selectQuery(cad);
+		ArrayList<Canco> alMusica = new ArrayList<Canco>();
+		try {
+			
+			while (responseServer.next()) {
+				Canco c = new Canco();
+				c.setNom(responseServer.getString("nom"));
+				c.setAlbum(responseServer.getString("album"));
+				c.setArtista(responseServer.getString("artista"));
+				c.setPath(responseServer.getString("ubicacio"));
+				c.setEstrelles(responseServer.getString("num_estrelles"));
+				System.out.println("[Servidor] "+c.getNom()+" amb path: "+c.getPath());
+				alMusica.add(c);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return alMusica;
 	}
 	
 	// Aquest metode es invocat pel servei de missatges quan arriba

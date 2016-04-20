@@ -25,7 +25,6 @@ public class Main {
 				// Mostrem la VISTA
 				view.setVisible(true);
 				
-				
 				// Creem la VISTA
 				FinestraServidor viewF = new FinestraServidor();
 				

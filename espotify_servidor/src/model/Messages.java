@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Messages {
@@ -10,22 +11,31 @@ public class Messages {
 		boolean ok = true;
 		User user =new User();
 		Canco can = new Canco();
+		ArrayList<Canco> alMusica;
 		String[] s = m.split(" ");
 		String[] st = s[1].split(":");
-		String[] up = st[1].split("/");
-		user.setNickname(up[0]);
-		user.setPassword(up[1]);
+		
 		if(st[0].equals("user")){
+			String[] up = st[1].split("/");
+			user.setNickname(up[0]);
+			user.setPassword(up[1]);
 			user.insertUser(user);
 			System.out.println("User: "+user.getNickname()+"Inserit correctament.");
 			
 			//System.out.println(user.verifyUser(user));
-		}else{
-			if(st[0].equals("userlog")){
-				System.out.println("User: "+user.getNickname()+".");
-				//System.out.println("Comprovacio usuari:");
-				user.verifyUser(user);
-			}
+		}
+		if(st[0].equals("userLog")){
+			System.out.println("User: "+user.getNickname()+".");
+			//System.out.println("Comprovacio usuari:");
+			user.verifyUser(user);
+		}
+		if(st[0].equals("Request")){
+			System.out.println("Samu a estado aki");
+			alMusica = new ArrayList<Canco>();
+			alMusica = can.consultaTotesCancons();
+			System.out.println();
+			int size = alMusica.size();
+			for(int i = 0;i<size;i++)System.out.println("Canco numero "+i+" -->"+alMusica.get(i).getNom());
 		}
 		return ok;
 	}
