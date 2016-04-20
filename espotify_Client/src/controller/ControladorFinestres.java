@@ -13,7 +13,7 @@ import view.Finestra_login;
 /**
  * Controlador encarregat de gestionar la relacion entre les diferents finestres 
  * (Login, Registre, finestra principal)
- * @author carlaurrea
+ * 
  *
  */
 public class ControladorFinestres {

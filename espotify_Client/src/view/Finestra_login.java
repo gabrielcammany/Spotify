@@ -48,10 +48,10 @@ public class Finestra_login extends JFrame {
 			
 		jtfUsuari = new JTextField(15);
 		jtfUsuari.setForeground(Color.WHITE);
-		jtfPassword = new JPasswordField(15);
+		jtfUsuari.setBackground(new Color(100,100,100));
 		PromptSupport.setPrompt("Nom d'Usuari", jtfUsuari);
-		//color gris dins del text area
-		jtfUsuari.setBackground(new Color(51,51,51));
+
+		jtfPassword = new JPasswordField(15);
 		jtfPassword.setBackground(new Color(51,51,51));
 		jtfPassword.setForeground(Color.WHITE);
 		PromptSupport.setPrompt("Contrasenya", jtfPassword);
@@ -65,7 +65,7 @@ public class Finestra_login extends JFrame {
 		jbRegistre.setText("Registra't");
 		
 		//Logo
-		ImageIcon logo = new ImageIcon("Images/logoSpotyfai.png");
+		ImageIcon logo = new ImageIcon("Images/logoSpotyfai1.png");
 		JLabel jlLogo = new JLabel();
 		ImageIcon icono = new ImageIcon(logo.getImage().getScaledInstance(200, 60, Image.SCALE_DEFAULT));
 		jlLogo.setIcon(icono);
@@ -82,7 +82,7 @@ public class Finestra_login extends JFrame {
 		
 		
 		//background
-		ImageIcon bk = new ImageIcon("Images/backGround.jpg");
+		ImageIcon bk = new ImageIcon("Images/backGround1.jpg");
 		JLabel jlBk = new JLabel(new ImageIcon(bk.getImage().getScaledInstance(600, 500, Image.SCALE_DEFAULT)));
 		jlBk.setLayout(new MigLayout("al center center, wrap, gapy 10"));
 		jfLog.setContentPane(jlBk);
@@ -128,12 +128,12 @@ public class Finestra_login extends JFrame {
 					//Font font = new Font("Verdana", Font.BOLD, 12);	
 					PromptSupport.setForeground(new Color(255, 77, 77), jtfUsuari);
 					PromptSupport.setForeground(new Color(255, 77, 77), getjtfPassword());
-	                JOptionPane.showMessageDialog(jtfUsuari, "Camps buits", "Error a iniciar sessió", 0);
+	                JOptionPane.showMessageDialog(jtfUsuari, "Camps buits", "Error a iniciar sessiï¿½", 0);
 				}else if(String.copyValueOf(getjtfPassword().getPassword()).isEmpty()){
-	                JOptionPane.showMessageDialog(jtfUsuari, "Has d'inserir una contrasenya","Error a iniciar sessió", 0);
+	                JOptionPane.showMessageDialog(jtfUsuari, "Has d'inserir una contrasenya","Error a iniciar sessiï¿½", 0);
 					PromptSupport.setForeground(new Color(255, 77, 77), getjtfPassword());
 				}else if(getjtfUsuari().getText().isEmpty()){
-	                JOptionPane.showMessageDialog(jtfUsuari, "Nom d'usuari obligatori","Error a iniciar sessió", 0);
+	                JOptionPane.showMessageDialog(jtfUsuari, "Nom d'usuari obligatori","Error a iniciar sessiï¿½", 0);
 					PromptSupport.setForeground(new Color(255, 77, 77), jtfUsuari);		
 				}else{
 					controladorf.Login();
