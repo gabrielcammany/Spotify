@@ -54,7 +54,6 @@ public class Canco {
 		this.reproduccions = reproduccions;
 	}
 	
-	
-	
+	void Canco(){}
 
 }

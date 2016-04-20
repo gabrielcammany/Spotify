@@ -9,6 +9,7 @@ public class Messages {
 	public boolean tableMessages(String m){
 		boolean ok = true;
 		User user =new User();
+		Canco can = new Canco();
 		String[] s = m.split(" ");
 		String[] st = s[1].split(":");
 		String[] up = st[1].split("/");
@@ -20,9 +21,11 @@ public class Messages {
 			
 			//System.out.println(user.verifyUser(user));
 		}else{
-			System.out.println("User: "+user.getNickname()+".");
-			//System.out.println("Comprovacio usuari:");
-			user.verifyUser(user);
+			if(st[0].equals("userlog")){
+				System.out.println("User: "+user.getNickname()+".");
+				//System.out.println("Comprovacio usuari:");
+				user.verifyUser(user);
+			}
 		}
 		return ok;
 	}

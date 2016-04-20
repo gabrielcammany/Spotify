@@ -33,8 +33,8 @@ public class Query {
 			String cad3 = "Select user.nickname FROM db_espotifi.usuari AS user WHERE user.nickname = '"+user.getNickname()+"' AND user.password = '"+user.getPassword()+"';";
 			return cad3;
 		case 4://enviar canco 
-			
-		
+			String cad4= "SELECT * FROM canco;";
+			return cad4;
 		}
 		
 		return null;
