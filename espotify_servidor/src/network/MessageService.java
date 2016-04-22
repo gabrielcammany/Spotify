@@ -29,6 +29,7 @@ public class MessageService {
 			// Informem al CONTROLADOR que informi que el servidor ha
 			// estat iniciat, ell informara a la vista.
 			controller.showInformation("SERVER started. \nAwaiting messages...");
+			controller.creaFinestra();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

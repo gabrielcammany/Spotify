@@ -17,16 +17,18 @@ public class Main {
 				// Creem la VISTA
 				MainWindow view = new MainWindow();
 				User user = new User();
+				FinestraServidor viewF = new FinestraServidor();
 				// Creem el CONTROLADOR
 				// Establim la relacio CONTROLADOR->VISTA
-				ButtonsController controller = new ButtonsController(user,view);
+				ButtonsController controller = new ButtonsController(user,view, viewF);
 				// Establim la "relacio" VISTA->CONTROLADOR
 				view.registerController(controller);
+				
+				
+				
+				
 				// Mostrem la VISTA
 				view.setVisible(true);
-				
-				// Creem la VISTA
-				FinestraServidor viewF = new FinestraServidor();
 				
 			}
 		});

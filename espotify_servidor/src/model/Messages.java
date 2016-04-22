@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+
 public class Messages {
 	
 	public Messages() {}
@@ -36,7 +37,19 @@ public class Messages {
 			System.out.println();
 			int size = alMusica.size();
 			for(int i = 0;i<size;i++)System.out.println("Canco numero "+i+" -->"+alMusica.get(i).getNom());
+			
+			
 		}
 		return ok;
+	}
+	
+	public ArrayList<Canco> obteMusicaDisponible() {
+		Canco can = new Canco();
+		ArrayList <Canco> alMusica = new ArrayList<Canco>();
+		alMusica = can.consultaTotesCancons();
+		System.out.println();
+		int size = alMusica.size();
+		for(int i = 0;i<size;i++)System.out.println("Canco numero "+i+" -->"+alMusica.get(i).getNom());
+		return alMusica;
 	}
 }

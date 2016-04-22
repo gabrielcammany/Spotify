@@ -8,15 +8,18 @@ import java.util.ArrayList;
 
 import model.Canco;
 import model.Messages;
+import model.Musica;
 import model.User;
 import network.MessageService;
 import view.ErrorLog;
+import view.FinestraServidor;
 import view.MainWindow;
 
 
 public class ButtonsController implements ActionListener {
 	// VISTA
 	private MainWindow view;
+	private FinestraServidor viewF;
 	//ERRORS
 	public	ErrorLog vError =new ErrorLog();
 	// NETWORK
@@ -29,9 +32,10 @@ public class ButtonsController implements ActionListener {
 	network.ConectorDB conn = new network.ConectorDB("dpo_root", "sinminus", "bd_espotifi", 3306);
 	
 	public ButtonsController(){}
-	public ButtonsController(User user, MainWindow view) {
+	public ButtonsController(User user, MainWindow view, FinestraServidor viewF) {
 		this.user = user;
 		this.view = view;
+		this.viewF = viewF;
 		// Instanciem la classe per rebre missatges.
 		// Passem per parametre una referencia al propi objecte
 		// per tal que notifiqui larribada de nous missatges.
@@ -52,6 +56,11 @@ public class ButtonsController implements ActionListener {
 			mService.stopService();
 			view.changeButtonsStateStopped();
 		}
+	}
+	
+	public void creaFinestra() {
+		Musica musica = new Musica();
+		viewF.creaFinestra(musica);
 	}
 	
 	public void showMessage(String message) {

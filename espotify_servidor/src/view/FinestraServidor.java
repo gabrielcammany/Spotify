@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Vector;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -24,6 +25,10 @@ import net.miginfocom.swing.MigLayout;
 import org.jdesktop.xswingx.PromptSupport;
 
 
+import model.Canco;
+import model.Musica;
+
+
 /**
  * Creem la interficie del seervido composada per la "Gestio dels usuaris" i 
  * la "Gestió de música"
@@ -35,12 +40,20 @@ import org.jdesktop.xswingx.PromptSupport;
 public class FinestraServidor extends JFrame {
 	
 	private JPanel jpUsuari;
-	
+	private Musica musica;
 	private JPanel jpMusica;
 	private Estadistica estadistica;
 	
 	
-	public FinestraServidor() {
+	public FinestraServidor() {}
+	
+	public void creaFinestra(Musica musica){
+		this.musica = musica;
+		
+		
+		System.out.println(musica.getMusica().get(0).getNom());
+		System.out.println(musica.getMusica().get(1).getNom());
+		
 		JFrame jfServidor = new JFrame("SPOTYFAI - Servidor");
 		
 		jfServidor.setSize(900,500);
@@ -146,20 +159,40 @@ public class FinestraServidor extends JFrame {
 	public JPanel LlistarMusica(){
 		JPanel jpLlistat = new JPanel(new BorderLayout());
 		
-		/*
-		 * temporal, vinda de la bbdd
-		 */
-		Object info[][] = { {"Cargol", "Infantil", "Party", "Nuse", "Jorge el puto", "a ti que te importa"},
-				{ "Sol solet", "Infantil", "JorgePrivateParty", "Ves tu a saber", "Jorge", "es mia"}
-		};
-		/*
-		 * fiTemporal  FALTA POSAR UN BOTO D'ESBORRAR I ESCOLTAR A LA DRETA DE CADA FILA
-		 */
 		
-		Object titol[] = { "Nom canço", "Genere", "Àlbum", "Artistes", "Ubicació"};
+	
+		//Tabla musica disponible 
 		
-	    JTable taulaMusica = new JTable(info, titol);
+		Vector columnas = new Vector();
+		
+		columnas.add("Nom canco");
+		columnas.add("Genere");
+		columnas.add("Album");
+		columnas.add("Artistes");
+
+   
+		Vector filas = new Vector();
+		for (int i = 0; i < musica.getMusica().size(); i ++) {
+			Vector fila = new Vector();
+			
+			fila.add(musica.getMusica().get(i).getNom());
+			fila.add(musica.getMusica().get(i).getGenere());
+			fila.add(musica.getMusica().get(i).getAlbum());
+			fila.add(musica.getMusica().get(i).getArtista());
+			
+			filas.add(fila);
+		}
+		
+		
+		
+		
+		
+		JTable taulaMusica = new JTable(filas, columnas);
+		
+		
+		
 	    
+	  
 
 		JScrollPane jspLlistat = new JScrollPane(taulaMusica);
 		
