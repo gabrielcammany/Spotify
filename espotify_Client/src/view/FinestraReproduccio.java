@@ -10,6 +10,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+
+import org.jdesktop.xswingx.PromptSupport;
 
 import controller.ControladorLlistar;
 import controller.ControladorReproductor;
@@ -56,20 +59,43 @@ public class FinestraReproduccio extends JFrame {
 		JPanel jpUsuari = new JPanel(new BorderLayout());
 		jpUsuari.setBackground(new Color(40,40,40));
 		jpUsuari.setBorder(BorderFactory.createLineBorder(Color.black));
+		//adalt a la dreta
 		//nom usuari
 		JLabel jlUsuari = new JLabel("Jorge el mejor  ");
 		jlUsuari.setForeground(new Color(164,164,164));
 		jlUsuari.setBorder(BorderFactory.createEmptyBorder(10,10,10,10)); 
+		//introduir-lo
+		jpUsuari.add(jlUsuari,  BorderLayout.LINE_END);
+		
+		//adalt a l'esquera
+		JPanel jpAdaltEsquerra = new JPanel(new MigLayout("wrap"));
+		jpAdaltEsquerra.setBackground(new Color(40,40,40));
+		
+		//logo adalt a l'esquerra
+		ImageIcon imLogo = new ImageIcon("Images/logo.png");
+		JLabel jlLogo = new JLabel();
+		jlLogo.setForeground(new Color(164,164,164));
+		ImageIcon icLogo = new ImageIcon(imLogo.getImage().getScaledInstance(25, 25, Image.SCALE_DEFAULT));
+		jlLogo.setIcon(icLogo);
+		jpAdaltEsquerra.add(jlLogo,"dock west");
 		
 		//buscar (no fa res)
-		ImageIcon imBuscar = new ImageIcon("Images/buscar.png");
+		/*ImageIcon imBuscar = new ImageIcon("Images/buscar.png");
 		JLabel jlBuscar = new JLabel();
 		jlBuscar.setForeground(new Color(164,164,164));
 		ImageIcon icBuscar = new ImageIcon(imBuscar.getImage().getScaledInstance(200, 30, Image.SCALE_DEFAULT));
-		jlBuscar.setIcon(icBuscar);
+		jlBuscar.setIcon(icBuscar);*/
+		JTextField jtfBuscar = new JTextField(15);
+		jtfBuscar.setBackground(new Color(251,251,251));
+		jtfBuscar.setForeground(new Color(50,50,50));
+		jtfBuscar.setText("Buscar");
+		jtfBuscar.setFocusable(false);
 		
-		jpUsuari.add(jlBuscar, BorderLayout.LINE_START);
-		jpUsuari.add(jlUsuari,  BorderLayout.LINE_END);
+		jpAdaltEsquerra.add(jtfBuscar,"dock west");
+
+		
+		jpUsuari.add(jpAdaltEsquerra, BorderLayout.LINE_START);
+
 		//afegim la barra d'adalt al panell
 		jpReproduccio.add(jpUsuari, BorderLayout.NORTH);
 		

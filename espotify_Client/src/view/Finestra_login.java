@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.BorderFactory;
+
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -62,6 +64,8 @@ public class Finestra_login extends JFrame {
 		//JButton tanca = new JButton ();
 		
 		jbInicia.setText("Inicia Sessio");
+		
+		
 		jbRegistre.setText("Registra't");
 		
 		//Logo
