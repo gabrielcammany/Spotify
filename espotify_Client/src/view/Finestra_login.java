@@ -13,7 +13,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.border.LineBorder;
 
 import org.jdesktop.xswingx.PromptSupport;
 
@@ -21,12 +20,13 @@ import controller.ControladorFinestres;
 import net.miginfocom.swing.MigLayout;
 
 
+@SuppressWarnings("serial")
 public class Finestra_login extends JFrame {
 	private JTextField jtfUsuari;
 	private JPasswordField jtfPassword;
 	private JButton jbAccedeix;
-	private JButton jbRegistre;
-	private ControladorFinestres controladorf;
+	//private JButton jbRegistre;
+	//private ControladorFinestres controladorf;
 	private JFrame jfLog;
 	
 	
@@ -59,7 +59,7 @@ public class Finestra_login extends JFrame {
 		//creacio botons
 		JButton jbInicia = new JButton ();
 		JButton jbRegistre = new JButton();
-		JButton tanca = new JButton ();
+		//JButton tanca = new JButton ();
 		
 		jbInicia.setText("Inicia Sessio");
 		jbRegistre.setText("Registra't");
