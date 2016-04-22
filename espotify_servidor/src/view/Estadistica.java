@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+@SuppressWarnings("serial")
 public class Estadistica extends JPanel {
 	private ArrayList <String> valors;
 	private ArrayList <String> nomCancons;

@@ -1,8 +1,8 @@
 package model;
 
 import javax.swing.SwingUtilities;
+
 import controller.ButtonsController;
-import view.ErrorLog;
 import view.FinestraServidor;
 import view.MainWindow;
 
@@ -26,6 +26,7 @@ public class Main {
 				view.setVisible(true);
 				
 				// Creem la VISTA
+				@SuppressWarnings("unused")
 				FinestraServidor viewF = new FinestraServidor();
 				
 			}

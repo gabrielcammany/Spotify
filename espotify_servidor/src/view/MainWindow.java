@@ -2,22 +2,23 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+
 import controller.ButtonsController;
 
 
+@SuppressWarnings("serial")
 public class MainWindow extends JFrame{
 	private JScrollPane jspMessages;
 	private JTextArea jtaMessages;
 	private JButton jbStart;
 	private JButton jbStop;
-	private Integer numCars=0;
 	private JLabel jlNcars;
 	
 	public MainWindow() {
