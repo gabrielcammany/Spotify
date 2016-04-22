@@ -2,6 +2,16 @@ package controller;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Image;
+import java.io.UnsupportedEncodingException;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 /**
  * Controlador encarregat de gestionar quina musica llistar 
@@ -43,14 +53,20 @@ public class ControladorLlistar implements MouseListener {
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+		if (e.getSource() instanceof JLabel) {
+			JLabel aux = (JLabel)e.getSource();
+			aux.setForeground(new Color(254,254,254));
+		}
 	}
 
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// TODO Auto-generated method stub
-		
+		if (e.getSource() instanceof JLabel) {
+			JLabel aux = (JLabel)e.getSource();
+			aux.setForeground(new Color(164,164,164));
+		}
 	}
 
 
