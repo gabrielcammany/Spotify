@@ -1,8 +1,8 @@
 package model;
 
 import javax.swing.SwingUtilities;
+
 import controller.ButtonsController;
-import view.ErrorLog;
 import view.FinestraServidor;
 import view.MainWindow;
 
@@ -29,6 +29,7 @@ public class Main {
 				
 				// Mostrem la VISTA
 				view.setVisible(true);
+
 				
 			}
 		});

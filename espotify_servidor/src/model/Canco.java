@@ -59,7 +59,7 @@ public class Canco {
 		this.reproduccions = reproduccions;
 	}
 	
-	void Canco(){}
+	public Canco(){}
 	
 	public ArrayList<Canco> consultaTotesCancons(){
 		Query q =new Query();

@@ -1,28 +1,23 @@
 package view;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Graphics;
-import java.awt.GridLayout;
-import java.awt.Image;
 import java.util.ArrayList;
+
 import java.util.Comparator;
 import java.util.Vector;
 
-import javax.swing.ImageIcon;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.border.MatteBorder;
-
-import net.miginfocom.swing.MigLayout;
 
 import org.jdesktop.xswingx.PromptSupport;
+
+import net.miginfocom.swing.MigLayout;
 
 
 import model.Canco;
@@ -31,12 +26,13 @@ import model.Musica;
 
 /**
  * Creem la interficie del seervido composada per la "Gestio dels usuaris" i 
- * la "Gestió de música"
+ * la "GestiÃ³ de mÃºsica"
  * @author jorgemelguizo
  *
  *
  * 
  **/
+@SuppressWarnings("serial")
 public class FinestraServidor extends JFrame {
 	
 	private JPanel jpUsuari;
@@ -72,7 +68,7 @@ public class FinestraServidor extends JFrame {
 		jpMusica = FinestraMusica();
 		
 		jtpServidor.addTab("Usuari", jpUsuari);
-		jtpServidor.addTab("Musica", jpMusica);	
+		jtpServidor.addTab("Música", jpMusica);	
 		
 		jfServidor.add(jtpServidor);
 	}
@@ -101,11 +97,12 @@ public class FinestraServidor extends JFrame {
 		/*
 		 * fiTemporal
 		 */
-		
-		Object titol[] = { "Nom usuari", "Data registre", "Ultim accès", "Numero de llistes", "Numero de cançons",
+
+		Object titol []={ "Nom usuari", "Data registre", "Últim accés", "Número de llistes", "Numero de cançons",
 				"Numero followers", "Numero following"};
-	    JTable taulaUsuari = new JTable(info, titol);
-	    taulaUsuari.setEnabled(false);
+		JTable taulaUsuari = new JTable(info, titol);
+		taulaUsuari.setEnabled(false);
+
 
 
 		JScrollPane jspUsuari = new JScrollPane(taulaUsuari);
@@ -141,9 +138,9 @@ public class FinestraServidor extends JFrame {
 		//Afegim al JTabbedPane i finalment al JPanel
 		jtpMusica.add("Llistat", jpLlistat);
 		jtpMusica.add("Addicio", jpAddicio);
-		jtpMusica.add("Estadistiques", jpEstadistiques);
-		
-		
+		jtpMusica.add("Estadístiques", jpEstadistiques);
+
+
 		jpMusica.add(jtpMusica, BorderLayout.CENTER);
 		
 		
@@ -152,13 +149,14 @@ public class FinestraServidor extends JFrame {
 	}
 	
 	/**
-	 * Genera una taula de tota la musica al sistema i la seva informació
+	 * Genera una taula de tota la musica al sistema i la seva informaciÃ³
 	 * @return JPanel 
 	 */
 	
 	public JPanel LlistarMusica(){
 		JPanel jpLlistat = new JPanel(new BorderLayout());
 		
+
 		
 	
 		//Tabla musica disponible 
@@ -192,18 +190,20 @@ public class FinestraServidor extends JFrame {
 		
 		
 	    
-	  
+	
+
 
 		JScrollPane jspLlistat = new JScrollPane(taulaMusica);
-		
+
 		jpLlistat.add(jspLlistat, BorderLayout.CENTER);
-	
-		
+
+
+
 		return jpLlistat;
 	}
 	
 	/**
-	 * Permet l'addició de música en la base de dades
+	 * Permet l'addiciÃ³ de mÃºsica en la base de dades
 	 * @return JPanel 
 	 */
 	
@@ -214,47 +214,46 @@ public class FinestraServidor extends JFrame {
 		 * FALTA MIGLAYOUT
 		 */
 		JPanel jpAddicio = new JPanel(new MigLayout("al center center, wrap, gapy 10"));
-	
+
 		JTextField jtfcanco = new JTextField(15);
 		PromptSupport.setPrompt("Nom canço", jtfcanco);
-		
 		JTextField jtfGenere = new JTextField(15);
 		PromptSupport.setPrompt("Gènere", jtfGenere);
-		
+
 		JTextField jtfAlbum = new JTextField( 15);
 		PromptSupport.setPrompt("Nom album", jtfAlbum);
-		
+
 		JTextField jtfArtista = new JTextField( 15);
 		PromptSupport.setPrompt("Nom artista", jtfArtista);
-		
+
 		JTextField jtfUbicacio = new JTextField( 15);
 		PromptSupport.setPrompt("Ubicació o path", jtfUbicacio);
-		
+
 		JButton jbAddicio = new JButton();
 		jbAddicio.setText("Afegir canço");
-		
+
 		jpAddicio.add(jtfcanco);
 		jpAddicio.add(jtfGenere);
 		jpAddicio.add(jtfAlbum);
 		jpAddicio.add(jtfArtista);
 		jpAddicio.add(jtfUbicacio);
 		jpAddicio.add(jbAddicio, "span , grow");
-	
-		
+
+
 		return jpAddicio;
 	}
-	
-	
+
+
 	/**
-	 * Genera les estadistiques de les 10 cançons mes escoltades del sistema
+	 * Genera les estadistiques de les 10 canÃ§ons mes escoltades del sistema
 	 * @return JPanel 
 	 */
 	
 	public JPanel generaEstadistica() {
 
 		JPanel jpGrafica = new JPanel(new BorderLayout() );
-		JPanel jpNoms = new JPanel (new GridLayout(10, 1));
-		JPanel jpBarres = new JPanel (new GridLayout(10,1));
+		//JPanel jpNoms = new JPanel (new GridLayout(10, 1));
+		//JPanel jpBarres = new JPanel (new GridLayout(10,1));
 		
 		//!!!!!Hardcodeo nombres y valores para hacer pruebas
 		ArrayList<String> nomsCancons = new ArrayList<String>();

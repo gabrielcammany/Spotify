@@ -59,7 +59,7 @@ public class Finestra_Registre extends JPanel{
 
 	        }
 
-	    };
+	    };	
 		//centrar a la pantalla
 		jpRegistre.setLayout(new MigLayout("al center center, wrap, gapy 10"));
 		//color negre del fons

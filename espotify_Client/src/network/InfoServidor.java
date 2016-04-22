@@ -3,22 +3,8 @@ package network;
 import java.awt.Image;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
-
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.ShortBufferException;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
 
 public class InfoServidor {
 	
@@ -68,9 +54,12 @@ public class InfoServidor {
 
 			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
 			doStream.writeUTF("requestMusic:");
+			sServidor.close();
 		} catch (IOException e) {
+			
 			e.printStackTrace();
 		}
+		
 	}
 	/*
 	public String algo(String s){

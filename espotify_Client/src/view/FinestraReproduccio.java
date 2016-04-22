@@ -11,13 +11,6 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-
-
-
-
-
-
-import controller.ControladorFinestres;
 import controller.ControladorLlistar;
 import controller.ControladorReproductor;
 import net.miginfocom.swing.MigLayout;
@@ -31,6 +24,7 @@ import network.InfoServidor;
  */
 
 
+@SuppressWarnings("serial")
 public class FinestraReproduccio extends JFrame {
 	
 	private JFrame jfReproduccio;
