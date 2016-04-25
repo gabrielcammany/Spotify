@@ -26,7 +26,6 @@ public class Main {
 				
 				
 				
-				
 				// Mostrem la VISTA
 				view.setVisible(true);
 

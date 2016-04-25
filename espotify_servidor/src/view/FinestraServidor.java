@@ -68,7 +68,7 @@ public class FinestraServidor extends JFrame {
 		jpMusica = FinestraMusica();
 		
 		jtpServidor.addTab("Usuari", jpUsuari);
-		jtpServidor.addTab("Música", jpMusica);	
+		jtpServidor.addTab("Musica", jpMusica);	
 		
 		jfServidor.add(jtpServidor);
 	}

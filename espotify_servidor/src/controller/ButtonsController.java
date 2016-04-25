@@ -78,19 +78,20 @@ public class ButtonsController implements ActionListener {
 	public String selectUser(String cad){
 		ResultSet responseServer = conn.selectQuery(cad);
 		String nickname= null;
-
+		int i = 0 ;
 		try {
 			while (responseServer.next()) {
-			  nickname = responseServer.getString("nickname");
-			  System.out.println("[Servidor] "+nickname );
+				i++;
+				nickname = responseServer.getString("nickname");
+				System.out.println("[Servidor] Response server: '"+nickname+"'." );
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		
-		return nickname;
+		if(i>1)return nickname;
+		return "error";
 	}
 	
 	public ArrayList<Canco> selectSongs(String cad){

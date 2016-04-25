@@ -39,7 +39,7 @@ public class MessageServiceWorker implements Runnable{
 				data = aux[0].split(":");
 				
 				
-				if(data[0].equals("user")||data[0].equals("userLog")){
+				if(data[0].equals("user")){
 					user = data[1];
 					System.out.println(aux[1]);
 					//password = desencripta(aux[1].getBytes());
@@ -50,13 +50,25 @@ public class MessageServiceWorker implements Runnable{
 					// Tanquem el socket del client
 					sClient.close();
 				}else{
-					if(data[0].equals("requestMusic")){
-						
-						mService.messageReceived("[" + getCurrentTime()+ "] " + "Request Music");
+					if(data[0].equals("userLog")){
+						user = data[1];
+						//System.out.println(aux[1]);
+						//password = desencripta(aux[1].getBytes());
+						password = aux[1];
+						// Informem a MessageService que sha rebut un nou missatge
+						// ell informara al controlador i el controlador actualitzara la vista.
+						mService.messageReceived("[" + getCurrentTime()+ "] " + "Loguin_Usuari:" + user + "/" + password);
+						// Tanquem el socket del client
 						sClient.close();
+					}else{
+						if(data[0].equals("requestMusic")){
+						
+							mService.messageReceived("[" + getCurrentTime()+ "] " + "Request Music");
+							sClient.close();
+						}
+				
 					}
 				}
-				
 				
 			} catch (IOException e) { }
 		}

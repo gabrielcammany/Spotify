@@ -14,23 +14,30 @@ public class Messages {
 		ArrayList<Canco> alMusica;
 		String[] s = m.split(" ");
 		String[] st = s[1].split(":");
-		
-		if(st[0].equals("user")){
+		if(st[0].equals("Usuari")){
 			String[] up = st[1].split("/");
 			user.setNickname(up[0]);
 			user.setPassword(up[1]);
-			user.insertUser(user);
-			System.out.println("User: "+user.getNickname()+"Inserit correctament.");
+			//Comprovamos el nombre de usuario pero no validamos la contraseña
+			String result = user.verifyUser(user);
+			System.out.println("'"+result+"'");
+			if(result.equals("error")){
+				user.insertUser(user);
+				System.out.println("User: '"+user.getNickname()+"' Inserit correctament.");
+			}else{
+				System.out.println("[Servidor] L'usari '"+user.getNickname()+"' ja es troba registrat.");
+			}
 			
 			//System.out.println(user.verifyUser(user));
 		}
-		if(st[0].equals("userLog")){
+		if(st[0].equals("Loguin_Usuari")){
 			System.out.println("User: "+user.getNickname()+".");
 			//System.out.println("Comprovacio usuari:");
-			user.verifyUser(user);
+			String result = user.verifyUser(user);
+			if(result.equals("null"))System.out.println("[Servidor] L'usuari no es troba registrat");
+			//si user no es troba registrat cal notificar al client.
 		}
 		if(st[0].equals("Request")){
-			System.out.println("Samu a estado aki");
 			alMusica = new ArrayList<Canco>();
 			alMusica = can.consultaTotesCancons();
 			System.out.println();

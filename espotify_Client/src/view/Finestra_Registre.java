@@ -104,6 +104,7 @@ public class Finestra_Registre extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//Finestra_Registre fReg = new FinestraRegistre();
+				controladorf = new ControladorFinestres();
 				controladorf.Reproduccio();
 				
 			}

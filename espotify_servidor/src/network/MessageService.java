@@ -52,6 +52,7 @@ public class MessageService {
 	public void messageReceived(String message) {
 		// Informem al controlador de la recepcio dun missatge,
 		// ell actualitzara la vista.
+		
 		controller.showMessage(message);
 		
 	}
