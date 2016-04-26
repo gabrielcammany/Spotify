@@ -60,12 +60,5 @@ public class Canco {
 	}
 	
 	public Canco(){}
-	
-	public ArrayList<Canco> consultaTotesCancons(){
-		Query q =new Query();
-		String select = q.queryList(4,null);
-		controller = new ButtonsController();
-		return controller.selectSongs(select);
-	}
 
 }

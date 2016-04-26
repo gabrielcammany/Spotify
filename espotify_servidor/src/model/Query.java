@@ -13,7 +13,10 @@ public class Query {
 	 * @param user Usuari del qual s'enviaran o consultaran les dades
 	 * @return      Cadena de caracters amb el codi a enviar
 	 */
-	String queryList(int option,User user){
+	public Query(){}
+	
+	public String queryList(int option,User user){
+		
 		switch(option){
 		case 0:
 			String cad = "USE db_espotifi;";

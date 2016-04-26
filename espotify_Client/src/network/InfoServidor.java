@@ -3,19 +3,38 @@ package network;
 import java.awt.Image;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+
+import java.io.DataInputStream;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+
+import model.Canco;
+
 public class InfoServidor {
 	
-	/**
-	 * 
-	 *
-	 * @param  url  an absolute URL giving the base location of the image
-	 * @param  name the location of the image, relative to the url argument
-	 * @return      the image at the specified URL
-	 * @see         Image
-	 */
+		//private MessageService mService;
+		private ServerSocket sServer;
+		private Socket sClient;
+		private DataInputStream diStream;
+		private ObjectInputStream objectInput;
+		
+		private ArrayList<Canco> alMusica;
+		private boolean active;
+
+		public InfoServidor(){}
+		public InfoServidor(ServerSocket sServer) {
+			this.sServer = sServer;
+			active = true;
+		}
+	
+	
 	public void enviarUsuari(int option, String nom, char[] contrasenya){
 		
 		try {
@@ -45,6 +64,7 @@ public class InfoServidor {
 			e.printStackTrace();
 		}
 	}
+	
 	public void peticioMusica(){
 		System.out.println("[CLIENT] - Peticio de connexio..."); 
 		
@@ -56,7 +76,6 @@ public class InfoServidor {
 			doStream.writeUTF("requestMusic:");
 			sServidor.close();
 		} catch (IOException e) {
-			
 			e.printStackTrace();
 		}
 		
@@ -99,7 +118,5 @@ public class InfoServidor {
 		
 		
 	}*/
-	
-	
 	
 }

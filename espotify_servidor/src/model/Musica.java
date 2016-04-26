@@ -2,6 +2,8 @@ package model;
 
 import java.util.ArrayList;
 
+import controller.SocketController;
+
 /**
  * classe encarregada de la gestio de les estructures d'emmagatzematge de la
  * musica disponible al sistema
@@ -11,11 +13,11 @@ import java.util.ArrayList;
 
 public class Musica {
 	private static ArrayList<Canco> alMusica;
-	Messages message;
+	SocketController message;
 	
 	public Musica () {
-		Messages message = new Messages();
-		alMusica = message.obteMusicaDisponible(); 
+		SocketController message = new SocketController();
+		alMusica = message.selectSongs();
 		
 	}
 	

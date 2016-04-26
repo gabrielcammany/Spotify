@@ -205,8 +205,9 @@ public class FinestraReproduccio extends JFrame {
 		jfReproduccio.add(jpReproduccio);
 		
 		//Realitzem la peticio de cançons al servidor
-		/*ifs =new InfoServidor();
-		ifs.peticioMusica();*/
+		ifs =new InfoServidor();
+		ifs.peticioMusica();
+		
 	}
 	
 }

@@ -1,7 +1,10 @@
 package network;
 
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
+import java.net.Socket;
+
 import controller.ButtonsController;
 
 
@@ -28,7 +31,7 @@ public class MessageService {
 			new Thread(msWorker).start();
 			// Informem al CONTROLADOR que informi que el servidor ha
 			// estat iniciat, ell informara a la vista.
-			controller.showInformation("SERVER started. \nAwaiting messages...");
+			//controller.showInformation("SERVER started. \nAwaiting messages...");
 			controller.creaFinestra();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -43,7 +46,7 @@ public class MessageService {
 			sServer.close();
 			// Informem al CONTROLADOR que informi que el servidor ha
 			// estat aturat
-			controller.showInformation("SERVER stopped.");
+			//controller.showInformation("SERVER stopped.");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -53,7 +56,24 @@ public class MessageService {
 		// Informem al controlador de la recepcio dun missatge,
 		// ell actualitzara la vista.
 		
-		controller.showMessage(message);
+		//controller.showMessage(message);
+		
+	}
+	
+	public void enviarMusica(){
+		System.out.println("[CLIENT] - Peticio de connexio..."); 
+		
+		
+		try {
+			Socket sServidor = new Socket("localhost", 34567);
+
+			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
+			doStream.writeUTF("requestMusic:");
+			sServidor.close();
+		} catch (IOException e) {
+			
+			e.printStackTrace();
+		}
 		
 	}
 	

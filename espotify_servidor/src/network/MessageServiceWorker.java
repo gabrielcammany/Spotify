@@ -2,10 +2,16 @@ package network;
 
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+
+import controller.SocketController;
+import model.Canco;
+import model.Musica;
 
 public class MessageServiceWorker implements Runnable{
 
@@ -14,11 +20,17 @@ public class MessageServiceWorker implements Runnable{
 	private Socket sClient;
 	private DataInputStream diStream;
 	private boolean active;
-
+	private SocketController cadenas;
+	private ArrayList<Canco> alcanco;
+	
+	public MessageServiceWorker(){
+	}
+	
 	public MessageServiceWorker(MessageService mService, ServerSocket sServer) {
 		this.mService = mService;
 		this.sServer = sServer;
 		active = true;
+		cadenas = new SocketController();
 	}
 
 	// Escolta peticions de connexio i llegeix els missatjges dels clients
@@ -44,27 +56,27 @@ public class MessageServiceWorker implements Runnable{
 					System.out.println(aux[1]);
 					//password = desencripta(aux[1].getBytes());
 					password = aux[1];
-					// Informem a MessageService que sha rebut un nou missatge
-					// ell informara al controlador i el controlador actualitzara la vista.
-					mService.messageReceived("[" + getCurrentTime()+ "] " + "Usuari:" + user + "/" + password);
+
+					cadenas.registroUsuario(user,password);
+					
+					
 					// Tanquem el socket del client
 					sClient.close();
 				}else{
 					if(data[0].equals("userLog")){
 						user = data[1];
-						//System.out.println(aux[1]);
-						//password = desencripta(aux[1].getBytes());
+						
 						password = aux[1];
-						// Informem a MessageService que sha rebut un nou missatge
-						// ell informara al controlador i el controlador actualitzara la vista.
-						mService.messageReceived("[" + getCurrentTime()+ "] " + "Loguin_Usuari:" + user + "/" + password);
+						
+						cadenas.loginUser(user,password);
 						// Tanquem el socket del client
 						sClient.close();
 					}else{
 						if(data[0].equals("requestMusic")){
-						
-							mService.messageReceived("[" + getCurrentTime()+ "] " + "Request Music");
-							sClient.close();
+							alcanco = new ArrayList<Canco>();
+							
+							alcanco = cadenas.selectSongs();
+							
 						}
 				
 					}
@@ -82,6 +94,25 @@ public class MessageServiceWorker implements Runnable{
 	public void stopListening() {
 		active = false;
 	}
+	
+/*	public void sendMusic(){
+		 System.out.println();
+         System.out.println("@@ hola tete@@");
+		
+            Musica m =new Musica();
+            ArrayList<Canco> al = new ArrayList<Canco>();
+            al = m.getMusica();
+            System.out.println();
+            System.out.println("@@ hola tete 2 @@");
+            try{
+                ObjectOutputStream objectOutput = new ObjectOutputStream(sClient.getOutputStream());
+               
+                objectOutput.writeObject(al);               
+            } 
+            catch (IOException e){
+                e.printStackTrace();
+            }
+	}*/
 	
 	//
 	/*

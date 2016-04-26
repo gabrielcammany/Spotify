@@ -63,34 +63,15 @@ public class User {
 	}
 
 	
-	public User(){
+	public User(String usuario,String password){
 		this.lluser =new LinkedList<User>();
-		
+		this.nickname = usuario;
+		this.password = password;
 	}
 	
 	
 	public void creaCotxe(String cad){
 		
-	}
-	
-	public boolean insertUser(User user){
-		boolean ok = true;
-		Query q = new Query();
-		String response;
-		controller = new ButtonsController();
-		q.queryList(0, user);
-		response = q.queryList(1, user);
-		ok = controller.inserirUser(response);
-		return ok;
-	}
-	public String verifyUser(User user){
-		String response;
-		Query q =new Query();
-		String select = q.queryList(2, user);
-		System.out.println("## "+select+" ##");
-		controller = new ButtonsController();
-		response= controller.selectUser(select);
-		return response;
 	}
 	
 }

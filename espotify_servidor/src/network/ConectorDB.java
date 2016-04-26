@@ -18,6 +18,8 @@ public class ConectorDB {
 	static Connection conn = null;
 	public ButtonsController controller;
 	static Statement s;
+	
+	
     
 	public ConectorDB(String usr, String pass, String db, int port) {
 		ConectorDB.userName = usr;
