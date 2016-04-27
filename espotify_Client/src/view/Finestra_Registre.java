@@ -105,7 +105,12 @@ public class Finestra_Registre extends JPanel{
 			public void actionPerformed(ActionEvent e) {
 				//Finestra_Registre fReg = new FinestraRegistre();
 				controladorf = new ControladorFinestres();
-				controladorf.Reproduccio();
+				try {
+					controladorf.Reproduccio();
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
 			}
 		});

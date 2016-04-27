@@ -5,6 +5,7 @@ import javax.swing.SwingUtilities;
 import controller.ControladorFinestres;
 import javafx.application.Application;
 import javafx.stage.Stage;
+import network.InfoServidor;
 import view.Finestra_login;
 
 
@@ -26,7 +27,8 @@ public class  Main {
 			@Override
 			public void run() {
 				//Creem la finestra de login i la mostrem
-				ControladorFinestres controladorf = new ControladorFinestres();
+				InfoServidor infoServidor = new InfoServidor();
+				ControladorFinestres controladorf = new ControladorFinestres(infoServidor);
 				//finestra_log.setVisible(true);
 				
 			}

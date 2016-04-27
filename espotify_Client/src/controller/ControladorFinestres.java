@@ -2,7 +2,9 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
+import model.Canco;
 import network.InfoServidor;
 import view.FinestraReproduccio;
 import view.Finestra_Registre;
@@ -17,10 +19,18 @@ public class ControladorFinestres {
 	public Finestra_login fLogin;
 	public Finestra_Registre fRegistre;
 	public FinestraReproduccio fReproduccio;
-
+	private InfoServidor infoServidor;
 	
-	public ControladorFinestres () {
-		this.fLogin = new Finestra_login(this);	
+
+	public ControladorFinestres(){
+		
+	}
+	
+	public ControladorFinestres (InfoServidor infoServidor) {
+		this.fLogin = new Finestra_login(this);
+		this.infoServidor = infoServidor;
+		infoServidor.setControladorFinestra(this);
+		
 		
 	}
 		
@@ -37,28 +47,34 @@ public class ControladorFinestres {
  
             public void actionPerformed(ActionEvent e)
             {
-                InfoServidor info = new InfoServidor();
-                info.enviarUsuari(1, fRegistre.getjtfUsuari().getText(),fRegistre.getjtfPassword().getPassword());
+                //InfoServidor info = new InfoServidor();
+                infoServidor.enviarUsuari(1, fRegistre.getjtfUsuari().getText(),fRegistre.getjtfPassword().getPassword());
             }
         }); 
 		
 	}
 	
+	public void creaMusicaDisponible(ArrayList<Canco> alMusica) {
+		
+	}
+	
 	/**
 	 * Proces de login
+	 * @throws ClassNotFoundException 
 	 */
-	public void Login() {
-		InfoServidor info = new InfoServidor();
-		info.enviarUsuari(2, fLogin.getjtfUsuari().getText(), fLogin.getjtfPassword().getPassword());
+	public void Login() throws ClassNotFoundException {
+		//InfoServidor info = new InfoServidor();
+		infoServidor.enviarUsuari(2, fLogin.getjtfUsuari().getText(), fLogin.getjtfPassword().getPassword());
 		Reproduccio();	
 		
 	}
 	
 	/**
 	 * Reproduir la musica
+	 * @throws ClassNotFoundException 
 	 */
 	
-	public void Reproduccio(){
+	public void Reproduccio() throws ClassNotFoundException{
 		/*
 		 * 
 		 * Comprovar dades correctes
@@ -67,9 +83,12 @@ public class ControladorFinestres {
 		 * 
 		 */
 		
-		fReproduccio = new FinestraReproduccio();
+		fReproduccio = new FinestraReproduccio(this);
+		//Realitzem la peticio de cançons al servidor
+		infoServidor =new InfoServidor();
+		infoServidor.peticioMusica();
 		
-		
+
 		
 		
 	}

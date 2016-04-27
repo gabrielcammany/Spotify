@@ -216,7 +216,7 @@ public class FinestraServidor extends JFrame {
 		JPanel jpAddicio = new JPanel(new MigLayout("al center center, wrap, gapy 10"));
 
 		JTextField jtfcanco = new JTextField(15);
-		PromptSupport.setPrompt("Nom canço", jtfcanco);
+		PromptSupport.setPrompt("Nom canco", jtfcanco);
 		JTextField jtfGenere = new JTextField(15);
 		PromptSupport.setPrompt("Gènere", jtfGenere);
 

@@ -1,16 +1,20 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import controller.ButtonsController;
 
-public class Canco {
-	private ButtonsController controller;
-	String nom;
-	String genere;
-	String album;
-	String artista;
-	String path;
+public class Canco implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String nom;
+	private String genere;
+	private String album;
+	private String artista;
+	private String path;
 	
 	public String getPath() {
 		return path;

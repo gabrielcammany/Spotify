@@ -15,6 +15,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import controller.ControladorFinestres;
+import controller.ControladorLlistar;
 import model.Canco;
 
 public class InfoServidor {
@@ -27,11 +29,16 @@ public class InfoServidor {
 		
 		private ArrayList<Canco> alMusica;
 		private boolean active;
-
+		private ControladorFinestres controladorFinestres;
+		private ControladorLlistar controladorLlistar;
 		public InfoServidor(){}
 		public InfoServidor(ServerSocket sServer) {
 			this.sServer = sServer;
 			active = true;
+		}
+		
+		public void setControladorFinestra(ControladorFinestres controladorFinestes){
+			this.controladorFinestres = controladorFinestres;
 		}
 	
 	
@@ -65,15 +72,21 @@ public class InfoServidor {
 		}
 	}
 	
-	public void peticioMusica(){
+	public void peticioMusica() throws ClassNotFoundException{
 		System.out.println("[CLIENT] - Peticio de connexio..."); 
 		
 		
 		try {
 			Socket sServidor = new Socket("localhost", 34567);
-
+			
+			ArrayList <Canco> alMusica = new ArrayList<Canco>();
+			
 			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
 			doStream.writeUTF("requestMusic:");
+			ObjectInputStream objectInput = new ObjectInputStream(sServidor.getInputStream());
+			alMusica = (ArrayList<Canco>) objectInput.readObject();
+			System.out.println(alMusica.get(0).getNom()); 
+			
 			sServidor.close();
 		} catch (IOException e) {
 			e.printStackTrace();

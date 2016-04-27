@@ -13,6 +13,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import view.FinestraReproduccio;
+
 /**
  * Controlador encarregat de gestionar quina musica llistar 
  * (disponible, propia, following)
@@ -24,10 +26,14 @@ public class ControladorLlistar implements MouseListener {
 	
 	private String opcio;
 	
+
+	private FinestraReproduccio fReproduccio;
+	private ControladorFinestres cFinestra;
 	
 	
-	public ControladorLlistar(String opcio) {
-		this.opcio = opcio;
+	public ControladorLlistar(String Opcio,ControladorFinestres cFinestra) {
+		this.opcio =Opcio;
+		this.cFinestra = cFinestra;
 	}
 
 	@Override
@@ -80,6 +86,18 @@ public class ControladorLlistar implements MouseListener {
 	@Override
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
+		
+	}
+	
+	public String getOpcio() {
+		return opcio;
+	}
+
+	public void setOpcio(String opcio) {
+		this.opcio = opcio;
+	}
+
+	public void llistarCanco(){
 		
 	}
 	

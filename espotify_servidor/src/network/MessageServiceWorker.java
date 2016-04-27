@@ -69,6 +69,7 @@ public class MessageServiceWorker implements Runnable{
 						password = aux[1];
 						
 						cadenas.loginUser(user,password);
+						
 						// Tanquem el socket del client
 						sClient.close();
 					}else{
@@ -76,6 +77,9 @@ public class MessageServiceWorker implements Runnable{
 							alcanco = new ArrayList<Canco>();
 							
 							alcanco = cadenas.selectSongs();
+							
+							ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
+							objectOutput.writeObject(alcanco);
 							
 						}
 				

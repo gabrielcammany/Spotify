@@ -140,7 +140,12 @@ public class Finestra_login extends JFrame {
 	                JOptionPane.showMessageDialog(jtfUsuari, "Nom d'usuari obligatori","Error a iniciar sessi�", 0);
 					PromptSupport.setForeground(new Color(255, 77, 77), jtfUsuari);		
 				}else{
-					controladorf.Login();
+					try {
+						controladorf.Login();
+					} catch (ClassNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 				
 				

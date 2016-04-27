@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 
 import org.jdesktop.xswingx.PromptSupport;
 
+import controller.ControladorFinestres;
 import controller.ControladorLlistar;
 import controller.ControladorReproductor;
 import net.miginfocom.swing.MigLayout;
@@ -31,11 +32,13 @@ import network.InfoServidor;
 public class FinestraReproduccio extends JFrame {
 	
 	private JFrame jfReproduccio;
-	private InfoServidor ifs ;
+	private JPanel jpReproduccio;
+	private ControladorFinestres cf;
 	
 	
 	
-	public FinestraReproduccio(){
+	public FinestraReproduccio(ControladorFinestres cf) throws ClassNotFoundException{
+		this.cf = cf;
 		
 		jfReproduccio = new JFrame();
 		jfReproduccio.setVisible(true);
@@ -46,7 +49,7 @@ public class FinestraReproduccio extends JFrame {
 		
 		
 		//panell general
-		JPanel jpReproduccio = new JPanel(new BorderLayout());
+		jpReproduccio = new JPanel(new BorderLayout());
 		jpReproduccio.setBackground(new Color(24,24,24));
 		
 		/*
@@ -122,9 +125,10 @@ public class FinestraReproduccio extends JFrame {
 			JLabel jlfollowing = new JLabel(new String(following.getBytes("UTF-8"),"UTF-8"));
 			jlfollowing.setForeground(new Color(164,164,164));
 
-			jldisponible.addMouseListener(new ControladorLlistar("disponible"));
-			jlpropies.addMouseListener(new ControladorLlistar("propia"));
-			jlfollowing.addMouseListener(new ControladorLlistar("following"));
+			jldisponible.addMouseListener(new ControladorLlistar("disponible",cf));
+			
+			jlpropies.addMouseListener(new ControladorLlistar("propia",cf));
+			jlfollowing.addMouseListener(new ControladorLlistar("following",cf));
 			
 			jpGestionar.add(jlBlanc0, "span 2, grow, wrap ");
 			jpGestionar.add(jldisponible, "span 2, grow, wrap ");
@@ -204,10 +208,10 @@ public class FinestraReproduccio extends JFrame {
 		//ho afegim tot al frame general
 		jfReproduccio.add(jpReproduccio);
 		
-		//Realitzem la peticio de cançons al servidor
-		ifs =new InfoServidor();
-		ifs.peticioMusica();
-		
 	}
+	/*
+	void setJPReproduccioLlistar(JPanel jpLlista){
+		jfReproduccio.add(jpReproduccio.add(jpLlista, BorderLayout.CENTER));
+	}*/
 	
 }
