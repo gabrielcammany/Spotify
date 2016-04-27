@@ -29,8 +29,7 @@ public class ControladorFinestres {
 	public ControladorFinestres (InfoServidor infoServidor) {
 		this.fLogin = new Finestra_login(this);
 		this.infoServidor = infoServidor;
-		infoServidor.setControladorFinestra(this);
-		
+		this.infoServidor.setControladorFinestra(this);
 		
 	}
 		
@@ -84,13 +83,21 @@ public class ControladorFinestres {
 		 */
 		
 		fReproduccio = new FinestraReproduccio(this);
-		//Realitzem la peticio de cançons al servidor
-		infoServidor =new InfoServidor();
+		//Realitzem la peticio de canï¿½ons al servidor
+		//infoServidor =new InfoServidor();
 		infoServidor.peticioMusica();
 		
-
+		
+	}
+	
+	public void actualitzaMusicaDisponible(ArrayList<Canco> alMusica){
+		fReproduccio.setMusicaDisponible(alMusica);
 		
 		
+	}
+	
+	public void novaOpcio(String opcio) {
+		fReproduccio.actualitzaOpcio(opcio);
 	}
 	
 		

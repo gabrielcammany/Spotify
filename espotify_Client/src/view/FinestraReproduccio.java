@@ -4,12 +4,16 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Image;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 
 import org.jdesktop.xswingx.PromptSupport;
@@ -17,6 +21,7 @@ import org.jdesktop.xswingx.PromptSupport;
 import controller.ControladorFinestres;
 import controller.ControladorLlistar;
 import controller.ControladorReproductor;
+import model.Canco;
 import net.miginfocom.swing.MigLayout;
 import network.InfoServidor;
 
@@ -34,6 +39,7 @@ public class FinestraReproduccio extends JFrame {
 	private JFrame jfReproduccio;
 	private JPanel jpReproduccio;
 	private ControladorFinestres cf;
+	private JScrollPane jspLlistat;
 	
 	
 	
@@ -49,8 +55,8 @@ public class FinestraReproduccio extends JFrame {
 		
 		
 		//panell general
-		jpReproduccio = new JPanel(new BorderLayout());
-		jpReproduccio.setBackground(new Color(24,24,24));
+		this.jpReproduccio = new JPanel(new BorderLayout());
+		this.jpReproduccio.setBackground(new Color(24,24,24));
 		
 		/*
 		 * 
@@ -209,9 +215,59 @@ public class FinestraReproduccio extends JFrame {
 		jfReproduccio.add(jpReproduccio);
 		
 	}
-	/*
-	void setJPReproduccioLlistar(JPanel jpLlista){
-		jfReproduccio.add(jpReproduccio.add(jpLlista, BorderLayout.CENTER));
-	}*/
+	
+	/**
+	 * Aquesta funcio rep l'array de totes del cancos disponibles i actualitza la taula on es mostraran totes.
+	 */
+	
+	public void setMusicaDisponible(ArrayList<Canco> alMusica){
+		JPanel jpLlistat = new JPanel(new BorderLayout());
+		
+		//Tabla musica disponible 
+		
+		Vector<String> columnas = new Vector();
+		
+		columnas.add("Nom canco");
+		columnas.add("Genere");
+		columnas.add("Album");
+		columnas.add("Artistes");
+
+   
+		Vector filas = new Vector();
+		for (int i = 0; i <alMusica.size(); i ++) {
+			Vector<String> fila = new Vector();
+			
+			fila.add(alMusica.get(i).getNom());
+			fila.add(alMusica.get(i).getGenere());
+			fila.add(alMusica.get(i).getAlbum());
+			fila.add(alMusica.get(i).getArtista());
+			System.out.println("entra");
+			
+			filas.add(fila);
+		}
+	
+		JTable taulaMusica = new JTable(filas, columnas);
+		
+		this.jspLlistat = new JScrollPane(taulaMusica);
+		
+		
+		//jpReproduccio.add(jspLlistat, BorderLayout.CENTER);
+
+		
+	}
+	
+	public void actualitzaOpcio(String opcio) {
+		switch (opcio){
+		
+			case "disponible":
+				System.out.println(opcio + "jeje");
+				this.jpReproduccio.add(this.jspLlistat, BorderLayout.CENTER);
+				
+			case "propia":
+				this.jpReproduccio.add(new JScrollPane(), BorderLayout.CENTER);
+				System.out.println(opcio + "jeje");
+		}
+	}
+	
 	
 }

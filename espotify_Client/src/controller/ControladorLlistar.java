@@ -42,9 +42,11 @@ public class ControladorLlistar implements MouseListener {
 		switch (opcio) {
 		case "disponible":
 			System.out.println("click disponible");
+			cFinestra.novaOpcio(opcio);
 			break;
 		case "propia":
 			System.out.println("click propia");
+			cFinestra.novaOpcio(opcio);
 			break;
 		case "following":
 			System.out.println("click following");

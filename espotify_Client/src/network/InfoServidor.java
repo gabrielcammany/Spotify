@@ -31,14 +31,17 @@ public class InfoServidor {
 		private boolean active;
 		private ControladorFinestres controladorFinestres;
 		private ControladorLlistar controladorLlistar;
+		
 		public InfoServidor(){}
+		
 		public InfoServidor(ServerSocket sServer) {
 			this.sServer = sServer;
 			active = true;
 		}
 		
-		public void setControladorFinestra(ControladorFinestres controladorFinestes){
+		public void setControladorFinestra(ControladorFinestres controladorFinestres){
 			this.controladorFinestres = controladorFinestres;
+			System.out.println(controladorFinestres);
 		}
 	
 	
@@ -74,8 +77,6 @@ public class InfoServidor {
 	
 	public void peticioMusica() throws ClassNotFoundException{
 		System.out.println("[CLIENT] - Peticio de connexio..."); 
-		
-		
 		try {
 			Socket sServidor = new Socket("localhost", 34567);
 			
@@ -86,10 +87,15 @@ public class InfoServidor {
 			ObjectInputStream objectInput = new ObjectInputStream(sServidor.getInputStream());
 			alMusica = (ArrayList<Canco>) objectInput.readObject();
 			System.out.println(alMusica.get(0).getNom()); 
+			/////
+			
+			if (controladorFinestres != null)  controladorFinestres.actualitzaMusicaDisponible(alMusica);
+
 			
 			sServidor.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
+			System.out.println("exc1");
 		}
 		
 	}
