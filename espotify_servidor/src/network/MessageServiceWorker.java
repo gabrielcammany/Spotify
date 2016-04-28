@@ -12,6 +12,7 @@ import java.util.Calendar;
 import controller.SocketController;
 import model.Canco;
 import model.Musica;
+import model.Usuaris;
 
 public class MessageServiceWorker implements Runnable{
 
@@ -58,7 +59,8 @@ public class MessageServiceWorker implements Runnable{
 					password = aux[1];
 
 					cadenas.registroUsuario(user,password);
-					
+					//Tornem a generar la llista d'usuaris
+					Usuaris allUsers = new Usuaris();
 					
 					// Tanquem el socket del client
 					sClient.close();
