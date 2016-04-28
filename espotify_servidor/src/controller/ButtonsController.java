@@ -54,7 +54,7 @@ public class ButtonsController implements ActionListener {
 		Musica musica = new Musica();
 		System.out.println("########################################################");
 		Usuaris allUsers = new Usuaris();
-		viewF.creaFinestra(musica);
+		viewF.creaFinestra(musica, allUsers);
 	}
 	
 	

@@ -22,6 +22,7 @@ import net.miginfocom.swing.MigLayout;
 
 import model.Canco;
 import model.Musica;
+import model.Usuaris;
 
 
 /**
@@ -43,7 +44,7 @@ public class FinestraServidor extends JFrame {
 	
 	public FinestraServidor() {}
 	
-	public void creaFinestra(Musica musica){
+	public void creaFinestra(Musica musica, Usuaris allUsers){
 		this.musica = musica;
 		
 		
@@ -62,7 +63,7 @@ public class FinestraServidor extends JFrame {
 		JTabbedPane jtpServidor = new JTabbedPane();
 		//tab user
 		jpUsuari = new JPanel();
-		jpUsuari = FinestraUsuari();
+		jpUsuari = FinestraUsuari(allUsers);
 		//tab music
 		jpMusica = new JPanel();
 		jpMusica = FinestraMusica();
@@ -79,28 +80,42 @@ public class FinestraServidor extends JFrame {
 	 * 
 	 **/
 	
-	public JPanel FinestraUsuari(){
+	public JPanel FinestraUsuari(Usuaris allUsers){
 		jpUsuari = new JPanel(new BorderLayout());
 		//connectar amb base de dades 
 		
-		/*
-		 * temporal, vinda de la bbdd
-		 */
-		Object info[][] = { { "Carla medio metro", "28/03/1998", "29/06/2015", "0", "1", "0", "9", "0" },
-				{ "Jorge te queremos", "14/06/1994", "29/06/2015", "2", "1", "200983248", "6", "0" },
-				{ "Problem manager", "05/08/95", "05/08/95", "4", "7", "3", "89", "4"},
-				{ "Gabri hombre socket", "05/00/95", "05/08/95", "4", "7", "2", "69", "4"},
-				{ "Ivan casper", "05/00000/95", "05/08/95", "4", "7", "2", "69", "4"}
-		};
+		Vector columnas = new Vector();
+		columnas.add ("Nom usuari");
+		columnas.add("Data registre");
+		columnas.add("Ultim acces");
+		columnas.add("Número de llistes");
+		columnas.add("Numero de llistes");
+		columnas.add("Numero de cancos");
+		columnas.add("Numero follower");
+		columnas.add("Numero following");
+		
+		Vector filas = new Vector();
+		
+		for (int i = 0; i < allUsers.getUsuaris().size(); i ++) {
+			Vector fila = new Vector();
+			fila.add(allUsers.getUsuaris().get(i).getNickname());
+			fila.add(allUsers.getUsuaris().get(i).getData_reg());
+			fila.add(allUsers.getUsuaris().get(i).getData_ult());
+			fila.add("no esta hecho");
+			fila.add("no esta hecho");
+			fila.add("no esta hecho");
+			fila.add("no esta hecho");
+			fila.add("no esta hecho");
+			
+			filas.add(fila);
+		}
 		
 		
-		/*
-		 * fiTemporal
-		 */
-
-		Object titol []={ "Nom usuari", "Data registre", "Últim accés", "Número de llistes", "Numero de cançons",
-				"Numero followers", "Numero following"};
-		JTable taulaUsuari = new JTable(info, titol);
+		
+		
+	
+		
+		JTable taulaUsuari = new JTable(filas, columnas);
 		taulaUsuari.setEnabled(false);
 
 

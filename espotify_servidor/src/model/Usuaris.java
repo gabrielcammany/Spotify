@@ -16,4 +16,8 @@ public class Usuaris {
 	public ArrayList<User> getMusica() {
 		return alUser;
 	}
+	
+	public ArrayList<User> getUsuaris() {
+		return alUser;
+	}
 }
