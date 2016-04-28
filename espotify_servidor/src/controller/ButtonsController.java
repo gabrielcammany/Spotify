@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import model.Canco;
 import model.Musica;
 import model.User;
+import model.Usuaris;
 import network.MessageService;
 import view.ErrorLog;
 import view.FinestraServidor;
@@ -51,6 +52,8 @@ public class ButtonsController implements ActionListener {
 	
 	public void creaFinestra() {
 		Musica musica = new Musica();
+		System.out.println("########################################################");
+		Usuaris allUsers = new Usuaris();
 		viewF.creaFinestra(musica);
 	}
 	

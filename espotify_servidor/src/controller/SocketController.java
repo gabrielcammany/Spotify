@@ -17,9 +17,7 @@ public class SocketController {
 	
 	public ConectorDB conn = new ConectorDB("dpo_root", "sinminus", "bd_espotifi", 3306);
 	
-	public SocketController() {
-		
-	}
+	public SocketController() {}
 	
 	public String verifyUser(User user){
 		String response;
@@ -44,7 +42,7 @@ public class SocketController {
 			String cad = q.queryList(0, user);
 			response = q.queryList(1, user);
 
-			conn.insertQuery(cad);
+			conn.insertQuery(response);
 			
 			System.out.println("User: '"+user.getNickname()+"' Inserit correctament.");
 		}else{
@@ -110,6 +108,32 @@ public class SocketController {
 		for(int i = 0;i<size;i++)System.out.println("Canco numero "+i+" -->"+alMusica.get(i).getNom());
 		
 		return alMusica;
+	}
+public ArrayList<User> selectUsers(){
+		Query q = new Query();
+		
+		ResultSet responseServer = conn.selectQuery(q.queryList(5, null));
+		
+		ArrayList<User> alUser = new ArrayList<User>();
+		try {
+			
+			while (responseServer.next()) {
+				User u = new User();
+				
+				u.setNickname(responseServer.getString("nickname"));
+				u.setPassword(responseServer.getString("password"));
+				u.setData_reg(responseServer.getString("data_reg"));
+				u.setData_ult(responseServer.getString("data_ult"));
+				
+				System.out.println("[Servidor] Usuari ' "+u.getNickname()+" '");
+				alUser.add(u);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return alUser;
 	}
 	
 }

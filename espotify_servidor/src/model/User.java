@@ -1,8 +1,10 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 import controller.ButtonsController;
+import controller.SocketController;
 
 public class User {
 	private String nickname;
@@ -10,17 +12,6 @@ public class User {
 	private String data_reg;
 	private String data_ult;
 	private ButtonsController controller;
-	
-	private LinkedList<User> lluser;
-	
-	public LinkedList<User> getLluser() {
-		return lluser;
-	}
-
-
-	public void setLluser(LinkedList<User> lluser) {
-		this.lluser = lluser;
-	}
 
 
 	public String getNickname() {
@@ -62,16 +53,14 @@ public class User {
 		this.data_ult = data_ult;
 	}
 
-	
+	public User(){
+		SocketController message = new SocketController();
+	}
 	public User(String usuario,String password){
-		this.lluser =new LinkedList<User>();
+		//this.alUser =new ArrayList<User>();
 		this.nickname = usuario;
 		this.password = password;
 	}
 	
-	
-	public void creaCotxe(String cad){
-		
-	}
 	
 }

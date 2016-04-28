@@ -84,7 +84,7 @@ public class ControladorFinestres {
 
 		fReproduccio = new FinestraReproduccio(this);
 		//Realitzem la peticio de can�ons al servidor
-		//infoServidor =new InfoServidor();
+		infoServidor =new InfoServidor();
 		infoServidor.peticioMusica();
 		
 		

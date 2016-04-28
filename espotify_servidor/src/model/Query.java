@@ -38,6 +38,9 @@ public class Query {
 		case 4://enviar canco 
 			String cad4= "SELECT * FROM canco;";
 			return cad4;
+		case 5://enviar usuari 
+			String cad5= "SELECT * FROM usuari;";
+			return cad5;
 		}
 		
 		return null;
