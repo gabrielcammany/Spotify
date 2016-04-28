@@ -37,7 +37,9 @@ public class Finestra_Registre extends JPanel{
 	
 	private ControladorFinestres controladorf;
 	
-	public Finestra_Registre() {
+	public Finestra_Registre(ControladorFinestres controladorf) {
+		
+		this.controladorf = controladorf;
 		
 		jfRegistre = new JFrame("eSpotyfai - Registre");
 		jfRegistre.setVisible(true);
@@ -104,7 +106,7 @@ public class Finestra_Registre extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//Finestra_Registre fReg = new FinestraRegistre();
-				controladorf = new ControladorFinestres();
+				
 				try {
 					controladorf.Reproduccio();
 				} catch (ClassNotFoundException e1) {

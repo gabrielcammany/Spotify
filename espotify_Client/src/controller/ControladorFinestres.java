@@ -40,7 +40,7 @@ public class ControladorFinestres {
 	public void nouRegistre() {
 		//tanquem finestra de login
 		fLogin.tancaFinestraLogin();
-		fRegistre = new Finestra_Registre();
+		fRegistre = new Finestra_Registre(this);
 		
 		fRegistre.getjbRegistre().addActionListener(new ActionListener() {
  
@@ -84,7 +84,8 @@ public class ControladorFinestres {
 
 		fReproduccio = new FinestraReproduccio(this);
 		//Realitzem la peticio de can�ons al servidor
-		infoServidor =new InfoServidor();
+		
+		//infoServidor =new InfoServidor();
 		infoServidor.peticioMusica();
 		
 		

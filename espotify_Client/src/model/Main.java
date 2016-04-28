@@ -24,6 +24,7 @@ public class  Main {
 			@Override
 			public void run() {
 				//Creem la finestra de login i la mostrem
+				System.out.println("pasa por aqui");
 				InfoServidor infoServidor = new InfoServidor();
 				@SuppressWarnings("unused")
 				ControladorFinestres controladorf = new ControladorFinestres(infoServidor);
