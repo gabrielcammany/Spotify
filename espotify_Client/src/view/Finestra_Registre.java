@@ -9,7 +9,6 @@ import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -28,6 +27,7 @@ import net.miginfocom.swing.MigLayout;
  *
  */
 
+@SuppressWarnings("serial")
 public class Finestra_Registre extends JPanel{
 	
 	private JFrame jfRegistre;

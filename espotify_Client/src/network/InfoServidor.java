@@ -1,24 +1,19 @@
 package network;
 
-import java.awt.Image;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
-
-
-import java.io.DataInputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import controller.ControladorFinestres;
 import controller.ControladorLlistar;
 import model.Canco;
 
+@SuppressWarnings("unused")
 public class InfoServidor {
 	
 		//private MessageService mService;
@@ -75,6 +70,7 @@ public class InfoServidor {
 		}
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void peticioMusica() throws ClassNotFoundException{
 		System.out.println("[CLIENT] - Peticio de connexio..."); 
 		try {

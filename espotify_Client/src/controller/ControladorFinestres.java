@@ -81,7 +81,7 @@ public class ControladorFinestres {
 		 * depen de si ve per login o registre tancar la finestra correcte per no fer pataPUM
 		 * 
 		 */
-		
+
 		fReproduccio = new FinestraReproduccio(this);
 		//Realitzem la peticio de can�ons al servidor
 		//infoServidor =new InfoServidor();

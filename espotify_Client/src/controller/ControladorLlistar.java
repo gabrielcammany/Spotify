@@ -1,19 +1,10 @@
 package controller;
 
+import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Image;
-import java.io.UnsupportedEncodingException;
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-
-import view.FinestraReproduccio;
 
 /**
  * Controlador encarregat de gestionar quina musica llistar 
@@ -26,8 +17,6 @@ public class ControladorLlistar implements MouseListener {
 	
 	private String opcio;
 	
-
-	private FinestraReproduccio fReproduccio;
 	private ControladorFinestres cFinestra;
 	
 	

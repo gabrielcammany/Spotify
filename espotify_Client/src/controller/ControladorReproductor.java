@@ -1,20 +1,15 @@
 package controller;
 
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Image;
-import java.io.UnsupportedEncodingException;
-
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+
+import model.Reproductor;
+import view.FinestraReproduccio;
 
 
 /**
@@ -27,22 +22,35 @@ import javax.swing.JLabel;
 public class ControladorReproductor implements MouseListener {
 	
 	private String opcio;
+	private FinestraReproduccio finestrareproduccio;
+	Reproductor r;
+	boolean play = false;
+	String nom;
+	String artista;
 	
 	
-	
-	public ControladorReproductor(String opcio) {
+	public ControladorReproductor(String opcio,FinestraReproduccio fr) {
 		this.opcio = opcio;
+		this.finestrareproduccio = fr;
+		r = new Reproductor("");
+		
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
+		
+		nom = (String) finestrareproduccio.taulaMusica.getValueAt(finestrareproduccio.taulaMusica.getSelectedRow(), 0);
+		artista = (String) finestrareproduccio.taulaMusica.getValueAt(finestrareproduccio.taulaMusica.getSelectedRow(), 3);
+		
 		switch (opcio) {
 		case "play":
 			System.out.println("click play");
+			r.setPath(nom,artista);
+			r.run();
 			break;
 		case "next":
 			System.out.println("click next");
+			play = false;
 			break;
 		case "back":
 			System.out.println("click back");

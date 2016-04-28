@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
-	<classpathentry kind="lib" path="libs/controlsfx-8.40.10.jar"/>
-	<classpathentry kind="lib" path="libs/jfoenix.jar"/>
 	<classpathentry kind="lib" path="libs/gson-2.2.4-sources.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="libs/miglayout-4.0.jar"/>
 	<classpathentry kind="lib" path="libs/xswingx.jar"/>
+	<classpathentry kind="lib" path="libs/jl1.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

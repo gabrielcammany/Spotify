@@ -16,14 +16,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 
-import org.jdesktop.xswingx.PromptSupport;
-
 import controller.ControladorFinestres;
 import controller.ControladorLlistar;
 import controller.ControladorReproductor;
 import model.Canco;
 import net.miginfocom.swing.MigLayout;
-import network.InfoServidor;
 
 
 /**
@@ -33,14 +30,14 @@ import network.InfoServidor;
  */
 
 
-@SuppressWarnings("serial")
+@SuppressWarnings({ "unused", "serial" })
 public class FinestraReproduccio extends JFrame {
 	
 	private JFrame jfReproduccio;
 	private JPanel jpReproduccio;
 	private ControladorFinestres cf;
 	private JScrollPane jspLlistat;
-	
+	public JTable taulaMusica;
 	
 	
 	public FinestraReproduccio(ControladorFinestres cf) throws ClassNotFoundException{
@@ -189,10 +186,10 @@ public class FinestraReproduccio extends JFrame {
 		jlPlay.setIcon(icPausa);*/
 		
 		//imatges de play, next i back clickables
-		jlPlay.addMouseListener(new ControladorReproductor("play"));
-		jlBack.addMouseListener(new ControladorReproductor("back"));
-		jlNext.addMouseListener(new ControladorReproductor("next"));
-		
+
+		jlPlay.addMouseListener(new ControladorReproductor("play",this));
+		jlBack.addMouseListener(new ControladorReproductor("back",this));
+		jlNext.addMouseListener(new ControladorReproductor("next",this));
 		//sonido
 		ImageIcon imSonido = new ImageIcon("Images/sonido.png");
 		JLabel jlSonido = new JLabel();
@@ -246,9 +243,12 @@ public class FinestraReproduccio extends JFrame {
 			filas.add(fila);
 		}
 	
-		JTable taulaMusica = new JTable(filas, columnas);
+		taulaMusica = new JTable(filas, columnas);
+
+		
 		
 		this.jspLlistat = new JScrollPane(taulaMusica);
+		
 		
 		
 		//jpReproduccio.add(jspLlistat, BorderLayout.CENTER);
@@ -260,8 +260,10 @@ public class FinestraReproduccio extends JFrame {
 		switch (opcio){
 		
 			case "disponible":
-				System.out.println(opcio + "jeje");
 				this.jpReproduccio.add(this.jspLlistat, BorderLayout.CENTER);
+				this.jpReproduccio.invalidate();
+				this.jpReproduccio.validate();
+				
 				
 			case "propia":
 				this.jpReproduccio.add(new JScrollPane(), BorderLayout.CENTER);
