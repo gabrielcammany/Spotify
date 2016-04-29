@@ -15,15 +15,24 @@ public class Canco implements Serializable {
 	private String album;
 	private String artista;
 	private String path;
+	private String nReproduccio;
+	private String estrelles;
+	private int reproduccions;
 	
+	
+	public String getnReproduccio() {
+		return nReproduccio;
+	}
+	public void setnReproduccio(String nReproduccio) {
+		this.nReproduccio = nReproduccio;
+	}
 	public String getPath() {
 		return path;
 	}
 	public void setPath(String path) {
 		this.path = path;
 	}
-	String estrelles;
-	int reproduccions;
+	
 	
 	
 	public String getNom() {

@@ -36,6 +36,7 @@ public class SocketController {
 		
 		//Comprovamos el nombre de usuario pero no validamos la contraseña
 		String result = verifyUser(user);
+		System.out.println("## "+result+" ##");
 		if(result.equals("error")){
 			Query q = new Query();
 			String response;
@@ -77,8 +78,7 @@ public class SocketController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		if(i>1)return nickname;
+		if(i>0)return nickname;
 		return "error";
 	}
 	
@@ -97,7 +97,9 @@ public class SocketController {
 				c.setArtista(responseServer.getString("artista"));
 				c.setPath(responseServer.getString("ubicacio"));
 				c.setEstrelles(responseServer.getString("num_estrelles"));
-				System.out.println("[Servidor] "+c.getNom()+" amb path: "+c.getPath());
+				c.setnReproduccio(responseServer.getString("num_reproduccio"));
+				
+				System.out.println("[Servidor] "+c.getNom()+" amb path: "+c.getPath()+" num reproduccions: "+c.getnReproduccio());
 				alMusica.add(c);
 			}
 		} catch (SQLException e) {
