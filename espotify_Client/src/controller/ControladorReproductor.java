@@ -49,7 +49,6 @@ public class ControladorReproductor implements MouseListener {
 			break;
 		case "back":
 			System.out.println("click back");
-			controladorfinestres.r.
 			break;
 
 		default:
