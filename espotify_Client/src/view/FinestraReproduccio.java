@@ -40,6 +40,7 @@ public class FinestraReproduccio extends JFrame {
 	public JTable taulaMusica;
 	
 	
+	
 	public FinestraReproduccio(ControladorFinestres cf) throws ClassNotFoundException{
 		this.cf = cf;
 		
@@ -187,9 +188,9 @@ public class FinestraReproduccio extends JFrame {
 		
 		//imatges de play, next i back clickables
 
-		jlPlay.addMouseListener(new ControladorReproductor("play",this));
-		jlBack.addMouseListener(new ControladorReproductor("back",this));
-		jlNext.addMouseListener(new ControladorReproductor("next",this));
+		jlPlay.addMouseListener(new ControladorReproductor("play",cf));
+		jlBack.addMouseListener(new ControladorReproductor("back",cf));
+		jlNext.addMouseListener(new ControladorReproductor("next",cf));
 		//sonido
 		ImageIcon imSonido = new ImageIcon("Images/sonido.png");
 		JLabel jlSonido = new JLabel();

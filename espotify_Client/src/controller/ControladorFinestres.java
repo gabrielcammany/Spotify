@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import model.Canco;
+import model.Reproductor;
 import network.InfoServidor;
 import view.FinestraReproduccio;
 import view.Finestra_Registre;
@@ -20,6 +21,8 @@ public class ControladorFinestres {
 	public Finestra_Registre fRegistre;
 	public FinestraReproduccio fReproduccio;
 	private InfoServidor infoServidor;
+	boolean reproduir = false;
+	Reproductor r;
 	
 
 	public ControladorFinestres(){
@@ -30,6 +33,22 @@ public class ControladorFinestres {
 		this.fLogin = new Finestra_login(this);
 		this.infoServidor = infoServidor;
 		this.infoServidor.setControladorFinestra(this);
+		r = new Reproductor("");
+		Thread t = new Thread(){
+			@Override
+			public void run(){
+				int i = 0;
+				while(true){
+					if(reproduir){
+						i = 0;
+						r.run();
+						reproduir = false;
+					}
+					i++;
+				}
+			}
+		};
+		t.start();
 		
 	}
 		

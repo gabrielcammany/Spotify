@@ -8,9 +8,6 @@ import java.awt.event.MouseListener;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
-import model.Reproductor;
-import view.FinestraReproduccio;
-
 
 /**
  * Controlador encarregat de gestionar els botons encarregats de reproduir la musica
@@ -21,39 +18,38 @@ import view.FinestraReproduccio;
 
 public class ControladorReproductor implements MouseListener {
 	
-	private String opcio;
-	private FinestraReproduccio finestrareproduccio;
-	Reproductor r;
+	public String opcio;
+	private ControladorFinestres controladorfinestres;
 	boolean play = false;
 	String nom;
 	String artista;
 	
 	
-	public ControladorReproductor(String opcio,FinestraReproduccio fr) {
+	public ControladorReproductor(String opcio,ControladorFinestres fr) {
 		this.opcio = opcio;
-		this.finestrareproduccio = fr;
-		r = new Reproductor("");
-		
+		this.controladorfinestres = fr;
+
 	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		
-		nom = (String) finestrareproduccio.taulaMusica.getValueAt(finestrareproduccio.taulaMusica.getSelectedRow(), 0);
-		artista = (String) finestrareproduccio.taulaMusica.getValueAt(finestrareproduccio.taulaMusica.getSelectedRow(), 3);
+		nom = (String) controladorfinestres.fReproduccio.taulaMusica.getValueAt(controladorfinestres.fReproduccio.taulaMusica.getSelectedRow(), 0);
+		artista = (String) controladorfinestres.fReproduccio.taulaMusica.getValueAt(controladorfinestres.fReproduccio.taulaMusica.getSelectedRow(), 3);
 		
 		switch (opcio) {
 		case "play":
 			System.out.println("click play");
-			r.setPath(nom,artista);
-			r.run();
+			controladorfinestres.r.setPath(nom,artista);
+			controladorfinestres.reproduir = true;
 			break;
 		case "next":
 			System.out.println("click next");
-			play = false;
+			controladorfinestres.r.pause();
 			break;
 		case "back":
 			System.out.println("click back");
+			controladorfinestres.r.
 			break;
 
 		default:
@@ -155,6 +151,7 @@ public class ControladorReproductor implements MouseListener {
 		// TODO Auto-generated method stub
 		
 	}
+	
 	
 	
 	

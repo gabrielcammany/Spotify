@@ -3,16 +3,22 @@ package model;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
+import javazoom.jlgui.basicplayer.BasicPlayer;
+import javazoom.jlgui.basicplayer.BasicPlayerException;
 
 
 
 public class Reproductor extends Thread{
 	
 	private String path;
-	Player player;
+	BasicPlayer player;
 	
 	public Reproductor(String s) {
 		this.path = s;
@@ -29,10 +35,10 @@ public class Reproductor extends Thread{
             FileInputStream fis;
             
             fis = new FileInputStream(this.path);
-            BufferedInputStream bis = new BufferedInputStream(fis);
-
-            player = new Player(bis); 
             
+            player = new BasicPlayer();
+            
+            player.open(AudioSystem.getAudioInputStream(fis));
             while (true) {
             	System.out.println("hola");
             	player.play();  
@@ -42,18 +48,15 @@ public class Reproductor extends Thread{
 					e.printStackTrace();
 				}
             }
-        } catch (JavaLayerException e) {
-            e.printStackTrace();
-        } catch (FileNotFoundException e) {
+        } catch (BasicPlayerException | UnsupportedAudioFileException | IOException e) {
             e.printStackTrace();
         }
 	}
 	
 	public void pause(){
 		try {
-			player.wait();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
+			player.pause();
+		} catch (BasicPlayerException e) {
 			e.printStackTrace();
 		}
 	}
@@ -64,7 +67,7 @@ public class Reproductor extends Thread{
 
 	public void setPath(String nom, String artista) {
 		System.out.println(nom + "_" + artista);
-		this.path = "C:/Users/gabriel53/git/eSpotyfai/espotify_servidor/Musica/" + nom + "_" + artista.replace(" ", "") + ".mp3";
+		this.path = "temp/" + nom.replace(" ", "") + "_" + artista.replace(" ", "") + ".mp3";
 	}
 }
 
