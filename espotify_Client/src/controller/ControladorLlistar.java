@@ -37,8 +37,13 @@ public class ControladorLlistar implements MouseListener {
 			System.out.println("click propia");
 			cFinestra.novaOpcio(opcio);
 			break;
-		case "following":
-			System.out.println("click following");
+		case "llistesfollowing":
+			System.out.println("click llistesfollowing");
+			cFinestra.novaOpcio(opcio);
+			break;
+		case "usuarisfollowing":
+			System.out.println("click usuarisfollowing");
+			cFinestra.novaOpcio(opcio);
 			break;
 
 		default:

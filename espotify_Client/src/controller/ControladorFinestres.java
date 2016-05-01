@@ -112,12 +112,54 @@ public class ControladorFinestres {
 		
 	}
 	
+	/*
+	 * Aquesta funcio parla amb la finestra per actualitzar la llista de musica disponible
+	 * rep un ArrayList de cancons
+	 * 
+	 */
+	
 	public void actualitzaMusicaDisponible(ArrayList<Canco> alMusica){
 		fReproduccio.setMusicaDisponible(alMusica);
 		
 		
 	}
 	
+	/*
+	 * Aquesta funcio parla amb la finestra per actualitzar la musica propia
+	 * rep un ArrayList de cancons
+	 * 
+	 */
+	public void actualitzaMusicaPropia(ArrayList<Canco> alMusica){
+		fReproduccio.setMusicaPropia();
+		
+	}
+	
+	/*
+	 * Aquesta funcio parla amb la finestra per actualitzar les llistes dels usuaris que seguim
+	 * rep un ArrayList llistes
+	 * 
+	 */
+	public void actualitzaLlistesFollowing(/*  rebre array de llistes    */ArrayList<String> alListes){
+		fReproduccio.setLlistesFollowing(/*  pasar array de llistes    */alListes);
+		
+	}
+	
+	
+	/*
+	 * Aquesta funcio parla amb la finestra per actualitzar el nom dels usuaris que seguim com per fer 
+	 * follow o unfollow
+	 * 
+	 */
+
+	public void actualitzaUsuarisFollowing(/*  rebre array dusuaris    */ArrayList<String> alUsuari){
+		fReproduccio.setUsuarisFollowing(/*  pasar array dusuaris   */alUsuari);
+		
+	}
+	
+	/*
+	 * Aquesta funcio parla amb la finestra per dirli que s'ha clicat una opcio de mostrar contingut
+	 * 
+	 */
 	public void novaOpcio(String opcio) {
 		fReproduccio.actualitzaOpcio(opcio);
 	}

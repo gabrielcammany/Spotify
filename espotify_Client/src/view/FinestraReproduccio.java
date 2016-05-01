@@ -13,8 +13,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
 import controller.ControladorFinestres;
 import controller.ControladorLlistar;
@@ -36,13 +38,31 @@ public class FinestraReproduccio extends JFrame {
 	private JFrame jfReproduccio;
 	private JPanel jpReproduccio;
 	private ControladorFinestres cf;
-	private JScrollPane jspLlistat;
+	private JScrollPane jspLlistatDisponible;
+	private JScrollPane jspLlistatPropia;
+	private JScrollPane jspUsuarisFollowing;
+	private JScrollPane jspLlistesFollowing;
 	public JTable taulaMusica;
+	public JTable taulaUsuaris;
 	
 	
 	
 	public FinestraReproduccio(ControladorFinestres cf) throws ClassNotFoundException{
 		this.cf = cf;
+		//inicialitzem
+		if(jspLlistatDisponible == null){
+			jspLlistatDisponible = new JScrollPane();
+			
+		}
+		if(jspUsuarisFollowing == null){
+			jspUsuarisFollowing = new JScrollPane();
+		}
+		if(jspLlistatPropia == null){
+			jspLlistatPropia = new JScrollPane();
+		}
+		if(jspLlistesFollowing == null){
+			jspLlistesFollowing = new JScrollPane();
+		}
 		
 		jfReproduccio = new JFrame();
 		jfReproduccio.setVisible(true);
@@ -84,6 +104,7 @@ public class FinestraReproduccio extends JFrame {
 		jlLogo.setForeground(new Color(164,164,164));
 		ImageIcon icLogo = new ImageIcon(imLogo.getImage().getScaledInstance(25, 25, Image.SCALE_DEFAULT));
 		jlLogo.setIcon(icLogo);
+		jlLogo.setBorder(new EmptyBorder(1, 5, 0, 10));
 		jpAdaltEsquerra.add(jlLogo,"dock west");
 		
 		//buscar (no fa res)
@@ -114,33 +135,37 @@ public class FinestraReproduccio extends JFrame {
 		jpGestionar.setBackground(new Color(40,40,40));
 		jpGestionar.setBorder(BorderFactory.createLineBorder(Color.black));
 
-		JLabel jlBlanc0 = new JLabel("  ");
-		JLabel jlBlanc1 = new JLabel("  ");
-		JLabel jlBlanc2 = new JLabel("  ");
 		String disponible = "Música disponible";
 		String propies = "Música propia";
-		String following = "Música following";
-		JLabel jldisponible;
+		String llistesfollowing = "Música following";
+		String usuarisfollowing = "Follow usuaris";
 		try {
-			jldisponible = new JLabel(new String(disponible.getBytes("UTF-8"),"UTF-8"));
-			jldisponible.setForeground(new Color(164,164,164));
-			JLabel jlpropies = new JLabel(new String(propies.getBytes("UTF-8"),"UTF-8"));
-			jlpropies.setForeground(new Color(164,164,164));
-			JLabel jlfollowing = new JLabel(new String(following.getBytes("UTF-8"),"UTF-8"));
-			jlfollowing.setForeground(new Color(164,164,164));
+			JLabel jlDisponible = new JLabel(new String(disponible.getBytes("UTF-8"),"UTF-8"));
+			jlDisponible.setForeground(new Color(164,164,164));
+			jlDisponible.setBorder(BorderFactory.createEmptyBorder(10,4,15,10));
+			
+			JLabel jlPropies = new JLabel(new String(propies.getBytes("UTF-8"),"UTF-8"));
+			jlPropies.setForeground(new Color(164,164,164));
+			jlPropies.setBorder(BorderFactory.createEmptyBorder(10,4,15,10));
+			
+			JLabel jlLlistesfollowing = new JLabel(new String(llistesfollowing.getBytes("UTF-8"),"UTF-8"));
+			jlLlistesfollowing.setForeground(new Color(164,164,164));
+			jlLlistesfollowing.setBorder(BorderFactory.createEmptyBorder(10,4,15,10));
+			
+			JLabel jlUsuarisfollowing = new JLabel(new String(usuarisfollowing.getBytes("UTF-8"),"UTF-8"));
+			jlUsuarisfollowing.setForeground(new Color(164,164,164));
+			jlUsuarisfollowing.setBorder(BorderFactory.createEmptyBorder(10,4,15,10));
 
-			jldisponible.addMouseListener(new ControladorLlistar("disponible",cf));
+			jlDisponible.addMouseListener(new ControladorLlistar("disponible",cf));
+			jlPropies.addMouseListener(new ControladorLlistar("propia",cf));
+			jlUsuarisfollowing.addMouseListener(new ControladorLlistar("usuarisfollowing",cf));
+			jlLlistesfollowing.addMouseListener(new ControladorLlistar("llistesfollowing",cf));
 			
-			jlpropies.addMouseListener(new ControladorLlistar("propia",cf));
-			jlfollowing.addMouseListener(new ControladorLlistar("following",cf));
-			
-			jpGestionar.add(jlBlanc0, "span 2, grow, wrap ");
-			jpGestionar.add(jldisponible, "span 2, grow, wrap ");
-			jpGestionar.add(jlBlanc1, "span 2, grow, wrap ");
-			jpGestionar.add(jlpropies, "span 2, grow, wrap");
-			jpGestionar.add(jlBlanc2, "span 2, grow, wrap ");
-			jpGestionar.add(jlfollowing, "span 2, grow, wrap");
-		} catch (UnsupportedEncodingException e) {
+			jpGestionar.add(jlDisponible, "span 2, grow, wrap ");
+			jpGestionar.add(jlPropies, "span 2, grow, wrap");
+			jpGestionar.add(jlLlistesfollowing, "span 2, grow, wrap");
+			jpGestionar.add(jlUsuarisfollowing, "span 2, grow, wrap");
+		}  catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -214,15 +239,16 @@ public class FinestraReproduccio extends JFrame {
 		
 	}
 	
+	
+	
 	/**
 	 * Aquesta funcio rep l'array de totes del cancos disponibles i actualitza la taula on es mostraran totes.
 	 */
 	
 	public void setMusicaDisponible(ArrayList<Canco> alMusica){
 		JPanel jpLlistat = new JPanel(new BorderLayout());
-		
+
 		//Tabla musica disponible 
-		
 		Vector<String> columnas = new Vector();
 		
 		columnas.add("Nom canco");
@@ -239,7 +265,6 @@ public class FinestraReproduccio extends JFrame {
 			fila.add(alMusica.get(i).getGenere());
 			fila.add(alMusica.get(i).getAlbum());
 			fila.add(alMusica.get(i).getArtista());
-			System.out.println("entra");
 			
 			filas.add(fila);
 		}
@@ -251,33 +276,177 @@ public class FinestraReproduccio extends JFrame {
 		}};
 		
 		
-		this.jspLlistat = new JScrollPane(taulaMusica);
-		
-		
-		
-		//jpReproduccio.add(jspLlistat, BorderLayout.CENTER);
+		this.jspLlistatDisponible = new JScrollPane(taulaMusica);		
 
 		
 	}
 	
+	/**
+	 * Aquesta funcio rep l'array de totes del cancos propies i actualitza la taula on es mostraran totes.
+	 */
+	
+	public void setMusicaPropia(/*passar llistes*/){
+		JTabbedPane jtpLlistatPropia = new JTabbedPane();
+		
+		jtpLlistatPropia.addTab("Crear llista", new JScrollPane());
+		jtpLlistatPropia.addTab("Visualitzar llistes", new JScrollPane());	
+		jtpLlistatPropia.addTab("Eliminar llista", new JScrollPane());
+		jtpLlistatPropia.addTab("Votar cancons", new JScrollPane());
+		
+		this.jspLlistatPropia = new JScrollPane(jtpLlistatPropia);
+	}
+	
+	/**
+	 * Aquesta funcio rep l'array de totes llistes dels usuaris que segueix i els mostra en una taula
+	 */
+	
+	public void setLlistesFollowing(/*array de llistes*/ArrayList<String> alLlistes){
+		JPanel jpLlistat = new JPanel(new BorderLayout());
+
+		//Tabla musica disponible 
+		Vector<String> columnas = new Vector();
+		
+		columnas.add("Nom llista");
+		columnas.add("Nom usuari");
+
+
+   
+		Vector filas = new Vector();
+		 
+		  for (int i = 0; i <alLlistes.size(); i ++) {
+		 
+			Vector<String> fila = new Vector();
+			
+			fila.add(alLlistes.get(i).toString());
+			
+			
+			filas.add(fila);
+		}
+		
+		
+	
+		JTable taulaUsuariFollowing = new JTable(filas, columnas){
+		
+		public boolean isCellEditable (int rowIndex, int vColIndex) {
+			return false;
+		}};
+		
+		
+		this.jspLlistesFollowing = new JScrollPane(taulaUsuariFollowing);	
+	}
+	
+	/**
+	 * Aquesta funcio rep l'array de tots els usuaris que segueix i els mostra en una taua
+	 */
+	
+	public void setUsuarisFollowing(/*array usuaris*/ /*provisional*/ArrayList<String> alUsuari){
+		JPanel jpLlistat = new JPanel(new BorderLayout());
+
+		//Tabla musica disponible 
+		Vector<String> columnas = new Vector();
+		
+		columnas.add("Nom usuari");
+		columnas.add("Numero llistes");
+
+
+   
+		Vector filas = new Vector();
+		 
+		  for (int i = 0; i <alUsuari.size(); i ++) {
+		 
+			Vector<String> fila = new Vector();
+			
+			fila.add(alUsuari.get(i).toString());
+			
+			
+			filas.add(fila);
+		}
+		
+		
+	
+		JTable taulaUsuariFollowing = new JTable(filas, columnas){
+		
+		public boolean isCellEditable (int rowIndex, int vColIndex) {
+			return false;
+		}};
+		
+		
+		this.jspUsuarisFollowing = new JScrollPane(taulaUsuariFollowing);	
+		
+	}
+	
+	
+	/**
+	 * Aquesta funcio rep l'string de la opcio que es vol fer i 
+	 * actualitza el que es mostra en la pantalla de reproduccio
+	 * 
+	 */
 	public void actualitzaOpcio(String opcio) {
+		
+		//eborrem el que hi havia per pintar de nou
+		BorderLayout layout =  (BorderLayout) jpReproduccio.getLayout();
+		if (layout.getLayoutComponent(BorderLayout.CENTER) != null){
+			jpReproduccio.remove(layout.getLayoutComponent(BorderLayout.CENTER));
+		}
+		
+		//segons l'opcio que esolli l'usuari mostrem en el centre del panell
 		switch (opcio){
 		
 			case "disponible":
-				this.jpReproduccio.add(this.jspLlistat, BorderLayout.CENTER);
-				this.jpReproduccio.invalidate();
+			
+				this.jpReproduccio.add(this.jspLlistatDisponible, BorderLayout.CENTER);
+				//this.jpReproduccio.invalidate();
+				this.jpReproduccio.validate();
+				//this.jpReproduccio.repaint();
+				//this.jpReproduccio.revalidate();
+				break;
+			 
+			case "propia":
+				
+				/*provisional: */ setMusicaPropia();
+				
+				this.jpReproduccio.add(this.jspLlistatPropia, BorderLayout.CENTER);
 				this.jpReproduccio.validate();
 				
+				break;
 				
-			case "propia":
-				this.jpReproduccio.add(new JScrollPane(), BorderLayout.CENTER);
-				System.out.println(opcio + "jeje");
+			case "llistesfollowing":
+				/*provisional: */
+				ArrayList<String> llistes = new ArrayList<String>();
+				llistes.add("Party loca");
+				llistes.add("Portugues");
+				llistes.add("Brasilenherias");
+				setLlistesFollowing(llistes);
+				/*fi provisional: */ 
+				
+				this.jpReproduccio.add(this.jspLlistesFollowing, BorderLayout.CENTER);
+				this.jpReproduccio.validate();
+				break;
+				
+				
+			case "usuarisfollowing":
+				/*provisional: */ 
+				if(taulaUsuaris == null){
+					ArrayList<String> usuaris = new ArrayList<String>();
+					usuaris.add("Braulio");
+					usuaris.add("Gumersindo");
+					setUsuarisFollowing(usuaris);
+				}
+				/*fi provisional: */ 
+				
+				this.jpReproduccio.add(this.jspUsuarisFollowing, BorderLayout.CENTER);
+				this.jpReproduccio.validate();
+				break;
+				
+		
+			default: break;
+			
 		}
 	}
 	
+	
 	public JTable getTaulaMusica() {
 		return taulaMusica;
-	
 	}
 	
 	
