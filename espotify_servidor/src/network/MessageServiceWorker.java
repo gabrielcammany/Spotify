@@ -51,6 +51,9 @@ public class MessageServiceWorker implements Runnable{
 				aux = newMessage.split("/");
 				data = aux[0].split(":");
 				
+				if (data[0].equals("requestCanco")){
+					System.out.println("He recibido la peticion de cancion: "+ data[1] + " " + aux[1]);
+				}
 				
 				if(data[0].equals("user")){
 					user = data[1];

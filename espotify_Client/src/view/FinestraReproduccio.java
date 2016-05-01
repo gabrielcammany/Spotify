@@ -244,8 +244,11 @@ public class FinestraReproduccio extends JFrame {
 			filas.add(fila);
 		}
 	
-		taulaMusica = new JTable(filas, columnas);
-
+		taulaMusica = new JTable(filas, columnas){
+		
+		public boolean isCellEditable (int rowIndex, int vColIndex) {
+			return false;
+		}};
 		
 		
 		this.jspLlistat = new JScrollPane(taulaMusica);
@@ -270,6 +273,11 @@ public class FinestraReproduccio extends JFrame {
 				this.jpReproduccio.add(new JScrollPane(), BorderLayout.CENTER);
 				System.out.println(opcio + "jeje");
 		}
+	}
+	
+	public JTable getTaulaMusica() {
+		return taulaMusica;
+	
 	}
 	
 	

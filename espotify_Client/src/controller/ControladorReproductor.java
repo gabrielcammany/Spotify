@@ -7,6 +7,7 @@ import java.awt.event.MouseListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JTable;
 
 
 /**
@@ -42,6 +43,12 @@ public class ControladorReproductor implements MouseListener {
 			System.out.println("click play");
 			controladorfinestres.r.setPath(nom,artista);
 			controladorfinestres.reproduir = true;
+			
+
+			JTable taulaMusica = controladorfinestres.obteTaulaMusica();
+			
+			//Enviem Request al servidor per tal que ens retorni la canço seleccionada
+			controladorfinestres.getServidor().peticio("requestCanco", nom + "/" + artista );
 			break;
 		case "next":
 			System.out.println("click next");

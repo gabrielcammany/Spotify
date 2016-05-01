@@ -4,6 +4,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.JTable;
+
 import model.Canco;
 import model.Reproductor;
 import network.InfoServidor;
@@ -120,6 +122,13 @@ public class ControladorFinestres {
 		fReproduccio.actualitzaOpcio(opcio);
 	}
 	
+	public JTable obteTaulaMusica() {
+		return fReproduccio.getTaulaMusica();
+	}
+	
+	public InfoServidor getServidor() {
+		return infoServidor;
+	}
 		
 	
 }

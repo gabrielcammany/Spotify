@@ -95,6 +95,29 @@ public class InfoServidor {
 		}
 		
 	}
+	
+	/**
+	 * Funcio encarregada de enviar al servidor les diferens peticions del client, cal observar que el segon parametre 
+	 * es de la clase objecte ja que, segons la peticio, haurem de rebre diferents objectes.
+	 * @param request
+	 */
+	
+	public void peticio(String request, Object obj) {
+		try {
+			Socket sServidor = new Socket ("localhost", 34567);
+			
+			switch(request){
+				case "requestCanco": 
+						//Envia: requestCanco:canco/nomArtista
+						DataOutputStream doStream  = new DataOutputStream(sServidor.getOutputStream());
+						doStream.writeUTF("requestCanco:" + (String)obj);
+						break;
+			}
+			sServidor.close();
+		} catch (IOException e) {
+			System.out.println("No s'ha pogut conectar amb el servidor");
+		}
+	}
 	/*
 	public String algo(String s){
 		String keyString = "KA839KJsdDa4sdJSNsdjasid!@$@#$#@$#*&(*&}{234hjuk32432432dsfsdf";
