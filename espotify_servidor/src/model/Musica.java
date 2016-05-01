@@ -12,7 +12,7 @@ import controller.SocketController;
  */
 
 public class Musica {
-	private static ArrayList<Canco> alMusica;
+	public static ArrayList<Canco> alMusica;
 	SocketController message;
 	
 	public Musica () {

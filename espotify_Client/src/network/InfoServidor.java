@@ -1,8 +1,12 @@
 package network;
 
+import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -15,6 +19,8 @@ import model.Canco;
 
 @SuppressWarnings("unused")
 public class InfoServidor {
+		public final static int FILE_SIZE = 6022386;
+		public final static String FILE_TO_RECEIVED = "espotify_Client/Musica/";
 	
 		//private MessageService mService;
 		private ServerSocket sServer;
@@ -26,6 +32,7 @@ public class InfoServidor {
 		private boolean active;
 		private ControladorFinestres controladorFinestres;
 		private ControladorLlistar controladorLlistar;
+		private FileInputStream fSongServ;
 		
 		public InfoServidor(){}
 		
@@ -103,6 +110,10 @@ public class InfoServidor {
 	 */
 	
 	public void peticio(String request, Object obj) {
+		int bytesRead;
+	    int current = 0;
+	    FileOutputStream fos = null;
+	    BufferedOutputStream bos = null;
 		try {
 			Socket sServidor = new Socket ("localhost", 34567);
 			
@@ -111,6 +122,34 @@ public class InfoServidor {
 						//Envia: requestCanco:canco/nomArtista
 						DataOutputStream doStream  = new DataOutputStream(sServidor.getOutputStream());
 						doStream.writeUTF("requestCanco:" + (String)obj);
+						//ObjectInputStream objectInput = new ObjectInputStream(sServidor.getInputStream());
+						/*try {
+							fSongServ = (FileInputStream) objectInput.readObject();
+							if(fSongServ == null)System.out.println("es nulo!");
+						} catch (ClassNotFoundException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}*/
+						// receive file
+					      byte [] mybytearray  = new byte [FILE_SIZE];
+					      InputStream is = sServidor.getInputStream();
+					      String auxPath = obj.toString();
+					      String[] concat=auxPath.split("/");
+					      fos = new FileOutputStream(FILE_TO_RECEIVED.concat(concat[0])+"_".concat(concat[1]));
+					      bos = new BufferedOutputStream(fos);
+					      bytesRead = is.read(mybytearray,0,mybytearray.length);
+					      current = bytesRead;
+
+					      do {
+					         bytesRead =
+					            is.read(mybytearray, current, (mybytearray.length-current));
+					         if(bytesRead >= 0) current += bytesRead;
+					      } while(bytesRead > -1);
+
+					      bos.write(mybytearray, 0 , current);
+					      bos.flush();
+					      System.out.println("File " + FILE_TO_RECEIVED
+					          + " downloaded (" + current + " bytes read)");
 						break;
 			}
 			sServidor.close();

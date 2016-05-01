@@ -29,7 +29,6 @@ public class SocketController {
 		return response;
 	}
 	
-	
 
 	public void registroUsuario(String usuario, String password){
 		User user =new User(usuario,password);
@@ -136,6 +135,42 @@ public ArrayList<User> selectUsers(){
 		}
 		
 		return alUser;
+	}
+public int songRequest(String nCanco, String nArtista){
+	/*User user =new User(usuario,password);
+	
+	//Comprovamos el nombre de usuario pero no validamos la contraseña
+	String result = verifyUser(user);
+	System.out.println("## "+result+" ##");
+	if(result.equals("error")){
+		Query q = new Query();
+		String response;
+		String cad = q.queryList(0, user);
+		response = q.queryList(1, user);
+
+		conn.insertQuery(response);
+		
+		System.out.println("User: '"+user.getNickname()+"' Inserit correctament.");
+	}else{
+		System.out.println("[Servidor] L'usari '"+user.getNickname()+"' ja es troba registrat.");
+	}
+		
+		//System.out.println(user.verifyUser(user));
+*/
+	ArrayList<Canco> allMusic = selectSongs();
+	int size = allMusic.size();
+	int i = 0;
+	boolean trobat =  false;
+	while( i <size && !trobat){
+		if(allMusic.get(i).getNom().equals(nCanco) && allMusic.get(i).getArtista().equals(nArtista))trobat=true;
+		i++;
+	}
+	if(!trobat){
+		return -1;
+	}else{
+		return i-1;
+	}
+	
 	}
 	
 }

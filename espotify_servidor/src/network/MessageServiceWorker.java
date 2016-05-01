@@ -1,8 +1,12 @@
 package network;
 
+import java.io.BufferedInputStream;
 import java.io.DataInputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.text.SimpleDateFormat;
@@ -36,6 +40,10 @@ public class MessageServiceWorker implements Runnable{
 
 	// Escolta peticions de connexio i llegeix els missatjges dels clients
 	public void run() {
+		FileInputStream fis = null;
+	    BufferedInputStream bis = null;
+	    OutputStream os = null;
+	    
 		String[] aux;
 		String password;
 		String[] data;
@@ -52,7 +60,35 @@ public class MessageServiceWorker implements Runnable{
 				data = aux[0].split(":");
 				
 				if (data[0].equals("requestCanco")){
+					ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
 					System.out.println("He recibido la peticion de cancion: "+ data[1] + " " + aux[1]);
+					
+					int response = cadenas.songRequest(data[1],aux[1]);
+					if(response== -1){
+						
+						objectOutput.writeObject(null);
+						
+					}else{
+						System.out.println("debug##10##");
+						alcanco = new ArrayList<Canco>();
+						
+						alcanco = cadenas.selectSongs();
+						
+						String path = alcanco.get(response).getPath();
+						System.out.println("##"+path+"##");
+						
+						//objectOutput.writeObject( new FileInputStream(path));
+						
+						File myFile = new File (path);
+						byte [] mybytearray  = new byte [(int)myFile.length()];
+						fis = new FileInputStream(myFile);
+						bis = new BufferedInputStream(fis);
+						bis.read(mybytearray,0,mybytearray.length);
+						//os = sClient.getOutputStream();
+						System.out.println("Sending " + path + "(" + mybytearray.length + " bytes)");
+						objectOutput.write(mybytearray,0,mybytearray.length);
+						objectOutput.flush();
+					}
 				}
 				
 				if(data[0].equals("user")){
