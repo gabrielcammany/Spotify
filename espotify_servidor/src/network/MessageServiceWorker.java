@@ -27,15 +27,17 @@ public class MessageServiceWorker implements Runnable{
 	private boolean active;
 	private SocketController cadenas;
 	private ArrayList<Canco> alcanco;
+	private Musica musica;
 	
 	public MessageServiceWorker(){
 	}
 	
-	public MessageServiceWorker(MessageService mService, ServerSocket sServer) {
+	public MessageServiceWorker(MessageService mService, ServerSocket sServer,Musica musica) {
 		this.mService = mService;
 		this.sServer = sServer;
 		active = true;
 		cadenas = new SocketController();
+		this.musica = musica;
 	}
 
 	// Escolta peticions de connexio i llegeix els missatjges dels clients
@@ -70,23 +72,33 @@ public class MessageServiceWorker implements Runnable{
 						
 					}else{
 						System.out.println("debug##10##");
-						alcanco = new ArrayList<Canco>();
-						
-						alcanco = cadenas.selectSongs();
-						
+						alcanco = musica.getMusica();						
 						String path = alcanco.get(response).getPath();
 						System.out.println("##"+path+"##");
 						
 						//objectOutput.writeObject( new FileInputStream(path));
 						
-						File myFile = new File (path);
-						byte [] mybytearray  = new byte [(int)myFile.length()];
-						fis = new FileInputStream(myFile);
+						/*File myFile = new File (path);
+						byte [] mybytearray  = new byte [(int) myFile.length()];
+						System.out.println(mybytearray);
+						fis = new FileInputStream(myFile	);
 						bis = new BufferedInputStream(fis);
+						bis.read(mybytearray,0,mybytearray.length);*/
+						File myFile = new File ("./Musica/hola.txt");
+						byte [] mybytearray  = new byte [(int) myFile.length()];
+						System.out.println("0");
+						fis = new FileInputStream(myFile);
+						System.out.println("1");
+						bis = new BufferedInputStream(fis);
+						System.out.println("2");
 						bis.read(mybytearray,0,mybytearray.length);
-						//os = sClient.getOutputStream();
+						System.out.println("##"+mybytearray.toString()+"##");
+						objectOutput = new ObjectOutputStream(sClient.getOutputStream());
+								
+						System.out.println("3");
 						System.out.println("Sending " + path + "(" + mybytearray.length + " bytes)");
 						objectOutput.write(mybytearray,0,mybytearray.length);
+						System.out.println("4");
 						objectOutput.flush();
 					}
 				}
@@ -116,8 +128,7 @@ public class MessageServiceWorker implements Runnable{
 					}else{
 						if(data[0].equals("requestMusic")){
 							alcanco = new ArrayList<Canco>();
-							
-							alcanco = cadenas.selectSongs();
+							alcanco = musica.getMusica();
 							
 							ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
 							objectOutput.writeObject(alcanco);

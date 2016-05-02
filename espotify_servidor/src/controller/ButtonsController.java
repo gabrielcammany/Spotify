@@ -24,7 +24,7 @@ public class ButtonsController implements ActionListener {
 	public	ErrorLog vError =new ErrorLog();
 	// NETWORK
 	private MessageService mService;
-	
+	public Musica musica;
 	private User user;
 	
 	
@@ -36,10 +36,12 @@ public class ButtonsController implements ActionListener {
 		this.mService = new MessageService(this);
 		
 		
+		
 	}
 	
 	public void actionPerformed(ActionEvent event) {
 		if (event.getActionCommand().equals("START")) {
+			this.musica = new Musica();
 			// Iniciem el servei
 			mService.startService();
 			view.changeButtonsStateStarted();
@@ -51,7 +53,6 @@ public class ButtonsController implements ActionListener {
 	}
 	
 	public void creaFinestra() {
-		Musica musica = new Musica();
 		System.out.println("########################################################");
 		Usuaris allUsers = new Usuaris();
 		viewF.creaFinestra(musica, allUsers);

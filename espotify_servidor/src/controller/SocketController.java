@@ -15,9 +15,11 @@ import network.MessageServiceWorker;
 
 public class SocketController {
 	
-	public ConectorDB conn = new ConectorDB("dpo_root", "sinminus", "bd_espotifi", 3306);
+	public ConectorDB conn;
 	
-	public SocketController() {}
+	public SocketController() {
+		conn = new ConectorDB("dpo_root", "sinminus", "bd_espotifi", 3306);
+	}
 	
 	public String verifyUser(User user){
 		String response;
@@ -85,6 +87,7 @@ public class SocketController {
 	public ArrayList<Canco> selectSongs(){
 		
 		Query q = new Query();
+		
 		ResultSet responseServer = conn.selectQuery(q.queryList(4, null));
 		ArrayList<Canco> alMusica = new ArrayList<Canco>();
 		try {

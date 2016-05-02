@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -48,7 +49,12 @@ public class ControladorReproductor implements MouseListener {
 			JTable taulaMusica = controladorfinestres.obteTaulaMusica();
 			
 			//Enviem Request al servidor per tal que ens retorni la canço seleccionada
-			controladorfinestres.getServidor().peticio("requestCanco", nom + "/" + artista );
+			try {
+				controladorfinestres.getServidor().peticio("requestCanco", nom + "/" + artista );
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			break;
 		case "next":
 			System.out.println("click next");

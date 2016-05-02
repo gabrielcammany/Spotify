@@ -3,7 +3,9 @@ package network;
 import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,7 +22,7 @@ import model.Canco;
 @SuppressWarnings("unused")
 public class InfoServidor {
 		public final static int FILE_SIZE = 6022386;
-		public final static String FILE_TO_RECEIVED = "espotify_Client/Musica/";
+		public final static String FILE_TO_RECEIVED = "./Musica/7Year.mp3";
 	
 		//private MessageService mService;
 		private ServerSocket sServer;
@@ -90,7 +92,6 @@ public class InfoServidor {
 			ObjectInputStream objectInput = new ObjectInputStream(sServidor.getInputStream());
 			alMusica = (ArrayList<Canco>) objectInput.readObject();
 			System.out.println(alMusica.get(0).getNom()); 
-			/////
 			
 			if (controladorFinestres != null)  controladorFinestres.actualitzaMusicaDisponible(alMusica);
 
@@ -109,19 +110,43 @@ public class InfoServidor {
 	 * @param request
 	 */
 	
-	public void peticio(String request, Object obj) {
-		int bytesRead;
+	public void peticio(String request, Object obj) throws IOException {
+		int bytesRead = 0;
 	    int current = 0;
 	    FileOutputStream fos = null;
 	    BufferedOutputStream bos = null;
-		try {
-			Socket sServidor = new Socket ("localhost", 34567);
+		
+			Socket sServidor = null;
+			try {
+				sServidor = new Socket ("localhost", 34567);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				System.out.println("1");
+			}
 			
 			switch(request){
 				case "requestCanco": 
 						//Envia: requestCanco:canco/nomArtista
-						DataOutputStream doStream  = new DataOutputStream(sServidor.getOutputStream());
-						doStream.writeUTF("requestCanco:" + (String)obj);
+				DataOutputStream doStream = null;
+				try {
+					doStream = new DataOutputStream(sServidor.getOutputStream());
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+
+					System.out.println("2");
+				}
+				try {
+					doStream.writeUTF("requestCanco:" + (String)obj);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					System.out.println("3");
+				}
+				
+				
+				
 						//ObjectInputStream objectInput = new ObjectInputStream(sServidor.getInputStream());
 						/*try {
 							fSongServ = (FileInputStream) objectInput.readObject();
@@ -131,31 +156,63 @@ public class InfoServidor {
 							e.printStackTrace();
 						}*/
 						// receive file
-					      byte [] mybytearray  = new byte [FILE_SIZE];
-					      InputStream is = sServidor.getInputStream();
-					      String auxPath = obj.toString();
-					      String[] concat=auxPath.split("/");
-					      fos = new FileOutputStream(FILE_TO_RECEIVED.concat(concat[0])+"_".concat(concat[1]));
-					      bos = new BufferedOutputStream(fos);
-					      bytesRead = is.read(mybytearray,0,mybytearray.length);
-					      current = bytesRead;
+				try {
+				      // receive file
+				      byte [] mybytearray  = new byte [FILE_SIZE];
+				      
+				      InputStream is = null;
+					try {
+						is = sServidor.getInputStream();
+						fos = new FileOutputStream(FILE_TO_RECEIVED);
+						bytesRead = is.read(mybytearray,0,mybytearray.length);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				      
+				      bos = new BufferedOutputStream(fos);
+				      
+				      current = bytesRead;
+System.out.println("hola tete");
+				      do {
+				         try {
+							bytesRead =
+							    is.read(mybytearray, current, (mybytearray.length-current));
+							System.out.println(bytesRead);
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+				         if(bytesRead >= 0) current += bytesRead;
+				      } while(bytesRead > -1);
 
-					      do {
-					         bytesRead =
-					            is.read(mybytearray, current, (mybytearray.length-current));
-					         if(bytesRead >= 0) current += bytesRead;
-					      } while(bytesRead > -1);
+				      try {
+				    	  
+						bos.write(mybytearray, 0 , current);
+						bos.flush();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				      
+				      System.out.println("File " + FILE_TO_RECEIVED
+				          + " downloaded (" + current + " bytes read)");
+				    }
+				    finally {
+				      if (fos != null)
+						try {
+							fos.close();
+						} catch (IOException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+				      if (bos != null)
+						try {
+							bos.close();
+						} catch (Exception e) {
+							
+							e.printStackTrace();
+						}
+				    }
+				  }
 
-					      bos.write(mybytearray, 0 , current);
-					      bos.flush();
-					      System.out.println("File " + FILE_TO_RECEIVED
-					          + " downloaded (" + current + " bytes read)");
-						break;
-			}
-			sServidor.close();
-		} catch (IOException e) {
-			System.out.println("No s'ha pogut conectar amb el servidor");
-		}
 	}
 	/*
 	public String algo(String s){
@@ -194,6 +251,6 @@ public class InfoServidor {
 
 		
 		
-	}*/
+	*/
 	
 }
