@@ -35,6 +35,7 @@ public class InfoServidor {
 		private ControladorFinestres controladorFinestres;
 		private ControladorLlistar controladorLlistar;
 		private FileInputStream fSongServ;
+		BufferedOutputStream bos;
 		
 		public InfoServidor(){}
 		
@@ -110,111 +111,32 @@ public class InfoServidor {
 	 * @param request
 	 */
 	
-	public void peticio(String request, Object obj) throws IOException {
-		int bytesRead = 0;
-	    int current = 0;
-	    FileOutputStream fos = null;
-	    BufferedOutputStream bos = null;
-		
-			Socket sServidor = null;
-			try {
-				sServidor = new Socket ("localhost", 34567);
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				System.out.println("1");
-			}
-			
-			switch(request){
-				case "requestCanco": 
-						//Envia: requestCanco:canco/nomArtista
-				DataOutputStream doStream = null;
-				try {
-					doStream = new DataOutputStream(sServidor.getOutputStream());
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-
-					System.out.println("2");
+	public void peticio(String request, String obj) throws IOException {
+		Socket sServidor = new Socket ("localhost", 34567);
+		DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
+		doStream.writeUTF("requestCanco:"+obj.replace(" ", ""));
+		sServidor.close();
+		String[] s = obj.split("/");
+		Socket sServidor2 = new Socket ("localhost", 34567);
+		switch(request){
+		case "requestCanco":   
+			byte[] mybytearray = new byte[600000];
+			InputStream is = sServidor2.getInputStream();
+			FileOutputStream fos = new FileOutputStream(s[0] + "_" + s[1] + ".mp3");
+			bos = new BufferedOutputStream(fos);int bytesRead;
+			System.out.println("askudhahjsdjhuiashd");
+				while((bytesRead = is.read(mybytearray, 0, mybytearray.length)) > -1){
+					
+					bos.write(mybytearray, 0, bytesRead);
 				}
-				try {
-					doStream.writeUTF("requestCanco:" + (String)obj);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-					System.out.println("3");
-				}
-				
-				
-				
-						//ObjectInputStream objectInput = new ObjectInputStream(sServidor.getInputStream());
-						/*try {
-							fSongServ = (FileInputStream) objectInput.readObject();
-							if(fSongServ == null)System.out.println("es nulo!");
-						} catch (ClassNotFoundException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}*/
-						// receive file
-				try {
-				      // receive file
-				      byte [] mybytearray  = new byte [FILE_SIZE];
-				      
-				      InputStream is = null;
-					try {
-						is = sServidor.getInputStream();
-						fos = new FileOutputStream(FILE_TO_RECEIVED);
-						bytesRead = is.read(mybytearray,0,mybytearray.length);
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				      
-				      bos = new BufferedOutputStream(fos);
-				      
-				      current = bytesRead;
-System.out.println("hola tete");
-				      do {
-				         try {
-							bytesRead =
-							    is.read(mybytearray, current, (mybytearray.length-current));
-							System.out.println(bytesRead);
-						} catch (IOException e) {
-							e.printStackTrace();
-						}
-				         if(bytesRead >= 0) current += bytesRead;
-				      } while(bytesRead > -1);
+			bos.close();
+			sServidor2.close();
 
-				      try {
-				    	  
-						bos.write(mybytearray, 0 , current);
-						bos.flush();
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				      
-				      System.out.println("File " + FILE_TO_RECEIVED
-				          + " downloaded (" + current + " bytes read)");
-				    }
-				    finally {
-				      if (fos != null)
-						try {
-							fos.close();
-						} catch (IOException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-				      if (bos != null)
-						try {
-							bos.close();
-						} catch (Exception e) {
-							
-							e.printStackTrace();
-						}
-				    }
-				  }
+		}
 
 	}
-	/*
+}
+			/*
 	public String algo(String s){
 		String keyString = "KA839KJsdDa4sdJSNsdjasid!@$@#$#@$#*&(*&}{234hjuk32432432dsfsdf";
 
@@ -252,5 +174,4 @@ System.out.println("hola tete");
 		
 		
 	*/
-	
-}
+

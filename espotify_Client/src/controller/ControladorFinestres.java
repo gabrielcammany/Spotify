@@ -39,14 +39,11 @@ public class ControladorFinestres {
 		Thread t = new Thread(){
 			@Override
 			public void run(){
-				int i = 0;
 				while(true){
 					if(reproduir){
-						i = 0;
 						r.run();
 						reproduir = false;
 					}
-					i++;
 				}
 			}
 		};

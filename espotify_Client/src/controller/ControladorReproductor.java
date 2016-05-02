@@ -43,7 +43,6 @@ public class ControladorReproductor implements MouseListener {
 		case "play":
 			System.out.println("click play");
 			controladorfinestres.r.setPath(nom,artista);
-			controladorfinestres.reproduir = true;
 			
 
 			JTable taulaMusica = controladorfinestres.obteTaulaMusica();

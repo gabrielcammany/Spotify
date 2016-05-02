@@ -28,6 +28,7 @@ public class MessageServiceWorker implements Runnable{
 	private SocketController cadenas;
 	private ArrayList<Canco> alcanco;
 	private Musica musica;
+	BufferedInputStream bis;
 	
 	public MessageServiceWorker(){
 	}
@@ -42,9 +43,6 @@ public class MessageServiceWorker implements Runnable{
 
 	// Escolta peticions de connexio i llegeix els missatjges dels clients
 	public void run() {
-		FileInputStream fis = null;
-	    BufferedInputStream bis = null;
-	    OutputStream os = null;
 	    
 		String[] aux;
 		String password;
@@ -62,44 +60,29 @@ public class MessageServiceWorker implements Runnable{
 				data = aux[0].split(":");
 				
 				if (data[0].equals("requestCanco")){
+					System.out.println("Holaaaa");
 					ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
 					System.out.println("He recibido la peticion de cancion: "+ data[1] + " " + aux[1]);
-					
+
 					int response = cadenas.songRequest(data[1],aux[1]);
 					if(response== -1){
-						
+
 						objectOutput.writeObject(null);
-						
+
 					}else{
 						System.out.println("debug##10##");
 						alcanco = musica.getMusica();						
 						String path = alcanco.get(response).getPath();
 						System.out.println("##"+path+"##");
-						
-						//objectOutput.writeObject( new FileInputStream(path));
-						
-						/*File myFile = new File (path);
-						byte [] mybytearray  = new byte [(int) myFile.length()];
-						System.out.println(mybytearray);
-						fis = new FileInputStream(myFile	);
-						bis = new BufferedInputStream(fis);
-						bis.read(mybytearray,0,mybytearray.length);*/
-						File myFile = new File ("./Musica/hola.txt");
-						byte [] mybytearray  = new byte [(int) myFile.length()];
-						System.out.println("0");
-						fis = new FileInputStream(myFile);
-						System.out.println("1");
-						bis = new BufferedInputStream(fis);
-						System.out.println("2");
-						bis.read(mybytearray,0,mybytearray.length);
-						System.out.println("##"+mybytearray.toString()+"##");
-						objectOutput = new ObjectOutputStream(sClient.getOutputStream());
-								
-						System.out.println("3");
-						System.out.println("Sending " + path + "(" + mybytearray.length + " bytes)");
-						objectOutput.write(mybytearray,0,mybytearray.length);
-						System.out.println("4");
-						objectOutput.flush();
+						File myFile = new File (path);
+						Socket sock = sServer.accept();
+						byte[] mybytearray = new byte[(int) myFile.length()];
+						bis = new BufferedInputStream(new FileInputStream(myFile));
+						bis.read(mybytearray, 0, mybytearray.length);
+						OutputStream os = sock.getOutputStream();
+						os.write(mybytearray, 0, mybytearray.length);
+						os.flush();
+						sock.close();
 					}
 				}
 				
