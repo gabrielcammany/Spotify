@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 
 import org.jdesktop.xswingx.PromptSupport;
 
+import controller.ButtonsController;
 import net.miginfocom.swing.MigLayout;
 
 
@@ -40,9 +41,17 @@ public class FinestraServidor extends JFrame {
 	private Musica musica;
 	private JPanel jpMusica;
 	private Estadistica estadistica;
+	private ButtonsController controlador;
+
 	
 	
 	public FinestraServidor() {}
+	
+	public void setControlador(ButtonsController controlador) {
+		this.controlador = controlador;
+	}
+	
+	
 	
 	public void creaFinestra(Musica musica, Usuaris allUsers){
 		this.musica = musica;
@@ -270,6 +279,7 @@ public class FinestraServidor extends JFrame {
 		//JPanel jpNoms = new JPanel (new GridLayout(10, 1));
 		//JPanel jpBarres = new JPanel (new GridLayout(10,1));
 		
+		/*
 		//!!!!!Hardcodeo nombres y valores para hacer pruebas
 		ArrayList<String> nomsCancons = new ArrayList<String>();
 		nomsCancons.add("pepe");nomsCancons.add("jeje");
@@ -287,7 +297,7 @@ public class FinestraServidor extends JFrame {
 		valors.add("23");valors.add("8");
 		
 		
-		/*for (int i = 0; i < 10; i++) {
+		for (int i = 0; i < 10; i++) {
 			jpNoms.add(new JLabel(nomsCancons.get(i)));
 		}
 		
@@ -295,7 +305,7 @@ public class FinestraServidor extends JFrame {
 		for (int i = 0; i < 10; i++) {
 			
 		}*/
-		estadistica = new Estadistica(valors, nomsCancons);
+		estadistica = new Estadistica(musica);
 		
 		//Agafem el valor mes gran (CUIDADO HARA FALTA ORDENAR CUANDO RECIBAMOS DE LA BDD)
 		//mesGran = Integer.parseInt(valors.get(0)); //i = sort de la array (nombre + reproducciones) ordenada de mayor a menos

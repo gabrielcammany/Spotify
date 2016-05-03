@@ -33,6 +33,7 @@ public class ButtonsController implements ActionListener {
 		//this.user = user;
 		this.view = view;
 		this.viewF = viewF;
+		this.viewF.setControlador(this);
 		this.mService = new MessageService(this);
 		
 		
