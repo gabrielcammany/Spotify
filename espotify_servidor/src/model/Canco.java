@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import controller.ButtonsController;
 
-public class Canco implements Serializable {
+public class Canco implements Serializable, Comparable<Canco> {
 	/**
 	 * 
 	 */
@@ -73,5 +73,18 @@ public class Canco implements Serializable {
 	}
 	
 	public Canco(){}
+	@Override
+	public int compareTo(Canco o) {
+		// TODO Auto-generated method stub
+		if (Integer.parseInt(nReproduccio) > Integer.parseInt(o.nReproduccio)) {
+			return -1;
+		}
+		
+		if (Integer.parseInt(nReproduccio) < Integer.parseInt(o.nReproduccio)) {
+			return 1;
+		}
+		
+		return 0;
+	}
 
 }
