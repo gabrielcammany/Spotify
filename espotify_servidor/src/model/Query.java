@@ -15,7 +15,7 @@ public class Query {
 	 */
 	public Query(){}
 	
-	public String queryList(int option,User user){
+	public String queryList(int option,Object obj){
 		
 		switch(option){
 		case 0:
@@ -24,16 +24,16 @@ public class Query {
 		case 1://inserir usuari
 			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 			Date date = new Date();
-			user.setData_reg(dateFormat.format(date));
-			String cad1= "INSERT INTO usuari(nickname,password,data_reg,data_ult) values('"+user.getNickname()+"','"+user.getPassword()+"','"+user.getData_reg()+"','"+user.getData_reg()+"');";
+			((User) obj).setData_reg(dateFormat.format(date));
+			String cad1= "INSERT INTO usuari(nickname,password,data_reg,data_ult) values('"+((User) obj).getNickname()+"','"+((User) obj).getPassword()+"','"+((User) obj).getData_reg()+"','"+((User) obj).getData_reg()+"');";
 			return cad1;
 		case 2://Select d'un nickname especific
-			String cad2 = "SELECT nickname FROM usuari WHERE nickname = '"+user.getNickname()+"';";
+			String cad2 = "SELECT nickname FROM usuari WHERE nickname = '"+((User) obj).getNickname()+"';";
 			
 			//String cad2 = "Select * FROM db_espotifi.usuari AS user;";
 			return cad2;
 		case 3://Select d'un password especific
-			String cad3 = "Select user.nickname FROM db_espotifi.usuari AS user WHERE user.nickname = '"+user.getNickname()+"' AND user.password = '"+user.getPassword()+"';";
+			String cad3 = "Select user.nickname FROM db_espotifi.usuari AS user WHERE user.nickname = '"+((User) obj).getNickname()+"' AND user.password = '"+((User) obj).getPassword()+"';";
 			return cad3;
 		case 4://enviar canco 
 			String cad4= "SELECT * FROM canco;";
@@ -41,6 +41,12 @@ public class Query {
 		case 5://enviar usuari 
 			String cad5= "SELECT * FROM usuari;";
 			return cad5;
+		case 6: //Actualizar numero de reproducciones
+			String nom =((Canco) obj).getNom();
+			String nRep= ((Canco) obj).getnReproduccio();
+			String artista = ((Canco) obj).getArtista();
+			String cad6 = "UPDATE canco SET num_reproduccio ='"+nRep+"' WHERE nom = '"+nom+"' AND artista= '"+artista+"';";
+			return cad6;
 		}
 		
 		return null;

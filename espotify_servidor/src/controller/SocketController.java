@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import com.mysql.jdbc.ConnectionPropertiesTransform;
 
 import model.Canco;
+import model.Musica;
 import model.Query;
 import model.User;
 import network.ConectorDB;
@@ -15,7 +16,8 @@ import network.MessageServiceWorker;
 
 public class SocketController {
 	
-	public ConectorDB conn;
+	private ConectorDB conn;
+	private Musica m;
 	
 	public SocketController() {
 		conn = new ConectorDB("dpo_root", "sinminus", "bd_espotifi", 3306);
@@ -139,28 +141,10 @@ public ArrayList<User> selectUsers(){
 		
 		return alUser;
 	}
-public int songRequest(String nCanco, String nArtista){
-	/*User user =new User(usuario,password);
-	
-	//Comprovamos el nombre de usuario pero no validamos la contraseña
-	String result = verifyUser(user);
-	System.out.println("## "+result+" ##");
-	if(result.equals("error")){
-		Query q = new Query();
-		String response;
-		String cad = q.queryList(0, user);
-		response = q.queryList(1, user);
 
-		conn.insertQuery(response);
-		
-		System.out.println("User: '"+user.getNickname()+"' Inserit correctament.");
-	}else{
-		System.out.println("[Servidor] L'usari '"+user.getNickname()+"' ja es troba registrat.");
-	}
-		
-		//System.out.println(user.verifyUser(user));
-*/
-	ArrayList<Canco> allMusic = selectSongs();
+public int songRequest(String nCanco, String nArtista){
+	m = new Musica();
+	ArrayList<Canco> allMusic = m.getMusica();
 	int size = allMusic.size();
 	int i = 0;
 	boolean trobat =  false;
@@ -168,11 +152,17 @@ public int songRequest(String nCanco, String nArtista){
 		if(allMusic.get(i).getNom().equals(nCanco) && allMusic.get(i).getArtista().equals(nArtista))trobat=true;
 		i++;
 	}
-	if(!trobat){
-		return -1;
-	}else{
-		return i-1;
-	}
+	i--;
+	Query q= new Query();
+	Canco c = allMusic.get(i);
+	Integer nRep = Integer.parseInt(c.getnReproduccio())+1;
+	c.setnReproduccio(nRep.toString());
+	allMusic.set(i,c);
+	m.setMusica(allMusic);
+	String response = q.queryList(6,c);
+	conn.updateQuery(response);
+	return i-1;
+	
 	
 	}
 	
