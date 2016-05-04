@@ -22,6 +22,7 @@ import controller.ControladorFinestres;
 import controller.ControladorLlistar;
 import controller.ControladorReproductor;
 import model.Canco;
+import model.User;
 import net.miginfocom.swing.MigLayout;
 
 
@@ -44,6 +45,7 @@ public class FinestraReproduccio extends JFrame {
 	private JScrollPane jspLlistesFollowing;
 	public JTable taulaMusica;
 	public JTable taulaUsuaris;
+	ArrayList<User> alUsers;
 	
 	
 	
@@ -279,6 +281,10 @@ public class FinestraReproduccio extends JFrame {
 		this.jspLlistatDisponible = new JScrollPane(taulaMusica);		
 
 		
+	}
+	
+	public void setUsuaris(ArrayList<User> alUsers) {
+		this.alUsers = alUsers;	
 	}
 	
 	/**

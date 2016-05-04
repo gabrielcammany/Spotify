@@ -4,18 +4,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 
-import controller.ButtonsController;
-import controller.SocketController;
 
-public class User implements Serializable{
+public class User implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	private String nickname;
 	private String password;
 	private String data_reg;
 	private String data_ult;
-	private ButtonsController controller;
-
 
 	public String getNickname() {
 		return nickname;
@@ -56,9 +52,7 @@ public class User implements Serializable{
 		this.data_ult = data_ult;
 	}
 
-	public User(){
-		SocketController message = new SocketController();
-	}
+
 	public User(String usuario,String password){
 		//this.alUser =new ArrayList<User>();
 		this.nickname = usuario;

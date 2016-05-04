@@ -22,6 +22,7 @@ import java.util.Calendar;
 import controller.SocketController;
 import model.Canco;
 import model.Musica;
+import model.User;
 import model.Usuaris;
 
 public class MessageServiceWorker implements Runnable{
@@ -97,6 +98,14 @@ public class MessageServiceWorker implements Runnable{
 						
 					}
 				}
+				
+				if (data[0].equals("requestUsuaris")) {
+					ArrayList<User> usuaris = new ArrayList<User>();
+					usuaris = cadenas.selectUsers();
+					ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
+					objectOutput.writeObject(usuaris);
+				}
+				
 				
 				if(data[0].equals("user")){
 					user = data[1];

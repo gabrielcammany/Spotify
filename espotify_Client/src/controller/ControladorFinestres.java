@@ -2,12 +2,15 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 import javax.swing.JTable;
 
 import model.Canco;
 import model.Reproductor;
+import model.User;
 import network.InfoServidor;
 import view.FinestraReproduccio;
 import view.Finestra_Registre;
@@ -78,8 +81,10 @@ public class ControladorFinestres {
 	/**
 	 * Proces de login
 	 * @throws ClassNotFoundException 
+	 * @throws IOException 
+	 * @throws UnknownHostException 
 	 */
-	public void Login() throws ClassNotFoundException {
+	public void Login() throws ClassNotFoundException, UnknownHostException, IOException {
 		//InfoServidor info = new InfoServidor();
 		infoServidor.enviarUsuari(2, fLogin.getjtfUsuari().getText(), fLogin.getjtfPassword().getPassword());
 		Reproduccio();	
@@ -89,9 +94,11 @@ public class ControladorFinestres {
 	/**
 	 * Reproduir la musica
 	 * @throws ClassNotFoundException 
+	 * @throws IOException 
+	 * @throws UnknownHostException 
 	 */
 	
-	public void Reproduccio() throws ClassNotFoundException{
+	public void Reproduccio() throws ClassNotFoundException, UnknownHostException, IOException{
 		/*
 		 * 
 		 * Comprovar dades correctes
@@ -101,10 +108,13 @@ public class ControladorFinestres {
 		 */
 
 		fReproduccio = new FinestraReproduccio(this);
-		//Realitzem la peticio de can�ons al servidor
+		//Realitzem la peticio de cancos disponibles al servidor
 		
 		//infoServidor =new InfoServidor();
 		infoServidor.peticioMusica();
+		
+		//Realitzem la peticio dels usuaris registrats
+		infoServidor.peticioUsuaris();
 		
 		
 	}
@@ -119,6 +129,10 @@ public class ControladorFinestres {
 		fReproduccio.setMusicaDisponible(alMusica);
 		
 		
+	}
+	
+	public void actualitzaUsuaris(ArrayList<User> alUsers) {
+		fReproduccio.setUsuaris(alUsers);
 	}
 	
 	/*

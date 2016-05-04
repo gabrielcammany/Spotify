@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import controller.ControladorFinestres;
 import controller.ControladorLlistar;
 import model.Canco;
+import model.User;
 
 @SuppressWarnings("unused")
 public class InfoServidor {
@@ -94,7 +95,7 @@ public class InfoServidor {
 			doStream.writeUTF("requestMusic:");
 			ObjectInputStream objectInput = new ObjectInputStream(sServidor.getInputStream());
 			alMusica = (ArrayList<Canco>) objectInput.readObject();
-			System.out.println(alMusica.get(0).getNom()); 
+			 
 			
 			if (controladorFinestres != null)  controladorFinestres.actualitzaMusicaDisponible(alMusica);
 
@@ -105,6 +106,21 @@ public class InfoServidor {
 			System.out.println("exc1");
 		}
 		
+	}
+	
+	public void peticioUsuaris() throws UnknownHostException, IOException, ClassNotFoundException {
+		Socket sServidor = new Socket("localhost", 34567);
+		
+		ArrayList <User> alUsers = new ArrayList<User>();
+		
+		DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
+		doStream.writeUTF("requestUsuaris:");
+		ObjectInputStream objectInput = new ObjectInputStream(sServidor.getInputStream());
+		alUsers = (ArrayList<User>) objectInput.readObject();
+		
+		controladorFinestres.actualitzaUsuaris(alUsers);
+		
+		sServidor.close();
 	}
 	
 	/**
