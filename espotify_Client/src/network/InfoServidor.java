@@ -3,6 +3,7 @@ package network;
 import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -10,6 +11,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
@@ -115,22 +117,20 @@ public class InfoServidor {
 		Socket sServidor = new Socket ("localhost", 34567);
 		DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
 		doStream.writeUTF("requestCanco:"+obj.replace(" ", ""));
-		sServidor.close();
 		String[] s = obj.split("/");
-		Socket sServidor2 = new Socket ("localhost", 34567);
 		switch(request){
 		case "requestCanco":   
-			byte[] mybytearray = new byte[600000];
-			InputStream is = sServidor2.getInputStream();
-			FileOutputStream fos = new FileOutputStream(s[0] + "_" + s[1] + ".mp3");
-			bos = new BufferedOutputStream(fos);int bytesRead;
-			System.out.println("askudhahjsdjhuiashd");
-				while((bytesRead = is.read(mybytearray, 0, mybytearray.length)) > -1){
-					
-					bos.write(mybytearray, 0, bytesRead);
-				}
-			bos.close();
-			sServidor2.close();
+			System.out.println("Path    ./espotify_Client/temp/" + s[0] + "_" + s[1] + ".mp3");
+			InputStream llegada = sServidor.getInputStream();
+			File f = new File("./temp/" + s[0] + "_" + s[1] + ".mp3");
+			FileOutputStream desti = new FileOutputStream(f);
+			byte[] buffer = new byte[1024];
+			int len = 0;
+			while((len=llegada.read(buffer))>0){
+				System.out.println(len);
+				desti.write(buffer, 0, len);
+			}
+			sServidor.close();
 
 		}
 

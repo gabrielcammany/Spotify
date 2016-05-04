@@ -1,14 +1,20 @@
 package network;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -39,6 +45,7 @@ public class MessageServiceWorker implements Runnable{
 		active = true;
 		cadenas = new SocketController();
 		this.musica = musica;
+		
 	}
 
 	// Escolta peticions de connexio i llegeix els missatjges dels clients
@@ -70,19 +77,24 @@ public class MessageServiceWorker implements Runnable{
 						objectOutput.writeObject(null);
 
 					}else{
-						System.out.println("debug##10##");
-						alcanco = musica.getMusica();						
-						String path = alcanco.get(response).getPath();
-						System.out.println("##"+path+"##");
-						File myFile = new File (path);
-						Socket sock = sServer.accept();
-						byte[] mybytearray = new byte[(int) myFile.length()];
-						bis = new BufferedInputStream(new FileInputStream(myFile));
-						bis.read(mybytearray, 0, mybytearray.length);
-						OutputStream os = sock.getOutputStream();
-						os.write(mybytearray, 0, mybytearray.length);
-						os.flush();
-						sock.close();
+						try{ 
+							System.out.println("debug##10##");
+							alcanco = musica.getMusica();						
+							String path = alcanco.get(response).getPath();
+							System.out.println("####");
+							PrintStream envio = new PrintStream(sClient.getOutputStream());
+							FileInputStream fitxer = new FileInputStream("./Musica/Raging_Kygo.mp3");
+							byte[] buffer = new byte[1024];
+							int len = 0;
+							while((len = fitxer.read(buffer))>0){
+								envio.write(buffer,0,len);
+							}
+							envio.flush();
+							sClient.close();	
+						}catch(IOException e){
+							e.printStackTrace();
+						}
+						
 					}
 				}
 				
