@@ -68,7 +68,6 @@ public class MessageServiceWorker implements Runnable{
 				data = aux[0].split(":");
 				
 				if (data[0].equals("requestCanco")){
-					System.out.println("Holaaaa");
 					ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
 					System.out.println("He recibido la peticion de cancion: "+ data[1] + " " + aux[1]);
 
@@ -156,8 +155,6 @@ public class MessageServiceWorker implements Runnable{
 	}
 	
 /*	public void sendMusic(){
-		 System.out.println();
-         System.out.println("@@ hola tete@@");
 		
             Musica m =new Musica();
             ArrayList<Canco> al = new ArrayList<Canco>();

@@ -2,10 +2,8 @@ package view;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
-
 import java.util.Comparator;
 import java.util.Vector;
-
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -18,9 +16,8 @@ import javax.swing.JTextField;
 import org.jdesktop.xswingx.PromptSupport;
 
 import controller.ButtonsController;
+import controller.DeleteController;
 import net.miginfocom.swing.MigLayout;
-
-
 import model.Canco;
 import model.Musica;
 import model.Usuaris;
@@ -42,6 +39,7 @@ public class FinestraServidor extends JFrame {
 	private JPanel jpMusica;
 	private Estadistica estadistica;
 	private ButtonsController controlador;
+	private JFrame jfServidor;
 
 	
 	
@@ -60,7 +58,7 @@ public class FinestraServidor extends JFrame {
 		System.out.println(musica.getMusica().get(0).getNom());
 		System.out.println(musica.getMusica().get(1).getNom());
 		
-		JFrame jfServidor = new JFrame("SPOTYFAI - Servidor");
+		jfServidor = new JFrame("SPOTYFAI - Servidor");
 		
 		jfServidor.setSize(900,500);
 		jfServidor.setResizable(true);
@@ -119,14 +117,15 @@ public class FinestraServidor extends JFrame {
 			filas.add(fila);
 		}
 		
-		
-		
+		JTable taulaUsuari = new JTable(filas, columnas){
+			
+		public boolean isCellEditable (int rowIndex, int vColIndex) {
+			return false;
+		}};
+		taulaUsuari.addMouseListener(new DeleteController(jfServidor, this));
+			
 		
 	
-		
-		JTable taulaUsuari = new JTable(filas, columnas);
-		taulaUsuari.setEnabled(false);
-
 
 
 		JScrollPane jspUsuari = new JScrollPane(taulaUsuari);
@@ -204,18 +203,15 @@ public class FinestraServidor extends JFrame {
 			
 			filas.add(fila);
 		}
-		
-		
-		
-		
-		
-		JTable taulaMusica = new JTable(filas, columnas);
-		
-		
-		
-	    
-	
 
+		
+		JTable taulaMusica = new JTable(filas, columnas){
+			
+		public boolean isCellEditable (int rowIndex, int vColIndex) {
+			return false;
+		}};
+	
+		taulaMusica.addMouseListener(new DeleteController(jfServidor, this));
 
 		JScrollPane jspLlistat = new JScrollPane(taulaMusica);
 

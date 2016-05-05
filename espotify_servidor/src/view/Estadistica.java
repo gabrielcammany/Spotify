@@ -75,7 +75,7 @@ public class Estadistica extends JPanel  {
 		
 		while (i < 10 && i < cancons.size()) {
 			g.setColor(new Color (R, G, B));
-			g.fillRect(150, xBarra, (Integer.parseInt(cancons.get(i).getnReproduccio()) * 600 / mesGran), 28);
+			g.fillRect(200, xBarra, (Integer.parseInt(cancons.get(i).getnReproduccio()) * 600 / mesGran), 28);
 			g.drawString(cancons.get(i).getNom() + " (" + cancons.get(i).getnReproduccio() + ")", 10, xText);
 			
 			R-=20;
