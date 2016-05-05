@@ -39,7 +39,7 @@ public class ControladorFinestres {
 		this.infoServidor = infoServidor;
 		this.infoServidor.setControladorFinestra(this);
 		r = new Reproductor("");
-		Thread t = new Thread(){
+		/*Thread t = new Thread(){
 			@Override
 			public void run(){
 				while(true){
@@ -50,7 +50,7 @@ public class ControladorFinestres {
 				}
 			}
 		};
-		t.start();
+		t.start();*/
 		
 	}
 		
@@ -181,6 +181,10 @@ public class ControladorFinestres {
 	
 	public InfoServidor getServidor() {
 		return infoServidor;
+	}
+	
+	public void restartReproductor() {
+		this.r = new Reproductor("");
 	}
 		
 	
