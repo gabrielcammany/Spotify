@@ -138,15 +138,18 @@ public class InfoServidor {
 		case "requestCanco":   
 			System.out.println("Path    ./espotify_Client/temp/" + s[0] + "_" + s[1] + ".mp3");
 			InputStream llegada = sServidor.getInputStream();
+			System.out.println(s[0] + " " + s[1] + " ES ESTE");
 			File f = new File("./temp/" + s[0] + "_" + s[1] + ".mp3");
+			
 			FileOutputStream desti = new FileOutputStream(f);
 			byte[] buffer = new byte[1024];
 			int len = 0;
 			while((len=llegada.read(buffer))>0){
-				System.out.println(len);
+				//System.out.println(len);
 				desti.write(buffer, 0, len);
 			}
 			sServidor.close();
+			
 
 		}
 

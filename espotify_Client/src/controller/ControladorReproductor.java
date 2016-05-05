@@ -23,6 +23,7 @@ public class ControladorReproductor implements MouseListener {
 	public String opcio;
 	private ControladorFinestres controladorfinestres;
 	boolean play = false;
+	boolean playing = false;
 	String nom;
 	String artista;
 	
@@ -42,22 +43,37 @@ public class ControladorReproductor implements MouseListener {
 		switch (opcio) {
 		case "play":
 			System.out.println("click play");
-			controladorfinestres.r.setPath(nom,artista);
-			
+			System.out.println(nom + " " + artista);
+			if(controladorfinestres.r.getSong().equals(nom + "_" + artista)) {
+				controladorfinestres.r.pause();
+			}
+			else {
+				if (controladorfinestres.r.isPlaying()) {
+					controladorfinestres.r.endSong();
+				}
+				controladorfinestres.restartReproductor();
+				controladorfinestres.r.setPath(nom,artista);
+				
 
-			JTable taulaMusica = controladorfinestres.obteTaulaMusica();
-			
-			//Enviem Request al servidor per tal que ens retorni la canço seleccionada
-			try {
-				controladorfinestres.getServidor().peticio("requestCanco", nom + "/" + artista );
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				JTable taulaMusica = controladorfinestres.obteTaulaMusica();
+				
+				//Enviem Request al servidor per tal que ens retorni la canço seleccionada
+				try {
+					
+					controladorfinestres.getServidor().peticio("requestCanco", nom + "/" + artista );
+					controladorfinestres.r.start();
+					playing = true;
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
 			}
 			break;
+			
+			
 		case "next":
 			System.out.println("click next");
-			controladorfinestres.r.pause();
 			break;
 		case "back":
 			System.out.println("click back");

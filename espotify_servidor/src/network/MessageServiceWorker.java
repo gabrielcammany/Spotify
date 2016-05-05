@@ -84,7 +84,7 @@ public class MessageServiceWorker implements Runnable{
 							String path = alcanco.get(response).getPath();
 							System.out.println("####");
 							PrintStream envio = new PrintStream(sClient.getOutputStream());
-							FileInputStream fitxer = new FileInputStream("./Musica/Raging_Kygo.mp3");
+							FileInputStream fitxer = new FileInputStream("./Musica/" + data[1] + "_" + aux[1] + ".mp3");
 							byte[] buffer = new byte[1024];
 							int len = 0;
 							while((len = fitxer.read(buffer))>0){

@@ -18,14 +18,20 @@ import javazoom.jlgui.basicplayer.BasicPlayerException;
 public class Reproductor extends Thread{
 	
 	private String path;
+	private String song;
+	private boolean isPlaying;
 	BasicPlayer player;
 	
 	public Reproductor(String s) {
 		this.path = s;
+		this.song = "";
+		setPlaying(false);
 	}
 	
 	public Reproductor(){
 		this.path = "";
+		this.song = "";
+		setPlaying(false);
 	}
 	
 	@Override
@@ -35,12 +41,12 @@ public class Reproductor extends Thread{
             FileInputStream fis;
             
             fis = new FileInputStream(this.path);
-            
+            setPlaying(true);
             player = new BasicPlayer();
             
             player.open(AudioSystem.getAudioInputStream(fis));
             while (true) {
-            	System.out.println("hola");
+            	//System.out.println("hola");
             	player.play();  
             	try {
 					Thread.sleep(1000);
@@ -55,7 +61,16 @@ public class Reproductor extends Thread{
 	
 	public void pause(){
 		try {
-			player.pause();
+			if (isPlaying()) {
+				player.pause();
+				setPlaying(false);
+			}
+			else {
+				setPlaying(true);
+				player.resume();
+			}
+			
+			
 		} catch (BasicPlayerException e) {
 			e.printStackTrace();
 		}
@@ -66,8 +81,36 @@ public class Reproductor extends Thread{
 	}
 
 	public void setPath(String nom, String artista) {
-		System.out.println(nom + "_" + artista);
-		this.path = "temp/" + nom.replace(" ", "") + "_" + artista.replace(" ", "") + ".mp3";
+		
+		this.song = (nom + "_" + artista);
+		nom.replaceAll("\\s", "");
+		artista.replaceAll("\\s", "");
+		//System.out.println(nom.replaceAll("\\s", "") + "_" + artista.replaceAll("\\s", ""));
+		this.path = "temp/" + nom + "_" + artista + ".mp3";
+		//System.out.println(this.path);
+	}
+
+	public boolean isPlaying() {
+		return isPlaying;
+	}
+
+	public void setPlaying(boolean isPlaying) {
+		this.isPlaying = isPlaying;
+	}
+	
+	public void endSong() {
+		setPlaying(false);
+		try {
+			player.stop();
+			stop();
+		} catch (BasicPlayerException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public String getSong() {
+		return this.song;
 	}
 }
 
