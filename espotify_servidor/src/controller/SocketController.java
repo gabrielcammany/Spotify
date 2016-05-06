@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import com.mysql.jdbc.ConnectionPropertiesTransform;
 
 import model.Canco;
+import model.Llistes;
 import model.Musica;
 import model.Query;
 import model.User;
@@ -125,7 +126,7 @@ public ArrayList<User> selectUsers(){
 			
 			while (responseServer.next()) {
 				User u = new User();
-				
+				u.setId_usuari(responseServer.getInt("id_usuaris"));
 				u.setNickname(responseServer.getString("nickname"));
 				u.setPassword(responseServer.getString("password"));
 				u.setData_reg(responseServer.getString("data_reg"));
@@ -161,9 +162,45 @@ public int songRequest(String nCanco, String nArtista){
 	m.setMusica(allMusic);
 	String response = q.queryList(6,c);
 	conn.updateQuery(response);
+	
+	
 	return i-1;
-	
-	
 	}
+
+public ArrayList<Llistes> omplirLlistes(int id_user){
+	ArrayList<Llistes> ll = new ArrayList<Llistes>();
+	Query q =new Query();
+	ArrayList<Canco> allCanco = new ArrayList<Canco>();
+	m = new Musica();
+	allCanco = m.getMusica();
+	
+	ResultSet responseServer = conn.selectQuery(q.queryList(7,id_user));
+	
+	try {
+		
+		while (responseServer.next()) {
+			Llistes al = new Llistes();
+			ArrayList<Integer> aCancons = new ArrayList<Integer>();
+			
+			al.setId_llistes(responseServer.getInt("id_llista"));
+			
+			System.out.println("[omplirLlistes]# "+al.getId_llistes());
+			
+			
+			ResultSet responseServer2 = conn.selectQuery(q.queryList(8,al.getId_llistes()));
+			while (responseServer2.next()) {
+				aCancons.add(responseServer2.getInt("id_canco"));
+			}
+			al.setAllIdCanco(aCancons);
+			ll.add(al);
+			
+		}
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	return ll;
+}
 	
 }
