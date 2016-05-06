@@ -126,7 +126,7 @@ public class SocketController {
 
 			while (responseServer.next()) {
 				User u = new User();
-
+				u.setId_usuari(responseServer.getInt("id_usuaris"));
 				u.setNickname(responseServer.getString("nickname"));
 				u.setPassword(responseServer.getString("password"));
 				u.setData_reg(responseServer.getString("data_reg"));

@@ -15,6 +15,17 @@ public class User implements Serializable{
 	private String data_reg;
 	private String data_ult;
 	private ButtonsController controller;
+	private int id_usuari;
+
+
+	public int getId_usuari() {
+		return id_usuari;
+	}
+
+
+	public void setId_usuari(int id_usuari) {
+		this.id_usuari = id_usuari;
+	}
 
 
 	public String getNickname() {

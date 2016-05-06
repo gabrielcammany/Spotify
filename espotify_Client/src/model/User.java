@@ -5,13 +5,25 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 
-public class User implements Serializable {
+public class User implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	private String nickname;
 	private String password;
 	private String data_reg;
 	private String data_ult;
+	private int id_usuari;
+
+
+	public int getId_usuari() {
+		return id_usuari;
+	}
+
+
+	public void setId_usuari(int id_usuari) {
+		this.id_usuari = id_usuari;
+	}
+
 
 	public String getNickname() {
 		return nickname;
@@ -51,7 +63,6 @@ public class User implements Serializable {
 	public void setData_ult(String data_ult) {
 		this.data_ult = data_ult;
 	}
-
 
 	public User(String usuario,String password){
 		//this.alUser =new ArrayList<User>();
