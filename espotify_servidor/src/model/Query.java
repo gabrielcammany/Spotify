@@ -47,6 +47,14 @@ public class Query {
 			String artista = ((Canco) obj).getArtista();
 			String cad6 = "UPDATE canco SET num_reproduccio ='"+nRep+"' WHERE nom = '"+nom+"' AND artista= '"+artista+"';";
 			return cad6;
+		case 7: //Demanar llistes del usuari seleccionat
+			int idUser =((int) obj);
+			String cad7 = "SELECT id_llista FROM usuari_llista WHERE id_usuari = "+idUser+";";
+			return cad7;
+		case 8: //Demanar les cancons de la llista
+			int idLl =((int) obj);
+			String cad8 = "SELECT id_canco FROM canco_llista WHERE id_llista = "+idLl+";";
+			return cad8;
 		}
 		
 		return null;

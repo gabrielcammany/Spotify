@@ -91,14 +91,25 @@ public class ControladorReproductor implements MouseListener {
 		ImageIcon im = new ImageIcon("Images/"+opcio+"d.png");
 		switch (opcio) {
 		case "play":
-			ImageIcon icp = new ImageIcon(im.getImage().getScaledInstance(50, 51, Image.SCALE_DEFAULT));
-			System.out.println("click play");
-			if (e.getSource() instanceof JLabel) {
-				JLabel aux = (JLabel)e.getSource();
-				aux.setForeground(new Color(164,164,164));
-				aux.setFocusable(true);
-				aux.setFocusTraversalKeysEnabled(true);
-				aux.setIcon(icp);
+			if (controladorfinestres.r.isPlaying() && controladorfinestres.r.getSong().equals(nom + "_" + artista)) {
+				ImageIcon impause = new ImageIcon("Images/paused.png");
+				ImageIcon icp = new ImageIcon(impause.getImage().getScaledInstance(50, 51, Image.SCALE_DEFAULT));
+				if (e.getSource() instanceof JLabel) {
+					JLabel aux = (JLabel)e.getSource();
+					aux.setForeground(new Color(164,164,164));
+					aux.setFocusable(true);
+					aux.setFocusTraversalKeysEnabled(true);
+					aux.setIcon(icp);
+				}
+			}else{
+				ImageIcon icp = new ImageIcon(im.getImage().getScaledInstance(50, 51, Image.SCALE_DEFAULT));
+				if (e.getSource() instanceof JLabel) {
+					JLabel aux = (JLabel)e.getSource();
+					aux.setForeground(new Color(164,164,164));
+					aux.setFocusable(true);
+					aux.setFocusTraversalKeysEnabled(true);
+					aux.setIcon(icp);
+				}
 			}
 			break;
 		case "next":
@@ -133,22 +144,30 @@ public class ControladorReproductor implements MouseListener {
 	@Override
 	public void mouseReleased(MouseEvent e) {
 		// desclic
+		nom = (String) controladorfinestres.fReproduccio.taulaMusica.getValueAt(controladorfinestres.fReproduccio.taulaMusica.getSelectedRow(), 0);
+		artista = (String) controladorfinestres.fReproduccio.taulaMusica.getValueAt(controladorfinestres.fReproduccio.taulaMusica.getSelectedRow(), 3);
 				ImageIcon im = new ImageIcon("Images/"+opcio+".png");
 				switch (opcio) {
 				case "play":
-					ImageIcon icp = new ImageIcon(im.getImage().getScaledInstance(50, 51, Image.SCALE_DEFAULT));
-					if (e.getSource() instanceof JLabel) {
-						JLabel aux = (JLabel)e.getSource();
-						aux.setForeground(new Color(164,164,164));
-						aux.setIcon(icp);
-					}
-					break;
-				case "next":
-					ImageIcon icn = new ImageIcon(im.getImage().getScaledInstance(46, 40, Image.SCALE_DEFAULT));
-					if (e.getSource() instanceof JLabel) {
-						JLabel aux = (JLabel)e.getSource();
-						aux.setForeground(new Color(164,164,164));
-						aux.setIcon(icn);
+					if (controladorfinestres.r.isPlaying() && controladorfinestres.r.getSong().equals(nom + "_" + artista)) {
+						ImageIcon icp = new ImageIcon(im.getImage().getScaledInstance(50, 51, Image.SCALE_DEFAULT));
+						if (e.getSource() instanceof JLabel) {
+							JLabel aux = (JLabel)e.getSource();
+							aux.setForeground(new Color(164,164,164));
+							aux.setFocusable(true);
+							aux.setFocusTraversalKeysEnabled(true);
+							aux.setIcon(icp);
+						}
+					}else{
+						ImageIcon impause = new ImageIcon("Images/pause.png");
+						ImageIcon icp = new ImageIcon(impause.getImage().getScaledInstance(50, 51, Image.SCALE_DEFAULT));
+						if (e.getSource() instanceof JLabel) {
+							JLabel aux = (JLabel)e.getSource();
+							aux.setForeground(new Color(164,164,164));
+							aux.setFocusable(true);
+							aux.setFocusTraversalKeysEnabled(true);
+							aux.setIcon(icp);
+						}
 					}
 					break;
 				case "back":

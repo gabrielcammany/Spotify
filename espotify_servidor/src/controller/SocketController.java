@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import com.mysql.jdbc.ConnectionPropertiesTransform;
 
 import model.Canco;
+import model.Llistes;
 import model.Musica;
 import model.Query;
 import model.User;
@@ -15,28 +16,28 @@ import network.MessageServiceWorker;
 
 
 public class SocketController {
-	
+
 	private ConectorDB conn;
 	private Musica m;
-	
+
 	public SocketController() {
 		conn = new ConectorDB("dpo_root", "sinminus", "bd_espotifi", 3306);
 	}
-	
+
 	public String verifyUser(User user){
 		String response;
 		Query q =new Query();
-		
+
 		String select = q.queryList(2, user);
 		System.out.println("## "+select+" ##");
 		response= selectUser(select);
 		return response;
 	}
-	
+
 
 	public void registroUsuario(String usuario, String password){
 		User user =new User(usuario,password);
-		
+
 		//Comprovamos el nombre de usuario pero no validamos la contraseña
 		String result = verifyUser(user);
 		System.out.println("## "+result+" ##");
@@ -47,16 +48,16 @@ public class SocketController {
 			response = q.queryList(1, user);
 
 			conn.insertQuery(response);
-			
+
 			System.out.println("User: '"+user.getNickname()+"' Inserit correctament.");
 		}else{
 			System.out.println("[Servidor] L'usari '"+user.getNickname()+"' ja es troba registrat.");
 		}
-			
-			//System.out.println(user.verifyUser(user));
-		
+
+		//System.out.println(user.verifyUser(user));
+
 	}
-	
+
 	public void loginUser(String usuario, String password){
 		User user =new User(usuario,password);
 
@@ -65,8 +66,8 @@ public class SocketController {
 		//si user no es troba registrat cal notificar al client.
 
 	}
-	
-	
+
+
 	public String selectUser(String query){
 		ResultSet responseServer = conn.selectQuery(query);
 		String nickname= null;
@@ -84,16 +85,16 @@ public class SocketController {
 		if(i>0)return nickname;
 		return "error";
 	}
-	
-	
+
+
 	public ArrayList<Canco> selectSongs(){
-		
+
 		Query q = new Query();
-		
+
 		ResultSet responseServer = conn.selectQuery(q.queryList(4, null));
 		ArrayList<Canco> alMusica = new ArrayList<Canco>();
 		try {
-			
+
 			while (responseServer.next()) {
 				Canco c = new Canco();
 				c.setNom(responseServer.getString("nom"));
@@ -102,7 +103,7 @@ public class SocketController {
 				c.setPath(responseServer.getString("ubicacio"));
 				c.setEstrelles(responseServer.getString("num_estrelles"));
 				c.setnReproduccio(responseServer.getString("num_reproduccio"));
-				
+
 				System.out.println("[Servidor] "+c.getNom()+" amb path: "+c.getPath()+" num reproduccions: "+c.getnReproduccio());
 				alMusica.add(c);
 			}
@@ -112,25 +113,25 @@ public class SocketController {
 		}
 		int size = alMusica.size();
 		for(int i = 0;i<size;i++)System.out.println("Canco numero "+i+" -->"+alMusica.get(i).getNom());
-		
+
 		return alMusica;
 	}
-public ArrayList<User> selectUsers(){
+	public ArrayList<User> selectUsers(){
 		Query q = new Query();
-		
+
 		ResultSet responseServer = conn.selectQuery(q.queryList(5, null));
-		
+
 		ArrayList<User> alUser = new ArrayList<User>();
 		try {
-			
+
 			while (responseServer.next()) {
 				User u = new User();
-				
+
 				u.setNickname(responseServer.getString("nickname"));
 				u.setPassword(responseServer.getString("password"));
 				u.setData_reg(responseServer.getString("data_reg"));
 				u.setData_ult(responseServer.getString("data_ult"));
-				
+
 				System.out.println("[Servidor] Usuari ' "+u.getNickname()+" '");
 				alUser.add(u);
 			}
@@ -138,32 +139,77 @@ public ArrayList<User> selectUsers(){
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return alUser;
 	}
 
-public int songRequest(String nCanco, String nArtista){
-	m = new Musica();
-	ArrayList<Canco> allMusic = m.getMusica();
-	int size = allMusic.size();
-	int i = 0;
-	boolean trobat =  false;
-	while( i <size && !trobat){
-		if(allMusic.get(i).getNom().equals(nCanco) && allMusic.get(i).getArtista().equals(nArtista))trobat=true;
-		i++;
+	public int songRequest(String nCanco, String nArtista){
+		m = new Musica();
+		ArrayList<Canco> allMusic = m.getMusica();
+		int size = allMusic.size();
+		int i = 0;
+		boolean trobat =  false;
+		
+		while( i <size && !trobat){
+			String comparaCanco = new String (allMusic.get(i).getNom());
+			String comparaArtista = new String(allMusic.get(i).getArtista());
+			
+			comparaCanco = comparaCanco.replace(" ", "");
+			comparaArtista = comparaArtista.replace(" ", "");
+			
+			System.out.println("COMPARACION: pasan -> " + nCanco+ "  comparo -> "+ comparaCanco);
+			System.out.println("COMPARACION: pasan -> " + nArtista+ "  comparo -> "+ comparaArtista);
+			
+			//if(allMusic.get(i).getNom().equals(nCanco) && allMusic.get(i).getArtista().replace(" ", "").equals(nArtista))trobat=true;
+			if(comparaCanco.equals(nCanco) && comparaArtista.equals(nArtista))trobat=true;
+			i++;
+		}
+		i--;
+		Query q= new Query();
+		Canco c = allMusic.get(i);
+		Integer nRep = Integer.parseInt(c.getnReproduccio())+1;
+		c.setnReproduccio(nRep.toString());
+		allMusic.set(i,c);
+		m.setMusica(allMusic);
+		String response = q.queryList(6,c);
+		conn.updateQuery(response);
+		return i;
+
+
 	}
-	i--;
-	Query q= new Query();
-	Canco c = allMusic.get(i);
-	Integer nRep = Integer.parseInt(c.getnReproduccio())+1;
-	c.setnReproduccio(nRep.toString());
-	allMusic.set(i,c);
-	m.setMusica(allMusic);
-	String response = q.queryList(6,c);
-	conn.updateQuery(response);
-	return i-1;
-	
-	
+
+	public ArrayList<Llistes> omplirLlistes(int id_user){
+		ArrayList<Llistes> ll = new ArrayList<Llistes>();
+		Query q =new Query();
+		ArrayList<Canco> allCanco = new ArrayList<Canco>();
+		m = new Musica();
+		allCanco = m.getMusica();
+
+		ResultSet responseServer = conn.selectQuery(q.queryList(7,id_user));
+
+		try {
+
+			while (responseServer.next()) {
+				Llistes al = new Llistes();
+				ArrayList<Integer> aCancons = new ArrayList<Integer>();
+
+				al.setId_llistes(responseServer.getInt("id_llista"));
+
+				System.out.println("[omplirLlistes]# "+al.getId_llistes());
+
+
+				ResultSet responseServer2 = conn.selectQuery(q.queryList(8,al.getId_llistes()));
+				while (responseServer2.next()) {
+					aCancons.add(responseServer2.getInt("id_canco"));
+				}
+				al.setAllIdCanco(aCancons);
+				ll.add(al);
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return ll;
 	}
-	
+
 }
