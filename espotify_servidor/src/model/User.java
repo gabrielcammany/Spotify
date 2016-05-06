@@ -10,6 +10,8 @@ import controller.SocketController;
 public class User implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
+	private int id_usuari;
+
 	private String nickname;
 	private String password;
 	private String data_reg;
@@ -58,6 +60,14 @@ public class User implements Serializable{
 
 	public User(){
 		SocketController message = new SocketController();
+	}
+	public int getId_usuari() {
+		return id_usuari;
+	}
+
+
+	public void setId_usuari(int id_usuari) {
+		this.id_usuari = id_usuari;
 	}
 	public User(String usuario,String password){
 		//this.alUser =new ArrayList<User>();
