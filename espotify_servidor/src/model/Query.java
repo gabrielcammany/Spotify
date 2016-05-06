@@ -51,10 +51,14 @@ public class Query {
 			int idUser =((int) obj);
 			String cad7 = "SELECT id_llista FROM usuari_llista WHERE id_usuari = "+idUser+";";
 			return cad7;
-		case 8: //Demanar les cancons de la llista
+		case 8: //Segons el id de la llista troba el nom de la llista
 			int idLl =((int) obj);
-			String cad8 = "SELECT id_canco FROM canco_llista WHERE id_llista = "+idLl+";";
-			return cad8;
+			String cad8 = "SELECT nom_llista FROM llista WHERE id_llista = "+idLl+";";
+			return cad8;	
+		case 9: //Demanar les cancons de la llista
+			int idLl2 =((int) obj);
+			String cad9 = "SELECT id_canco FROM canco_llista WHERE id_llista = "+idLl2+";";
+			return cad9;
 		}
 		
 		return null;

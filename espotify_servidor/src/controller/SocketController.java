@@ -173,9 +173,8 @@ public class SocketController {
 		m.setMusica(allMusic);
 		String response = q.queryList(6,c);
 		conn.updateQuery(response);
+		
 		return i;
-
-
 	}
 
 	public ArrayList<Llistes> omplirLlistes(int id_user){
@@ -195,12 +194,17 @@ public class SocketController {
 
 				al.setId_llistes(responseServer.getInt("id_llista"));
 
-				System.out.println("[omplirLlistes]# "+al.getId_llistes());
-
+				
 
 				ResultSet responseServer2 = conn.selectQuery(q.queryList(8,al.getId_llistes()));
 				while (responseServer2.next()) {
-					aCancons.add(responseServer2.getInt("id_canco"));
+					al.setNom_llista(responseServer2.getString("nom_llista"));
+				}
+				System.out.println("[omplirLlistes]# "+al.getNom_llista());
+				
+				ResultSet responseServer3 = conn.selectQuery(q.queryList(9,al.getId_llistes()));
+				while (responseServer3.next()) {
+					aCancons.add(responseServer3.getInt("id_canco"));
 				}
 				al.setAllIdCanco(aCancons);
 				ll.add(al);

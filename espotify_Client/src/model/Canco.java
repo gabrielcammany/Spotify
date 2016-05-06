@@ -3,7 +3,7 @@ package model;
 import java.io.Serializable;
 
 
-public class Canco implements Serializable {
+public class Canco implements Serializable, Comparable<Canco> {
 	/**
 	 * 
 	 */
@@ -13,15 +13,24 @@ public class Canco implements Serializable {
 	private String album;
 	private String artista;
 	private String path;
+	private String nReproduccio;
+	private String estrelles;
+	private int reproduccions;
 	
+	
+	public String getnReproduccio() {
+		return nReproduccio;
+	}
+	public void setnReproduccio(String nReproduccio) {
+		this.nReproduccio = nReproduccio;
+	}
 	public String getPath() {
 		return path;
 	}
 	public void setPath(String path) {
 		this.path = path;
 	}
-	String estrelles;
-	int reproduccions;
+	
 	
 	
 	public String getNom() {
@@ -62,5 +71,18 @@ public class Canco implements Serializable {
 	}
 	
 	public Canco(){}
+	@Override
+	public int compareTo(Canco o) {
+		// TODO Auto-generated method stub
+		if (Integer.parseInt(nReproduccio) > Integer.parseInt(o.nReproduccio)) {
+			return -1;
+		}
+		
+		if (Integer.parseInt(nReproduccio) < Integer.parseInt(o.nReproduccio)) {
+			return 1;
+		}
+		
+		return 0;
+	}
 
 }
