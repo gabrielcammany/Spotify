@@ -46,8 +46,6 @@ public class Query {
 			String nRep= ((Canco) obj).getnReproduccio();
 			String artista = ((Canco) obj).getArtista();
 			String cad6 = "UPDATE canco SET num_reproduccio ='"+nRep+"' WHERE nom = '"+nom+"' AND artista= '"+artista+"';";
-			
-			System.out.println("#######" + cad6);
 			return cad6;
 		}
 		

@@ -1,6 +1,7 @@
 package model;
 
 import java.io.BufferedInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -82,9 +83,10 @@ public class Reproductor extends Thread{
 
 	public void setPath(String nom, String artista) {
 		
-		this.song = (nom + "_" + artista);
+		
 		nom.replaceAll("\\s", "");
 		artista.replaceAll("\\s", "");
+		this.song = (nom + "_" + artista);
 		//System.out.println(nom.replaceAll("\\s", "") + "_" + artista.replaceAll("\\s", ""));
 		this.path = "temp/" + nom + "_" + artista + ".mp3";
 		//System.out.println(this.path);
@@ -100,9 +102,13 @@ public class Reproductor extends Thread{
 	
 	public void endSong() {
 		setPlaying(false);
+		File f = new File("./temp/" + this.song + ".mp3");
 		try {
+			
 			player.stop();
+			f.delete();
 			stop();
+			
 		} catch (BasicPlayerException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

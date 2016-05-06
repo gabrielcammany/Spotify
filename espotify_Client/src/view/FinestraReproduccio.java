@@ -18,8 +18,6 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import org.jdesktop.xswingx.PromptSupport;
-
 import controller.ControladorFinestres;
 import controller.ControladorLlistar;
 import controller.ControladorReproductor;
@@ -348,16 +346,8 @@ public class FinestraReproduccio extends JFrame {
 	 */
 	
 	public void setUsuarisFollowing(/*array usuaris*/ /*provisional*/ArrayList<String> alUsuari){
-		
-		//podem escollir entre llistar els usuaris que seguim o buscar un usuari per seguir-lo/seixar-lo de seguir
-		JTabbedPane jtpFollowing = new JTabbedPane();
-		//buscar un nou usuari
-		JPanel jpNouFollow = new JPanel(new MigLayout("al center center, wrap, gapy 10"));
-		JTextField jtfUsuari = new JTextField(15);
-		PromptSupport.setPrompt("Nom usuari", jtfUsuari);
-		jpNouFollow.add(jtfUsuari);
-		
-		
+		JPanel jpLlistat = new JPanel(new BorderLayout());
+
 		//Tabla musica disponible 
 		Vector<String> columnas = new Vector();
 		
@@ -386,10 +376,8 @@ public class FinestraReproduccio extends JFrame {
 			return false;
 		}};
 		
-		jtpFollowing.add("Llistat following", taulaUsuariFollowing);
-		jtpFollowing.add("Buscar Usuari", jpNouFollow);
 		
-		this.jspUsuarisFollowing = new JScrollPane(jtpFollowing);	
+		this.jspUsuarisFollowing = new JScrollPane(taulaUsuariFollowing);	
 		
 	}
 	
