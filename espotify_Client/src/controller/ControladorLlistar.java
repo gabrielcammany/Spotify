@@ -30,19 +30,19 @@ public class ControladorLlistar implements MouseListener {
 		// TODO Auto-generated method stub
 		switch (opcio) {
 		case "disponible":
-			//System.out.println("click disponible");
+			System.out.println("click disponible");
 			cFinestra.novaOpcio(opcio);
 			break;
 		case "propia":
-			//System.out.println("click propia");
+			System.out.println("click propia");
 			cFinestra.novaOpcio(opcio);
 			break;
 		case "llistesfollowing":
-			//System.out.println("click llistesfollowing");
+			System.out.println("click llistesfollowing");
 			cFinestra.novaOpcio(opcio);
 			break;
 		case "usuarisfollowing":
-			//System.out.println("click usuarisfollowing");
+			System.out.println("click usuarisfollowing");
 			cFinestra.novaOpcio(opcio);
 			break;
 

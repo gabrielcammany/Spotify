@@ -37,7 +37,7 @@ public class SocketController {
 	public void registroUsuario(String usuario, String password){
 		User user =new User(usuario,password);
 		
-		//Comprovamos el nombre de usuario pero no validamos la contraseï¿½a
+		//Comprovamos el nombre de usuario pero no validamos la contraseña
 		String result = verifyUser(user);
 		System.out.println("## "+result+" ##");
 		if(result.equals("error")){
@@ -148,19 +148,8 @@ public int songRequest(String nCanco, String nArtista){
 	int size = allMusic.size();
 	int i = 0;
 	boolean trobat =  false;
-	
 	while( i <size && !trobat){
-		String comparaCanco = new String (allMusic.get(i).getNom());
-		String comparaArtista = new String(allMusic.get(i).getArtista());
-		
-		comparaCanco = comparaCanco.replace(" ", "");
-		comparaArtista = comparaArtista.replace(" ", "");
-		
-		System.out.println("COMPARACION: pasan -> " + nCanco+ "  comparo -> "+ comparaCanco);
-		System.out.println("COMPARACION: pasan -> " + nArtista+ "  comparo -> "+ comparaArtista);
-		
-		//if(allMusic.get(i).getNom().equals(nCanco) && allMusic.get(i).getArtista().replace(" ", "").equals(nArtista))trobat=true;
-		if(comparaCanco.equals(nCanco) && comparaArtista.equals(nArtista))trobat=true;
+		if(allMusic.get(i).getNom().equals(nCanco) && allMusic.get(i).getArtista().equals(nArtista))trobat=true;
 		i++;
 	}
 	i--;
@@ -172,7 +161,7 @@ public int songRequest(String nCanco, String nArtista){
 	m.setMusica(allMusic);
 	String response = q.queryList(6,c);
 	conn.updateQuery(response);
-	return i;
+	return i-1;
 	
 	
 	}
