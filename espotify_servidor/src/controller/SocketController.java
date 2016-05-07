@@ -33,12 +33,23 @@ public class SocketController {
 		response= selectUser(select);
 		return response;
 	}
+	
+	/**
+	 * Metode que s'encarrega d'afegir a la bbdd la nova canco que s'ha afegit
+	 * des del servidor
+	 * @param descripcio
+	 */
+	public void registroAddCanco(String descripcio) {
+		Query q = new Query();
+		String cad = q.queryList(10, descripcio);
+		conn.insertQuery(cad);
+	}
 
 
 	public void registroUsuario(String usuario, String password){
 		User user =new User(usuario,password);
 
-		//Comprovamos el nombre de usuario pero no validamos la contraseña
+		//Comprovamos el nombre de usuario pero no validamos la contraseï¿½a
 		String result = verifyUser(user);
 		System.out.println("## "+result+" ##");
 		if(result.equals("error")){

@@ -50,6 +50,13 @@ public class ButtonsController implements ActionListener {
 			// Aturem el servei
 			mService.stopService();
 			view.changeButtonsStateStopped();
+		} else if (event.getActionCommand().equals("Addicio")) {
+			System.out.println(viewF.getAddCanco());
+			System.out.println(viewF.getAddAlbum());
+			System.out.println(viewF.getAddArtista());
+			System.out.println(viewF.getAddGenere());
+			System.out.println(viewF.getAddUbicacio());
+			viewF.netejaFormulari();
 		}
 	}
 	

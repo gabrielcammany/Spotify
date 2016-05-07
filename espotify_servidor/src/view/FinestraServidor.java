@@ -40,6 +40,12 @@ public class FinestraServidor extends JFrame {
 	private Estadistica estadistica;
 	private ButtonsController controlador;
 	private JFrame jfServidor;
+	JTextField jtfcanco;
+	JButton jbAddicio;
+	JTextField jtfGenere;
+	JTextField jtfAlbum;
+	JTextField jtfArtista;
+	JTextField jtfUbicacio;
 
 	
 	
@@ -48,6 +54,9 @@ public class FinestraServidor extends JFrame {
 	public void setControlador(ButtonsController controlador) {
 		this.controlador = controlador;
 	}
+	
+	
+	
 	
 	
 	
@@ -235,22 +244,26 @@ public class FinestraServidor extends JFrame {
 		 */
 		JPanel jpAddicio = new JPanel(new MigLayout("al center center, wrap, gapy 10"));
 
-		JTextField jtfcanco = new JTextField(15);
+		jtfcanco = new JTextField(15);
 		PromptSupport.setPrompt("Nom canco", jtfcanco);
-		JTextField jtfGenere = new JTextField(15);
+		jtfGenere = new JTextField(15);
 		PromptSupport.setPrompt("Gènere", jtfGenere);
 
-		JTextField jtfAlbum = new JTextField( 15);
+		jtfAlbum = new JTextField( 15);
 		PromptSupport.setPrompt("Nom album", jtfAlbum);
 
-		JTextField jtfArtista = new JTextField( 15);
+		jtfArtista = new JTextField( 15);
 		PromptSupport.setPrompt("Nom artista", jtfArtista);
 
-		JTextField jtfUbicacio = new JTextField( 15);
+		jtfUbicacio = new JTextField( 15);
 		PromptSupport.setPrompt("Ubicació o path", jtfUbicacio);
 
-		JButton jbAddicio = new JButton();
+		jbAddicio = new JButton();
 		jbAddicio.setText("Afegir canço");
+		jbAddicio.addActionListener(controlador);
+		jbAddicio.setActionCommand("Addicio");
+		
+		
 
 		jpAddicio.add(jtfcanco);
 		jpAddicio.add(jtfGenere);
@@ -262,6 +275,8 @@ public class FinestraServidor extends JFrame {
 
 		return jpAddicio;
 	}
+	
+	
 
 
 	/**
@@ -313,7 +328,33 @@ public class FinestraServidor extends JFrame {
 		return jpGrafica;
 	}
 	
+	public String getAddCanco() {
+		return jtfcanco.getText();
+	}
 	
+	public String getAddGenere() {
+		return jtfGenere.getText();
+	}
+	
+	public String getAddAlbum() {
+		return jtfAlbum.getText();
+	}
+	
+	public String getAddArtista() {
+		return jtfArtista.getText();
+	}
+	
+	public String getAddUbicacio() {
+		return jtfUbicacio.getText();
+	}
+	
+	public void netejaFormulari() {
+		jtfcanco.setText(null);
+		jtfGenere.setText(null);
+		jtfAlbum.setText(null);
+		jtfArtista.setText(null);
+		jtfUbicacio.setText(null);
+	}
 
 }
 

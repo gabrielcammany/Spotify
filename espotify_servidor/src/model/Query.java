@@ -59,6 +59,10 @@ public class Query {
 			int idLl2 =((int) obj);
 			String cad9 = "SELECT id_canco FROM canco_llista WHERE id_llista = "+idLl2+";";
 			return cad9;
+		case 10:
+			String infoSong= ((String) obj);
+			String cad10 = "INSERT INTO canco VALUES("+infoSong+")";
+			return cad10;
 		}
 		
 		return null;
