@@ -35,7 +35,7 @@ public class MessageServiceWorker implements Runnable{
 	private SocketController cadenas;
 	private ArrayList<Canco> alcanco;
 	private Musica musica;
-	BufferedInputStream bis;
+	private BufferedInputStream bis;
 	
 	public MessageServiceWorker(){
 	}

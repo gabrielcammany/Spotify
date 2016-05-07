@@ -16,11 +16,10 @@ public class ConectorDB {
 	static int port;
 	static String url = "jdbc:mysql://projectdpo.ddns.net";
 	static Connection conn = null;
-	public ButtonsController controller;
 	static Statement s;
 	
 	
-    
+	public ConectorDB(){}
 	public ConectorDB(String usr, String pass, String db, int port) {
 		ConectorDB.userName = usr;
 		ConectorDB.password = pass;
@@ -90,8 +89,6 @@ public class ConectorDB {
              rs = s.executeQuery (query);
              if (!rs.isBeforeFirst()){
             	 System.out.println("[SERVER] Usuari no disponible.");
-            	 controller = new ButtonsController();
-            	 controller.incorrectUser();
             	 
              }
          } catch (SQLException ex) {

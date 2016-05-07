@@ -28,7 +28,7 @@ public class MessageService {
 			sServer = new ServerSocket(PORT);
 			// Creem i iniciem un nou fil d execucio per tal descoltar
 			// els clients i rebre els missatges per part dels clients
-			msWorker = new MessageServiceWorker(this, sServer,controller.musica);
+			msWorker = new MessageServiceWorker(this, sServer,controller.getMusica());
 			new Thread(msWorker).start();
 			// Informem al CONTROLADOR que informi que el servidor ha
 			// estat iniciat, ell informara a la vista.

@@ -8,8 +8,10 @@ import java.util.ArrayList;
 
 import model.Canco;
 import model.Musica;
+import model.Query;
 import model.User;
 import model.Usuaris;
+import network.ConectorDB;
 import network.MessageService;
 import view.ErrorLog;
 import view.FinestraServidor;
@@ -21,10 +23,10 @@ public class ButtonsController implements ActionListener {
 	private MainWindow view;
 	private FinestraServidor viewF;
 	//ERRORS
-	public	ErrorLog vError =new ErrorLog();
+	private	ErrorLog vError =new ErrorLog();
 	// NETWORK
 	private MessageService mService;
-	public Musica musica;
+	private Musica musica;
 	private User user;
 	
 	
@@ -40,6 +42,14 @@ public class ButtonsController implements ActionListener {
 		
 	}
 	
+	public void insertSongUser(){
+		String add = ("'"+viewF.getAddCanco()+"','"+viewF.getAddAlbum()+"','"+viewF.getAddArtista()+"','"+viewF.getAddUbicacio()+"','0','0','0'");
+		
+		ConectorDB conn = new ConectorDB() ;
+		Query q =new Query();
+		conn.insertQuery(q.queryList(10, add));
+	}
+	
 	public void actionPerformed(ActionEvent event) {
 		if (event.getActionCommand().equals("START")) {
 			this.musica = new Musica();
@@ -50,12 +60,8 @@ public class ButtonsController implements ActionListener {
 			// Aturem el servei
 			mService.stopService();
 			view.changeButtonsStateStopped();
-		} else if (event.getActionCommand().equals("Addicio")) {
-			System.out.println(viewF.getAddCanco());
-			System.out.println(viewF.getAddAlbum());
-			System.out.println(viewF.getAddArtista());
-			System.out.println(viewF.getAddGenere());
-			System.out.println(viewF.getAddUbicacio());
+		} else if (event.getActionCommand().equals("Addicio")) {			
+			insertSongUser();
 			viewF.netejaFormulari();
 		}
 	}
@@ -63,13 +69,19 @@ public class ButtonsController implements ActionListener {
 	public void creaFinestra() {
 		System.out.println("########################################################");
 		Usuaris allUsers = new Usuaris();
-		viewF.creaFinestra(musica, allUsers);
+		viewF.creaFinestra(getMusica(), allUsers);
 	}
 	
 	
 	
 	public void incorrectUser(){
 		vError.errorInsertUser();
+	}
+	public void setMusica(Musica musica) {
+		this.musica = musica;
+	}
+	public Musica getMusica() {
+		return musica;
 	}
 	
 

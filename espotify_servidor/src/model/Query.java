@@ -61,7 +61,7 @@ public class Query {
 			return cad9;
 		case 10:
 			String infoSong= ((String) obj);
-			String cad10 = "INSERT INTO canco VALUES("+infoSong+")";
+			String cad10 = "INSERT INTO canco(nom,album,artista,ubicacio,nVotacio,num_estrelles,num_reproduccio) VALUES("+infoSong+");";
 			return cad10;
 		}
 		

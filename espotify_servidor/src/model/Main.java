@@ -7,7 +7,6 @@ import network.ConectorDB;
 import view.FinestraServidor;
 import view.MainWindow;
 
-
 public class Main {
 	
 	public static void main(String[] args) {
