@@ -100,7 +100,14 @@ public class MessageServiceWorker implements Runnable{
 				
 				if (data[0].equals("requestUsuaris")) {
 					ArrayList<User> usuaris = new ArrayList<User>();
-					usuaris = cadenas.selectUsers();
+					usuaris = cadenas.selectUsers(true,null);
+					ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
+					objectOutput.writeObject(usuaris);
+				}
+				
+				if (data[0].equals("requestUsuarisFollower")) {
+					ArrayList<User> usuaris = new ArrayList<User>();
+					usuaris = cadenas.selectUsers(false,data[1]);
 					ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
 					objectOutput.writeObject(usuaris);
 				}

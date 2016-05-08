@@ -20,7 +20,7 @@ public class Main {
 				FinestraServidor viewF = new FinestraServidor();
 				// Creem el CONTROLADOR
 				// Establim la relacio CONTROLADOR->VISTA
-				ButtonsController controller = new ButtonsController(/*user,*/view, viewF);
+				ButtonsController controller = new ButtonsController(view, viewF);
 				conn.connect();
 				// Establim la "relacio" VISTA->CONTROLADOR
 				view.registerController(controller);

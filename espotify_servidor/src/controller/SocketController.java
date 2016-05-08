@@ -127,10 +127,14 @@ public class SocketController {
 
 		return alMusica;
 	}
-	public ArrayList<User> selectUsers(){
+	public ArrayList<User> selectUsers(boolean i, String nom){
 		Query q = new Query();
-
-		ResultSet responseServer = conn.selectQuery(q.queryList(5, null));
+		ResultSet responseServer;
+		if(i){
+			responseServer = conn.selectQuery(q.queryList(5, null));
+		}else{
+			responseServer = conn.selectQuery(q.queryList(11, nom));
+		}
 
 		ArrayList<User> alUser = new ArrayList<User>();
 		try {

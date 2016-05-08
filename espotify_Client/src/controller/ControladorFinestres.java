@@ -26,6 +26,7 @@ public class ControladorFinestres {
 	public Finestra_Registre fRegistre;
 	public FinestraReproduccio fReproduccio;
 	private InfoServidor infoServidor;
+	private User user;
 	boolean reproduir = false;
 	Reproductor r;
 	
@@ -162,7 +163,7 @@ public class ControladorFinestres {
 	 * 
 	 */
 
-	public void actualitzaUsuarisFollowing(/*  rebre array dusuaris    */ArrayList<String> alUsuari){
+	public void actualitzaUsuarisFollowing(/*  rebre array dusuaris    */ArrayList<User> alUsuari){
 		fReproduccio.setUsuarisFollowing(/*  pasar array dusuaris   */alUsuari);
 		
 	}
@@ -185,6 +186,14 @@ public class ControladorFinestres {
 	
 	public void restartReproductor() {
 		this.r = new Reproductor("");
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 		
 	

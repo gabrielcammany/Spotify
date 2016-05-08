@@ -10,7 +10,7 @@ public class Usuaris {
 	
 	public Usuaris () {
 		SocketController message = new SocketController();
-		alUser = message.selectUsers();
+		alUser = message.selectUsers(true, null);
 	}
 	
 	public ArrayList<User> getMusica() {

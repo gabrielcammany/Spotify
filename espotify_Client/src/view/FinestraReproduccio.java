@@ -170,7 +170,6 @@ public class FinestraReproduccio extends JFrame {
 			jpGestionar.add(jlLlistesfollowing, "span 2, grow, wrap");
 			jpGestionar.add(jlUsuarisfollowing, "span 2, grow, wrap");
 		}  catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -347,7 +346,7 @@ public class FinestraReproduccio extends JFrame {
 	 * Aquesta funcio rep l'array de tots els usuaris que segueix i els mostra en una taua
 	 */
 	
-	public void setUsuarisFollowing(/*array usuaris*/ /*provisional*/ArrayList<String> alUsuari){
+	public void setUsuarisFollowing(ArrayList<User> alUsuari){
 		//podem escollir entre llistar els usuaris que seguim o buscar un usuari per seguir-lo/seixar-lo de seguir
 				JTabbedPane jtpFollowing = new JTabbedPane();
 				//buscar un nou usuari
@@ -366,9 +365,10 @@ public class FinestraReproduccio extends JFrame {
 
    
 		Vector filas = new Vector();
-		 
+
+		  System.out.println("%%%%%%");
 		  for (int i = 0; i <alUsuari.size(); i ++) {
-		 
+			  System.out.println("%%%%%%"+i);
 			Vector<String> fila = new Vector();
 			
 			fila.add(alUsuari.get(i).toString());
@@ -413,10 +413,7 @@ public class FinestraReproduccio extends JFrame {
 			case "disponible":
 			
 				this.jpReproduccio.add(this.jspLlistatDisponible, BorderLayout.CENTER);
-				//this.jpReproduccio.invalidate();
 				this.jpReproduccio.validate();
-				//this.jpReproduccio.repaint();
-				//this.jpReproduccio.revalidate();
 				break;
 			 
 			case "propia":
@@ -444,14 +441,6 @@ public class FinestraReproduccio extends JFrame {
 				
 			case "usuarisfollowing":
 				/*provisional: */ 
-				if(taulaUsuaris == null){
-					ArrayList<String> usuaris = new ArrayList<String>();
-					usuaris.add("Braulio");
-					usuaris.add("Gumersindo");
-					setUsuarisFollowing(usuaris);
-				}
-				/*fi provisional: */ 
-				
 				this.jpReproduccio.add(this.jspUsuarisFollowing, BorderLayout.CENTER);
 				this.jpReproduccio.validate();
 				break;

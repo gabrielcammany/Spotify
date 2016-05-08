@@ -63,6 +63,10 @@ public class Query {
 			String infoSong= ((String) obj);
 			String cad10 = "INSERT INTO canco(nom,album,artista,ubicacio,nVotacio,num_estrelles,num_reproduccio) VALUES("+infoSong+");";
 			return cad10;
+		case 11: //Demanar les cancons de la llista
+			String idUserF =((String) obj);
+			String cad11 = "SELECT * FROM usuari_follower WHERE id_user = "+idUserF+";";
+			return cad11;
 		}
 		
 		return null;

@@ -31,8 +31,8 @@ public class ButtonsController implements ActionListener {
 	
 	
 	public ButtonsController(){}
-	public ButtonsController(/*User user,*/ MainWindow view, FinestraServidor viewF) {
-		//this.user = user;
+	public ButtonsController( MainWindow view, FinestraServidor viewF) {
+
 		this.view = view;
 		this.viewF = viewF;
 		this.viewF.setControlador(this);

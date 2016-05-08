@@ -68,6 +68,8 @@ public class InfoServidor {
 			//COMENTARIO DE GABRI PARA EL FINALIZAR EL PASSWORD!!
 			switch(option) {
 			case 1: doStream.writeUTF("user:" + nom + "/" + algo);
+				User user = new User(nom,algo);
+				this.controladorFinestres.setUser(user);
 				break;
 			case 2:
 				doStream.writeUTF("userLog:" + nom + "/" + algo);
@@ -154,6 +156,22 @@ public class InfoServidor {
 		}
 
 	}
+	
+	public void peticioFollowers() throws UnknownHostException, IOException, ClassNotFoundException {
+		Socket sServidor = new Socket("localhost", 34567);
+		
+		ArrayList <User> alUsers = new ArrayList<User>();
+		
+		DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
+		doStream.writeUTF("requestUsuarisFollower:"+this.controladorFinestres.getUser().getNickname()+"");
+		ObjectInputStream objectInput = new ObjectInputStream(sServidor.getInputStream());
+		alUsers = (ArrayList<User>) objectInput.readObject();
+		
+		controladorFinestres.actualitzaUsuarisFollowing(alUsers);
+		
+		sServidor.close();
+	}
+	
 }
 			/*
 	public String algo(String s){

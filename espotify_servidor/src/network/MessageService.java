@@ -41,24 +41,11 @@ public class MessageService {
 	
 	public void stopService() {
 		try {
-			// Aturem el fil d execucio
 			msWorker.stopListening();
-			// Tanquem el ServerSpcket
 			sServer.close();
-			// Informem al CONTROLADOR que informi que el servidor ha
-			// estat aturat
-			//controller.showInformation("SERVER stopped.");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	public void messageReceived(String message) {
-		// Informem al controlador de la recepcio dun missatge,
-		// ell actualitzara la vista.
-		
-		//controller.showMessage(message);
-		
 	}
 	
 	public void enviarMusica(){
