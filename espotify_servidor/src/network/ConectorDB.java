@@ -4,6 +4,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.google.gson.JsonObject;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 
@@ -18,8 +19,17 @@ public class ConectorDB {
 	static Connection conn = null;
 	static Statement s;
 	
-	
 	public ConectorDB(){}
+	
+	public ConectorDB(JsonObject o) {
+		ConectorDB.userName = o.get("user").getAsString();
+		ConectorDB.password = o.get("pass").getAsString();
+		ConectorDB.db = o.get("database").getAsString();
+		ConectorDB.port = o.get("port").getAsInt();
+		ConectorDB.url += ":"+ConectorDB.port+"/";
+		ConectorDB.url += ConectorDB.db;
+	}
+	
 	public ConectorDB(String usr, String pass, String db, int port) {
 		ConectorDB.userName = usr;
 		ConectorDB.password = pass;

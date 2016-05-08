@@ -1,0 +1,8 @@
+{
+  "configuration": {
+    "user": "dpo_root",
+    "pass": "sinminus",
+    "database": "bd_espotifi",
+    "port": 3306
+  }
+}
