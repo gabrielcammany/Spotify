@@ -1,20 +1,11 @@
 package network;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.ObjectOutputStream;
-import java.io.OutputStream;
 import java.io.PrintStream;
-import java.net.ServerSocket;
 import java.net.Socket;
-import java.nio.file.Files;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -25,27 +16,23 @@ import model.Musica;
 import model.User;
 import model.Usuaris;
 
-public class MessageServiceWorker implements Runnable{
+public class MessageServiceWorker implements Runnable {
 
-	private MessageService mService;
-	private ServerSocket sServer;
 	private Socket sClient;
 	private DataInputStream diStream;
 	private boolean active;
 	private SocketController cadenas;
 	private ArrayList<Canco> alcanco;
 	private Musica musica;
-	private BufferedInputStream bis;
 	
 	public MessageServiceWorker(){
 	}
 	
-	public MessageServiceWorker(MessageService mService, ServerSocket sServer,Musica musica) {
-		this.mService = mService;
-		this.sServer = sServer;
+	public MessageServiceWorker(Socket sclient,Musica musica) {
 		active = true;
 		cadenas = new SocketController();
 		this.musica = musica;
+		this.sClient = sclient;
 		
 	}
 
@@ -58,17 +45,16 @@ public class MessageServiceWorker implements Runnable{
 		String user;
 		while (active) {
 			try {
-				// Esperem peticions de connexio
-				sClient = sServer.accept();
 				// Atenem les connexions
-				diStream = new DataInputStream(sClient.getInputStream());
+				diStream = new DataInputStream(this.sClient.getInputStream());
+
 				String newMessage = diStream.readUTF();
 				System.out.println(newMessage);
 				aux = newMessage.split("/");
 				data = aux[0].split(":");
 				
 				if (data[0].equals("requestCanco")){
-					ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
+					ObjectOutputStream objectOutput  = new ObjectOutputStream(this.sClient.getOutputStream());
 					System.out.println("He recibido la peticion de cancion: "+ data[1] + " " + aux[1]);
 
 					int response = cadenas.songRequest(data[1],aux[1]);
@@ -82,7 +68,7 @@ public class MessageServiceWorker implements Runnable{
 							alcanco = musica.getMusica();						
 							String path = alcanco.get(response).getPath();
 							System.out.println("####");
-							PrintStream envio = new PrintStream(sClient.getOutputStream());
+							PrintStream envio = new PrintStream(this.sClient.getOutputStream());
 							FileInputStream fitxer = new FileInputStream("./Musica/" + data[1] + "_" + aux[1] + ".mp3");
 							byte[] buffer = new byte[1024];
 							int len = 0;
@@ -124,7 +110,7 @@ public class MessageServiceWorker implements Runnable{
 					Usuaris allUsers = new Usuaris();
 					
 					// Tanquem el socket del client
-					sClient.close();
+					//sClient.close();
 				}else{
 					if(data[0].equals("userLog")){
 						user = data[1];
@@ -134,7 +120,7 @@ public class MessageServiceWorker implements Runnable{
 						cadenas.loginUser(user,password);
 						
 						// Tanquem el socket del client
-						sClient.close();
+						//sClient.close();
 					}else{
 						if(data[0].equals("requestMusic")){
 							alcanco = new ArrayList<Canco>();
@@ -148,7 +134,9 @@ public class MessageServiceWorker implements Runnable{
 					}
 				}
 				
-			} catch (IOException e) { }
+			} catch (IOException e) { 
+				e.printStackTrace();
+			}
 		}
 	}
 

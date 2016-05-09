@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Llistes {
 	private static int id_llistes;
-	private	static String nom_llista;
+	static String nom_llista;
 	private static ArrayList<Integer> allIdCanco;
 	
 	public int getId_llistes() {

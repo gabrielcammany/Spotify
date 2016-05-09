@@ -1,12 +1,10 @@
 package network;
 
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 import controller.ButtonsController;
-import model.Musica;
 
 
 public class MessageService {
@@ -24,16 +22,31 @@ public class MessageService {
 	// Inicia el servei per la recepcio de missatges
 	public void startService() {
 		try {
-			// Creem el ServerSocket
 			sServer = new ServerSocket(PORT);
+			Thread t = new Thread(){
+				@Override
+				public void run(){
+					try {
+						Socket sClient = sServer.accept();
+						msWorker = new MessageServiceWorker(sClient,controller.getMusica());
+						new Thread(msWorker).start();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					
+				}
+			};
+			t.start();
+			// Creem el ServerSocket
 			// Creem i iniciem un nou fil d execucio per tal descoltar
 			// els clients i rebre els missatges per part dels clients
-			msWorker = new MessageServiceWorker(this, sServer,controller.getMusica());
-			new Thread(msWorker).start();
 			// Informem al CONTROLADOR que informi que el servidor ha
 			// estat iniciat, ell informara a la vista.
 			//controller.showInformation("SERVER started. \nAwaiting messages...");
 			controller.creaFinestra();
+			
+			
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -46,23 +59,5 @@ public class MessageService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	public void enviarMusica(){
-		System.out.println("[CLIENT] - Peticio de connexio..."); 
-		
-		
-		try {
-			Socket sServidor = new Socket("localhost", 34567);
-
-			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
-			doStream.writeUTF("requestMusic:");
-			sServidor.close();
-		} catch (IOException e) {
-			
-			e.printStackTrace();
-		}
-		
-	}
-	
+	}	
 }
