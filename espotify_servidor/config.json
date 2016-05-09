@@ -2,6 +2,7 @@
   "configuration": {
     "user": "dpo_root",
     "pass": "sinminus",
+    "url": "jdbc:mysql://projectdpo.ddns.net",
     "database": "bd_espotifi",
     "port": 3306
   }

@@ -15,7 +15,7 @@ public class ConectorDB {
 	static String password;
 	static String db;
 	static int port;
-	static String url = "jdbc:mysql://projectdpo.ddns.net";
+	static String url;
 	static Connection conn = null;
 	static Statement s;
 	
@@ -26,6 +26,7 @@ public class ConectorDB {
 		ConectorDB.password = o.get("pass").getAsString();
 		ConectorDB.db = o.get("database").getAsString();
 		ConectorDB.port = o.get("port").getAsInt();
+		ConectorDB.url = o.get("url").getAsString();
 		ConectorDB.url += ":"+ConectorDB.port+"/";
 		ConectorDB.url += ConectorDB.db;
 	}
