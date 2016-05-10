@@ -1,6 +1,8 @@
 package network;
 
 import java.io.DataInputStream;
+import java.io.DataOutput;
+import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
@@ -114,11 +116,25 @@ public class MessageServiceWorker implements Runnable {
 				}else{
 					if(data[0].equals("userLog")){
 						user = data[1];
+						int idUser = 0;
 						
 						password = aux[1];
+						System.out.println("----------------------------------------------------------");
+						DataOutputStream d = new DataOutputStream(this.sClient.getOutputStream());
+						if(cadenas.loginUser(user,password)){
+
+							int trobat = 0;
+							//User es static i nomes ho fara una vegada
 						
-						cadenas.loginUser(user,password);
-						
+							for(User u : new Usuaris().getUsuaris()){
+								System.out.println("Estoy dentro");
+								if(u.getNickname().toLowerCase().equals(user.toLowerCase()))trobat = 1 ;
+								System.out.println("Estoy listo: ##"+trobat);
+							}
+							d.writeInt(trobat);
+						}else{
+							d.writeInt(1);
+						}
 						// Tanquem el socket del client
 						//sClient.close();
 					}else{

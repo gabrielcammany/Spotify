@@ -69,11 +69,13 @@ public class SocketController {
 
 	}
 
-	public void loginUser(String usuario, String password){
+	public Boolean loginUser(String usuario, String password){
 		User user =new User(usuario,password);
-
+System.out.println("hola bro ");
 		String result = verifyUser(user);
-		if(result.equals("null"))System.out.println("[Servidor] L'usuari no es troba registrat");
+		System.out.println("adios bro"+ result);
+		if(result.equals("-1"))return true;
+		return false;
 		//si user no es troba registrat cal notificar al client.
 
 	}
@@ -83,18 +85,19 @@ public class SocketController {
 		ResultSet responseServer = conn.selectQuery(query);
 		String nickname= null;
 		int i = 0 ;
-		try {
-			while (responseServer.next()) {
-				i++;
-				nickname = responseServer.getString("nickname");
-				System.out.println("[Servidor] Response server: '"+nickname+"'." );
+		if(responseServer != null){
+			try {
+				while (responseServer.next()) {
+					i++;
+					nickname = responseServer.getString("nickname");
+					System.out.println("[Servidor] Response server: '"+nickname+"'." );
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
 		if(i>0)return nickname;
-		return "error";
+		return "-1";
 	}
 
 

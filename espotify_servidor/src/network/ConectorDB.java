@@ -100,7 +100,7 @@ public class ConectorDB {
              rs = s.executeQuery (query);
              if (!rs.isBeforeFirst()){
             	 System.out.println("[SERVER] Usuari no disponible.");
-            	 
+            	 return null;
              }
          } catch (SQLException ex) {
              System.out.println("Problema al Recuperar les dades --> " + ex.getSQLState());
