@@ -87,7 +87,11 @@ public class ControladorFinestres {
 	 */
 	public void Login() throws ClassNotFoundException, UnknownHostException, IOException {
 		//InfoServidor info = new InfoServidor();
-		if((infoServidor.enviarUsuari(2, fLogin.getjtfUsuari().getText(), fLogin.getjtfPassword().getPassword()))){Reproduccio();}	
+		if((infoServidor.enviarUsuari(2, fLogin.getjtfUsuari().getText(), fLogin.getjtfPassword().getPassword()))){
+			Reproduccio();
+		} else {
+			fLogin.mostraMissatgeError("L'usuari no existeix.");
+		}
 		
 	}
 	

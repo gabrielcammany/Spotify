@@ -85,6 +85,7 @@ public class InfoServidor {
 				DataInputStream input = new DataInputStream(sServidor.getInputStream());
 				int i = input.readInt();
 				if(i == 1)return true;
+				if (i == 0) return false;
 				break;
 			
 			}

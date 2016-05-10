@@ -132,12 +132,12 @@ public class Finestra_login extends JFrame {
 					//Font font = new Font("Verdana", Font.BOLD, 12);	
 					PromptSupport.setForeground(new Color(255, 77, 77), jtfUsuari);
 					PromptSupport.setForeground(new Color(255, 77, 77), getjtfPassword());
-	                JOptionPane.showMessageDialog(jtfUsuari, "Camps buits", "Error a iniciar sessi�", 0);
+	                mostraMissatgeError("Camps buits\n Error a iniciar sessio");
 				}else if(String.copyValueOf(getjtfPassword().getPassword()).isEmpty()){
-	                JOptionPane.showMessageDialog(jtfUsuari, "Has d'inserir una contrasenya","Error a iniciar sessi�", 0);
+	                mostraMissatgeError("Has d'inserir una contrasenya\n Error a iniciar sessio");
 					PromptSupport.setForeground(new Color(255, 77, 77), getjtfPassword());
 				}else if(getjtfUsuari().getText().isEmpty()){
-	                JOptionPane.showMessageDialog(jtfUsuari, "Nom d'usuari obligatori","Error a iniciar sessi�", 0);
+	                mostraMissatgeError("Nom d'usuari obligatori\n Error a iniciar sessio");
 					PromptSupport.setForeground(new Color(255, 77, 77), jtfUsuari);		
 				}else{
 					try {
@@ -157,6 +157,9 @@ public class Finestra_login extends JFrame {
 				
 			}
 		});
+	}
+	public void mostraMissatgeError(String s) {
+		JOptionPane.showMessageDialog(jtfUsuari, s, "Error", JOptionPane.ERROR_MESSAGE);
 	}
 	
 	public void tancaFinestraLogin() {
