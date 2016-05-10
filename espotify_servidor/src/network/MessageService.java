@@ -14,22 +14,30 @@ public class MessageService {
 	private MessageServiceWorker msWorker;
 	// Relacio amb el controlador per notificar les recepcions de missatges
 	private ButtonsController controller;
+	int i = 0;
 	
 	public MessageService(ButtonsController controller) {
 		this.controller = controller;
+		try {
+			sServer = new ServerSocket(PORT);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	// Inicia el servei per la recepcio de missatges
 	public void startService() {
-		try {
-			sServer = new ServerSocket(PORT);
 			Thread t = new Thread(){
 				@Override
 				public void run(){
+					
 					try {
+						System.out.println("Esperant..."+(i));
 						Socket sClient = sServer.accept();
 						msWorker = new MessageServiceWorker(sClient,controller.getMusica());
 						new Thread(msWorker).start();
+						System.out.println("Esperant..."+(i++));
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -44,12 +52,7 @@ public class MessageService {
 			// estat iniciat, ell informara a la vista.
 			//controller.showInformation("SERVER started. \nAwaiting messages...");
 			controller.creaFinestra();
-			
-			
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	
 	}
 	
 	public void stopService() {

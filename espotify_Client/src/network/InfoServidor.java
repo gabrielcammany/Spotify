@@ -38,9 +38,18 @@ public class InfoServidor {
 		private ControladorFinestres controladorFinestres;
 		private ControladorLlistar controladorLlistar;
 		private FileInputStream fSongServ;
+		private Socket sServidor ;
 		BufferedOutputStream bos;
 		
-		public InfoServidor(){}
+		public InfoServidor(){
+			try {
+				sServidor = new Socket("localhost", 34567);
+			} catch (UnknownHostException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
 		
 		public InfoServidor(ServerSocket sServer) {
 			this.sServer = sServer;
@@ -53,13 +62,12 @@ public class InfoServidor {
 		}
 	
 	
-	public void enviarUsuari(int option, String nom, char[] contrasenya){
+	public boolean enviarUsuari(int option, String nom, char[] contrasenya){
 		
 		try {
 			String algo;
 			System.out.println("[CLIENT] - Peticio de connexio..."); 
 			
-			Socket sServidor = new Socket("localhost", 34567);
 
 			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
 			
@@ -70,26 +78,29 @@ public class InfoServidor {
 			case 1: doStream.writeUTF("user:" + nom + "/" + algo);
 				User user = new User(nom,algo);
 				this.controladorFinestres.setUser(user);
+				
 				break;
 			case 2:
 				doStream.writeUTF("userLog:" + nom + "/" + algo);
+				DataInputStream input = new DataInputStream(sServidor.getInputStream());
+				int i = input.readInt();
+				if(i == 1)return true;
 				break;
 			
 			}
 			System.out.println("Enviat");
-			sServidor.close();
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		return false;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public void peticioMusica() throws ClassNotFoundException{
-		System.out.println("[CLIENT] - Peticio de connexio..."); 
+		System.out.println("[CLIENT] - Peticio de musica..."); 
 		try {
-			Socket sServidor = new Socket("localhost", 34567);
 			
 			ArrayList <Canco> alMusica = new ArrayList<Canco>();
 			
@@ -101,17 +112,13 @@ public class InfoServidor {
 			
 			if (controladorFinestres != null)  controladorFinestres.actualitzaMusicaDisponible(alMusica);
 
-			
-			sServidor.close();
 		} catch (IOException e) {
-			//e.printStackTrace();
 			System.out.println("exc1");
 		}
 		
 	}
 	
 	public void peticioUsuaris() throws UnknownHostException, IOException, ClassNotFoundException {
-		Socket sServidor = new Socket("localhost", 34567);
 		
 		ArrayList <User> alUsers = new ArrayList<User>();
 		
@@ -122,7 +129,6 @@ public class InfoServidor {
 		
 		controladorFinestres.actualitzaUsuaris(alUsers);
 		
-		sServidor.close();
 	}
 	
 	/**
@@ -132,7 +138,6 @@ public class InfoServidor {
 	 */
 	
 	public void peticio(String request, String obj) throws IOException {
-		Socket sServidor = new Socket ("localhost", 34567);
 		DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
 		doStream.writeUTF("requestCanco:"+obj.replace(" ", ""));
 		String[] s = obj.split("/");
@@ -147,10 +152,8 @@ public class InfoServidor {
 			byte[] buffer = new byte[1024];
 			int len = 0;
 			while((len=llegada.read(buffer))>0){
-				//System.out.println(len);
 				desti.write(buffer, 0, len);
 			}
-			sServidor.close();
 			
 
 		}
@@ -158,7 +161,6 @@ public class InfoServidor {
 	}
 	
 	public void peticioFollowers() throws UnknownHostException, IOException, ClassNotFoundException {
-		Socket sServidor = new Socket("localhost", 34567);
 		
 		ArrayList <User> alUsers = new ArrayList<User>();
 		
@@ -169,7 +171,6 @@ public class InfoServidor {
 		
 		controladorFinestres.actualitzaUsuarisFollowing(alUsers);
 		
-		sServidor.close();
 	}
 	
 }

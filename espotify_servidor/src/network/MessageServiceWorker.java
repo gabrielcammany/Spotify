@@ -77,8 +77,7 @@ public class MessageServiceWorker implements Runnable {
 							while((len = fitxer.read(buffer))>0){
 								envio.write(buffer,0,len);
 							}
-							envio.flush();
-							sClient.close();	
+							envio.flush();	
 						}catch(IOException e){
 							e.printStackTrace();
 						}
