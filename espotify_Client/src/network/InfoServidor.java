@@ -60,6 +60,19 @@ public class InfoServidor {
 			this.controladorFinestres = controladorFinestres;
 			System.out.println(controladorFinestres);
 		}
+		
+	public void demanaSessio(){
+		try {
+			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
+			String.valueOf("Sessio");
+			
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
 	
 	
 	public boolean enviarUsuari(int option, String nom, char[] contrasenya){

@@ -29,7 +29,6 @@ public class SocketController {
 		Query q =new Query();
 
 		String select = q.queryList(2, user);
-		System.out.println("## "+select+" ##");
 		response= selectUser(select);
 		return response;
 	}
@@ -71,9 +70,7 @@ public class SocketController {
 
 	public Boolean loginUser(String usuario, String password){
 		User user =new User(usuario,password);
-System.out.println("hola bro ");
 		String result = verifyUser(user);
-		System.out.println("adios bro"+ result);
 		if(result.equals("-1"))return true;
 		return false;
 		//si user no es troba registrat cal notificar al client.

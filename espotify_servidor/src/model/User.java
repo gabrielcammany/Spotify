@@ -14,7 +14,6 @@ public class User implements Serializable{
 	private String password;
 	private String data_reg;
 	private String data_ult;
-	private ButtonsController controller;
 	private int id_usuari;
 
 
@@ -68,7 +67,6 @@ public class User implements Serializable{
 	}
 
 	public User(){
-		SocketController message = new SocketController();
 	}
 	public User(String usuario,String password){
 		//this.alUser =new ArrayList<User>();

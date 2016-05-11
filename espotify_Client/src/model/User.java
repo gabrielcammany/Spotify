@@ -64,6 +64,7 @@ public class User implements Serializable{
 		this.data_ult = data_ult;
 	}
 
+	public User(){}
 	public User(String usuario,String password){
 		//this.alUser =new ArrayList<User>();
 		this.nickname = usuario;
