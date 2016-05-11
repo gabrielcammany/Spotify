@@ -15,6 +15,7 @@ import java.util.Calendar;
 import controller.SocketController;
 import model.Canco;
 import model.Musica;
+import model.Sessio;
 import model.User;
 import model.Usuaris;
 
@@ -45,7 +46,6 @@ public class MessageServiceWorker implements Runnable {
 		String password;
 		String[] data;
 		String user;
-		while (active) {
 			try {
 				// Atenem les connexions
 				diStream = new DataInputStream(this.sClient.getInputStream());
@@ -74,10 +74,14 @@ public class MessageServiceWorker implements Runnable {
 							FileInputStream fitxer = new FileInputStream("./Musica/" + data[1] + "_" + aux[1] + ".mp3");
 							byte[] buffer = new byte[1024];
 							int len = 0;
-							while((len = fitxer.read(buffer))>0){
+							while((len = fitxer.read(buffer))>=0){
+								System.out.println("len = " + len);
 								envio.write(buffer,0,len);
 							}
-							envio.flush();	
+							System.out.println("--------Enviat----------");
+							envio.flush();
+							
+							
 						}catch(IOException e){
 							e.printStackTrace();
 						}
@@ -86,6 +90,8 @@ public class MessageServiceWorker implements Runnable {
 				}
 				
 				if (data[0].equals("requestUsuaris")) {
+					
+					System.out.println("request usuaris");
 					ArrayList<User> usuaris = new ArrayList<User>();
 					usuaris = cadenas.selectUsers(true,null);
 					ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
@@ -93,12 +99,19 @@ public class MessageServiceWorker implements Runnable {
 				}
 				
 				if (data[0].equals("requestUsuarisFollower")) {
+					
 					ArrayList<User> usuaris = new ArrayList<User>();
 					usuaris = cadenas.selectUsers(false,data[1]);
 					ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
 					objectOutput.writeObject(usuaris);
 				}
-				
+				if (data[0].equals("Sessio")) {
+					Sessio sessio = new Sessio();
+					sessio.setIdSessio(cadenas.getUsuariActual().getId_usuari());
+					sessio.setLl(cadenas.omplirLlistes(cadenas.getUsuariActual().getId_usuari()));
+					
+					
+				}
 				
 				if(data[0].equals("user")){
 					user = data[1];
@@ -148,11 +161,17 @@ public class MessageServiceWorker implements Runnable {
 				
 					}
 				}
-				
 			} catch (IOException e) { 
 				e.printStackTrace();
 			}
-		}
+
+			try {
+				sClient.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		
+		
 	}
 
 	// Operacio privada per generar la data de recepcio dels missatges

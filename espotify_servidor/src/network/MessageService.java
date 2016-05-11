@@ -28,10 +28,10 @@ public class MessageService {
 	
 	// Inicia el servei per la recepcio de missatges
 	public void startService() {
-			Thread t = new Thread(){
-				@Override
-				public void run(){
-					
+		Thread t = new Thread(){
+			@Override
+			public void run(){
+				while(true){
 					try {
 						System.out.println("Esperant..."+(i));
 						Socket sClient = sServer.accept();
@@ -41,9 +41,9 @@ public class MessageService {
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
-					
 				}
-			};
+			}
+		};
 			t.start();
 			// Creem el ServerSocket
 			// Creem i iniciem un nou fil d execucio per tal descoltar

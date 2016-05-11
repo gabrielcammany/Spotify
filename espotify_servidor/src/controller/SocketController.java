@@ -19,9 +19,14 @@ public class SocketController {
 
 	private ConectorDB conn;
 	private Musica m;
+	private User user;
 
 	public SocketController() {
 		conn = new ConectorDB("dpo_root", "sinminus", "bd_espotifi", 3306);
+	}
+	
+	public User getUsuariActual() {
+		return user;
 	}
 
 	public String verifyUser(User user){
@@ -46,7 +51,7 @@ public class SocketController {
 
 
 	public void registroUsuario(String usuario, String password){
-		User user =new User(usuario,password);
+		user =new User(usuario,password);
 
 		//Comprovamos el nombre de usuario pero no validamos la contrase�a
 		String result = verifyUser(user);
@@ -69,7 +74,7 @@ public class SocketController {
 	}
 
 	public Boolean loginUser(String usuario, String password){
-		User user =new User(usuario,password);
+		user =new User(usuario,password);
 		String result = verifyUser(user);
 		if(result.equals("-1"))return true;
 		return false;

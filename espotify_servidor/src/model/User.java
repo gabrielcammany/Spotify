@@ -20,6 +20,8 @@ public class User implements Serializable{
 	public int getId_usuari() {
 		return id_usuari;
 	}
+	
+	
 
 
 	public void setId_usuari(int id_usuari) {

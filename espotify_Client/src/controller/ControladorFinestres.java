@@ -88,7 +88,7 @@ public class ControladorFinestres {
 	public void Login() throws ClassNotFoundException, UnknownHostException, IOException {
 		//InfoServidor info = new InfoServidor();
 		if((infoServidor.enviarUsuari(2, fLogin.getjtfUsuari().getText(), fLogin.getjtfPassword().getPassword()))){
-			infoServidor.demanaSessio();
+			//infoServidor.demanaSessio();
 			Reproduccio();
 		} else {
 			fLogin.mostraMissatgeError("L'usuari no existeix.");
@@ -116,7 +116,9 @@ public class ControladorFinestres {
 		//Realitzem la peticio de cancos disponibles al servidor
 		
 		//infoServidor =new InfoServidor();
+		infoServidor.demanaSessio();
 		infoServidor.peticioMusica();
+		
 		
 		//Realitzem la peticio dels usuaris registrats
 		infoServidor.peticioUsuaris();
@@ -167,8 +169,8 @@ public class ControladorFinestres {
 	 * 
 	 */
 
-	public void actualitzaUsuarisFollowing(/*  rebre array dusuaris    */ArrayList<User> alUsuari){
-		fReproduccio.setUsuarisFollowing(/*  pasar array dusuaris   */alUsuari);
+	public void actualitzaUsuarisFollowing(ArrayList<User> alUsuari){
+		fReproduccio.setUsuarisFollowing(alUsuari);
 		
 	}
 	

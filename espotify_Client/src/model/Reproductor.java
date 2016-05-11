@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
@@ -45,7 +46,8 @@ public class Reproductor extends Thread{
             setPlaying(true);
             player = new BasicPlayer();
             
-            player.open(AudioSystem.getAudioInputStream(fis));
+            InputStream bufferedIn = new BufferedInputStream(fis);
+            player.open(AudioSystem.getAudioInputStream(bufferedIn));
             while (true) {
             	//System.out.println("hola");
             	player.play();  

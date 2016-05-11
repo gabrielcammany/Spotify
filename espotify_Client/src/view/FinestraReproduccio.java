@@ -348,12 +348,12 @@ public class FinestraReproduccio extends JFrame {
 	
 	public void setUsuarisFollowing(ArrayList<User> alUsuari){
 		//podem escollir entre llistar els usuaris que seguim o buscar un usuari per seguir-lo/seixar-lo de seguir
-				JTabbedPane jtpFollowing = new JTabbedPane();
-				//buscar un nou usuari
-				JPanel jpNouFollow = new JPanel(new MigLayout("al center center, wrap, gapy 10"));
-				JTextField jtfUsuari = new JTextField(15);
-				PromptSupport.setPrompt("Nom usuari", jtfUsuari);
-				jpNouFollow.add(jtfUsuari);
+		JTabbedPane jtpFollowing = new JTabbedPane();
+		//buscar un nou usuari
+		JPanel jpNouFollow = new JPanel(new MigLayout("al center center, wrap, gapy 10"));
+		JTextField jtfUsuari = new JTextField(15);
+		PromptSupport.setPrompt("Nom usuari", jtfUsuari);
+		jpNouFollow.add(jtfUsuari);
 		//JPanel jpLlistat = new JPanel(new BorderLayout());
 
 		//Tabla musica disponible 
@@ -388,8 +388,10 @@ public class FinestraReproduccio extends JFrame {
 		jtpFollowing.add("Llistat following", taulaUsuariFollowing);
 		jtpFollowing.add("Buscar Usuari", jpNouFollow);
 		
+
+		//this.jspUsuarisFollowing = new JScrollPane(taulaUsuariFollowing);	
 		this.jspUsuarisFollowing = new JScrollPane(jtpFollowing);
-		this.jspUsuarisFollowing = new JScrollPane(taulaUsuariFollowing);	
+
 		
 	}
 	

@@ -22,6 +22,7 @@ public class ConectorDB {
 	public ConectorDB(){}
 	
 	public ConectorDB(JsonObject o) {
+		
 		ConectorDB.userName = o.get("user").getAsString();
 		ConectorDB.password = o.get("pass").getAsString();
 		ConectorDB.db = o.get("database").getAsString();
