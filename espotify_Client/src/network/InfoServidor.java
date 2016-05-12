@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import controller.ControladorFinestres;
 import controller.ControladorLlistar;
 import model.Canco;
+import model.Llistes;
 import model.User;
 
 @SuppressWarnings("unused")
@@ -89,37 +90,40 @@ public class InfoServidor {
 			
 
 			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
-			
+			int id = 0;
 			//algo = algo(String.valueOf(contrasenya));
 			algo = String.valueOf(contrasenya);
-			//COMENTARIO DE GABRI PARA EL FINALIZAR EL PASSWORD!!
 			switch(option) {
 			case 1: doStream.writeUTF("user:" + nom + "/" + algo);
-				User user = new User(nom,algo);
-				this.controladorFinestres.setUser(user);
-				
+				DataInputStream input2 = new DataInputStream(sServidor.getInputStream());
+				id = input2.readInt();
 				break;
 			case 2:
 				doStream.writeUTF("userLog:" + nom + "/" + algo);
 				DataInputStream input = new DataInputStream(sServidor.getInputStream());
-				int i = input.readInt();
-				if(i == 1)return true;
-				if (i == 0) return false;
+				id = input.readInt();
+
 				break;
-			
 			}
-			System.out.println("Enviat");
+			System.out.println(id);
+			if(id!=0){
+				User.setId_usuari(id);
+				User.setNickname(nom);
+				ObjectInputStream o = new ObjectInputStream(sServidor.getInputStream());
+				try {
+					User.setlPropies((ArrayList<Llistes>)o.readObject());
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				return true;
+			}
+			return false;
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
-		/*try {
-			sServer.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}*/
 		return false;
 	}
 	
@@ -132,7 +136,8 @@ public class InfoServidor {
 			ArrayList <Canco> alMusica = new ArrayList<Canco>();
 			
 			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
-			doStream.writeUTF("requestMusic:");
+			System.out.println(User.getId_usuari()+":requestMusic");
+			doStream.writeUTF(User.getId_usuari()+":requestMusic");
 			ObjectInputStream objectInput = new ObjectInputStream(sServidor.getInputStream());
 			alMusica = (ArrayList<Canco>) objectInput.readObject();
 			
@@ -150,7 +155,7 @@ public class InfoServidor {
 		ArrayList <User> alUsers = new ArrayList<User>();
 		
 		DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
-		doStream.writeUTF("requestUsuaris:");
+		doStream.writeUTF(User.getId_usuari()+":requestUsuaris");
 		ObjectInputStream objectInput = new ObjectInputStream(sServidor.getInputStream());
 		alUsers = (ArrayList<User>) objectInput.readObject();
 
@@ -166,50 +171,42 @@ public class InfoServidor {
 	
 	public void peticio(String request, String obj) throws IOException {
 		try {
-			
+
 			newSocket();
-			
+
 			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
-			doStream.writeUTF("requestCanco:"+obj.replace(" ", ""));
+			doStream.writeUTF(User.getId_usuari()+":requestCanco:"+obj.replace(" ", ""));
 			String[] s = obj.split("/");
-			switch(request){
-			case "requestCanco":   
-				System.out.println("Path    ./espotify_Client/temp/" + s[0] + "_" + s[1] + ".mp3");
-				InputStream llegada = sServidor.getInputStream();
-				System.out.println(s[0] + " " + s[1] + " ES ESTE");
-				File f = new File("./temp/" + s[0] + "_" + s[1] + ".mp3");
-				
-				FileOutputStream desti = new FileOutputStream(f);
-				byte[] buffer = new byte[1024];
-				int len = 0;
-				while((len=llegada.read(buffer))>=0){
-					System.out.println("len-> "+ len);
-					desti.write(buffer, 0, len);
+			System.out.println("Path    ./espotify_Client/temp/" + s[0] + "_" + s[1] + ".mp3");
+			InputStream llegada = sServidor.getInputStream();
+			System.out.println(s[0] + " " + s[1] + " ES ESTE");
+			File f = new File("./temp/" + s[0] + "_" + s[1] + ".mp3");
 
-				}
-				//desti.write(buffer, 0, len);
-				desti.close();
-				
-				
-				
-				System.out.println("fi while");
+			FileOutputStream desti = new FileOutputStream(f);
+			byte[] buffer = new byte[1024];
+			int len = 0;
+			while((len=llegada.read(buffer))>=0){
+				System.out.println("len-> "+ len);
+				desti.write(buffer, 0, len);
+
 			}
-				
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-				System.out.println("->exception");
-			}
-		sServidor.close();
+			desti.close();
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			System.out.println("->exception");
 		}
+		sServidor.close();
+	}
 
 	
 	
+	@SuppressWarnings("unchecked")
 	public void peticioFollowers() throws UnknownHostException, IOException, ClassNotFoundException {
 		newSocket();
 		ArrayList <User> alUsers = new ArrayList<User>();
 		
 		DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
-		doStream.writeUTF("requestUsuarisFollower:"+this.controladorFinestres.getUser().getNickname()+"");
+		doStream.writeUTF(User.getId_usuari()+":requestUsuarisFollower");
 		ObjectInputStream objectInput = new ObjectInputStream(sServidor.getInputStream());
 		alUsers = (ArrayList<User>) objectInput.readObject();
 		

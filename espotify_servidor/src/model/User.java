@@ -1,11 +1,6 @@
 package model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.LinkedList;
-
-import controller.ButtonsController;
-import controller.SocketController;
 
 public class User implements Serializable{
 	

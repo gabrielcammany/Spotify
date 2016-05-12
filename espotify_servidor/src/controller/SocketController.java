@@ -4,15 +4,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.mysql.jdbc.ConnectionPropertiesTransform;
-
 import model.Canco;
+import model.Data;
 import model.Llistes;
 import model.Musica;
 import model.Query;
 import model.User;
 import network.ConectorDB;
-import network.MessageServiceWorker;
 
 
 public class SocketController {
@@ -22,20 +20,12 @@ public class SocketController {
 	private User user;
 
 	public SocketController() {
+		//json donde estas!!!
 		conn = new ConectorDB("dpo_root", "sinminus", "bd_espotifi", 3306);
 	}
 	
 	public User getUsuariActual() {
 		return user;
-	}
-
-	public String verifyUser(User user){
-		String response;
-		Query q =new Query();
-
-		String select = q.queryList(2, user);
-		response= selectUser(select);
-		return response;
 	}
 	
 	/**
@@ -50,13 +40,12 @@ public class SocketController {
 	}
 
 
-	public void registroUsuario(String usuario, String password){
+	public int registroUsuario(String usuario, String password){
 		user =new User(usuario,password);
 
 		//Comprovamos el nombre de usuario pero no validamos la contrase�a
-		String result = verifyUser(user);
-		System.out.println("## "+result+" ##");
-		if(result.equals("error")){
+		int result = verifyUser(usuario,password);
+		if(result == 0){
 			Query q = new Query();
 			String response;
 			String cad = q.queryList(0, user);
@@ -65,21 +54,24 @@ public class SocketController {
 			conn.insertQuery(response);
 
 			System.out.println("User: '"+user.getNickname()+"' Inserit correctament.");
+			selectUsers(true,null);
+			return verifyUser(usuario, password);
 		}else{
 			System.out.println("[Servidor] L'usari '"+user.getNickname()+"' ja es troba registrat.");
+			return result;
 		}
-
 		//System.out.println(user.verifyUser(user));
 
 	}
 
-	public Boolean loginUser(String usuario, String password){
-		user =new User(usuario,password);
-		String result = verifyUser(user);
-		if(result.equals("-1"))return true;
-		return false;
-		//si user no es troba registrat cal notificar al client.
-
+	public int verifyUser(String usuario, String password){
+		int id = 0;
+		for(User u : Data.getUsers()){
+			if(u.getNickname().toLowerCase().equals(usuario.toLowerCase())){
+				if(u.getPassword().equals(password))return id = u.getId_usuari();
+			}
+		}
+		return id;
 	}
 
 
@@ -200,9 +192,6 @@ public class SocketController {
 	public ArrayList<Llistes> omplirLlistes(int id_user){
 		ArrayList<Llistes> ll = new ArrayList<Llistes>();
 		Query q =new Query();
-		ArrayList<Canco> allCanco = new ArrayList<Canco>();
-		m = new Musica();
-		allCanco = m.getMusica();
 
 		ResultSet responseServer = conn.selectQuery(q.queryList(7,id_user));
 

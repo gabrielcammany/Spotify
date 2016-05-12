@@ -2,7 +2,6 @@ package view;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Vector;
 
 import javax.swing.JButton;
@@ -17,10 +16,9 @@ import org.jdesktop.xswingx.PromptSupport;
 
 import controller.ButtonsController;
 import controller.DeleteController;
-import net.miginfocom.swing.MigLayout;
-import model.Canco;
 import model.Musica;
-import model.Usuaris;
+import model.User;
+import net.miginfocom.swing.MigLayout;
 
 
 /**
@@ -60,7 +58,7 @@ public class FinestraServidor extends JFrame {
 	
 	
 	
-	public void creaFinestra(Musica musica, Usuaris allUsers){
+	public void creaFinestra(Musica musica, ArrayList<User> alUsuaris){
 		this.musica = musica;
 		
 		
@@ -79,7 +77,7 @@ public class FinestraServidor extends JFrame {
 		JTabbedPane jtpServidor = new JTabbedPane();
 		//tab user
 		jpUsuari = new JPanel();
-		jpUsuari = FinestraUsuari(allUsers);
+		jpUsuari = FinestraUsuari(alUsuaris);
 		//tab music
 		jpMusica = new JPanel();
 		jpMusica = FinestraMusica();
@@ -96,11 +94,11 @@ public class FinestraServidor extends JFrame {
 	 * 
 	 **/
 	
-	public JPanel FinestraUsuari(Usuaris allUsers){
+	public JPanel FinestraUsuari(ArrayList<User> allUsers){
 		jpUsuari = new JPanel(new BorderLayout());
 		//connectar amb base de dades 
 		
-		Vector columnas = new Vector();
+		Vector<String> columnas = new Vector<String>();
 		columnas.add ("Nom usuari");
 		columnas.add("Data registre");
 		columnas.add("Ultim acces");
@@ -110,13 +108,13 @@ public class FinestraServidor extends JFrame {
 		columnas.add("Numero follower");
 		columnas.add("Numero following");
 		
-		Vector filas = new Vector();
+		Vector<Vector<String>> filas = new Vector<Vector<String>>();
 		
-		for (int i = 0; i < allUsers.getUsuaris().size(); i ++) {
-			Vector fila = new Vector();
-			fila.add(allUsers.getUsuaris().get(i).getNickname());
-			fila.add(allUsers.getUsuaris().get(i).getData_reg());
-			fila.add(allUsers.getUsuaris().get(i).getData_ult());
+		for (int i = 0; i < allUsers.size(); i ++) {
+			Vector<String> fila = new Vector<String>();
+			fila.add(allUsers.get(i).getNickname());
+			fila.add(allUsers.get(i).getData_reg());
+			fila.add(allUsers.get(i).getData_ult());
 			fila.add("no esta hecho");
 			fila.add("no esta hecho");
 			fila.add("no esta hecho");
@@ -193,7 +191,7 @@ public class FinestraServidor extends JFrame {
 	
 		//Tabla musica disponible 
 		
-		Vector columnas = new Vector();
+		Vector<String> columnas = new Vector<String>();
 		
 		columnas.add("Nom canco");
 		columnas.add("Genere");
@@ -201,9 +199,9 @@ public class FinestraServidor extends JFrame {
 		columnas.add("Artistes");
 
    
-		Vector filas = new Vector();
+		Vector<Vector<String>> filas = new Vector<Vector<String>>();
 		for (int i = 0; i < musica.getMusica().size(); i ++) {
-			Vector fila = new Vector();
+			Vector<String> fila = new Vector<String>();
 			
 			fila.add(musica.getMusica().get(i).getNom());
 			fila.add(musica.getMusica().get(i).getGenere());

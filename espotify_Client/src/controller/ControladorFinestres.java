@@ -116,14 +116,8 @@ public class ControladorFinestres {
 		//Realitzem la peticio de cancos disponibles al servidor
 		
 		//infoServidor =new InfoServidor();
-		infoServidor.demanaSessio();
+		//infoServidor.demanaSessio();
 		infoServidor.peticioMusica();
-		
-		
-		//Realitzem la peticio dels usuaris registrats
-		infoServidor.peticioUsuaris();
-		
-		
 	}
 	
 	/*
@@ -193,14 +187,5 @@ public class ControladorFinestres {
 	public void restartReproductor() {
 		this.r = new Reproductor("");
 	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-		
 	
 }

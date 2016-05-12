@@ -8,8 +8,6 @@ import com.google.gson.JsonObject;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 
-import controller.ButtonsController;
-
 public class ConectorDB {
 	static String userName;
 	static String password;

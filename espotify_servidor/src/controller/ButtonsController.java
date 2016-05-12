@@ -2,15 +2,11 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 
-import model.Canco;
+import model.Data;
 import model.Musica;
 import model.Query;
 import model.User;
-import model.Usuaris;
 import network.ConectorDB;
 import network.MessageService;
 import view.ErrorLog;
@@ -68,8 +64,8 @@ public class ButtonsController implements ActionListener {
 	
 	public void creaFinestra() {
 		System.out.println("########################################################");
-		Usuaris allUsers = new Usuaris();
-		viewF.creaFinestra(getMusica(), allUsers);
+		Data.setUsers(new SocketController().selectUsers(true, null));
+		viewF.creaFinestra(getMusica(),Data.getUsers());
 	}
 	
 	

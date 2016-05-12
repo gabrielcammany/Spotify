@@ -1,7 +1,6 @@
 package network;
 
 import java.io.DataInputStream;
-import java.io.DataOutput;
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -14,10 +13,10 @@ import java.util.Calendar;
 
 import controller.SocketController;
 import model.Canco;
+import model.Data;
 import model.Musica;
 import model.Sessio;
 import model.User;
-import model.Usuaris;
 
 public class MessageServiceWorker implements Runnable {
 
@@ -41,141 +40,117 @@ public class MessageServiceWorker implements Runnable {
 
 	// Escolta peticions de connexio i llegeix els missatjges dels clients
 	public void run() {
-	    
+
 		String[] aux;
 		String password;
 		String[] data;
 		String user;
-			try {
-				// Atenem les connexions
-				diStream = new DataInputStream(this.sClient.getInputStream());
+		try {
+			// Atenem les connexions
+			diStream = new DataInputStream(this.sClient.getInputStream());
 
-				String newMessage = diStream.readUTF();
-				System.out.println(newMessage);
-				aux = newMessage.split("/");
-				data = aux[0].split(":");
-				
-				if (data[0].equals("requestCanco")){
-					ObjectOutputStream objectOutput  = new ObjectOutputStream(this.sClient.getOutputStream());
-					System.out.println("He recibido la peticion de cancion: "+ data[1] + " " + aux[1]);
+			String newMessage = diStream.readUTF();
+			System.out.println(newMessage);
+			aux = newMessage.split("/");
+			data = aux[0].split(":");
+			if (data[1].equals("requestCanco")){
+				ObjectOutputStream objectOutput  = new ObjectOutputStream(this.sClient.getOutputStream());
+				System.out.println("He recibido la peticion de cancion: "+ data[2] + " " + aux[1]);
 
-					int response = cadenas.songRequest(data[1],aux[1]);
-					if(response== -1){
+				int response = cadenas.songRequest(data[1],aux[1]);
+				if(response== -1){
 
-						objectOutput.writeObject(null);
+					objectOutput.writeObject(null);
 
-					}else{
-						try{ 
-							System.out.println("debug##10##");
-							alcanco = musica.getMusica();						
-							String path = alcanco.get(response).getPath();
-							System.out.println("####");
-							PrintStream envio = new PrintStream(this.sClient.getOutputStream());
-							FileInputStream fitxer = new FileInputStream("./Musica/" + data[1] + "_" + aux[1] + ".mp3");
-							byte[] buffer = new byte[1024];
-							int len = 0;
-							while((len = fitxer.read(buffer))>=0){
-								System.out.println("len = " + len);
-								envio.write(buffer,0,len);
-							}
-							System.out.println("--------Enviat----------");
-							envio.flush();
-							
-							
-						}catch(IOException e){
-							e.printStackTrace();
-						}
-						
-					}
-				}
-				
-				if (data[0].equals("requestUsuaris")) {
-					
-					System.out.println("request usuaris");
-					ArrayList<User> usuaris = new ArrayList<User>();
-					usuaris = cadenas.selectUsers(true,null);
-					ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
-					objectOutput.writeObject(usuaris);
-				}
-				
-				if (data[0].equals("requestUsuarisFollower")) {
-					
-					ArrayList<User> usuaris = new ArrayList<User>();
-					usuaris = cadenas.selectUsers(false,data[1]);
-					ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
-					objectOutput.writeObject(usuaris);
-				}
-				if (data[0].equals("Sessio")) {
-					Sessio sessio = new Sessio();
-					sessio.setIdSessio(cadenas.getUsuariActual().getId_usuari());
-					sessio.setLl(cadenas.omplirLlistes(cadenas.getUsuariActual().getId_usuari()));
-					
-					
-				}
-				
-				if(data[0].equals("user")){
-					user = data[1];
-					System.out.println(aux[1]);
-					//password = desencripta(aux[1].getBytes());
-					password = aux[1];
-
-					cadenas.registroUsuario(user,password);
-					//Tornem a generar la llista d'usuaris
-					Usuaris allUsers = new Usuaris();
-					
-					// Tanquem el socket del client
-					//sClient.close();
 				}else{
-					if(data[0].equals("userLog")){
-						user = data[1];
-						int idUser = 0;
-						
-						password = aux[1];
-						System.out.println("----------------------------------------------------------");
-						DataOutputStream d = new DataOutputStream(this.sClient.getOutputStream());
-						if(cadenas.loginUser(user,password)){
+					try{ 
+						System.out.println("debug##10##");
+						alcanco = musica.getMusica();				
+						PrintStream envio = new PrintStream(this.sClient.getOutputStream());
+						FileInputStream fitxer = new FileInputStream("./Musica/" + data[2] + "_" + aux[1] + ".mp3");
+						byte[] buffer = new byte[1024];
+						int len = 0;
+						while((len = fitxer.read(buffer))>=0){
+							System.out.println("len = " + len);
+							envio.write(buffer,0,len);
+						}
+						System.out.println("--------Enviat----------");
+						envio.flush();
+						fitxer.close();
 
-							int trobat = 0;
-							//User es static i nomes ho fara una vegada
-						
-							for(User u : new Usuaris().getUsuaris()){
-								System.out.println("Estoy dentro");
-								if(u.getNickname().toLowerCase().equals(user.toLowerCase()))trobat = 1 ;
-								System.out.println("Estoy listo: ##"+trobat);
-							}
-							d.writeInt(trobat);
-						}else{
-							d.writeInt(1);
-						}
-						// Tanquem el socket del client
-						//sClient.close();
-					}else{
-						if(data[0].equals("requestMusic")){
-							alcanco = new ArrayList<Canco>();
-							alcanco = musica.getMusica();
-							
-							ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
-							objectOutput.writeObject(alcanco);
-							
-						}
-				
+					}catch(IOException e){
+						e.printStackTrace();
 					}
+
 				}
-			} catch (IOException e) { 
-				e.printStackTrace();
 			}
 
-			try {
-				sClient.close();
-			} catch (IOException e) {
-				e.printStackTrace();
+			if (data[1].equals("requestUsuaris")) {
+
+				System.out.println("request usuaris");
+				ArrayList<User> usuaris = new ArrayList<User>();
+				usuaris = cadenas.selectUsers(true,null);
+				ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
+				objectOutput.writeObject(usuaris);
 			}
-		
-		
+
+			if (data[1].equals("requestUsuarisFollower")) {
+
+				ArrayList<User> usuaris = new ArrayList<User>();
+				usuaris = cadenas.selectUsers(false,data[1]);
+				ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
+				objectOutput.writeObject(usuaris);
+			}
+
+			if(data[0].equals("user")){
+				user = data[1];
+				System.out.println(aux[1]);
+				//password = desencripta(aux[1].getBytes());
+				password = aux[1];
+				DataOutputStream d = new DataOutputStream(this.sClient.getOutputStream());
+				d.writeInt(cadenas.registroUsuario(user,password));
+
+
+				// Tanquem el socket del client
+				//sClient.close();
+			}
+			if(data[0].equals("userLog")){
+				user = data[1];
+				password = aux[1];
+				System.out.println("----------------------------------------------------------");
+				DataOutputStream d = new DataOutputStream(this.sClient.getOutputStream());
+				int i = cadenas.verifyUser(user,password);
+				d.writeInt(i);
+				if(i != 0){
+					Sessio s =new Sessio(i,cadenas.omplirLlistes(i),new ArrayList<Integer>());
+					Data.addSessio(s);
+					ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
+					objectOutput.writeObject(s.getLl());
+				}
+			}
+			if(data[1].equals("requestMusic")){
+				alcanco = new ArrayList<Canco>();
+				alcanco = musica.getMusica();
+
+				ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
+				objectOutput.writeObject(alcanco);
+
+			}
+		} catch (IOException e) { 
+			e.printStackTrace();
+		}
+
+		try {
+			sClient.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+
 	}
 
 	// Operacio privada per generar la data de recepcio dels missatges
-	private String getCurrentTime() {
+	public String getCurrentTime() {
 		return new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
 	}
 

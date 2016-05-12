@@ -1,74 +1,48 @@
 package model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.LinkedList;
+
+public class User{
+	private static String nickname;
+	private static int id_usuari;
+	private static ArrayList<Llistes> lPropies;
 
 
-public class User implements Serializable{
-	
-	private static final long serialVersionUID = 1L;
-	private String nickname;
-	private String password;
-	private String data_reg;
-	private String data_ult;
-	private int id_usuari;
-
-
-	public int getId_usuari() {
+	public static int getId_usuari() {
 		return id_usuari;
 	}
 
 
-	public void setId_usuari(int id_usuari) {
-		this.id_usuari = id_usuari;
+	public static void setId_usuari(int id_usuari) {
+		User.id_usuari = id_usuari;
 	}
 
 
-	public String getNickname() {
+	public static String getNickname() {
 		return nickname;
 	}
 
 
-	public void setNickname(String nickname) {
-		this.nickname = nickname;
+	public static void setNickname(String nickname) {
+		User.nickname = nickname;
 	}
 
 
-	public String getPassword() {
-		return password;
-	}
 
-
-	public void setPassword(String password) {
-		this.password = password;
-	}
-
-
-	public String getData_reg() {
-		return data_reg;
-	}
-
-
-	public void setData_reg(String data) {
-		this.data_reg = data;
-	}
-
-
-	public String getData_ult() {
-		return data_ult;
-	}
-
-
-	public void setData_ult(String data_ult) {
-		this.data_ult = data_ult;
-	}
-
-	public User(){}
-	public User(String usuario,String password){
+	public User(String usuario,int id){
 		//this.alUser =new ArrayList<User>();
-		this.nickname = usuario;
-		this.password = password;
+		User.nickname = usuario;
+		User.id_usuari = id;
+	}
+
+
+	public static ArrayList<Llistes> getlPropies() {
+		return lPropies;
+	}
+
+
+	public static void setlPropies(ArrayList<Llistes> lPropies) {
+		User.lPropies = lPropies;
 	}
 	
 	

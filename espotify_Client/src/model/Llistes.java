@@ -1,8 +1,14 @@
 package model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Llistes {
+public class Llistes implements Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private static int id_llistes;
 	static String nom_llista;
 	private static ArrayList<Integer> allIdCanco;

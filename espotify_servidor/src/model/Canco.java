@@ -1,9 +1,6 @@
 package model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-
-import controller.ButtonsController;
 
 public class Canco implements Serializable, Comparable<Canco> {
 	/**
