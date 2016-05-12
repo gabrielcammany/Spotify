@@ -118,6 +118,7 @@ public class ControladorFinestres {
 		//infoServidor =new InfoServidor();
 		//infoServidor.demanaSessio();
 		infoServidor.peticioMusica();
+		infoServidor.peticioUsuaris();
 	}
 	
 	/*

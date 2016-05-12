@@ -111,7 +111,14 @@ public class InfoServidor {
 				User.setNickname(nom);
 				ObjectInputStream o = new ObjectInputStream(sServidor.getInputStream());
 				try {
-					User.setlPropies((ArrayList<Llistes>)o.readObject());
+					//Llistes[]
+					//User.setlPropies((ArrayList<Llistes>)o.readObject());
+					
+					Llistes[] llistes = (Llistes[]) o.readObject();
+					System.out.println("Rebent llistes");
+					for(Llistes l : llistes) System.out.println(l.getNom_llista());
+					//System.out.println("dfgdfhfghgjhj"+(String)o.readObject());
+					//System.out.println("sdfgfdg" + User.getlPropies().get(0).getNom_llista());
 				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -156,8 +163,11 @@ public class InfoServidor {
 		
 		DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
 		doStream.writeUTF(User.getId_usuari()+":requestUsuaris");
-		ObjectInputStream objectInput = new ObjectInputStream(sServidor.getInputStream());
-		alUsers = (ArrayList<User>) objectInput.readObject();
+		//ObjectInputStream objectInput = new ObjectInputStream(sServidor.getInputStream());
+
+		//alUsers = (ArrayList<User>) objectInput.readObject();
+		//Object o = objectInput.readObject();
+		//for(User c : alUsers)System.out.println(c.getNickname());
 
 		//controladorFinestres.actualitzaUsuarisFollowing(alUsers);
 		//sServer.close();

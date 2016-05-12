@@ -10,10 +10,12 @@ import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import controller.SocketController;
 import model.Canco;
 import model.Data;
+import model.Llistes;
 import model.Musica;
 import model.Sessio;
 import model.User;
@@ -90,8 +92,8 @@ public class MessageServiceWorker implements Runnable {
 				System.out.println("request usuaris");
 				ArrayList<User> usuaris = new ArrayList<User>();
 				usuaris = cadenas.selectUsers(true,null);
-				ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
-				objectOutput.writeObject(usuaris);
+				//ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
+				//objectOutput.writeObject(usuaris);
 			}
 
 			if (data[1].equals("requestUsuarisFollower")) {
@@ -124,8 +126,17 @@ public class MessageServiceWorker implements Runnable {
 				if(i != 0){
 					Sessio s =new Sessio(i,cadenas.omplirLlistes(i),new ArrayList<Integer>());
 					Data.addSessio(s);
-					ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
-					objectOutput.writeObject(s.getLl());
+					System.out.println(s.getLl().get(0).getNom_llista());
+					ObjectOutputStream objectOutput  = new ObjectOutputStream(this.sClient.getOutputStream());
+					List<Llistes> list = s.getLl();
+					Llistes[] llistes = new Llistes[list.size()];
+					llistes = list.toArray(llistes);
+					
+					for(Llistes l : llistes) System.out.println(l.getNom_llista());
+					objectOutput.writeObject(llistes);
+					//Llista[] llista = 
+					//objectOutput.writeObject("hello world");
+					//objectOutput.writeObject(s.getLl());
 				}
 			}
 			if(data[1].equals("requestMusic")){
