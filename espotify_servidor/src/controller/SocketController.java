@@ -106,7 +106,7 @@ public class SocketController {
 
 			while (responseServer.next()) {
 				Canco c = new Canco();
-				c.setIdCanco(Integer.getInteger(responseServer.getString("id_canco")));
+				c.setIdCanco(responseServer.getInt("id_canco"));
 				c.setNom(responseServer.getString("nom"));
 				c.setAlbum(responseServer.getString("album"));
 				c.setArtista(responseServer.getString("artista"));

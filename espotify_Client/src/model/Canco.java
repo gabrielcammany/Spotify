@@ -16,7 +16,11 @@ public class Canco implements Serializable, Comparable<Canco> {
 	private String nReproduccio;
 	private String estrelles;
 	private int reproduccions;
+	private int idCanco;
 	
+	public int getidCanco() {
+		return idCanco;
+	}
 	
 	public String getnReproduccio() {
 		return nReproduccio;

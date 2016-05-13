@@ -31,6 +31,8 @@ public class ControladorFinestres {
 	boolean reproduir = false;
 	Reproductor r;
 	
+	private ArrayList<Canco> alMusic;
+	
 
 	public ControladorFinestres(){
 		
@@ -129,6 +131,7 @@ public class ControladorFinestres {
 	 */
 	
 	public void actualitzaMusicaDisponible(ArrayList<Canco> alMusica){
+		this.alMusic = alMusica;
 		fReproduccio.setMusicaDisponible(alMusica);
 		
 		
@@ -190,8 +193,31 @@ public class ControladorFinestres {
 		this.r = new Reproductor("");
 	}
 	
-	public void creaLlistesPropies(ArrayList<Llistes> llistes) {
-		fReproduccio.llistesPropies(llistes);
+	public ArrayList<String> getlistesPropies() {
+		ArrayList<String> nomsLlistes = new ArrayList();
+		for (int i = 0; i<User.getlPropies().size(); i++) {
+			nomsLlistes.add(User.getlPropies().get(i).getNom_llista());	
+		}
+		return nomsLlistes;
+	}
+	
+	public void actualitzaTablaLlistaPropia(int indexSeleccio){
+		Llistes llistaSeleccionada = new Llistes();
+		llistaSeleccionada = User.getlPropies().get(indexSeleccio);
+		
+		ArrayList<Canco> musicaLlista = new ArrayList<Canco>();
+		
+		for (int i = 0; i < llistaSeleccionada.getAllIdCanco().size(); i ++) {
+			for (int j = 0; j < alMusic.size(); j++) {
+				if(llistaSeleccionada.getAllIdCanco().get(i) == alMusic.get(j).getidCanco()) {
+					System.out.println("TROBADA");
+					System.out.println(alMusic.get(j).getidCanco());
+					musicaLlista.add(alMusic.get(j));
+				}
+			}
+		}
+		
+		fReproduccio.actualitzaLlistaSeleccionada(musicaLlista);
 	}
 	
 }

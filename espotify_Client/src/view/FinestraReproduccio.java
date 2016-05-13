@@ -11,6 +11,7 @@ import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -22,6 +23,7 @@ import org.jdesktop.xswingx.PromptSupport;
 
 import controller.ControladorFinestres;
 import controller.ControladorLlistar;
+import controller.ControladorLlistesMusica;
 import controller.ControladorReproductor;
 import model.Canco;
 import model.Llistes;
@@ -49,6 +51,7 @@ public class FinestraReproduccio extends JFrame {
 	public JTable taulaMusica;
 	public JTable taulaUsuaris;
 	ArrayList<User> alUsers;
+	JPanel jpVisualitzarLlistes;
 	
 	
 	
@@ -250,7 +253,7 @@ public class FinestraReproduccio extends JFrame {
 	 */
 	
 	public void setMusicaDisponible(ArrayList<Canco> alMusica){
-		JPanel jpLlistat = new JPanel(new BorderLayout());
+		//JPanel jpLlistat = new JPanel(new BorderLayout());
 
 		//Tabla musica disponible 
 		Vector<String> columnas = new Vector();
@@ -277,12 +280,9 @@ public class FinestraReproduccio extends JFrame {
 		
 		public boolean isCellEditable (int rowIndex, int vColIndex) {
 			return false;
-		}};
-		
+		}};		
 		
 		this.jspLlistatDisponible = new JScrollPane(taulaMusica);		
-
-		
 	}
 	
 	public void setUsuaris(ArrayList<User> alUsers) {
@@ -296,13 +296,72 @@ public class FinestraReproduccio extends JFrame {
 	public void setMusicaPropia(/*passar llistes*/){
 		JTabbedPane jtpLlistatPropia = new JTabbedPane();
 		
+		
 		jtpLlistatPropia.addTab("Crear llista", new JScrollPane());
-		jtpLlistatPropia.addTab("Visualitzar llistes", new JScrollPane());	
+		jtpLlistatPropia.addTab("Visualitzar llistes", new JScrollPane(setVisualitzarLlistes()));	
 		jtpLlistatPropia.addTab("Eliminar llista", new JScrollPane());
 		jtpLlistatPropia.addTab("Votar cancons", new JScrollPane());
 		
 		this.jspLlistatPropia = new JScrollPane(jtpLlistatPropia);
 	}
+	
+	public JPanel setVisualitzarLlistes(){
+		jpVisualitzarLlistes = new JPanel(new BorderLayout());
+		JList jlLlistes = new JList(cf.getlistesPropies().toArray());
+		jlLlistes.setBorder(BorderFactory.createEmptyBorder(5,5,5,60));
+		jpVisualitzarLlistes.add(jlLlistes, BorderLayout.WEST);
+		
+		
+		jlLlistes.addMouseListener(new ControladorLlistesMusica(jlLlistes, cf));
+			
+		return jpVisualitzarLlistes;
+	}
+	
+	/**
+	 * Aquesta funcio rep l'array de totes les cançons de la llista seleccionada
+	 * 
+	 */
+	public void actualitzaLlistaSeleccionada(ArrayList<Canco> musicaLlista ){
+		
+		Vector<String> columnas = new Vector();
+
+		columnas.add("Nom canco");
+		columnas.add("Genere");
+		columnas.add("Album");
+		columnas.add("Artistes");
+
+
+		Vector filas = new Vector();
+		for (int i = 0; i <musicaLlista.size(); i ++) {
+			Vector<String> fila = new Vector();
+
+			fila.add(musicaLlista.get(i).getNom());
+			fila.add(musicaLlista.get(i).getGenere());
+			fila.add(musicaLlista.get(i).getAlbum());
+			fila.add(musicaLlista.get(i).getArtista());
+
+			filas.add(fila);
+		}
+		System.out.println(columnas);
+		JTable jtMusicaLlista = new JTable(filas, columnas){
+		
+		public boolean isCellEditable (int rowIndex, int vColIndex) {
+			return false;
+		}};
+		
+		
+		//sense aixo es quedara el primer jpanel(border.center)
+		BorderLayout layout =  (BorderLayout) jpVisualitzarLlistes.getLayout();
+		if (layout.getLayoutComponent(BorderLayout.CENTER) != null){
+			jpVisualitzarLlistes.remove(layout.getLayoutComponent(BorderLayout.CENTER));
+		}	
+		
+		jpVisualitzarLlistes.add(new JScrollPane(jtMusicaLlista), BorderLayout.CENTER);
+		//jpVisualitzarLlistes.repaint();
+		jpVisualitzarLlistes.validate();
+	}
+		
+	
 	
 	/**
 	 * Aquesta funcio rep l'array de totes llistes dels usuaris que segueix i els mostra en una taula
@@ -316,23 +375,16 @@ public class FinestraReproduccio extends JFrame {
 		
 		columnas.add("Nom llista");
 		columnas.add("Nom usuari");
-
-
    
 		Vector filas = new Vector();
 		 
 		  for (int i = 0; i <alLlistes.size(); i ++) {
-		 
+
 			Vector<String> fila = new Vector();
-			
 			fila.add(alLlistes.get(i).toString());
-			
-			
 			filas.add(fila);
 		}
-		
-		
-	
+
 		JTable taulaUsuariFollowing = new JTable(filas, columnas){
 		
 		public boolean isCellEditable (int rowIndex, int vColIndex) {
@@ -373,7 +425,6 @@ public class FinestraReproduccio extends JFrame {
 			Vector<String> fila = new Vector();
 			
 			fila.add(alUsuari.get(i).toString());
-			
 			
 			filas.add(fila);
 		}
@@ -454,9 +505,6 @@ public class FinestraReproduccio extends JFrame {
 		}
 	}
 	
-	public void llistesPropies(ArrayList<Llistes> llistes) {
-		
-	}
 	
 	
 	public JTable getTaulaMusica() {
