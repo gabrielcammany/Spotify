@@ -41,5 +41,13 @@ public class Data {
 		Data.alMusica = alMusica;
 	}
 	
+	public static void esborraCanco (int idCanco) {
+		for (int i = 0; i < alMusica.size(); i++) {
+			if (alMusica.get(i).getIdCanco() == idCanco) {
+				alMusica.remove(i);
+			}
+		}
+	}
+	
 
 }

@@ -17,8 +17,9 @@ public class ConectorDB {
 	static Connection conn = null;
 	static Statement s;
 	
-	public ConectorDB(){}
-	
+	public ConectorDB(){
+		
+	}
 	public ConectorDB(JsonObject o) {
 		
 		ConectorDB.userName = o.get("user").getAsString();
@@ -57,7 +58,7 @@ public class ConectorDB {
 
     }
     
-    public void insertQuery(String query){
+    public static void insertQuery(String query){
         try {
         	System.out.println(query);
             s =(Statement) conn.createStatement();

@@ -48,10 +48,9 @@ public class SocketController {
 		if(result == 0){
 			Query q = new Query();
 			String response;
-			String cad = q.queryList(0, user);
 			response = q.queryList(1, user);
-
-			conn.insertQuery(response);
+			
+			ConectorDB.insertQuery(response);
 
 			System.out.println("User: '"+user.getNickname()+"' Inserit correctament.");
 			selectUsers(true,null);
@@ -99,7 +98,9 @@ public class SocketController {
 	public ArrayList<Canco> selectSongs(){
 
 		Query q = new Query();
-
+		
+		
+		
 		ResultSet responseServer = conn.selectQuery(q.queryList(4, null));
 		ArrayList<Canco> alMusica = new ArrayList<Canco>();
 		try {

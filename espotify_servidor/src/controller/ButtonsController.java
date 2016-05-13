@@ -37,11 +37,9 @@ public class ButtonsController implements ActionListener {
 	}
 	
 	public void insertSongUser(){
-		String add = ("'"+viewF.getAddCanco()+"','"+viewF.getAddAlbum()+"','"+viewF.getAddArtista()+"','"+viewF.getAddUbicacio()+"','0','0','0'");
-		
-		ConectorDB conn = new ConectorDB() ;
+		String add = ("'"+viewF.getAddCanco()+"','"+viewF.getAddAlbum()+"','"+viewF.getAddArtista()+"','"+viewF.getAddGenere()+"','"+viewF.getAddUbicacio()+"','a','a','a'");
 		Query q =new Query();
-		conn.insertQuery(q.queryList(10, add));
+		ConectorDB.insertQuery(q.queryList(10, add));
 	}
 	
 	public void actionPerformed(ActionEvent event) {

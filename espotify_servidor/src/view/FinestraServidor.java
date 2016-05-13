@@ -37,15 +37,20 @@ public class FinestraServidor extends JFrame {
 	private Estadistica estadistica;
 	private ButtonsController controlador;
 	private JFrame jfServidor;
-	JTextField jtfcanco;
-	JButton jbAddicio;
-	JTextField jtfGenere;
-	JTextField jtfAlbum;
-	JTextField jtfArtista;
-	JTextField jtfUbicacio;
+	private JTextField jtfcanco;
+	private JButton jbAddicio;
+	private JTextField jtfGenere;
+	private JTextField jtfAlbum;
+	private JTextField jtfArtista;
+	private JTextField jtfUbicacio;
+	private JTable taulaMusica;
 
 	
 	
+	public JTable getTaulaMusica() {
+		return taulaMusica;
+	}
+
 	public FinestraServidor() {}
 	
 	public void setControlador(ButtonsController controlador) {
@@ -99,7 +104,7 @@ public class FinestraServidor extends JFrame {
 		columnas.add ("Nom usuari");
 		columnas.add("Data registre");
 		columnas.add("Ultim acces");
-		columnas.add("Número de llistes");
+		columnas.add("Numero de llistes");
 		columnas.add("Numero de llistes");
 		columnas.add("Numero de cancos");
 		columnas.add("Numero follower");
@@ -128,9 +133,6 @@ public class FinestraServidor extends JFrame {
 		}};
 		taulaUsuari.addMouseListener(new DeleteController(jfServidor, this));
 			
-		
-	
-
 
 		JScrollPane jspUsuari = new JScrollPane(taulaUsuari);
 		
@@ -210,7 +212,7 @@ public class FinestraServidor extends JFrame {
 		}
 
 		
-		JTable taulaMusica = new JTable(filas, columnas){
+		taulaMusica = new JTable(filas, columnas){
 			
 		public boolean isCellEditable (int rowIndex, int vColIndex) {
 			return false;
