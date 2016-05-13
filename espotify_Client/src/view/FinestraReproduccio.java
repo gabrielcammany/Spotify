@@ -2,6 +2,7 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Image;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.TableCellRenderer;
 
 import org.jdesktop.xswingx.PromptSupport;
 
@@ -25,6 +27,7 @@ import controller.ControladorFinestres;
 import controller.ControladorLlistar;
 import controller.ControladorLlistesMusica;
 import controller.ControladorReproductor;
+
 import model.Canco;
 import model.Llistes;
 import model.User;
@@ -39,7 +42,7 @@ import net.miginfocom.swing.MigLayout;
 
 
 @SuppressWarnings({ "unused", "serial" })
-public class FinestraReproduccio extends JFrame {
+public class FinestraReproduccio extends JFrame{
 	
 	private JFrame jfReproduccio;
 	private JPanel jpReproduccio;
@@ -284,7 +287,15 @@ public class FinestraReproduccio extends JFrame {
 			return false;
 		}};		
 		
-		this.jspLlistatDisponible = new JScrollPane(taulaMusica);		
+		for(int i=0;i<columnas.size();i++){
+			taulaMusica.getColumnModel().getColumn(i).setCellRenderer(new TableRenderer());
+		}
+		//JScrollPane jspAux = new JScrollPane(taulaMusica);	
+		this.jspLlistatDisponible = new JScrollPane(taulaMusica);	
+		this.jspLlistatDisponible.setBackground(new Color(50,50,50));
+		this.jspLlistatDisponible.getViewport().setBackground(new Color(50,50,50));
+		this.jspLlistatDisponible.setFocusable(false);
+
 	}
 	
 	public void setUsuaris(ArrayList<User> alUsers) {
@@ -297,6 +308,8 @@ public class FinestraReproduccio extends JFrame {
 	
 	public void setMusicaPropia(){
 		JTabbedPane jtpLlistatPropia = new JTabbedPane();
+		jtpLlistatPropia.setBackground(new Color(50,50,50));
+		//jtpLlistatPropia.setFocusable(false);
 		
 		
 		jtpLlistatPropia.addTab("Crear llista", new JScrollPane());
@@ -305,14 +318,25 @@ public class FinestraReproduccio extends JFrame {
 		jtpLlistatPropia.addTab("Votar cancons", new JScrollPane());
 		
 		this.jspLlistatPropia = new JScrollPane(jtpLlistatPropia);
+		this.jspLlistatPropia.setBackground(new Color(50,50,50));
+		this.jspLlistatPropia.getViewport().setBackground(new Color(50,50,50));
+		//this.jspLlistatPropia.setFocusable(false);
+		
 	}
 	
 	public JPanel setVisualitzarLlistes(){
-		jpVisualitzarLlistes = new JPanel(new BorderLayout());
-		JList jlLlistes = new JList(cf.getlistesPropies().toArray());
-		jlLlistes.setBorder(BorderFactory.createEmptyBorder(5,5,5,60));
-		jpVisualitzarLlistes.add(jlLlistes, BorderLayout.WEST);
 		
+		JList jlLlistes = new JList(cf.getlistesPropies().toArray());
+		jlLlistes.setBorder(BorderFactory.createEmptyBorder(5,5,5,30));
+		jlLlistes.setCellRenderer(new ListRenderer());
+		jlLlistes.setBackground(new Color(70,70,70));
+		//jlLlistes.setFocusable(false);
+		
+		jpVisualitzarLlistes = new JPanel(new BorderLayout());
+		jpVisualitzarLlistes.add(jlLlistes, BorderLayout.WEST);
+		jpVisualitzarLlistes.setBackground(new Color(50,50,50));
+		
+		//jpVisualitzarLlistes.setFocusable(false);
 		
 		jlLlistes.addMouseListener(new ControladorLlistesMusica(jlLlistes, cf));
 			
@@ -351,6 +375,10 @@ public class FinestraReproduccio extends JFrame {
 			return false;
 		}};
 		
+		for(int i=0;i<columnas.size();i++){
+			taulaMusicaLlista.getColumnModel().getColumn(i).setCellRenderer(new TableRenderer());
+		}
+		
 		
 		//sense aixo es quedara el primer jpanel(border.center)
 		BorderLayout layout =  (BorderLayout) jpVisualitzarLlistes.getLayout();
@@ -359,6 +387,7 @@ public class FinestraReproduccio extends JFrame {
 		}	
 		
 		jpVisualitzarLlistes.add(new JScrollPane(taulaMusicaLlista), BorderLayout.CENTER);
+		jpVisualitzarLlistes.setBackground(new Color(50,50,50));
 		//jpVisualitzarLlistes.repaint();
 		jpVisualitzarLlistes.validate();
 	}
@@ -393,8 +422,14 @@ public class FinestraReproduccio extends JFrame {
 			return false;
 		}};
 		
+		for(int i=0;i<columnas.size();i++){
+			taulaUsuariFollowing.getColumnModel().getColumn(i).setCellRenderer(new TableRenderer());
+		}
 		
-		this.jspLlistesFollowing = new JScrollPane(taulaUsuariFollowing);	
+		this.jspLlistesFollowing = new JScrollPane(taulaUsuariFollowing);
+		this.jspLlistesFollowing.setBackground(new Color(50,50,50));
+		this.jspLlistesFollowing.getViewport().setBackground(new Color(50,50,50));
+		//this.jspLlistesFollowing.setFocusable(false);
 	}
 	
 	/**
@@ -445,6 +480,9 @@ public class FinestraReproduccio extends JFrame {
 
 		//this.jspUsuarisFollowing = new JScrollPane(taulaUsuariFollowing);	
 		this.jspUsuarisFollowing = new JScrollPane(jtpFollowing);
+		this.jspUsuarisFollowing.setBackground(new Color(50,50,50));
+		this.jspUsuarisFollowing.getViewport().setBackground(new Color(50,50,50));
+		//jspUsuarisFollowing.setFocusable(false);
 
 		
 	}
@@ -468,7 +506,9 @@ public class FinestraReproduccio extends JFrame {
 		
 			case "disponible":
 				setMusicaDisponible(alMusica);
+				//this.jspLlistatDisponible.setFocusable(false);
 				this.jpReproduccio.add(this.jspLlistatDisponible, BorderLayout.CENTER);
+				this.jpReproduccio.setBackground(new Color(50,50,50));
 				this.jpReproduccio.validate();
 				break;
 			 
@@ -477,12 +517,14 @@ public class FinestraReproduccio extends JFrame {
 				/*provisional: */ setMusicaPropia();
 				
 				this.jpReproduccio.add(this.jspLlistatPropia, BorderLayout.CENTER);
+				this.jpReproduccio.setBackground(new Color(50,50,50));
 				this.jpReproduccio.validate();
 				
 				break;
 				
 			case "llistesfollowing":
 				setMusicaDisponible(alMusica);//le de posar per desclicar la canco
+				
 				/*provisional: */
 				ArrayList<String> llistes = new ArrayList<String>();
 				llistes.add("Party loca");
@@ -492,14 +534,21 @@ public class FinestraReproduccio extends JFrame {
 				/*fi provisional: */ 
 				
 				this.jpReproduccio.add(this.jspLlistesFollowing, BorderLayout.CENTER);
+				this.jpReproduccio.setBackground(new Color(50,50,50));
 				this.jpReproduccio.validate();
 				break;
 				
 				
 			case "usuarisfollowing":
 				setMusicaDisponible(alMusica);//le de posar per desclicar la canco
-				/*provisional: */ 
+
+				/*
+				 * introduzca aqui su codigo
+				 * 
+				 */
+				
 				this.jpReproduccio.add(this.jspUsuarisFollowing, BorderLayout.CENTER);
+				this.jpReproduccio.setBackground(new Color(50,50,50));
 				this.jpReproduccio.validate();
 				break;
 				
@@ -518,8 +567,5 @@ public class FinestraReproduccio extends JFrame {
 	public JTable getTaulaLlistaMusicaFollowing() {
 		return taulaMusicaLlista;
 	}
-	
-	
-	
 	
 }

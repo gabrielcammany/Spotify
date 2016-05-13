@@ -45,7 +45,7 @@ public class MainWindow extends JFrame{
 		
 		this.setSize(450, 200);
 		this.setResizable(false);
-		this.setTitle("*** probando servidor  ***");
+		this.setTitle("*** eSpotifai Server  ***");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		this.setVisible(true);
