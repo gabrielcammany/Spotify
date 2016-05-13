@@ -22,7 +22,7 @@ public class Reproductor extends Thread{
 	private String path;
 	private String song;
 	private boolean isPlaying;
-	BasicPlayer player;
+	private BasicPlayer player;
 	
 	public Reproductor(String s) {
 		this.path = s;

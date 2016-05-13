@@ -42,7 +42,7 @@ public class InfoServidor {
 		private ControladorLlistar controladorLlistar;
 		private FileInputStream fSongServ;
 		private Socket sServidor ;
-		BufferedOutputStream bos;
+		private BufferedOutputStream bos;
 		
 		public InfoServidor(){}
 		

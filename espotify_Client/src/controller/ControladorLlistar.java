@@ -16,7 +16,6 @@ import javax.swing.JLabel;
 public class ControladorLlistar implements MouseListener {
 	
 	private String opcio;
-	
 	private ControladorFinestres cFinestra;
 	
 	

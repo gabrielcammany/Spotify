@@ -48,8 +48,9 @@ public class FinestraReproduccio extends JFrame {
 	private JScrollPane jspLlistatPropia;
 	private JScrollPane jspUsuarisFollowing;
 	private JScrollPane jspLlistesFollowing;
-	public JTable taulaMusica;
-	public JTable taulaUsuaris;
+	private JTable taulaMusica;
+	private JTable taulaUsuaris;
+	private JTable jtMusicaLlista;
 	ArrayList<User> alUsers;
 	JPanel jpVisualitzarLlistes;
 	
@@ -254,7 +255,20 @@ public class FinestraReproduccio extends JFrame {
 	
 	public void setMusicaDisponible(ArrayList<Canco> alMusica){
 		//JPanel jpLlistat = new JPanel(new BorderLayout());
-
+		/*
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 * AQUI SET 0
+		 * 
+		 * 
+		 * 
+		 * 
+		 * 
+		 */
 		//Tabla musica disponible 
 		Vector<String> columnas = new Vector();
 		
@@ -343,7 +357,7 @@ public class FinestraReproduccio extends JFrame {
 			filas.add(fila);
 		}
 		System.out.println(columnas);
-		JTable jtMusicaLlista = new JTable(filas, columnas){
+		jtMusicaLlista = new JTable(filas, columnas){
 		
 		public boolean isCellEditable (int rowIndex, int vColIndex) {
 			return false;
@@ -509,6 +523,10 @@ public class FinestraReproduccio extends JFrame {
 	
 	public JTable getTaulaMusica() {
 		return taulaMusica;
+	}
+	
+	public JTable getTaulaLlistaMusicaFollowing() {
+		return jtMusicaLlista;
 	}
 	
 	

@@ -7,9 +7,9 @@ import javax.swing.JList;
 
 public class ControladorLlistesMusica implements MouseListener{
 	
-	ControladorFinestres cFinestra;
-	String seleccio;
-	JList lista;
+	private ControladorFinestres cFinestra;
+	private String seleccio;
+	private JList lista;
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {

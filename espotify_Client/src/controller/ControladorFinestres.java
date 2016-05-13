@@ -114,6 +114,13 @@ public class ControladorFinestres {
 		 * depen de si ve per login o registre tancar la finestra correcte per no fer pataPUM
 		 * 
 		 */
+		//tanquem les finesttra segons d'on veniem
+		if(fLogin != null){
+			fLogin.tancaFinestraLogin();
+		}
+		if(fRegistre != null){
+			fRegistre.tancaFinestraRegistre();
+		}
 
 		fReproduccio = new FinestraReproduccio(this);
 		//Realitzem la peticio de cancos disponibles al servidor
