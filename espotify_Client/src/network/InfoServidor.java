@@ -114,9 +114,10 @@ public class InfoServidor {
 				ObjectInputStream o = new ObjectInputStream(sServidor.getInputStream());
 				try {
 					ArrayList<Llistes> all = (ArrayList<Llistes>)o.readObject();
-					
+					User.setlPropies(all);
 					//enviem la informacio al controlador
-					controladorFinestres.creaLlistesPropies(all);
+					//System.out.println("%%%%% " + all.get(0).getNom_llista());
+					//controladorFinestres.creaLlistesPropies(all);
 				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
