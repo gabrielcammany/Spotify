@@ -133,7 +133,7 @@ public class MessageServiceWorker implements Runnable {
 					llistes = list.toArray(llistes);
 					
 					for(Llistes l : llistes) System.out.println(l.getNom_llista());
-					objectOutput.writeObject(llistes);
+					objectOutput.writeObject(s.getLl());
 					//Llista[] llista = 
 					//objectOutput.writeObject("hello world");
 					//objectOutput.writeObject(s.getLl());

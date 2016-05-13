@@ -1,5 +1,6 @@
 package network;
 
+import java.awt.List;
 import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -16,6 +17,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import controller.ControladorFinestres;
 import controller.ControladorLlistar;
@@ -111,14 +113,10 @@ public class InfoServidor {
 				User.setNickname(nom);
 				ObjectInputStream o = new ObjectInputStream(sServidor.getInputStream());
 				try {
-					//Llistes[]
-					//User.setlPropies((ArrayList<Llistes>)o.readObject());
+					ArrayList<Llistes> all = (ArrayList<Llistes>)o.readObject();
 					
-					Llistes[] llistes = (Llistes[]) o.readObject();
-					System.out.println("Rebent llistes");
-					for(Llistes l : llistes) System.out.println(l.getNom_llista());
-					//System.out.println("dfgdfhfghgjhj"+(String)o.readObject());
-					//System.out.println("sdfgfdg" + User.getlPropies().get(0).getNom_llista());
+					//enviem la informacio al controlador
+					controladorFinestres.creaLlistesPropies(all);
 				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.JTable;
 
 import model.Canco;
+import model.Llistes;
 import model.Reproductor;
 import model.User;
 import network.InfoServidor;
@@ -187,6 +188,10 @@ public class ControladorFinestres {
 	
 	public void restartReproductor() {
 		this.r = new Reproductor("");
+	}
+	
+	public void creaLlistesPropies(ArrayList<Llistes> llistes) {
+		fReproduccio.llistesPropies(llistes);
 	}
 	
 }

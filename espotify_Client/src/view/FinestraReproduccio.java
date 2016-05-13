@@ -24,6 +24,7 @@ import controller.ControladorFinestres;
 import controller.ControladorLlistar;
 import controller.ControladorReproductor;
 import model.Canco;
+import model.Llistes;
 import model.User;
 import net.miginfocom.swing.MigLayout;
 
@@ -451,6 +452,10 @@ public class FinestraReproduccio extends JFrame {
 			default: break;
 			
 		}
+	}
+	
+	public void llistesPropies(ArrayList<Llistes> llistes) {
+		
 	}
 	
 	
