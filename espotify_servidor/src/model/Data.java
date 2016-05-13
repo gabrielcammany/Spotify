@@ -5,7 +5,8 @@ import java.util.ArrayList;
 public class Data {
 
 	private static ArrayList<Sessio> aSessio;
-	private static ArrayList<User> Users;
+	private static ArrayList<Object> Users;
+	private static ArrayList<Canco> alMusica;
 
 	public static ArrayList<Sessio> getaSessio() {
 		return aSessio;
@@ -15,11 +16,11 @@ public class Data {
 		Data.aSessio = aSessio;
 	}
 
-	public static ArrayList<User> getUsers() {
+	public static ArrayList<Object> getUsers() {
 		return Users;
 	}
 
-	public static void setUsers(ArrayList<User> users) {
+	public static void setUsers(ArrayList<Object> users) {
 		Users = users;
 	}
 	
@@ -32,5 +33,13 @@ public class Data {
 		Data.aSessio.remove(s);
 	}
 
+	public static ArrayList<Canco> getAlMusica() {
+		return alMusica;
+	}
+
+	public static void setAlMusica(ArrayList<Canco> alMusica) {
+		Data.alMusica = alMusica;
+	}
+	
 
 }

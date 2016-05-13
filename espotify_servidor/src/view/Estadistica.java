@@ -4,25 +4,23 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 import javax.swing.JPanel;
 
 import model.Canco;
-import model.Musica;
 
 @SuppressWarnings("serial")
 public class Estadistica extends JPanel  {
 	private ArrayList <String> valors;
 	private ArrayList <String> nomCancons;
-	private Musica musica;
+	private ArrayList<Canco> musica;
 	
 	/*public Estadistica(ArrayList <String> valors, ArrayList <String> nomCancons){
 		this.setBackground(Color.BLUE);
 		this.valors = valors;
 		this.nomCancons = nomCancons;
 	}*/
-	public Estadistica(Musica musica) {
+	public Estadistica(ArrayList<Canco> musica) {
 		this.musica = musica;
 	}
 	
@@ -68,7 +66,7 @@ public class Estadistica extends JPanel  {
 		int xText = 25;
 		int i = 0;
 		
-		cancons = new ArrayList<Canco> (musica.getMusica());
+		cancons = new ArrayList<Canco> (musica);
 		Collections.sort(cancons);
 		
 		mesGran = Integer.parseInt(cancons.get(0).getnReproduccio());

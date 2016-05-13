@@ -16,7 +16,7 @@ import org.jdesktop.xswingx.PromptSupport;
 
 import controller.ButtonsController;
 import controller.DeleteController;
-import model.Musica;
+import model.Canco;
 import model.User;
 import net.miginfocom.swing.MigLayout;
 
@@ -33,7 +33,6 @@ import net.miginfocom.swing.MigLayout;
 public class FinestraServidor extends JFrame {
 	
 	private JPanel jpUsuari;
-	private Musica musica;
 	private JPanel jpMusica;
 	private Estadistica estadistica;
 	private ButtonsController controlador;
@@ -58,12 +57,10 @@ public class FinestraServidor extends JFrame {
 	
 	
 	
-	public void creaFinestra(Musica musica, ArrayList<User> alUsuaris){
-		this.musica = musica;
+	public void creaFinestra(ArrayList<Canco> musica, ArrayList<Object> alUsuaris){
 		
-		
-		System.out.println(musica.getMusica().get(0).getNom());
-		System.out.println(musica.getMusica().get(1).getNom());
+		System.out.println(musica.get(0).getNom());
+		System.out.println(musica.get(1).getNom());
 		
 		jfServidor = new JFrame("SPOTYFAI - Servidor");
 		
@@ -80,7 +77,7 @@ public class FinestraServidor extends JFrame {
 		jpUsuari = FinestraUsuari(alUsuaris);
 		//tab music
 		jpMusica = new JPanel();
-		jpMusica = FinestraMusica();
+		jpMusica = FinestraMusica(musica);
 		
 		jtpServidor.addTab("Usuari", jpUsuari);
 		jtpServidor.addTab("Musica", jpMusica);	
@@ -94,7 +91,7 @@ public class FinestraServidor extends JFrame {
 	 * 
 	 **/
 	
-	public JPanel FinestraUsuari(ArrayList<User> allUsers){
+	public JPanel FinestraUsuari(ArrayList<Object> allUsers){
 		jpUsuari = new JPanel(new BorderLayout());
 		//connectar amb base de dades 
 		
@@ -112,9 +109,9 @@ public class FinestraServidor extends JFrame {
 		
 		for (int i = 0; i < allUsers.size(); i ++) {
 			Vector<String> fila = new Vector<String>();
-			fila.add(allUsers.get(i).getNickname());
-			fila.add(allUsers.get(i).getData_reg());
-			fila.add(allUsers.get(i).getData_ult());
+			fila.add(((User)(allUsers.get(i))).getNickname());
+			fila.add(((User)(allUsers.get(i))).getData_reg());
+			fila.add(((User)(allUsers.get(i))).getData_ult());
 			fila.add("no esta hecho");
 			fila.add("no esta hecho");
 			fila.add("no esta hecho");
@@ -142,7 +139,7 @@ public class FinestraServidor extends JFrame {
 		return jpUsuari;
 	}
 	
-	public JPanel FinestraMusica(){
+	public JPanel FinestraMusica(ArrayList<Canco> musica){
 		
 		jpMusica = new JPanel(new BorderLayout());
 		JTabbedPane jtpMusica = new JTabbedPane();
@@ -154,14 +151,14 @@ public class FinestraServidor extends JFrame {
 		
 		
 		//****** Opcio Llistat ******
-		jpLlistat.add(LlistarMusica(), BorderLayout.CENTER);
+		jpLlistat.add(LlistarMusica(musica), BorderLayout.CENTER);
 		
 	
 		//****** Opcio Addicio ******
 		jpAddicio = AddicioMusica();
 		
 		//****** Opcio Estadistiques ******
-		jpEstadistiques.add(generaEstadistica(), BorderLayout.CENTER);
+		jpEstadistiques.add(generaEstadistica(musica), BorderLayout.CENTER);
 		
 		
 		
@@ -180,10 +177,11 @@ public class FinestraServidor extends JFrame {
 	
 	/**
 	 * Genera una taula de tota la musica al sistema i la seva informaciÃ³
+	 * @param musica 
 	 * @return JPanel 
 	 */
 	
-	public JPanel LlistarMusica(){
+	public JPanel LlistarMusica(ArrayList<Canco> musica){
 		JPanel jpLlistat = new JPanel(new BorderLayout());
 		
 
@@ -200,13 +198,13 @@ public class FinestraServidor extends JFrame {
 
    
 		Vector<Vector<String>> filas = new Vector<Vector<String>>();
-		for (int i = 0; i < musica.getMusica().size(); i ++) {
+		for (int i = 0; i < musica.size(); i ++) {
 			Vector<String> fila = new Vector<String>();
 			
-			fila.add(musica.getMusica().get(i).getNom());
-			fila.add(musica.getMusica().get(i).getGenere());
-			fila.add(musica.getMusica().get(i).getAlbum());
-			fila.add(musica.getMusica().get(i).getArtista());
+			fila.add(musica.get(i).getNom());
+			fila.add(musica.get(i).getGenere());
+			fila.add(musica.get(i).getAlbum());
+			fila.add(musica.get(i).getArtista());
 			
 			filas.add(fila);
 		}
@@ -279,10 +277,11 @@ public class FinestraServidor extends JFrame {
 
 	/**
 	 * Genera les estadistiques de les 10 canÃ§ons mes escoltades del sistema
+	 * @param musica 
 	 * @return JPanel 
 	 */
 	
-	public JPanel generaEstadistica() {
+	public JPanel generaEstadistica(ArrayList<Canco> musica) {
 
 		JPanel jpGrafica = new JPanel(new BorderLayout() );
 		//JPanel jpNoms = new JPanel (new GridLayout(10, 1));

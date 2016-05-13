@@ -7,18 +7,18 @@ import java.util.ArrayList;
 import model.Canco;
 import model.Data;
 import model.Llistes;
-import model.Musica;
 import model.Query;
 import model.User;
+import model.sUser;
 import network.ConectorDB;
 
 
 public class SocketController {
 
 	private ConectorDB conn;
-	private Musica m;
 	private User user;
 
+	
 	public SocketController() {
 		//json donde estas!!!
 		conn = new ConectorDB("dpo_root", "sinminus", "bd_espotifi", 3306);
@@ -66,9 +66,10 @@ public class SocketController {
 
 	public int verifyUser(String usuario, String password){
 		int id = 0;
-		for(User u : Data.getUsers()){
-			if(u.getNickname().toLowerCase().equals(usuario.toLowerCase())){
-				if(u.getPassword().equals(password))return id = u.getId_usuari();
+		for(Object u : Data.getUsers()){
+			
+			if(((User)u).getNickname().toLowerCase().equals(usuario.toLowerCase())){
+				if(((User)u).getPassword().equals(password))return id = ((User)u).getId_usuari();
 			}
 		}
 		return id;
@@ -105,6 +106,7 @@ public class SocketController {
 
 			while (responseServer.next()) {
 				Canco c = new Canco();
+				c.setIdCanco(Integer.getInteger(responseServer.getString("id_canco")));
 				c.setNom(responseServer.getString("nom"));
 				c.setAlbum(responseServer.getString("album"));
 				c.setArtista(responseServer.getString("artista"));
@@ -124,40 +126,48 @@ public class SocketController {
 
 		return alMusica;
 	}
-	public ArrayList<User> selectUsers(boolean i, String nom){
+	public ArrayList<Object> selectUsers(boolean i, String nom){
 		Query q = new Query();
 		ResultSet responseServer;
+		ArrayList<Object> aUsers = new ArrayList<Object>();
 		if(i){
 			responseServer = conn.selectQuery(q.queryList(5, null));
 		}else{
 			responseServer = conn.selectQuery(q.queryList(11, nom));
 		}
 
-		ArrayList<User> alUser = new ArrayList<User>();
 		try {
 
 			while (responseServer.next()) {
-				User u = new User();
-				u.setId_usuari(responseServer.getInt("id_usuaris"));
-				u.setNickname(responseServer.getString("nickname"));
-				u.setPassword(responseServer.getString("password"));
-				u.setData_reg(responseServer.getString("data_reg"));
-				u.setData_ult(responseServer.getString("data_ult"));
+				if(i){
+					User u = new User();
+					u.setId_usuari(responseServer.getInt("id_usuaris"));
+					u.setNickname(responseServer.getString("nickname"));
+					u.setPassword(responseServer.getString("password"));
+					u.setData_reg(responseServer.getString("data_reg"));
+					u.setData_ult(responseServer.getString("data_ult"));
+					aUsers.add(u);
 
-				System.out.println("[Servidor] Usuari ' "+u.getNickname()+" '");
-				alUser.add(u);
+					System.out.println("[Servidor] Usuari ' "+u.getNickname()+" '");
+				}else{
+					sUser u = new sUser();
+					u.setId_usuari(responseServer.getInt("id_usuaris"));
+					u.setNickname(responseServer.getString("nickname"));
+					aUsers.add(u);
+
+					System.out.println("[Servidor] Usuari ' "+u.getNickname()+" '");
+				}
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		return alUser;
+		return aUsers;
 	}
 
 	public int songRequest(String nCanco, String nArtista){
-		m = new Musica();
-		ArrayList<Canco> allMusic = m.getMusica();
+		ArrayList<Canco> allMusic = Data.getAlMusica();
 		int size = allMusic.size();
 		int i = 0;
 		boolean trobat =  false;
@@ -182,7 +192,7 @@ public class SocketController {
 		Integer nRep = Integer.parseInt(c.getnReproduccio())+1;
 		c.setnReproduccio(nRep.toString());
 		allMusic.set(i,c);
-		m.setMusica(allMusic);
+		Data.setAlMusica(allMusic);
 		String response = q.queryList(6,c);
 		conn.updateQuery(response);
 		

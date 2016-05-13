@@ -7,6 +7,7 @@ public class Canco implements Serializable, Comparable<Canco> {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private int idCanco;
 	private String nom;
 	private String genere;
 	private String album;
@@ -82,6 +83,12 @@ public class Canco implements Serializable, Comparable<Canco> {
 		}
 		
 		return 0;
+	}
+	public int getIdCanco() {
+		return idCanco;
+	}
+	public void setIdCanco(int idCanco) {
+		this.idCanco = idCanco;
 	}
 
 }

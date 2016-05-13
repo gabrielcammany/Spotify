@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import model.Data;
-import model.Musica;
 import model.Query;
 import model.User;
 import network.ConectorDB;
@@ -22,7 +21,6 @@ public class ButtonsController implements ActionListener {
 	private	ErrorLog vError =new ErrorLog();
 	// NETWORK
 	private MessageService mService;
-	private Musica musica;
 	private User user;
 	
 	
@@ -48,7 +46,7 @@ public class ButtonsController implements ActionListener {
 	
 	public void actionPerformed(ActionEvent event) {
 		if (event.getActionCommand().equals("START")) {
-			this.musica = new Musica();
+			Data.setAlMusica((new SocketController().selectSongs()));
 			// Iniciem el servei
 			mService.startService();
 			view.changeButtonsStateStarted();
@@ -65,19 +63,13 @@ public class ButtonsController implements ActionListener {
 	public void creaFinestra() {
 		System.out.println("########################################################");
 		Data.setUsers(new SocketController().selectUsers(true, null));
-		viewF.creaFinestra(getMusica(),Data.getUsers());
+		viewF.creaFinestra(Data.getAlMusica(),Data.getUsers());
 	}
 	
 	
 	
 	public void incorrectUser(){
 		vError.errorInsertUser();
-	}
-	public void setMusica(Musica musica) {
-		this.musica = musica;
-	}
-	public Musica getMusica() {
-		return musica;
 	}
 	
 

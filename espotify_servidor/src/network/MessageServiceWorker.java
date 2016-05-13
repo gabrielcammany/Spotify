@@ -13,12 +13,11 @@ import java.util.Calendar;
 import java.util.List;
 
 import controller.SocketController;
-import model.Canco;
 import model.Data;
 import model.Llistes;
-import model.Musica;
 import model.Sessio;
 import model.User;
+import model.sUser;
 
 public class MessageServiceWorker implements Runnable {
 
@@ -26,17 +25,14 @@ public class MessageServiceWorker implements Runnable {
 	private DataInputStream diStream;
 	private boolean active;
 	private SocketController cadenas;
-	private ArrayList<Canco> alcanco;
-	private Musica musica;
 	
 	public MessageServiceWorker(){
 	}
 	
-	public MessageServiceWorker(Socket sclient,Musica musica) {
+	public MessageServiceWorker(Socket sclient) {
 		active = true;
-		cadenas = new SocketController();
-		this.musica = musica;
 		this.sClient = sclient;
+		this.cadenas = new SocketController();
 		
 	}
 
@@ -66,8 +62,7 @@ public class MessageServiceWorker implements Runnable {
 
 				}else{
 					try{ 
-						System.out.println("debug##10##");
-						alcanco = musica.getMusica();				
+						System.out.println("debug##10##");		
 						PrintStream envio = new PrintStream(this.sClient.getOutputStream());
 						FileInputStream fitxer = new FileInputStream("./Musica/" + data[2] + "_" + aux[1] + ".mp3");
 						byte[] buffer = new byte[1024];
@@ -90,7 +85,7 @@ public class MessageServiceWorker implements Runnable {
 			if (data[1].equals("requestUsuaris")) {
 
 				System.out.println("request usuaris");
-				ArrayList<User> usuaris = new ArrayList<User>();
+				ArrayList<Object> usuaris = new ArrayList<Object>();
 				usuaris = cadenas.selectUsers(true,null);
 				//ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
 				//objectOutput.writeObject(usuaris);
@@ -98,7 +93,7 @@ public class MessageServiceWorker implements Runnable {
 
 			if (data[1].equals("requestUsuarisFollower")) {
 
-				ArrayList<User> usuaris = new ArrayList<User>();
+				ArrayList<Object> usuaris = new ArrayList<Object>();
 				usuaris = cadenas.selectUsers(false,data[1]);
 				ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
 				objectOutput.writeObject(usuaris);
@@ -140,11 +135,9 @@ public class MessageServiceWorker implements Runnable {
 				}
 			}
 			if(data[1].equals("requestMusic")){
-				alcanco = new ArrayList<Canco>();
-				alcanco = musica.getMusica();
 
 				ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
-				objectOutput.writeObject(alcanco);
+				objectOutput.writeObject(Data.getAlMusica());
 
 			}
 		} catch (IOException e) { 

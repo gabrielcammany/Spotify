@@ -35,7 +35,7 @@ public class MessageService {
 					try {
 						System.out.println("Esperant..."+(i));
 						Socket sClient = sServer.accept();
-						msWorker = new MessageServiceWorker(sClient,controller.getMusica());
+						msWorker = new MessageServiceWorker(sClient);
 						new Thread(msWorker).start();
 						System.out.println("Esperant..."+(i++));
 					} catch (IOException e) {
