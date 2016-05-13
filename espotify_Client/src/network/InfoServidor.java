@@ -192,14 +192,11 @@ public class InfoServidor {
 			byte[] buffer = new byte[1024];
 			int len = 0;
 			while((len=llegada.read(buffer))>=0){
-				System.out.println("len-> "+ len);
 				desti.write(buffer, 0, len);
-
 			}
 			desti.close();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
-			System.out.println("->exception");
 		}
 		sServidor.close();
 	}

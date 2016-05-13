@@ -50,9 +50,10 @@ public class FinestraReproduccio extends JFrame {
 	private JScrollPane jspLlistesFollowing;
 	private JTable taulaMusica;
 	private JTable taulaUsuaris;
-	private JTable jtMusicaLlista;
-	ArrayList<User> alUsers;
-	JPanel jpVisualitzarLlistes;
+	private JTable taulaMusicaLlista;
+	private ArrayList<User> alUsers;
+	private JPanel jpVisualitzarLlistes;
+	private ArrayList<Canco> alMusica;
 	
 	
 	
@@ -255,20 +256,7 @@ public class FinestraReproduccio extends JFrame {
 	
 	public void setMusicaDisponible(ArrayList<Canco> alMusica){
 		//JPanel jpLlistat = new JPanel(new BorderLayout());
-		/*
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 * AQUI SET 0
-		 * 
-		 * 
-		 * 
-		 * 
-		 * 
-		 */
+		this.alMusica = alMusica;
 		//Tabla musica disponible 
 		Vector<String> columnas = new Vector();
 		
@@ -307,7 +295,7 @@ public class FinestraReproduccio extends JFrame {
 	 * Aquesta funcio rep l'array de totes del cancos propies i actualitza la taula on es mostraran totes.
 	 */
 	
-	public void setMusicaPropia(/*passar llistes*/){
+	public void setMusicaPropia(){
 		JTabbedPane jtpLlistatPropia = new JTabbedPane();
 		
 		
@@ -357,7 +345,7 @@ public class FinestraReproduccio extends JFrame {
 			filas.add(fila);
 		}
 		System.out.println(columnas);
-		jtMusicaLlista = new JTable(filas, columnas){
+		taulaMusicaLlista = new JTable(filas, columnas){
 		
 		public boolean isCellEditable (int rowIndex, int vColIndex) {
 			return false;
@@ -370,7 +358,7 @@ public class FinestraReproduccio extends JFrame {
 			jpVisualitzarLlistes.remove(layout.getLayoutComponent(BorderLayout.CENTER));
 		}	
 		
-		jpVisualitzarLlistes.add(new JScrollPane(jtMusicaLlista), BorderLayout.CENTER);
+		jpVisualitzarLlistes.add(new JScrollPane(taulaMusicaLlista), BorderLayout.CENTER);
 		//jpVisualitzarLlistes.repaint();
 		jpVisualitzarLlistes.validate();
 	}
@@ -479,13 +467,13 @@ public class FinestraReproduccio extends JFrame {
 		switch (opcio){
 		
 			case "disponible":
-			
+				setMusicaDisponible(alMusica);
 				this.jpReproduccio.add(this.jspLlistatDisponible, BorderLayout.CENTER);
 				this.jpReproduccio.validate();
 				break;
 			 
 			case "propia":
-				
+				setMusicaDisponible(alMusica);//le de posar per desclicar la canco
 				/*provisional: */ setMusicaPropia();
 				
 				this.jpReproduccio.add(this.jspLlistatPropia, BorderLayout.CENTER);
@@ -494,6 +482,7 @@ public class FinestraReproduccio extends JFrame {
 				break;
 				
 			case "llistesfollowing":
+				setMusicaDisponible(alMusica);//le de posar per desclicar la canco
 				/*provisional: */
 				ArrayList<String> llistes = new ArrayList<String>();
 				llistes.add("Party loca");
@@ -508,6 +497,7 @@ public class FinestraReproduccio extends JFrame {
 				
 				
 			case "usuarisfollowing":
+				setMusicaDisponible(alMusica);//le de posar per desclicar la canco
 				/*provisional: */ 
 				this.jpReproduccio.add(this.jspUsuarisFollowing, BorderLayout.CENTER);
 				this.jpReproduccio.validate();
@@ -526,8 +516,10 @@ public class FinestraReproduccio extends JFrame {
 	}
 	
 	public JTable getTaulaLlistaMusicaFollowing() {
-		return jtMusicaLlista;
+		return taulaMusicaLlista;
 	}
+	
+	
 	
 	
 }

@@ -28,6 +28,7 @@ public class ControladorReproductor implements MouseListener {
 	private String nomReproduccio;
 	private String artista;
 
+	
 	public ControladorReproductor(String opcio,ControladorFinestres fr) {
 		this.opcio = opcio;
 		this.controladorfinestres = fr;
@@ -36,24 +37,26 @@ public class ControladorReproductor implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		Boolean algoSeleccionat = true;
-
+		
 		try{
+			//mirem si estem a la taula de musica disponible
 			nom = (String) controladorfinestres.fReproduccio.getTaulaMusica().getValueAt(controladorfinestres.fReproduccio.getTaulaMusica().getSelectedRow(), 0);
 			artista = (String) controladorfinestres.fReproduccio.getTaulaMusica().getValueAt(controladorfinestres.fReproduccio.getTaulaMusica().getSelectedRow(), 3);
+
 		}catch(Exception e1){
-			
 		}
 		if(nom == null){
 			try{
-
+				//mirem si estem a la taula de llista musica following
 				nom = (String) controladorfinestres.fReproduccio.getTaulaLlistaMusicaFollowing().getValueAt(controladorfinestres.fReproduccio.getTaulaLlistaMusicaFollowing().getSelectedRow(), 0);
 				artista = (String) controladorfinestres.fReproduccio.getTaulaLlistaMusicaFollowing().getValueAt(controladorfinestres.fReproduccio.getTaulaLlistaMusicaFollowing().getSelectedRow(), 3);
 			}catch(Exception e1){
-				if(nom == null){
-					nom = nomReproduccio;
-				}
-				if(nom == null) algoSeleccionat = false;
 			}
+			if(nom == null){
+				//mirem si ja hi havia algo reproduintse
+				nom = nomReproduccio;
+			}
+			if(nom == null) algoSeleccionat = false;
 		}
 
 		if(algoSeleccionat){
@@ -84,8 +87,10 @@ public class ControladorReproductor implements MouseListener {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-					
 				}
+				System.out.println("netejoclick--->" +nom);
+				nom = null;
+				System.out.println("limpiaoclick--->" +nom);
 				break;
 				
 				
@@ -185,16 +190,23 @@ public class ControladorReproductor implements MouseListener {
 	public void mouseReleased(MouseEvent e) {
 		// desclic
 		Boolean algoSeleccionat = true;
+		Boolean esFollowing = false;
+		
 		try{
+			//mirem si estem a la taula de musica disponible
 			nom = (String) controladorfinestres.fReproduccio.getTaulaMusica().getValueAt(controladorfinestres.fReproduccio.getTaulaMusica().getSelectedRow(), 0);
 			artista = (String) controladorfinestres.fReproduccio.getTaulaMusica().getValueAt(controladorfinestres.fReproduccio.getTaulaMusica().getSelectedRow(), 3);
-		}catch(Exception e1){}
+		}catch(Exception e1){
+		}
 		if(nom == null){
 			try{
+				//mirem si estem a la taula de llista musica disponible
 				nom = (String) controladorfinestres.fReproduccio.getTaulaLlistaMusicaFollowing().getValueAt(controladorfinestres.fReproduccio.getTaulaLlistaMusicaFollowing().getSelectedRow(), 0);
 				artista = (String) controladorfinestres.fReproduccio.getTaulaLlistaMusicaFollowing().getValueAt(controladorfinestres.fReproduccio.getTaulaLlistaMusicaFollowing().getSelectedRow(), 3);
-			}catch(Exception e1){}
+			}catch(Exception e1){				
+			}
 			if(nom == null){
+				//mirem si ja hi havia algo reproduintse
 				nom = nomReproduccio;
 			}
 			if(nom == null) algoSeleccionat = false;
@@ -224,6 +236,7 @@ public class ControladorReproductor implements MouseListener {
 						aux.setIcon(icp);
 					}
 				}
+				nom = null;
 				break;
 			case "back":
 				ImageIcon icb = new ImageIcon(im.getImage().getScaledInstance(46, 40, Image.SCALE_DEFAULT));

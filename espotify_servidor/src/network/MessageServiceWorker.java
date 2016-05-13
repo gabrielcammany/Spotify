@@ -68,10 +68,8 @@ public class MessageServiceWorker implements Runnable {
 						byte[] buffer = new byte[1024];
 						int len = 0;
 						while((len = fitxer.read(buffer))>=0){
-							System.out.println("len = " + len);
 							envio.write(buffer,0,len);
 						}
-						System.out.println("--------Enviat----------");
 						envio.flush();
 						fitxer.close();
 
