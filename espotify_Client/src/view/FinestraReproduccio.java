@@ -349,6 +349,9 @@ public class FinestraReproduccio extends JFrame{
 	 */
 	public void actualitzaLlistaSeleccionada(ArrayList<Canco> musicaLlista ){
 		
+		
+		
+		
 		Vector<String> columnas = new Vector();
 
 		columnas.add("Nom canco");

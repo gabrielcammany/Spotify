@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
@@ -8,6 +9,7 @@ import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 
@@ -79,11 +81,12 @@ public class DeleteController implements MouseListener {
 				        	System.out.println("-------------------------------------------------------------------");
 				        	System.out.println("[Servidor]Canco '"+nom+"' deleted.");
 				        	Data.esborraCanco(id);
+				        	fs.tableModel.removeRow(fs.getTaulaMusica().getSelectedRow());
+				        	fs.tableModel.fireTableDataChanged();
 				        }catch(Exception e1){
 				        	e1.printStackTrace();
-				        	System.out.println("444444");
 				        }
-						
+
 					
 				}
 				

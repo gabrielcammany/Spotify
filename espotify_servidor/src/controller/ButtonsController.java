@@ -40,6 +40,13 @@ public class ButtonsController implements ActionListener {
 		String add = ("'"+viewF.getAddCanco()+"','"+viewF.getAddAlbum()+"','"+viewF.getAddArtista()+"','"+viewF.getAddGenere()+"','"+viewF.getAddUbicacio()+"','a','a','a'");
 		Query q =new Query();
 		ConectorDB.insertQuery(q.queryList(10, add));
+		String[] data = new String[4];
+		data[0] = viewF.getAddCanco();
+		data[1] = viewF.getAddGenere();
+		data[2] = viewF.getAddAlbum();
+		data[3] = viewF.getAddArtista();
+		viewF.tableModel.addRow(data);
+		viewF.tableModel.fireTableDataChanged();
 	}
 	
 	public void actionPerformed(ActionEvent event) {

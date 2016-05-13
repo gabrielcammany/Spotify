@@ -11,12 +11,15 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import org.jdesktop.xswingx.PromptSupport;
 
 import controller.ButtonsController;
 import controller.DeleteController;
 import model.Canco;
+import model.Data;
 import model.User;
 import net.miginfocom.swing.MigLayout;
 
@@ -33,7 +36,7 @@ import net.miginfocom.swing.MigLayout;
 public class FinestraServidor extends JFrame {
 	
 	private JPanel jpUsuari;
-	private JPanel jpMusica;
+	public JPanel jpMusica;
 	private Estadistica estadistica;
 	private ButtonsController controlador;
 	private JFrame jfServidor;
@@ -44,6 +47,7 @@ public class FinestraServidor extends JFrame {
 	private JTextField jtfArtista;
 	private JTextField jtfUbicacio;
 	private JTable taulaMusica;
+	public DefaultTableModel tableModel;
 
 	
 	
@@ -64,9 +68,6 @@ public class FinestraServidor extends JFrame {
 	
 	public void creaFinestra(ArrayList<Canco> musica, ArrayList<Object> alUsuaris){
 		
-		System.out.println(musica.get(0).getNom());
-		System.out.println(musica.get(1).getNom());
-		
 		jfServidor = new JFrame("SPOTYFAI - Servidor");
 		
 		jfServidor.setSize(900,500);
@@ -82,7 +83,7 @@ public class FinestraServidor extends JFrame {
 		jpUsuari = FinestraUsuari(alUsuaris);
 		//tab music
 		jpMusica = new JPanel();
-		jpMusica = FinestraMusica(musica);
+		jpMusica = FinestraMusica();
 		
 		jtpServidor.addTab("Usuari", jpUsuari);
 		jtpServidor.addTab("Musica", jpMusica);	
@@ -141,8 +142,7 @@ public class FinestraServidor extends JFrame {
 		return jpUsuari;
 	}
 	
-	public JPanel FinestraMusica(ArrayList<Canco> musica){
-		
+	public JPanel FinestraMusica(){
 		jpMusica = new JPanel(new BorderLayout());
 		JTabbedPane jtpMusica = new JTabbedPane();
 		
@@ -153,14 +153,14 @@ public class FinestraServidor extends JFrame {
 		
 		
 		//****** Opcio Llistat ******
-		jpLlistat.add(LlistarMusica(musica), BorderLayout.CENTER);
+		jpLlistat.add(LlistarMusica(), BorderLayout.CENTER);
 		
 	
 		//****** Opcio Addicio ******
 		jpAddicio = AddicioMusica();
 		
 		//****** Opcio Estadistiques ******
-		jpEstadistiques.add(generaEstadistica(musica), BorderLayout.CENTER);
+		jpEstadistiques.add(generaEstadistica(Data.getAlMusica()), BorderLayout.CENTER);
 		
 		
 		
@@ -183,9 +183,10 @@ public class FinestraServidor extends JFrame {
 	 * @return JPanel 
 	 */
 	
-	public JPanel LlistarMusica(ArrayList<Canco> musica){
+	public JPanel LlistarMusica(){
 		JPanel jpLlistat = new JPanel(new BorderLayout());
 		
+
 
 		
 	
@@ -198,31 +199,48 @@ public class FinestraServidor extends JFrame {
 		columnas.add("Album");
 		columnas.add("Artistes");
 
-   
-		Vector<Vector<String>> filas = new Vector<Vector<String>>();
+ 
+	    Vector<Vector<String>> filas = new Vector<Vector<String>>();
+		taulaMusica = new JTable(filas, columnas){
+		
+		public boolean isCellEditable (int rowIndex, int vColIndex) {
+			return false;
+		}};
+	
+	    tableModel = (DefaultTableModel) taulaMusica.getModel();
+	    tableModel.setRowCount(0);
+		
+		ArrayList<Canco>musica = Data.getAlMusica();
 		for (int i = 0; i < musica.size(); i ++) {
 			Vector<String> fila = new Vector<String>();
+			String[]data = new String[4];
+			
+			data[0] = musica.get(i).getNom();
+			data[1] = musica.get(i).getGenere();
+			data[2] = musica.get(i).getAlbum();
+			data[3] = musica.get(i).getArtista();
+			
+			tableModel.addRow(data);
+		/*
 			
 			fila.add(musica.get(i).getNom());
 			fila.add(musica.get(i).getGenere());
 			fila.add(musica.get(i).getAlbum());
 			fila.add(musica.get(i).getArtista());
 			
-			filas.add(fila);
-		}
-
-		
-		taulaMusica = new JTable(filas, columnas){
+			filas.add(fila);*/
 			
-		public boolean isCellEditable (int rowIndex, int vColIndex) {
-			return false;
-		}};
-	
+		}
+	    taulaMusica.setModel(tableModel);
+	    
 		taulaMusica.addMouseListener(new DeleteController(jfServidor, this));
 
 		JScrollPane jspLlistat = new JScrollPane(taulaMusica);
+		tableModel.fireTableDataChanged();
 
 		jpLlistat.add(jspLlistat, BorderLayout.CENTER);
+		
+		
 
 
 
