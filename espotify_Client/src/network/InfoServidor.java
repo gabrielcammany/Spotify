@@ -24,6 +24,7 @@ import controller.ControladorLlistar;
 import model.Canco;
 import model.Llistes;
 import model.User;
+import model.sUser;
 
 @SuppressWarnings("unused")
 public class InfoServidor {
@@ -90,8 +91,8 @@ public class InfoServidor {
 			DataInputStream input3 = new DataInputStream(sServidor.getInputStream());
 			int trobat = input3.readInt();
 			doStream.close();
-			if(trobat!= 0) ControladorFinestres.mostraPopUp(1);
-			if(trobat ==0) ControladorFinestres.mostraPopUp(0);
+			if(trobat!= 0) ControladorFinestres.mostraPopUp(1,nickname);
+			if(trobat ==0) ControladorFinestres.mostraPopUp(0,nickname);
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -131,6 +132,8 @@ public class InfoServidor {
 				ObjectInputStream o = new ObjectInputStream(sServidor.getInputStream());
 				try {
 					ArrayList<Llistes> all = (ArrayList<Llistes>)o.readObject();
+					
+					for(Llistes a:all)System.out.println("[llistes]--> "+a.getAllIdCanco().get(1));
 					User.setlPropies(all);
 				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
@@ -218,17 +221,38 @@ public class InfoServidor {
 		sServidor.close();
 	}
 
-	
+	public void peticioFollow(String nickname){
+		newSocket();
+		int result = 0;
+		
+		try {
+			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
+			doStream.writeUTF(User.getId_usuari()+":requestFollow:"+nickname);
+			
+			System.out.println("estas seguin a '"+nickname+"'.");	
+		
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+		//sServidor.close();
+	}
 	
 	@SuppressWarnings("unchecked")
 	public void peticioFollowers() throws UnknownHostException, IOException, ClassNotFoundException {
 		newSocket();
-		ArrayList <User> alUsers = new ArrayList<User>();
+		ArrayList <sUser> alUsers = new ArrayList<sUser>();
 		
 		DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
+		
 		doStream.writeUTF(User.getId_usuari()+":requestUsuarisFollower");
+		
 		ObjectInputStream objectInput = new ObjectInputStream(sServidor.getInputStream());
-		alUsers = (ArrayList<User>) objectInput.readObject();
+		alUsers = (ArrayList<sUser>) objectInput.readObject();
+		
+		System.out.println("[Client]id follow-->"+alUsers.get(0).getNickname()+" - "+alUsers.get(1).getNickname());
 		
 		ControladorFinestres.actualitzaUsuarisFollowing(alUsers);
 		//sServidor.close();

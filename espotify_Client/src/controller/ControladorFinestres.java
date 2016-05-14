@@ -13,6 +13,7 @@ import model.Canco;
 import model.Llistes;
 import model.Reproductor;
 import model.User;
+import model.sUser;
 import network.InfoServidor;
 import view.FinestraReproduccio;
 import view.Finestra_Registre;
@@ -126,6 +127,7 @@ public class ControladorFinestres {
 		//infoServidor =new InfoServidor();
 		//infoServidor.demanaSessio();
 		infoServidor.peticioMusica();
+		infoServidor.peticioFollowers();
 		infoServidor.peticioUsuaris();
 	}
 	
@@ -173,7 +175,7 @@ public class ControladorFinestres {
 	 * 
 	 */
 
-	public static  void actualitzaUsuarisFollowing(ArrayList<User> alUsuari){
+	public static  void actualitzaUsuarisFollowing(ArrayList<sUser> alUsuari){
 		fReproduccio.setUsuarisFollowing(alUsuari);
 		
 	}
@@ -226,7 +228,7 @@ public class ControladorFinestres {
 	}
 	
 	
-	public static void mostraPopUp(int option) {
+	public static void mostraPopUp(int option, String nickname) {
 		switch (option){
 			case 0:
 				JOptionPane.showMessageDialog(fReproduccio,
@@ -246,7 +248,11 @@ public class ControladorFinestres {
 								null,
 								options,
 								options[1]);
-				
+				if(n == 0){
+					infoServidor.peticioFollow(nickname);
+					
+					
+				}
 				break;
 		}
 	}

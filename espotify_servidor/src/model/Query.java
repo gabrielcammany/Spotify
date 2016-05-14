@@ -64,7 +64,7 @@ public class Query {
 			String cad10 = "INSERT INTO canco(nom,album,artista,genere,ubicacio,nVotacio,num_estrelles,num_reproduccio) VALUES("+infoSong+");";
 			return cad10;
 		case 11: //Demanar les cancons de la llista
-			String idUserF =((String) obj);
+			int idUserF =((int) obj);
 			String cad11 = "SELECT * FROM usuari_follower WHERE id_user = "+idUserF+";";
 			return cad11;
 		case 12://eliminamos una cancion de la musica disponible.
@@ -72,7 +72,15 @@ public class Query {
 			
 			String cad12 = ("DELETE FROM canco WHERE canco.id_canco = "+idCanco.toString());
 			return cad12;
+		case 13://eliminamos una cancion de la musica disponible.
+			String aux = ((String)obj);
+			String[] s = aux.split("/");
+			
+			String cad13 = ("INSERT usuari_follower (id_user,id_follower) VALUES('"+s[0]+"','"+s[1]+"');");
+			return cad13;
 		}
+			
+			
 		
 		return null;
 		

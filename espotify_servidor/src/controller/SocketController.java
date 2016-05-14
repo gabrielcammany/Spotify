@@ -114,8 +114,8 @@ public class SocketController {
 				c.setPath(responseServer.getString("ubicacio"));
 				c.setEstrelles(responseServer.getString("num_estrelles"));
 				c.setnReproduccio(responseServer.getString("num_reproduccio"));
-
-				System.out.println("[Servidor] "+c.getNom()+" amb path: "+c.getPath()+" num reproduccions: "+c.getnReproduccio());
+				System.out.println("[Servidor]id_canco '"+c.getIdCanco()+"'.");
+				//System.out.println("[Servidor] "+c.getNom()+" amb path: "+c.getPath()+" num reproduccions: "+c.getnReproduccio());
 				alMusica.add(c);
 			}
 		} catch (SQLException e) {
@@ -128,18 +128,20 @@ public class SocketController {
 		return alMusica;
 	}
 	
-	public ArrayList<sUser> selectSUsers (String nom){
+	public ArrayList<sUser> selectSUsers (int id){
 		ArrayList<sUser> aux = new ArrayList<sUser>();
 		Query q = new Query();
-		ResultSet responseServer = conn.selectQuery(q.queryList(11, nom));
+		ResultSet responseServer = conn.selectQuery(q.queryList(11, id));
 		
 		
 		try {
 			while (responseServer.next()) {
-				sUser u = new sUser(responseServer.getString("nickname"),responseServer.getInt("id_usuaris"));
+				sUser u = new sUser();
+				u.setId_usuari(responseServer.getInt("id_follower"));
+				for(User user : Data.getUsers())if(u.getId_usuari()==user.getId_usuari())u.setNickname(user.getNickname());
 				aux.add(u);
 
-				System.out.println("[Servidor] Usuari ' "+u.getNickname()+" '");
+				System.out.println("[Servidor] Usuari ' "+u.getId_usuari()+" '");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -209,6 +211,11 @@ public class SocketController {
 		
 		return i;
 	}
+	
+	public void hacerFollow(Integer idUser,Integer idFollow){
+		String aux = idUser.toString().concat("/"+idFollow.toString());
+		conn.insertQuery(new Query().queryList(13, aux));
+	}
 
 	public ArrayList<Llistes> omplirLlistes(int id_user){
 		ArrayList<Llistes> ll = new ArrayList<Llistes>();
@@ -221,6 +228,7 @@ public class SocketController {
 			while (responseServer.next()) {
 				Llistes al = new Llistes();
 				ArrayList<Integer> aCancons = new ArrayList<Integer>();
+				int idACanco = 0 ;
 
 				al.setId_llistes(responseServer.getInt("id_llista"));
 
@@ -234,7 +242,10 @@ public class SocketController {
 				
 				ResultSet responseServer3 = conn.selectQuery(q.queryList(9,al.getId_llistes()));
 				while (responseServer3.next()) {
+					
 					aCancons.add(responseServer3.getInt("id_canco"));
+					System.out.println("[SERVIDOR][Llista]id_canco '"+aCancons.get(idACanco));
+					idACanco++;
 				}
 				al.setAllIdCanco(aCancons);
 				ll.add(al);

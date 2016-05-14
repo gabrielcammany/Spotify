@@ -91,11 +91,22 @@ public class MessageServiceWorker implements Runnable {
 				//ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
 				//objectOutput.writeObject(usuaris);
 			}
+			
+			
+			if (data[1].equals("requestFollow")) {
+				int id = 0;
+				for(User u : Data.getUsers())if(u.getNickname().toLowerCase().equals(data[2].toLowerCase()))id = u.getId_usuari();
+				cadenas.hacerFollow(Integer.parseInt(data[0]),id);
+				
+			}
+			
 
 			if (data[1].equals("requestUsuarisFollower")) {
 
-				ArrayList<Object> usuaris = new ArrayList<Object>();
+				ArrayList<sUser> usuaris = new ArrayList<sUser>();
+				usuaris=cadenas.selectSUsers(Integer.parseInt(data[0]));
 				ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
+				System.out.println("[Server]id follow-->"+usuaris.get(0).getId_usuari()+" - "+usuaris.get(1).getId_usuari());
 				objectOutput.writeObject(usuaris);
 			}
 
@@ -127,7 +138,8 @@ public class MessageServiceWorker implements Runnable {
 					Llistes[] llistes = new Llistes[list.size()];
 					llistes = list.toArray(llistes);
 					
-					for(Llistes l : llistes) System.out.println(l.getNom_llista());
+					for(Llistes l : s.getLl()) System.out.println(l.getAllIdCanco().get(0));
+				
 					objectOutput.writeObject(s.getLl());
 					//Llista[] llista = 
 					//objectOutput.writeObject("hello world");

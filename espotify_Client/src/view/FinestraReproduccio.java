@@ -36,6 +36,7 @@ import controller.ControladorReproductor;
 import model.Canco;
 import model.Llistes;
 import model.User;
+import model.sUser;
 import net.miginfocom.swing.MigLayout;
 
 
@@ -440,7 +441,7 @@ public class FinestraReproduccio extends JFrame{
 	 * Aquesta funcio rep l'array de tots els usuaris que segueix i els mostra en una taua
 	 */
 	
-	public void setUsuarisFollowing(ArrayList<User> alUsuari){
+	public void setUsuarisFollowing(ArrayList<sUser> alUsuari){
 		//podem escollir entre llistar els usuaris que seguim o buscar un usuari per seguir-lo/seixar-lo de seguir
 		JTabbedPane jtpFollowing = new JTabbedPane();
 		//buscar un nou usuari
