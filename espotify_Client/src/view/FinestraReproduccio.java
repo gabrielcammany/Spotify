@@ -3,6 +3,8 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -10,6 +12,7 @@ import java.util.Vector;
 
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -19,10 +22,12 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import org.jdesktop.xswingx.PromptSupport;
 
+import controller.ControladorBotons;
 import controller.ControladorFinestres;
 import controller.ControladorLlistar;
 import controller.ControladorLlistesMusica;
@@ -89,11 +94,6 @@ public class FinestraReproduccio extends JFrame{
 		this.jpReproduccio = new JPanel(new BorderLayout());
 		this.jpReproduccio.setBackground(new Color(24,24,24));
 		
-		/*
-		 * 
-		 * GET NOM USUARI!!!
-		 * 
-		 */	
 		
 		//barra del nort
 		JPanel jpUsuari = new JPanel(new BorderLayout());
@@ -101,7 +101,7 @@ public class FinestraReproduccio extends JFrame{
 		jpUsuari.setBorder(BorderFactory.createLineBorder(Color.black));
 		//adalt a la dreta
 		//nom usuari
-		JLabel jlUsuari = new JLabel("Jorge el mejor  ");
+		JLabel jlUsuari = new JLabel("");
 		jlUsuari.setForeground(new Color(164,164,164));
 		jlUsuari.setBorder(BorderFactory.createEmptyBorder(10,10,10,10)); 
 		//introduir-lo
@@ -151,7 +151,7 @@ public class FinestraReproduccio extends JFrame{
 		String disponible = "Música disponible";
 		String propies = "Música propia";
 		String llistesfollowing = "Música following";
-		String usuarisfollowing = "Follow usuaris";
+		String usuarisfollowing = "Gestio usuaris";
 		try {
 			JLabel jlDisponible = new JLabel(new String(disponible.getBytes("UTF-8"),"UTF-8"));
 			jlDisponible.setForeground(new Color(164,164,164));
@@ -401,7 +401,7 @@ public class FinestraReproduccio extends JFrame{
 	 * Aquesta funcio rep l'array de totes llistes dels usuaris que segueix i els mostra en una taula
 	 */
 	
-	public void setLlistesFollowing(/*array de llistes*/ArrayList<String> alLlistes){
+	public void setLlistesFollowing(ArrayList<String> alLlistes){
 		JPanel jpLlistat = new JPanel(new BorderLayout());
 
 		//Tabla musica disponible 
@@ -449,36 +449,9 @@ public class FinestraReproduccio extends JFrame{
 		jpNouFollow.add(jtfUsuari);
 		//JPanel jpLlistat = new JPanel(new BorderLayout());
 
-		//Tabla musica disponible 
-		Vector<String> columnas = new Vector();
 		
-		columnas.add("Nom usuari");
-		columnas.add("Numero llistes");
-
-
-   
-		Vector filas = new Vector();
-
-		  System.out.println("%%%%%%");
-		  for (int i = 0; i <alUsuari.size(); i ++) {
-			  System.out.println("%%%%%%"+i);
-			Vector<String> fila = new Vector();
-			
-			fila.add(alUsuari.get(i).toString());
-			
-			filas.add(fila);
-		}
-		
-		
-	
-		JTable taulaUsuariFollowing = new JTable(filas, columnas){
-		
-		public boolean isCellEditable (int rowIndex, int vColIndex) {
-			return false;
-		}};
-		
-		jtpFollowing.add("Llistat following", taulaUsuariFollowing);
-		jtpFollowing.add("Buscar Usuari", jpNouFollow);
+		jtpFollowing.add("Llistat following", llistatFollowing());
+		jtpFollowing.add("Buscar Usuari", bucarUsuari());
 		
 
 		//this.jspUsuarisFollowing = new JScrollPane(taulaUsuariFollowing);	
@@ -488,6 +461,62 @@ public class FinestraReproduccio extends JFrame{
 		//jspUsuarisFollowing.setFocusable(false);
 
 		
+	}
+	
+	public JPanel bucarUsuari() {
+		JPanel jpBuscaUsuari = new JPanel(new BorderLayout());
+		
+		JTextField jtBusca = new JTextField();
+		PromptSupport.setPrompt("Nom usuari...", jtBusca);
+		
+		JButton jbBusca = new JButton();
+		jbBusca.setText("Busca");
+		
+		//Afegim el controlador al boto de buscar
+		ControladorBotons controladorBusca = new ControladorBotons(jtBusca);
+		jbBusca.addMouseListener(controladorBusca);
+		
+		JPanel jpSuperior = new JPanel (new GridLayout (1, 2));
+		jpSuperior.add(jtBusca);
+		jpSuperior.add(jbBusca);
+		jpBuscaUsuari.add(jpSuperior, BorderLayout.NORTH);
+		 
+		
+		return jpBuscaUsuari;
+	}
+	
+	public JPanel llistatFollowing() {
+		JPanel jpLlistatFollowing = new JPanel(new BorderLayout());
+		jpLlistatFollowing.setBackground(new Color(184,184,184));
+		
+		JTable jtLlistatFollowing = new JTable();
+		DefaultTableModel tableModel = (DefaultTableModel)jtLlistatFollowing.getModel();
+		tableModel.setRowCount(0);
+		
+		//NECESITEM LA LLISTA DEL USUARIS ALS QUALS SEGUEIS EL NOSTRE USUARI
+		
+		
+		
+		jtLlistatFollowing.setModel(tableModel);
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		JLabel jtTitol = new JLabel ("Usuaris que segueixes");
+		jtTitol.setFont(new Font("Arial", Font.PLAIN, 16));
+		jtTitol.setBackground(new Color(184,184,184));
+		
+		jtLlistatFollowing.setBackground(new Color(184,184,184));
+		
+		jpLlistatFollowing.add(jtLlistatFollowing, BorderLayout.CENTER);
+		jpLlistatFollowing.add(jtTitol, BorderLayout.PAGE_START );
+		
+		return jpLlistatFollowing;
 	}
 	
 	
@@ -544,12 +573,9 @@ public class FinestraReproduccio extends JFrame{
 				
 			case "usuarisfollowing":
 				setMusicaDisponible(alMusica);//le de posar per desclicar la canco
-
-				/*
-				 * introduzca aqui su codigo
-				 * 
-				 */
 				
+				setUsuarisFollowing(new ArrayList<>());
+			
 				this.jpReproduccio.add(this.jspUsuarisFollowing, BorderLayout.CENTER);
 				this.jpReproduccio.setBackground(new Color(50,50,50));
 				this.jpReproduccio.validate();
