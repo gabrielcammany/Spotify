@@ -78,6 +78,16 @@ public class Query {
 			
 			String cad13 = ("INSERT usuari_follower (id_user,id_follower) VALUES('"+s[0]+"','"+s[1]+"');");
 			return cad13;
+		case 14://eliminamos una cancion de la musica disponible.
+			String aux3 = ((String)obj);
+			
+			String cad14 = ("DELETE FROM usuari_follower WHERE usuari_follower.id_usuari_follower = "+aux3);
+			return cad14;
+		case 15://eliminamos una cancion de la musica disponible.
+			String aux2 = ((String)obj);
+			String[] s2 = aux2.split("/");
+			String cad15 = ("SELECT id_usuari_follower FROM usuari_follower WHERE usuari_follower.id_user = "+s2[0]+" AND usuari_follower.id_follower = "+s2[1]);
+			return cad15;
 		}
 			
 			

@@ -100,6 +100,21 @@ public class InfoServidor {
 		
 	}
 	
+	public void unfollow(String nickname){
+		
+		try {
+			newSocket();
+			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
+			doStream.writeUTF(User.getId_usuari()+":unFollow:"+nickname);
+			
+			doStream.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 	
 	public boolean enviarUsuari(int option, String nom, char[] contrasenya){
 		

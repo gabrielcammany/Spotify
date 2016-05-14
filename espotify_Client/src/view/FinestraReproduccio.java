@@ -32,7 +32,7 @@ import controller.ControladorFinestres;
 import controller.ControladorLlistar;
 import controller.ControladorLlistesMusica;
 import controller.ControladorReproductor;
-
+import controller.DeleteController;
 import model.Canco;
 import model.Llistes;
 import model.User;
@@ -63,6 +63,8 @@ public class FinestraReproduccio extends JFrame{
 	private JPanel jpVisualitzarLlistes;
 	private ArrayList<Canco> alMusica;
 	
+	private JTable jtLlistatFollowing;
+	private DefaultTableModel tableModel;
 	
 	
 	public FinestraReproduccio() throws ClassNotFoundException{
@@ -452,12 +454,12 @@ public class FinestraReproduccio extends JFrame{
 		//JPanel jpLlistat = new JPanel(new BorderLayout());
 
 		
-		jtpFollowing.add("Llistat following", llistatFollowing());
-		jtpFollowing.add("Buscar Usuari", bucarUsuari());
+		//jtpFollowing.add("Llistat following", llistatFollowing());
+		//jtpFollowing.add("Buscar Usuari", bucarUsuari());
 		
 
 		//this.jspUsuarisFollowing = new JScrollPane(taulaUsuariFollowing);	
-		this.jspUsuarisFollowing = new JScrollPane(jtpFollowing);
+		this.jspUsuarisFollowing = new JScrollPane(llistatFollowing(alUsuari));
 		this.jspUsuarisFollowing.setBackground(new Color(50,50,50));
 		this.jspUsuarisFollowing.getViewport().setBackground(new Color(50,50,50));
 		//jspUsuarisFollowing.setFocusable(false);
@@ -486,36 +488,69 @@ public class FinestraReproduccio extends JFrame{
 		
 		return jpBuscaUsuari;
 	}
+	public JTable getTaulaFollowing() {
+		return jtLlistatFollowing;
+	}
 	
-	public JPanel llistatFollowing() {
+	public DefaultTableModel getModel() {
+		return tableModel;
+	}
+	
+	public JPanel llistatFollowing(ArrayList <sUser> alUser) {
 		JPanel jpLlistatFollowing = new JPanel(new BorderLayout());
-		jpLlistatFollowing.setBackground(new Color(184,184,184));
+
 		
-		JTable jtLlistatFollowing = new JTable();
-		DefaultTableModel tableModel = (DefaultTableModel)jtLlistatFollowing.getModel();
+		Vector<String> columnas = new Vector<String>();
+		columnas.add ("Nom usuari");
+		
+		
+		Vector<String> filas = new Vector<String>();
+		jtLlistatFollowing = new JTable(filas, columnas){
+		
+		public boolean isCellEditable (int rowIndex, int vColIndex) {
+			return false;
+		}};
+		
+		
+		tableModel = (DefaultTableModel)jtLlistatFollowing.getModel();
 		tableModel.setRowCount(0);
+		tableModel.setRowCount(alUser.size());
+		System.out.println(alUser.size());
 		
-		//NECESITEM LA LLISTA DEL USUARIS ALS QUALS SEGUEIS EL NOSTRE USUARI
+		String[]data = new String[1];
+		for (int i = 0; i < alUser.size(); i ++) {
+
+			//String[]data = new String[4];
+			if (!alUser.get(i).getNickname().isEmpty()){
+				data[0] = alUser.get(i).getNickname();
+			
+				tableModel.insertRow(i, data);
+			}
 		
+	
+		}
+		
+		
+		//data[0] = alUser.get(i).getNickname();
+		//data[0] = "aaaaa";
+		//tableModel.addRow(data);
 		
 		
 		jtLlistatFollowing.setModel(tableModel);
-		
-		
-		
-		
-		
-		
-		
+		jtLlistatFollowing.addMouseListener(new DeleteController(this));
+
 		
 		
 		JLabel jtTitol = new JLabel ("Usuaris que segueixes");
 		jtTitol.setFont(new Font("Arial", Font.PLAIN, 16));
 		jtTitol.setBackground(new Color(184,184,184));
 		
-		jtLlistatFollowing.setBackground(new Color(184,184,184));
+		//jtLlistatFollowing.setBackground(new Color(184,184,184));
 		
-		jpLlistatFollowing.add(jtLlistatFollowing, BorderLayout.CENTER);
+		JScrollPane jspLlistat = new JScrollPane(jtLlistatFollowing);
+		tableModel.fireTableDataChanged();
+		
+		jpLlistatFollowing.add(jspLlistat, BorderLayout.CENTER);
 		jpLlistatFollowing.add(jtTitol, BorderLayout.PAGE_START );
 		
 		return jpLlistatFollowing;
@@ -576,7 +611,7 @@ public class FinestraReproduccio extends JFrame{
 			case "usuarisfollowing":
 				setMusicaDisponible(alMusica);//le de posar per desclicar la canco
 				
-				setUsuarisFollowing(new ArrayList<>());
+				//setUsuarisFollowing(new ArrayList<>());
 			
 				this.jpReproduccio.add(this.jspUsuarisFollowing, BorderLayout.CENTER);
 				this.jpReproduccio.setBackground(new Color(50,50,50));

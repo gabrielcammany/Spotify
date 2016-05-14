@@ -185,11 +185,7 @@ public class FinestraServidor extends JFrame {
 	
 	public JPanel LlistarMusica(){
 		JPanel jpLlistat = new JPanel(new BorderLayout());
-		
 
-
-		
-	
 		//Tabla musica disponible 
 		
 		Vector<String> columnas = new Vector<String>();
@@ -212,7 +208,7 @@ public class FinestraServidor extends JFrame {
 		
 		ArrayList<Canco>musica = Data.getAlMusica();
 		for (int i = 0; i < musica.size(); i ++) {
-			Vector<String> fila = new Vector<String>();
+
 			String[]data = new String[4];
 			
 			data[0] = musica.get(i).getNom();
@@ -221,14 +217,7 @@ public class FinestraServidor extends JFrame {
 			data[3] = musica.get(i).getArtista();
 			
 			tableModel.addRow(data);
-		/*
-			
-			fila.add(musica.get(i).getNom());
-			fila.add(musica.get(i).getGenere());
-			fila.add(musica.get(i).getAlbum());
-			fila.add(musica.get(i).getArtista());
-			
-			filas.add(fila);*/
+	
 			
 		}
 	    taulaMusica.setModel(tableModel);
@@ -240,9 +229,6 @@ public class FinestraServidor extends JFrame {
 
 		jpLlistat.add(jspLlistat, BorderLayout.CENTER);
 		
-		
-
-
 
 		return jpLlistat;
 	}

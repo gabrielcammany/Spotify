@@ -152,6 +152,14 @@ public class MessageServiceWorker implements Runnable {
 				objectOutput.writeObject(Data.getAlMusica());
 
 			}
+			if(data[1].equals("unFollow")){
+				DataInputStream input = new DataInputStream(sClient.getInputStream());
+				String nom = input.readUTF();
+				cadenas.unfollow(Integer.parseInt(data[0]),nom);
+				ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
+				objectOutput.writeObject(Data.getAlMusica());
+
+			}
 		} catch (IOException e) { 
 			e.printStackTrace();
 		}

@@ -216,6 +216,22 @@ public class SocketController {
 		String aux = idUser.toString().concat("/"+idFollow.toString());
 		conn.insertQuery(new Query().queryList(13, aux));
 	}
+	
+	public void unfollow(Integer idSesio,String nom){
+		int id = 0;
+		for(User u : Data.getUsers())if(u.getNickname().toLowerCase().equals(nom.toLowerCase()))id = u.getId_usuari();
+		ResultSet rs = conn.selectQuery(new Query().queryList(15, idSesio.toString().concat("/"+id)));
+		try {
+			int id2 =  0;
+			while (rs.next())id2 = rs.getInt("id_user_follower");
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		conn.deleteQuery(new Query().queryList(14, id));
+		
+		
+	}
 
 	public ArrayList<Llistes> omplirLlistes(int id_user){
 		ArrayList<Llistes> ll = new ArrayList<Llistes>();
