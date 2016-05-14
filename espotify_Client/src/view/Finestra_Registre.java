@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GradientPaint;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -29,6 +30,8 @@ import net.miginfocom.swing.MigLayout;
  *
  */
 
+
+
 @SuppressWarnings("serial")
 public class Finestra_Registre extends JPanel{
 	
@@ -36,7 +39,15 @@ public class Finestra_Registre extends JPanel{
 	private JButton jbRegistre;
 	private JPasswordField jtfPassword;
 	private JTextField jtfUsuari;
+	private ImageIcon imagen;
+	
+	
+
+	
+	
+	
 	public Finestra_Registre() {
+		
 		
 
 		
@@ -46,24 +57,17 @@ public class Finestra_Registre extends JPanel{
 		jfRegistre.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jfRegistre.setLocationRelativeTo(null);
 		
-		JPanel jpRegistre = new JPanel(){
-	        @Override
-	        protected void paintComponent(Graphics grphcs) {
-	            super.paintComponent(grphcs);
-	            Graphics2D g2d = (Graphics2D) grphcs;
-	            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-	                    RenderingHints.VALUE_ANTIALIAS_ON);
-	            GradientPaint gp = new GradientPaint(0, 0,
-	                    Color.BLACK, 0, 300, new Color(0, 153, 51));
-	            g2d.setPaint(gp);
-	            g2d.fillRect(0, 0, getWidth(), getHeight()); 
-
-	        }
+		
+		
+		
+		JPanel jpRegistre = new CustomPanel(){
+	       
 
 	    };	
 		//centrar a la pantalla
 		jpRegistre.setLayout(new MigLayout("al center center, wrap, gapy 10"));
 		//color negre del fons
+		//jpRegistre.setOpaque(false);
 		
 				
 		jtfUsuari = new JTextField(15);
@@ -82,7 +86,7 @@ public class Finestra_Registre extends JPanel{
 		//Logo
 		ImageIcon logo = new ImageIcon("espotify_Client/Images/logoSpotyfai.png");
 		JLabel jlLogo = new JLabel();
-		ImageIcon icono = new ImageIcon(logo.getImage().getScaledInstance(200, 50, Image.SCALE_DEFAULT));
+		ImageIcon icono = new ImageIcon(logo.getImage()/*.getScaledInstance(800, 800, Image.SCALE_DEFAULT)*/);
 		jlLogo.setIcon(icono);
 		
 		//afegim els jtarea al jpanel log
@@ -95,6 +99,15 @@ public class Finestra_Registre extends JPanel{
 		
 		jpRegistre.add(jbRegistre, "span 2, grow, wrap");
 		jbRegistre.setText("Completar registre");
+		
+		
+		
+		ImageIcon bk = new ImageIcon("Images/PantallaRegistre.jpg");
+		JLabel jlBk = new JLabel(new ImageIcon(bk.getImage().getScaledInstance(350, 350, Image.SCALE_DEFAULT)));
+		jlBk.setLayout(new MigLayout("al center center, wrap, gapy 10"));
+		jfRegistre.setContentPane(jlBk);
+		
+
 
 		jfRegistre.add(jpRegistre);
 		

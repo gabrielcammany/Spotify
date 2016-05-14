@@ -68,7 +68,7 @@ public class Finestra_login extends JFrame {
 		jbRegistre.setText("Registra't");
 		
 		//Logo
-		ImageIcon logo = new ImageIcon("Images/logoSpotyfai1.png");
+		/*ImageIcon logo = new ImageIcon("Images/logoSpotyfai1.png");
 		JLabel jlLogo = new JLabel();
 		ImageIcon icono = new ImageIcon(logo.getImage().getScaledInstance(200, 60, Image.SCALE_DEFAULT));
 		jlLogo.setIcon(icono);
@@ -76,7 +76,7 @@ public class Finestra_login extends JFrame {
 		
 	
 		//afegim els jtarea al jpanel log
-		jpLog.add(jlLogo, "span 2, grow, wrap");
+		jpLog.add(jlLogo, "span 2, grow, wrap");*/
 		jpLog.add(jtfUsuari, "span 2, grow, wrap");
 		jpLog.add(jtfPassword,  "span 2, grow, wrap");
 		//afegim els botons al jpanel log
@@ -85,8 +85,8 @@ public class Finestra_login extends JFrame {
 		
 		
 		//background
-		ImageIcon bk = new ImageIcon("Images/backGround1.jpg");
-		JLabel jlBk = new JLabel(new ImageIcon(bk.getImage().getScaledInstance(600, 500, Image.SCALE_DEFAULT)));
+		ImageIcon bk = new ImageIcon("Images/PantallaLogin.jpg");
+		JLabel jlBk = new JLabel(new ImageIcon(bk.getImage().getScaledInstance(500, 500, Image.SCALE_DEFAULT)));
 		jlBk.setLayout(new MigLayout("al center center, wrap, gapy 10"));
 		jfLog.setContentPane(jlBk);
 

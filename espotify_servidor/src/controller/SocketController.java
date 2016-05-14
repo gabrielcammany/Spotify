@@ -181,13 +181,13 @@ public class SocketController {
 
 	public int songRequest(String nCanco, String nArtista){
 		ArrayList<Canco> allMusic = Data.getAlMusica();
-		int size = allMusic.size();
+		int size = Data.getAlMusica().size();
 		int i = 0;
 		boolean trobat =  false;
 		
 		while( i <size && !trobat){
-			String comparaCanco = new String (allMusic.get(i).getNom());
-			String comparaArtista = new String(allMusic.get(i).getArtista());
+			String comparaCanco = new String (Data.getAlMusica().get(i).getNom());
+			String comparaArtista = new String(Data.getAlMusica().get(i).getArtista());
 			
 			comparaCanco = comparaCanco.replace(" ", "");
 			comparaArtista = comparaArtista.replace(" ", "");
@@ -200,10 +200,12 @@ public class SocketController {
 			i++;
 		}
 		i--;
+		
 		Query q= new Query();
 		Canco c = allMusic.get(i);
 		Integer nRep = Integer.parseInt(c.getnReproduccio())+1;
 		c.setnReproduccio(nRep.toString());
+		System.out.println("QUE LE LLEGA  "+ c.getNom() + " " +c.getArtista());
 		allMusic.set(i,c);
 		Data.setAlMusica(allMusic);
 		String response = q.queryList(6,c);

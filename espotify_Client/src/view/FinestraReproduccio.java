@@ -198,17 +198,17 @@ public class FinestraReproduccio extends JFrame{
 		jpBarraRepro.setBackground(new Color(40,40,40));
 		
 		//next
-		ImageIcon imNext = new ImageIcon("Images/next.png");
+		ImageIcon imNext = new ImageIcon("Images/next-button1.png");
 		JLabel jlNext = new JLabel();
 		jlNext.setForeground(new Color(164,164,164));
-		ImageIcon icNext = new ImageIcon(imNext.getImage().getScaledInstance(45, 40, Image.SCALE_DEFAULT));
+		ImageIcon icNext = new ImageIcon(imNext.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
 		jlNext.setIcon(icNext);
 		
 		//back
-		ImageIcon imBack = new ImageIcon("Images/back.png");
+		ImageIcon imBack = new ImageIcon("Images/back-button1.png");
 		JLabel jlBack = new JLabel();
 		jlBack.setForeground(new Color(164,164,164));
-		ImageIcon icBack = new ImageIcon(imBack.getImage().getScaledInstance(45, 40, Image.SCALE_DEFAULT));
+		ImageIcon icBack = new ImageIcon(imBack.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
 		jlBack.setIcon(icBack);
 				
 		//play

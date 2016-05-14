@@ -40,6 +40,11 @@ public class ControladorFinestres {
 		
 	}
 	
+	public static InfoServidor getInfoServidor() {
+		return infoServidor;
+	
+	}
+	
 	public ControladorFinestres (InfoServidor infoServidor) {
 		fLogin = new Finestra_login();
 		ControladorFinestres.infoServidor = infoServidor;

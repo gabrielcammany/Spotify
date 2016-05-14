@@ -55,7 +55,7 @@ public class MessageServiceWorker implements Runnable {
 				ObjectOutputStream objectOutput  = new ObjectOutputStream(this.sClient.getOutputStream());
 				System.out.println("He recibido la peticion de cancion: "+ data[2] + " " + aux[1]);
 
-				int response = cadenas.songRequest(data[1],aux[1]);
+				int response = cadenas.songRequest(data[2],aux[1]);
 				if(response== -1){
 
 					objectOutput.writeObject(null);

@@ -68,11 +68,10 @@ public class DeleteController implements MouseListener {
 					
 					String nom = (String) finestraReproduccio.getTaulaFollowing().getValueAt(finestraReproduccio.getTaulaFollowing().getSelectedRow(), 0);
 					
-					InfoServidor inf = new InfoServidor();
-					inf.unfollow(nom);
+					ControladorFinestres.getInfoServidor().unfollow(nom);
+									
 					
-					
-		        	finestraReproduccio.getModel().removeRow(finestraReproduccio.getTaulaMusica().getSelectedRow());
+		        	finestraReproduccio.getModel().removeRow(finestraReproduccio.getTaulaFollowing().getSelectedRow());
 		        	finestraReproduccio.getModel().fireTableDataChanged();
 
 					

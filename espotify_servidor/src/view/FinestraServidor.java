@@ -1,9 +1,11 @@
 package view;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -11,6 +13,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -87,6 +90,11 @@ public class FinestraServidor extends JFrame {
 		
 		jtpServidor.addTab("Usuari", jpUsuari);
 		jtpServidor.addTab("Musica", jpMusica);	
+		
+		jtpServidor.setIconAt(0, new ImageIcon("Images/profile.png"));
+		jtpServidor.setIconAt(1, new ImageIcon("Images/musical-note.png"));
+		
+		UIManager.put(jtpServidor.getSelectedComponent(), new Color(123,45,67));
 		
 		jfServidor.add(jtpServidor);
 	}
