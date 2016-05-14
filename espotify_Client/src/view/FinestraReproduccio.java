@@ -51,7 +51,6 @@ public class FinestraReproduccio extends JFrame{
 	
 	private JFrame jfReproduccio;
 	private JPanel jpReproduccio;
-	private ControladorFinestres cf;
 	private JScrollPane jspLlistatDisponible;
 	private JScrollPane jspLlistatPropia;
 	private JScrollPane jspUsuarisFollowing;
@@ -65,8 +64,8 @@ public class FinestraReproduccio extends JFrame{
 	
 	
 	
-	public FinestraReproduccio(ControladorFinestres cf) throws ClassNotFoundException{
-		this.cf = cf;
+	public FinestraReproduccio() throws ClassNotFoundException{
+		
 		//inicialitzem
 		if(jspLlistatDisponible == null){
 			jspLlistatDisponible = new JScrollPane();
@@ -132,13 +131,15 @@ public class FinestraReproduccio extends JFrame{
 		jtfBuscar.setText("Buscar");
 		jtfBuscar.setFocusable(false);
 		
+		
+		
 		jpAdaltEsquerra.add(jtfBuscar,"dock west");
 
 		
 		jpUsuari.add(jpAdaltEsquerra, BorderLayout.LINE_START);
 
 		//afegim la barra d'adalt al panell
-		jpReproduccio.add(jpUsuari, BorderLayout.NORTH);
+		jpReproduccio.add(bucarUsuari(), BorderLayout.NORTH);
 		
 		//afegim la columna de l'esquerra, faig un mig layout per fer us dels wrap
 		//Musica disponible, â€œLlistes de musica propies i Llistes de musica following
@@ -169,10 +170,10 @@ public class FinestraReproduccio extends JFrame{
 			jlUsuarisfollowing.setForeground(new Color(164,164,164));
 			jlUsuarisfollowing.setBorder(BorderFactory.createEmptyBorder(10,4,15,10));
 
-			jlDisponible.addMouseListener(new ControladorLlistar("disponible",cf));
-			jlPropies.addMouseListener(new ControladorLlistar("propia",cf));
-			jlUsuarisfollowing.addMouseListener(new ControladorLlistar("usuarisfollowing",cf));
-			jlLlistesfollowing.addMouseListener(new ControladorLlistar("llistesfollowing",cf));
+			jlDisponible.addMouseListener(new ControladorLlistar("disponible"));
+			jlPropies.addMouseListener(new ControladorLlistar("propia"));
+			jlUsuarisfollowing.addMouseListener(new ControladorLlistar("usuarisfollowing"));
+			jlLlistesfollowing.addMouseListener(new ControladorLlistar("llistesfollowing"));
 			
 			jpGestionar.add(jlDisponible, "span 2, grow, wrap ");
 			jpGestionar.add(jlPropies, "span 2, grow, wrap");
@@ -225,9 +226,9 @@ public class FinestraReproduccio extends JFrame{
 		
 		//imatges de play, next i back clickables
 
-		jlPlay.addMouseListener(new ControladorReproductor("play",cf));
-		jlBack.addMouseListener(new ControladorReproductor("back",cf));
-		jlNext.addMouseListener(new ControladorReproductor("next",cf));
+		jlPlay.addMouseListener(new ControladorReproductor("play"));
+		jlBack.addMouseListener(new ControladorReproductor("back"));
+		jlNext.addMouseListener(new ControladorReproductor("next"));
 		//sonido
 		ImageIcon imSonido = new ImageIcon("Images/sonido.png");
 		JLabel jlSonido = new JLabel();
@@ -326,7 +327,7 @@ public class FinestraReproduccio extends JFrame{
 	
 	public JPanel setVisualitzarLlistes(){
 		
-		JList jlLlistes = new JList(cf.getlistesPropies().toArray());
+		JList jlLlistes = new JList(ControladorFinestres.getlistesPropies().toArray());
 		jlLlistes.setBorder(BorderFactory.createEmptyBorder(5,5,5,30));
 		jlLlistes.setCellRenderer(new ListRenderer());
 		jlLlistes.setBackground(new Color(70,70,70));
@@ -338,7 +339,7 @@ public class FinestraReproduccio extends JFrame{
 		
 		//jpVisualitzarLlistes.setFocusable(false);
 		
-		jlLlistes.addMouseListener(new ControladorLlistesMusica(jlLlistes, cf));
+		jlLlistes.addMouseListener(new ControladorLlistesMusica(jlLlistes));
 			
 		return jpVisualitzarLlistes;
 	}

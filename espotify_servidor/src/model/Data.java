@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Data {
 
 	private static ArrayList<Sessio> aSessio;
-	private static ArrayList<Object> Users;
+	private static ArrayList<User> Users;
 	private static ArrayList<Canco> alMusica;
 
 	public static ArrayList<Sessio> getaSessio() {
@@ -16,11 +16,11 @@ public class Data {
 		Data.aSessio = aSessio;
 	}
 
-	public static ArrayList<Object> getUsers() {
+	public static ArrayList<User> getUsers() {
 		return Users;
 	}
 
-	public static void setUsers(ArrayList<Object> users) {
+	public static void setUsers(ArrayList<User> users) {
 		Users = users;
 	}
 	

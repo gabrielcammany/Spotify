@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 import model.Canco;
@@ -23,15 +24,15 @@ import view.Finestra_login;
  *
  */
 public class ControladorFinestres {
-	public Finestra_login fLogin;
-	public Finestra_Registre fRegistre;
-	public FinestraReproduccio fReproduccio;
-	private InfoServidor infoServidor;
-	private User user;
-	boolean reproduir = false;
-	Reproductor r;
+	public static Finestra_login fLogin;
+	public static Finestra_Registre fRegistre;
+	public static FinestraReproduccio fReproduccio;
+	private static InfoServidor infoServidor;
+	private static User user;
+	private static boolean reproduir = false;
+	private static Reproductor r;
 	
-	private ArrayList<Canco> alMusic;
+	private static ArrayList<Canco> alMusic;
 	
 
 	public ControladorFinestres(){
@@ -39,10 +40,9 @@ public class ControladorFinestres {
 	}
 	
 	public ControladorFinestres (InfoServidor infoServidor) {
-		this.fLogin = new Finestra_login(this);
-		this.infoServidor = infoServidor;
-		this.infoServidor.setControladorFinestra(this);
-		r = new Reproductor("");
+		fLogin = new Finestra_login();
+		ControladorFinestres.infoServidor = infoServidor;
+		setR(new Reproductor(""));
 		/*Thread t = new Thread(){
 			@Override
 			public void run(){
@@ -62,10 +62,10 @@ public class ControladorFinestres {
 	 * Metode encarregat de gestionar un nou registre a l'aplicacio
 	 */
 	
-	public void nouRegistre() {
+	public static void nouRegistre() {
 		//tanquem finestra de login
 		fLogin.tancaFinestraLogin();
-		fRegistre = new Finestra_Registre(this);
+		fRegistre = new Finestra_Registre();
 		
 		fRegistre.getjbRegistre().addActionListener(new ActionListener() {
  
@@ -78,9 +78,7 @@ public class ControladorFinestres {
 		
 	}
 	
-	public void creaMusicaDisponible(ArrayList<Canco> alMusica) {
-		
-	}
+
 	
 	/**
 	 * Proces de login
@@ -88,7 +86,7 @@ public class ControladorFinestres {
 	 * @throws IOException 
 	 * @throws UnknownHostException 
 	 */
-	public void Login() throws ClassNotFoundException, UnknownHostException, IOException {
+	public static void Login() throws ClassNotFoundException, UnknownHostException, IOException {
 		//InfoServidor info = new InfoServidor();
 		if((infoServidor.enviarUsuari(2, fLogin.getjtfUsuari().getText(), fLogin.getjtfPassword().getPassword()))){
 			//infoServidor.demanaSessio();
@@ -106,7 +104,7 @@ public class ControladorFinestres {
 	 * @throws UnknownHostException 
 	 */
 	
-	public void Reproduccio() throws ClassNotFoundException, UnknownHostException, IOException{
+	public static void Reproduccio() throws ClassNotFoundException, UnknownHostException, IOException{
 		/*
 		 * 
 		 * Comprovar dades correctes
@@ -122,7 +120,7 @@ public class ControladorFinestres {
 			fRegistre.tancaFinestraRegistre();
 		}
 
-		fReproduccio = new FinestraReproduccio(this);
+		fReproduccio = new FinestraReproduccio();
 		//Realitzem la peticio de cancos disponibles al servidor
 		
 		//infoServidor =new InfoServidor();
@@ -137,14 +135,14 @@ public class ControladorFinestres {
 	 * 
 	 */
 	
-	public void actualitzaMusicaDisponible(ArrayList<Canco> alMusica){
-		this.alMusic = alMusica;
+	public static void actualitzaMusicaDisponible(ArrayList<Canco> alMusica){
+		alMusic = alMusica;
 		fReproduccio.setMusicaDisponible(alMusica);
 		
 		
 	}
 	
-	public void actualitzaUsuaris(ArrayList<User> alUsers) {
+	public static void actualitzaUsuaris(ArrayList<User> alUsers) {
 		fReproduccio.setUsuaris(alUsers);
 	}
 	
@@ -153,7 +151,7 @@ public class ControladorFinestres {
 	 * rep un ArrayList de cancons
 	 * 
 	 */
-	public void actualitzaMusicaPropia(ArrayList<Canco> alMusica){
+	public static void actualitzaMusicaPropia(ArrayList<Canco> alMusica){
 		fReproduccio.setMusicaPropia();
 		
 	}
@@ -163,7 +161,7 @@ public class ControladorFinestres {
 	 * rep un ArrayList llistes
 	 * 
 	 */
-	public void actualitzaLlistesFollowing(/*  rebre array de llistes    */ArrayList<String> alListes){
+	public static void actualitzaLlistesFollowing(/*  rebre array de llistes    */ArrayList<String> alListes){
 		fReproduccio.setLlistesFollowing(/*  pasar array de llistes    */alListes);
 		
 	}
@@ -175,7 +173,7 @@ public class ControladorFinestres {
 	 * 
 	 */
 
-	public void actualitzaUsuarisFollowing(ArrayList<User> alUsuari){
+	public static  void actualitzaUsuarisFollowing(ArrayList<User> alUsuari){
 		fReproduccio.setUsuarisFollowing(alUsuari);
 		
 	}
@@ -184,23 +182,23 @@ public class ControladorFinestres {
 	 * Aquesta funcio parla amb la finestra per dirli que s'ha clicat una opcio de mostrar contingut
 	 * 
 	 */
-	public void novaOpcio(String opcio) {
+	public static void novaOpcio(String opcio) {
 		fReproduccio.actualitzaOpcio(opcio);
 	}
 	
-	public JTable obteTaulaMusica() {
+	public static JTable obteTaulaMusica() {
 		return fReproduccio.getTaulaMusica();
 	}
 	
-	public InfoServidor getServidor() {
+	public static InfoServidor getServidor() {
 		return infoServidor;
 	}
 	
-	public void restartReproductor() {
-		this.r = new Reproductor("");
+	public static void restartReproductor() {
+		setR(new Reproductor(""));
 	}
 	
-	public ArrayList<String> getlistesPropies() {
+	public static ArrayList<String> getlistesPropies() {
 		ArrayList<String> nomsLlistes = new ArrayList();
 		for (int i = 0; i<User.getlPropies().size(); i++) {
 			nomsLlistes.add(User.getlPropies().get(i).getNom_llista());	
@@ -208,7 +206,7 @@ public class ControladorFinestres {
 		return nomsLlistes;
 	}
 	
-	public void actualitzaTablaLlistaPropia(int indexSeleccio){
+	public static void actualitzaTablaLlistaPropia(int indexSeleccio){
 		Llistes llistaSeleccionada = new Llistes();
 		llistaSeleccionada = User.getlPropies().get(indexSeleccio);
 		
@@ -225,6 +223,40 @@ public class ControladorFinestres {
 		}
 		
 		fReproduccio.actualitzaLlistaSeleccionada(musicaLlista);
+	}
+	
+	
+	public static void mostraPopUp(int option) {
+		switch (option){
+			case 0:
+				JOptionPane.showMessageDialog(fReproduccio,
+					    "Usuari no trobat",
+					    "Error",
+					    JOptionPane.ERROR_MESSAGE);
+				break;
+				
+			case 1:
+				Object[] options = {"Fer follow",
+						"Cancelar"};
+				int n = JOptionPane.showOptionDialog(fReproduccio,
+						"Vols fer follow a l'usuari?",
+								"Following",
+								JOptionPane.YES_NO_CANCEL_OPTION,
+								JOptionPane.QUESTION_MESSAGE,
+								null,
+								options,
+								options[1]);
+				
+				break;
+		}
+	}
+
+	public static Reproductor getR() {
+		return r;
+	}
+
+	public static void setR(Reproductor r) {
+		ControladorFinestres.r = r;
 	}
 	
 }

@@ -21,7 +21,6 @@ public class ButtonsController implements ActionListener {
 	private	ErrorLog vError =new ErrorLog();
 	// NETWORK
 	private MessageService mService;
-	private User user;
 	
 	
 	public ButtonsController(){}
@@ -67,7 +66,7 @@ public class ButtonsController implements ActionListener {
 	
 	public void creaFinestra() {
 		System.out.println("########################################################");
-		Data.setUsers(new SocketController().selectUsers(true, null));
+		Data.setUsers(new SocketController().selectUsers());
 		viewF.creaFinestra(Data.getAlMusica(),Data.getUsers());
 	}
 	

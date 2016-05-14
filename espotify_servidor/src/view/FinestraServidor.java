@@ -66,7 +66,7 @@ public class FinestraServidor extends JFrame {
 	
 	
 	
-	public void creaFinestra(ArrayList<Canco> musica, ArrayList<Object> alUsuaris){
+	public void creaFinestra(ArrayList<Canco> musica, ArrayList<User> alUsuaris){
 		
 		jfServidor = new JFrame("SPOTYFAI - Servidor");
 		
@@ -97,7 +97,7 @@ public class FinestraServidor extends JFrame {
 	 * 
 	 **/
 	
-	public JPanel FinestraUsuari(ArrayList<Object> allUsers){
+	public JPanel FinestraUsuari(ArrayList<User> allUsers){
 		jpUsuari = new JPanel(new BorderLayout());
 		//connectar amb base de dades 
 		

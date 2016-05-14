@@ -53,7 +53,7 @@ public class SocketController {
 			ConectorDB.insertQuery(response);
 
 			System.out.println("User: '"+user.getNickname()+"' Inserit correctament.");
-			selectUsers(true,null);
+			selectUsers();
 			return verifyUser(usuario, password);
 		}else{
 			System.out.println("[Servidor] L'usari '"+user.getNickname()+"' ja es troba registrat.");
@@ -127,37 +127,47 @@ public class SocketController {
 
 		return alMusica;
 	}
-	public ArrayList<Object> selectUsers(boolean i, String nom){
+	
+	public ArrayList<sUser> selectSUsers (String nom){
+		ArrayList<sUser> aux = new ArrayList<sUser>();
+		Query q = new Query();
+		ResultSet responseServer = conn.selectQuery(q.queryList(11, nom));
+		
+		
+		try {
+			while (responseServer.next()) {
+				sUser u = new sUser(responseServer.getString("nickname"),responseServer.getInt("id_usuaris"));
+				aux.add(u);
+
+				System.out.println("[Servidor] Usuari ' "+u.getNickname()+" '");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return aux;
+	}
+	
+	public ArrayList<User> selectUsers(){
 		Query q = new Query();
 		ResultSet responseServer;
-		ArrayList<Object> aUsers = new ArrayList<Object>();
-		if(i){
-			responseServer = conn.selectQuery(q.queryList(5, null));
-		}else{
-			responseServer = conn.selectQuery(q.queryList(11, nom));
-		}
+		ArrayList<User> aUsers = new ArrayList<User>();
+
+		responseServer = conn.selectQuery(q.queryList(5, null));
 
 		try {
 
 			while (responseServer.next()) {
-				if(i){
-					User u = new User();
-					u.setId_usuari(responseServer.getInt("id_usuaris"));
-					u.setNickname(responseServer.getString("nickname"));
-					u.setPassword(responseServer.getString("password"));
-					u.setData_reg(responseServer.getString("data_reg"));
-					u.setData_ult(responseServer.getString("data_ult"));
-					aUsers.add(u);
+				User u = new User();
+				u.setId_usuari(responseServer.getInt("id_usuaris"));
+				u.setNickname(responseServer.getString("nickname"));
+				u.setPassword(responseServer.getString("password"));
+				u.setData_reg(responseServer.getString("data_reg"));
+				u.setData_ult(responseServer.getString("data_ult"));
+				aUsers.add(u);
 
-					System.out.println("[Servidor] Usuari ' "+u.getNickname()+" '");
-				}else{
-					sUser u = new sUser();
-					u.setId_usuari(responseServer.getInt("id_usuaris"));
-					u.setNickname(responseServer.getString("nickname"));
-					aUsers.add(u);
+				System.out.println("[Servidor] Usuari ' "+u.getNickname()+" '");
 
-					System.out.println("[Servidor] Usuari ' "+u.getNickname()+" '");
-				}
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

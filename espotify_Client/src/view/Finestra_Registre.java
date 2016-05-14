@@ -36,12 +36,9 @@ public class Finestra_Registre extends JPanel{
 	private JButton jbRegistre;
 	private JPasswordField jtfPassword;
 	private JTextField jtfUsuari;
-	
-	private ControladorFinestres controladorf;
-	
-	public Finestra_Registre(ControladorFinestres controladorf) {
+	public Finestra_Registre() {
 		
-		this.controladorf = controladorf;
+
 		
 		jfRegistre = new JFrame("eSpotyfai - Registre");
 		jfRegistre.setVisible(true);
@@ -110,7 +107,7 @@ public class Finestra_Registre extends JPanel{
 				//Finestra_Registre fReg = new FinestraRegistre();
 				
 				try {
-					controladorf.Reproduccio();
+					ControladorFinestres.Reproduccio();
 				} catch (ClassNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

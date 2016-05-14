@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Sessio {
 	private ArrayList<Llistes> lPropies;
 	private ArrayList<Integer> lFollowing;
+	private ArrayList<sUser> lUserFollow;
 	private int idSessio;
 	private String desconexio;
 	private boolean update;
@@ -50,6 +51,14 @@ public class Sessio {
 
 	public void setUpdate(boolean update) {
 		this.update = update;
+	}
+
+	public ArrayList<sUser> getlUserFollow() {
+		return lUserFollow;
+	}
+
+	public void setlUserFollow(ArrayList<sUser> lUserFollow) {
+		this.lUserFollow = lUserFollow;
 	}
 	
 	

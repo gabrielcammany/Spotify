@@ -38,7 +38,7 @@ public class InfoServidor {
 		
 		private ArrayList<Canco> alMusica;
 		private boolean active;
-		private ControladorFinestres controladorFinestres;
+
 		private ControladorLlistar controladorLlistar;
 		private FileInputStream fSongServ;
 		private Socket sServidor ;
@@ -61,10 +61,7 @@ public class InfoServidor {
 			active = true;
 		}
 		
-		public void setControladorFinestra(ControladorFinestres controladorFinestres){
-			this.controladorFinestres = controladorFinestres;
-			System.out.println(controladorFinestres);
-		}
+
 		
 	public void demanaSessio(){
 		
@@ -79,6 +76,26 @@ public class InfoServidor {
 			e.printStackTrace();
 		}
 		
+		
+	}
+	
+	public void demanaUser(String nickname){
+		
+		try {
+			System.out.println("[Client]Request user '"+nickname+"'.");
+			newSocket();
+			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
+			doStream.writeUTF(User.getId_usuari()+":UserRequest:"+nickname);
+			
+			DataInputStream input3 = new DataInputStream(sServidor.getInputStream());
+			int trobat = input3.readInt();
+			doStream.close();
+			if(trobat!= 0) ControladorFinestres.mostraPopUp(1);
+			if(trobat ==0) ControladorFinestres.mostraPopUp(0);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -145,7 +162,7 @@ public class InfoServidor {
 			alMusica = (ArrayList<Canco>) objectInput.readObject();
 			
 			
-			if (controladorFinestres != null)  controladorFinestres.actualitzaMusicaDisponible(alMusica);
+			ControladorFinestres.actualitzaMusicaDisponible(alMusica);
 
 		} catch (IOException e) {
 			System.out.println("exc1");
@@ -213,7 +230,7 @@ public class InfoServidor {
 		ObjectInputStream objectInput = new ObjectInputStream(sServidor.getInputStream());
 		alUsers = (ArrayList<User>) objectInput.readObject();
 		
-		controladorFinestres.actualitzaUsuarisFollowing(alUsers);
+		ControladorFinestres.actualitzaUsuarisFollowing(alUsers);
 		//sServidor.close();
 	}
 	

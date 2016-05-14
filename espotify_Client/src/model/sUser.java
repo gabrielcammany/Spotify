@@ -16,9 +16,6 @@ public class sUser implements Serializable{
 		return id_usuari;
 	}
 	
-	
-
-
 	public void setId_usuari(int id_usuari) {
 		this.id_usuari = id_usuari;
 	}

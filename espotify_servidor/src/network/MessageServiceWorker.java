@@ -80,11 +80,14 @@ public class MessageServiceWorker implements Runnable {
 				}
 			}
 
-			if (data[1].equals("requestUsuaris")) {
+			if (data[1].equals("UserRequest")) {
 
 				System.out.println("request usuaris");
-				ArrayList<Object> usuaris = new ArrayList<Object>();
-				usuaris = cadenas.selectUsers(true,null);
+				int idTrobat= 0 ;
+				for(User u : Data.getUsers())if(u.getNickname().toLowerCase().equals(data[2].toLowerCase()))idTrobat =u.getId_usuari();
+				System.out.println("Hola tete "+idTrobat);
+				DataOutputStream d = new DataOutputStream(this.sClient.getOutputStream());
+				d.writeInt(idTrobat);
 				//ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
 				//objectOutput.writeObject(usuaris);
 			}
@@ -92,7 +95,6 @@ public class MessageServiceWorker implements Runnable {
 			if (data[1].equals("requestUsuarisFollower")) {
 
 				ArrayList<Object> usuaris = new ArrayList<Object>();
-				usuaris = cadenas.selectUsers(false,data[1]);
 				ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
 				objectOutput.writeObject(usuaris);
 			}

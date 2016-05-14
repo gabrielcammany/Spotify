@@ -28,13 +28,12 @@ public class Finestra_login extends JFrame {
 	private JPasswordField jtfPassword;
 	private JButton jbAccedeix;
 	//private JButton jbRegistre;
-	//private ControladorFinestres controladorf;
 	private JFrame jfLog;
 	
 	
 
 	
-	public Finestra_login(ControladorFinestres controladorf) {
+	public Finestra_login() {
 		
 		jfLog = new JFrame("SPOTYFAI - Login");
 		jfLog.setUndecorated(false);
@@ -111,7 +110,7 @@ public class Finestra_login extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//Finestra_Registre fReg = new FinestraRegistre();
-				controladorf.nouRegistre();
+				ControladorFinestres.nouRegistre();
 				
 			}
 		});
@@ -141,7 +140,7 @@ public class Finestra_login extends JFrame {
 					PromptSupport.setForeground(new Color(255, 77, 77), jtfUsuari);		
 				}else{
 					try {
-						controladorf.Login();
+						ControladorFinestres.Login();
 					} catch (ClassNotFoundException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();

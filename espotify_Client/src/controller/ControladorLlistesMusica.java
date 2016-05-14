@@ -7,18 +7,18 @@ import javax.swing.JList;
 
 public class ControladorLlistesMusica implements MouseListener{
 	
-	private ControladorFinestres cFinestra;
+
 	private String seleccio;
 	private JList lista;
 	
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		System.out.println("Han premut: " + lista.getSelectedIndex());
-		cFinestra.actualitzaTablaLlistaPropia(lista.getSelectedIndex());
+		ControladorFinestres.actualitzaTablaLlistaPropia(lista.getSelectedIndex());
 	}
-	public ControladorLlistesMusica(JList lista,ControladorFinestres cFinestra) {
+	public ControladorLlistesMusica(JList lista) {
 
-		this.cFinestra = cFinestra;
+
 		this.lista = lista;
 		
 	}

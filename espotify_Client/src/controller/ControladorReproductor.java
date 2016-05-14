@@ -21,7 +21,6 @@ import javax.swing.JTable;
 public class ControladorReproductor implements MouseListener {
 	
 	private String opcio;
-	private ControladorFinestres controladorfinestres;
 	private boolean play = false;
 	private boolean playing = false;
 	private String nom;
@@ -29,9 +28,8 @@ public class ControladorReproductor implements MouseListener {
 	private String artista;
 
 	
-	public ControladorReproductor(String opcio,ControladorFinestres fr) {
+	public ControladorReproductor(String opcio) {
 		this.opcio = opcio;
-		this.controladorfinestres = fr;
 	}
 
 	@Override
@@ -40,16 +38,16 @@ public class ControladorReproductor implements MouseListener {
 		
 		try{
 			//mirem si estem a la taula de musica disponible
-			nom = (String) controladorfinestres.fReproduccio.getTaulaMusica().getValueAt(controladorfinestres.fReproduccio.getTaulaMusica().getSelectedRow(), 0);
-			artista = (String) controladorfinestres.fReproduccio.getTaulaMusica().getValueAt(controladorfinestres.fReproduccio.getTaulaMusica().getSelectedRow(), 3);
+			nom = (String) ControladorFinestres.fReproduccio.getTaulaMusica().getValueAt(ControladorFinestres.fReproduccio.getTaulaMusica().getSelectedRow(), 0);
+			artista = (String) ControladorFinestres.fReproduccio.getTaulaMusica().getValueAt(ControladorFinestres.fReproduccio.getTaulaMusica().getSelectedRow(), 3);
 
 		}catch(Exception e1){
 		}
 		if(nom == null){
 			try{
 				//mirem si estem a la taula de llista musica following
-				nom = (String) controladorfinestres.fReproduccio.getTaulaLlistaMusicaFollowing().getValueAt(controladorfinestres.fReproduccio.getTaulaLlistaMusicaFollowing().getSelectedRow(), 0);
-				artista = (String) controladorfinestres.fReproduccio.getTaulaLlistaMusicaFollowing().getValueAt(controladorfinestres.fReproduccio.getTaulaLlistaMusicaFollowing().getSelectedRow(), 3);
+				nom = (String) ControladorFinestres.fReproduccio.getTaulaLlistaMusicaFollowing().getValueAt(ControladorFinestres.fReproduccio.getTaulaLlistaMusicaFollowing().getSelectedRow(), 0);
+				artista = (String) ControladorFinestres.fReproduccio.getTaulaLlistaMusicaFollowing().getValueAt(ControladorFinestres.fReproduccio.getTaulaLlistaMusicaFollowing().getSelectedRow(), 3);
 			}catch(Exception e1){
 			}
 			if(nom == null){
@@ -64,24 +62,24 @@ public class ControladorReproductor implements MouseListener {
 			case "play":
 				System.out.println("click play");
 				System.out.println(nom + " " + artista);
-				if(controladorfinestres.r.getSong().equals(nom + "_" + artista)) {
-					controladorfinestres.r.pause();
+				if(ControladorFinestres.getR().getSong().equals(nom + "_" + artista)) {
+					ControladorFinestres.getR().pause();
 				}
 				else {
-					if (controladorfinestres.r.isPlaying()) {
-						controladorfinestres.r.endSong();
+					if (ControladorFinestres.getR().isPlaying()) {
+						ControladorFinestres.getR().endSong();
 					}
-					controladorfinestres.restartReproductor();
-					controladorfinestres.r.setPath(nom,artista);
+					ControladorFinestres.restartReproductor();
+					ControladorFinestres.getR().setPath(nom,artista);
 					
 	
-					JTable taulaMusica = controladorfinestres.obteTaulaMusica();
+					JTable taulaMusica = ControladorFinestres.obteTaulaMusica();
 					
 					//Enviem Request al servidor per tal que ens retorni la canço seleccionada
 					try {
 						
-						controladorfinestres.getServidor().peticio("requestCanco", nom + "/" + artista );
-						controladorfinestres.r.start();
+						ControladorFinestres.getServidor().peticio("requestCanco", nom + "/" + artista );
+						ControladorFinestres.getR().start();
 						playing = true;
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
@@ -118,13 +116,13 @@ public class ControladorReproductor implements MouseListener {
 			Boolean algoSeleccionat = true;
 			try{
 				//comprovem si havia seleccionat alguna canco
-				nom = (String) controladorfinestres.fReproduccio.getTaulaMusica().getValueAt(controladorfinestres.fReproduccio.getTaulaMusica().getSelectedRow(), 0);
-				artista = (String) controladorfinestres.fReproduccio.getTaulaMusica().getValueAt(controladorfinestres.fReproduccio.getTaulaMusica().getSelectedRow(), 3);
+				nom = (String) ControladorFinestres.fReproduccio.getTaulaMusica().getValueAt(ControladorFinestres.fReproduccio.getTaulaMusica().getSelectedRow(), 0);
+				artista = (String) ControladorFinestres.fReproduccio.getTaulaMusica().getValueAt(ControladorFinestres.fReproduccio.getTaulaMusica().getSelectedRow(), 3);
 			}catch(Exception e1){}
 			if(nom == null){
 				try{
-					nom = (String) controladorfinestres.fReproduccio.getTaulaLlistaMusicaFollowing().getValueAt(controladorfinestres.fReproduccio.getTaulaLlistaMusicaFollowing().getSelectedRow(), 0);
-					artista = (String) controladorfinestres.fReproduccio.getTaulaLlistaMusicaFollowing().getValueAt(controladorfinestres.fReproduccio.getTaulaLlistaMusicaFollowing().getSelectedRow(), 3);
+					nom = (String) ControladorFinestres.fReproduccio.getTaulaLlistaMusicaFollowing().getValueAt(ControladorFinestres.fReproduccio.getTaulaLlistaMusicaFollowing().getSelectedRow(), 0);
+					artista = (String) ControladorFinestres.fReproduccio.getTaulaLlistaMusicaFollowing().getValueAt(ControladorFinestres.fReproduccio.getTaulaLlistaMusicaFollowing().getSelectedRow(), 3);
 				}catch(Exception e1){}
 				if(nom == null){
 					nom = nomReproduccio;
@@ -135,7 +133,7 @@ public class ControladorReproductor implements MouseListener {
 			if(algoSeleccionat){
 				//si havia seleccionat alguna mentre prem el boto donara efecte optic de premut
 
-				if (controladorfinestres.r.isPlaying() && controladorfinestres.r.getSong().equals(nom + "_" + artista)) {
+				if (ControladorFinestres.getR().isPlaying() && ControladorFinestres.getR().getSong().equals(nom + "_" + artista)) {
 					ImageIcon impause = new ImageIcon("Images/paused.png");
 					ImageIcon icp = new ImageIcon(impause.getImage().getScaledInstance(50, 51, Image.SCALE_DEFAULT));
 					if (e.getSource() instanceof JLabel) {
@@ -194,15 +192,15 @@ public class ControladorReproductor implements MouseListener {
 		
 		try{
 			//mirem si estem a la taula de musica disponible
-			nom = (String) controladorfinestres.fReproduccio.getTaulaMusica().getValueAt(controladorfinestres.fReproduccio.getTaulaMusica().getSelectedRow(), 0);
-			artista = (String) controladorfinestres.fReproduccio.getTaulaMusica().getValueAt(controladorfinestres.fReproduccio.getTaulaMusica().getSelectedRow(), 3);
+			nom = (String) ControladorFinestres.fReproduccio.getTaulaMusica().getValueAt(ControladorFinestres.fReproduccio.getTaulaMusica().getSelectedRow(), 0);
+			artista = (String) ControladorFinestres.fReproduccio.getTaulaMusica().getValueAt(ControladorFinestres.fReproduccio.getTaulaMusica().getSelectedRow(), 3);
 		}catch(Exception e1){
 		}
 		if(nom == null){
 			try{
 				//mirem si estem a la taula de llista musica disponible
-				nom = (String) controladorfinestres.fReproduccio.getTaulaLlistaMusicaFollowing().getValueAt(controladorfinestres.fReproduccio.getTaulaLlistaMusicaFollowing().getSelectedRow(), 0);
-				artista = (String) controladorfinestres.fReproduccio.getTaulaLlistaMusicaFollowing().getValueAt(controladorfinestres.fReproduccio.getTaulaLlistaMusicaFollowing().getSelectedRow(), 3);
+				nom = (String) ControladorFinestres.fReproduccio.getTaulaLlistaMusicaFollowing().getValueAt(ControladorFinestres.fReproduccio.getTaulaLlistaMusicaFollowing().getSelectedRow(), 0);
+				artista = (String) ControladorFinestres.fReproduccio.getTaulaLlistaMusicaFollowing().getValueAt(ControladorFinestres.fReproduccio.getTaulaLlistaMusicaFollowing().getSelectedRow(), 3);
 			}catch(Exception e1){				
 			}
 			if(nom == null){
@@ -216,7 +214,7 @@ public class ControladorReproductor implements MouseListener {
 			ImageIcon im = new ImageIcon("Images/"+opcio+".png");
 			switch (opcio) {
 			case "play":
-				if (controladorfinestres.r.isPlaying() && controladorfinestres.r.getSong().equals(nom + "_" + artista)) {
+				if (ControladorFinestres.getR().isPlaying() && ControladorFinestres.getR().getSong().equals(nom + "_" + artista)) {
 					ImageIcon icp = new ImageIcon(im.getImage().getScaledInstance(50, 51, Image.SCALE_DEFAULT));
 					if (e.getSource() instanceof JLabel) {
 						JLabel aux = (JLabel)e.getSource();

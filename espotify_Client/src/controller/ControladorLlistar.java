@@ -16,12 +16,10 @@ import javax.swing.JLabel;
 public class ControladorLlistar implements MouseListener {
 	
 	private String opcio;
-	private ControladorFinestres cFinestra;
 	
 	
-	public ControladorLlistar(String Opcio,ControladorFinestres cFinestra) {
+	public ControladorLlistar(String Opcio) {
 		this.opcio =Opcio;
-		this.cFinestra = cFinestra;
 	}
 
 	@Override
@@ -30,20 +28,20 @@ public class ControladorLlistar implements MouseListener {
 		switch (opcio) {
 		case "disponible":
 			System.out.println("click disponible");
-			cFinestra.novaOpcio(opcio);
+			ControladorFinestres.novaOpcio(opcio);
 			
 			break;
 		case "propia":
 			System.out.println("click propia");
-			cFinestra.novaOpcio(opcio);
+			ControladorFinestres.novaOpcio(opcio);
 			break;
 		case "llistesfollowing":
 			System.out.println("click llistesfollowing");
-			cFinestra.novaOpcio(opcio);
+			ControladorFinestres.novaOpcio(opcio);
 			break;
 		case "usuarisfollowing":
 			System.out.println("click usuarisfollowing");
-			cFinestra.novaOpcio(opcio);
+			ControladorFinestres.novaOpcio(opcio);
 			break;
 
 		default:

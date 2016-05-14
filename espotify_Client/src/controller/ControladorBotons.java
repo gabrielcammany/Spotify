@@ -5,6 +5,8 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JTextField;
 
+import network.InfoServidor;
+
 public class ControladorBotons implements MouseListener{
 	
 	JTextField jtNomUsuariBusca;
@@ -14,8 +16,8 @@ public class ControladorBotons implements MouseListener{
 	}
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println(jtNomUsuariBusca.getText());
+		
+		new InfoServidor().demanaUser(jtNomUsuariBusca.getText());
 
 		
 		
