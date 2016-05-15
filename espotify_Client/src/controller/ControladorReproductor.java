@@ -66,7 +66,7 @@ public class ControladorReproductor implements MouseListener {
 					ControladorFinestres.getR().pause();
 				}
 				else {
-					if (ControladorFinestres.getR().isPlaying()) {
+					if (ControladorFinestres.getR().isStart()) {
 						ControladorFinestres.getR().endSong();
 					}
 					ControladorFinestres.restartReproductor();

@@ -22,18 +22,22 @@ public class Reproductor extends Thread{
 	private String path;
 	private String song;
 	private boolean isPlaying;
+	private boolean start;
 	private BasicPlayer player;
 	
 	public Reproductor(String s) {
 		this.path = s;
 		this.song = "";
 		setPlaying(false);
+		setStart(false);
+		
 	}
 	
 	public Reproductor(){
 		this.path = "";
 		this.song = "";
 		setPlaying(false);
+		setStart(false);
 	}
 	
 	@Override
@@ -44,6 +48,7 @@ public class Reproductor extends Thread{
             
             fis = new FileInputStream(this.path);
             setPlaying(true);
+            setStart(true);
             player = new BasicPlayer();
             
             InputStream bufferedIn = new BufferedInputStream(fis);
@@ -86,8 +91,8 @@ public class Reproductor extends Thread{
 	public void setPath(String nom, String artista) {
 		
 		
-		nom.replaceAll("\\s", "");
-		artista.replaceAll("\\s", "");
+		//nom.replaceAll("\\s", "");
+		//artista.replaceAll("\\s", "");
 		this.song = (nom + "_" + artista);
 		//System.out.println(nom.replaceAll("\\s", "") + "_" + artista.replaceAll("\\s", ""));
 		this.path = "temp/" + nom + "_" + artista + ".mp3";
@@ -104,7 +109,10 @@ public class Reproductor extends Thread{
 	
 	public void endSong() {
 		setPlaying(false);
+		setStart(false);
+		//String name = this.song.replaceAll(" ", "");
 		File f = new File("./temp/" + this.song + ".mp3");
+		System.out.println("PATH: " + this.song);
 		try {
 			
 			player.stop();
@@ -119,6 +127,14 @@ public class Reproductor extends Thread{
 	
 	public String getSong() {
 		return this.song;
+	}
+
+	public boolean isStart() {
+		return start;
+	}
+
+	public void setStart(boolean start) {
+		this.start = start;
 	}
 }
 
