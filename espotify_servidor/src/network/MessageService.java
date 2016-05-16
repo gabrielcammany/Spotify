@@ -1,8 +1,11 @@
 package network;
 
 import java.io.IOException;
+import java.net.BindException;
 import java.net.ServerSocket;
 import java.net.Socket;
+
+import javax.swing.JOptionPane;
 
 import controller.ButtonsController;
 
@@ -20,6 +23,11 @@ public class MessageService {
 		this.controller = controller;
 		try {
 			sServer = new ServerSocket(PORT);
+			
+		} catch(BindException e) {
+			
+			JOptionPane.showMessageDialog(null, "El servidor ja es troba actiu");
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

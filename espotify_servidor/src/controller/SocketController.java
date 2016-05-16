@@ -68,9 +68,14 @@ public class SocketController {
 		for(Object u : Data.getUsers()){
 			
 			if(((User)u).getNickname().toLowerCase().equals(usuario.toLowerCase())){
-				if(((User)u).getPassword().equals(password))return id = ((User)u).getId_usuari();
+				if(((User)u).getPassword().equals(password)) {
+					id = ((User)u).getId_usuari();
+					System.out.println("Verify user returns id: " + id);
+					return id;
+				}
 			}
 		}
+		System.out.println("Verify user returns id: " + id);
 		return id;
 	}
 
@@ -133,6 +138,7 @@ public class SocketController {
 		Query q = new Query();
 		ResultSet responseServer = conn.selectQuery(q.queryList(11, id));
 		
+		if(responseServer == null) return aux;
 		
 		try {
 			while (responseServer.next()) {
@@ -239,8 +245,13 @@ public class SocketController {
 		ArrayList<Llistes> ll = new ArrayList<Llistes>();
 		Query q =new Query();
 
+		
+		System.out.println("id_user --> ");
+		System.out.println(" " + id_user);
 		ResultSet responseServer = conn.selectQuery(q.queryList(7,id_user));
 
+		if(responseServer == null) return ll;
+		
 		try {
 
 			while (responseServer.next()) {

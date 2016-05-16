@@ -140,7 +140,7 @@ public class InfoServidor {
 
 				break;
 			}
-			System.out.println(id);
+			System.out.println("ID --> " + id);
 			if(id!=0){
 				User.setId_usuari(id);
 				User.setNickname(nom);

@@ -50,6 +50,7 @@ public class Query {
 		case 7: //Demanar llistes del usuari seleccionat
 			int idUser =((int) obj);
 			String cad7 = "SELECT id_llista FROM usuari_llista WHERE id_usuari = "+idUser+";";
+			System.out.println("query --> " + cad7);
 			return cad7;
 		case 8: //Segons el id de la llista troba el nom de la llista
 			int idLl =((int) obj);

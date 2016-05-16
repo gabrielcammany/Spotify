@@ -104,9 +104,11 @@ public class MessageServiceWorker implements Runnable {
 			if (data[1].equals("requestUsuarisFollower")) {
 
 				ArrayList<sUser> usuaris = new ArrayList<sUser>();
+				
+				
 				usuaris=cadenas.selectSUsers(Integer.parseInt(data[0]));
 				ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
-				System.out.println("[Server]id follow-->"+usuaris.get(0).getId_usuari()+" - "+usuaris.get(1).getId_usuari());
+				//System.out.println("[Server]id follow-->"+usuaris.get(0).getId_usuari()+" - "+usuaris.get(1).getId_usuari());
 				objectOutput.writeObject(usuaris);
 			}
 
@@ -132,7 +134,7 @@ public class MessageServiceWorker implements Runnable {
 				if(i != 0){
 					Sessio s =new Sessio(i,cadenas.omplirLlistes(i),new ArrayList<Integer>());
 					Data.addSessio(s);
-					System.out.println(s.getLl().get(0).getNom_llista());
+					//System.out.println(s.getLl().get(0).getNom_llista());
 					ObjectOutputStream objectOutput  = new ObjectOutputStream(this.sClient.getOutputStream());
 					List<Llistes> list = s.getLl();
 					Llistes[] llistes = new Llistes[list.size()];
