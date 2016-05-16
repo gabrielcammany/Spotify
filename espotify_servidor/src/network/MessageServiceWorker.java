@@ -94,8 +94,13 @@ public class MessageServiceWorker implements Runnable {
 			
 			
 			if (data[1].equals("requestFollow")) {
+				System.out.println("HOLAAAAAAA CARACOLAAA:" + data[2]);
 				int id = 0;
-				for(User u : Data.getUsers())if(u.getNickname().toLowerCase().equals(data[2].toLowerCase()))id = u.getId_usuari();
+				for(User u : Data.getUsers()){
+					if(u.getNickname().toLowerCase().equals(data[2].toLowerCase())){
+						id = u.getId_usuari();
+					}
+				}
 				cadenas.hacerFollow(Integer.parseInt(data[0]),id);
 				
 			}
@@ -119,6 +124,9 @@ public class MessageServiceWorker implements Runnable {
 				password = aux[1];
 				DataOutputStream d = new DataOutputStream(this.sClient.getOutputStream());
 				d.writeInt(cadenas.registroUsuario(user,password));
+				int i = cadenas.registroUsuario(user,password);
+				Sessio s =new Sessio(i,cadenas.omplirLlistes(i),new ArrayList<Integer>());
+				Data.addSessio(s);
 
 
 				// Tanquem el socket del client

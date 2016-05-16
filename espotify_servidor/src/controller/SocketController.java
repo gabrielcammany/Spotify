@@ -53,8 +53,12 @@ public class SocketController {
 			ConectorDB.insertQuery(response);
 
 			System.out.println("User: '"+user.getNickname()+"' Inserit correctament.");
-			selectUsers();
-			return verifyUser(usuario, password);
+			ArrayList<User> users = selectUsers();
+			for(User u : users) if(u.getNickname().equals(usuario)) user.setId_usuari(u.getId_usuari());
+			
+			System.out.println("Returning id --> " + user.getId_usuari());
+			return user.getId_usuari();
+			//return verifyUser(usuario, password);
 		}else{
 			System.out.println("[Servidor] L'usari '"+user.getNickname()+"' ja es troba registrat.");
 			return result;
@@ -66,7 +70,7 @@ public class SocketController {
 	public int verifyUser(String usuario, String password){
 		int id = 0;
 		for(Object u : Data.getUsers()){
-			
+			System.out.println("Inside of the loop");
 			if(((User)u).getNickname().toLowerCase().equals(usuario.toLowerCase())){
 				if(((User)u).getPassword().equals(password)) {
 					id = ((User)u).getId_usuari();

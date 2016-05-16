@@ -37,6 +37,9 @@ public class User{
 
 
 	public static ArrayList<Llistes> getlPropies() {
+		if (lPropies == null) {
+			lPropies = new ArrayList<Llistes>();
+		}
 		return lPropies;
 	}
 

@@ -121,7 +121,8 @@ public class InfoServidor {
 		try {
 			newSocket();
 			String algo;
-			System.out.println("[CLIENT] - Peticio de connexio..."); 
+			System.out.println("[CLIENT] - Peticio de connexio...");
+			System.out.println("NOM -> " + nom + " CONTRA: " +String.valueOf(contrasenya) + " OPCION: " + option);
 			
 
 			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
@@ -267,7 +268,7 @@ public class InfoServidor {
 		ObjectInputStream objectInput = new ObjectInputStream(sServidor.getInputStream());
 		alUsers = (ArrayList<sUser>) objectInput.readObject();
 		
-		System.out.println("[Client]id follow-->"+alUsers.get(0).getNickname()+" - "+alUsers.get(1).getNickname());
+
 		
 		ControladorFinestres.actualitzaUsuarisFollowing(alUsers);
 		//sServidor.close();
