@@ -61,8 +61,7 @@ public class MessageServiceWorker implements Runnable {
 					objectOutput.writeObject(null);
 
 				}else{
-					try{ 
-						System.out.println("debug##10##");		
+					try{ 		
 						PrintStream envio = new PrintStream(this.sClient.getOutputStream());
 						FileInputStream fitxer = new FileInputStream("./Musica/" + data[2] + "_" + aux[1] + ".mp3");
 						byte[] buffer = new byte[1024];
@@ -94,7 +93,7 @@ public class MessageServiceWorker implements Runnable {
 			
 			
 			if (data[1].equals("requestFollow")) {
-				System.out.println("HOLAAAAAAA CARACOLAAA:" + data[2]);
+				
 				int id = 0;
 				for(User u : Data.getUsers()){
 					if(u.getNickname().toLowerCase().equals(data[2].toLowerCase())){
@@ -104,17 +103,34 @@ public class MessageServiceWorker implements Runnable {
 				cadenas.hacerFollow(Integer.parseInt(data[0]),id);
 				
 			}
+			if(data[1].equals("requestLlistesFollow")){
+				for(int i= 0;i<Data.getaSessio().size();i++){
+					if(Integer.parseInt(data[0]) == Data.getaSessio().get(i).getIdSessio()){
+						System.out.println("[Servidor]Consulta llistes following...");
+						Data.getaSessio().get(i).setlFollowing(cadenas.omplirLlistesFollowing(Data.getaSessio().get(i).getlUserFollow()));
+						ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
+						
+						objectOutput.writeObject(Data.getaSessio().get(i).getlFollowing());
+						System.out.println("[Servidor]LlistesFollowing n1-->"+Data.getaSessio().get(i).getlFollowing().get(0).getNom_llista());
+					}
+				}
+			}
 			
 
 			if (data[1].equals("requestUsuarisFollower")) {
 
 				ArrayList<sUser> usuaris = new ArrayList<sUser>();
+				int i = 0;
+				for(i = 0; i<Data.getaSessio().size(); i++){
+					if(Integer.parseInt(data[0]) == Data.getaSessio().get(i).getIdSessio()){
+						Data.getaSessio().get(i).setlUserFollow(cadenas.selectSUsers(Integer.parseInt(data[0])));
+						ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
+						
+						objectOutput.writeObject(Data.getaSessio().get(i).getlUserFollow());
+					}
+				}
 				
 				
-				usuaris=cadenas.selectSUsers(Integer.parseInt(data[0]));
-				ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
-				//System.out.println("[Server]id follow-->"+usuaris.get(0).getId_usuari()+" - "+usuaris.get(1).getId_usuari());
-				objectOutput.writeObject(usuaris);
 			}
 
 			if(data[0].equals("user")){
@@ -125,7 +141,7 @@ public class MessageServiceWorker implements Runnable {
 				DataOutputStream d = new DataOutputStream(this.sClient.getOutputStream());
 				d.writeInt(cadenas.registroUsuario(user,password));
 				int i = cadenas.registroUsuario(user,password);
-				Sessio s =new Sessio(i,cadenas.omplirLlistes(i),new ArrayList<Integer>());
+				Sessio s =new Sessio(i,cadenas.omplirLlistes(i));
 				Data.addSessio(s);
 
 
@@ -140,7 +156,9 @@ public class MessageServiceWorker implements Runnable {
 				int i = cadenas.verifyUser(user,password);
 				d.writeInt(i);
 				if(i != 0){
-					Sessio s =new Sessio(i,cadenas.omplirLlistes(i),new ArrayList<Integer>());
+					
+					Sessio s =new Sessio(i,cadenas.omplirLlistes(i));
+					
 					Data.addSessio(s);
 					//System.out.println(s.getLl().get(0).getNom_llista());
 					ObjectOutputStream objectOutput  = new ObjectOutputStream(this.sClient.getOutputStream());
@@ -170,6 +188,8 @@ public class MessageServiceWorker implements Runnable {
 				objectOutput.writeObject(Data.getAlMusica());
 
 			}
+			
+			
 		} catch (IOException e) { 
 			e.printStackTrace();
 		}

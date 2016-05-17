@@ -156,6 +156,7 @@ public class SocketController {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	
 		
 		return aux;
 	}
@@ -244,11 +245,24 @@ public class SocketController {
 		
 		
 	}
+	public ArrayList<Llistes> omplirLlistesFollowing(ArrayList<sUser> lUserFollow ){
+		int size = lUserFollow.size();
+		int iUser = 0;
+		
+		ArrayList<Llistes> llFollowers =new ArrayList<Llistes>();
+		while(iUser<size){
+			ArrayList<Llistes> ll  = omplirLlistes(lUserFollow.get(iUser).getId_usuari());
+			for(Llistes l : ll)if(l.getPrivacitat() !=(1))ll.remove(l);
+			
+			for(Llistes l : ll)llFollowers.add(l);
+			iUser++;
+		}
+		return llFollowers;
+	}
 
 	public ArrayList<Llistes> omplirLlistes(int id_user){
 		ArrayList<Llistes> ll = new ArrayList<Llistes>();
 		Query q =new Query();
-
 		
 		System.out.println("id_user --> ");
 		System.out.println(" " + id_user);
@@ -264,12 +278,14 @@ public class SocketController {
 				int idACanco = 0 ;
 
 				al.setId_llistes(responseServer.getInt("id_llista"));
-
 				
 
 				ResultSet responseServer2 = conn.selectQuery(q.queryList(8,al.getId_llistes()));
 				while (responseServer2.next()) {
 					al.setNom_llista(responseServer2.getString("nom_llista"));
+					
+					al.setPrivacitat(responseServer2.getInt("privacitat"));
+				
 				}
 				System.out.println("[omplirLlistes]# "+al.getNom_llista());
 				

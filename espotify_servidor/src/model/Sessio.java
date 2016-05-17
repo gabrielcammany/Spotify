@@ -4,14 +4,13 @@ import java.util.ArrayList;
 
 public class Sessio {
 	private ArrayList<Llistes> lPropies;
-	private ArrayList<Integer> lFollowing;
+	private ArrayList<Llistes> lFollowing;
 	private ArrayList<sUser> lUserFollow;
 	private int idSessio;
 	private String desconexio;
 	private boolean update;
 	
-	public Sessio(int id,ArrayList<Llistes> llistes,ArrayList<Integer> lFollowing){
-		this.lFollowing = lFollowing;
+	public Sessio(int id,ArrayList<Llistes> llistes){
 		this.lPropies = llistes;
 		this.idSessio = id;
 		this.setUpdate(false);
@@ -37,11 +36,11 @@ public class Sessio {
 		this.desconexio = desconexio;
 	}
 
-	public ArrayList<Integer> getlFollowing() {
+	public ArrayList<Llistes> getlFollowing() {
 		return lFollowing;
 	}
 
-	public void setlFollowing(ArrayList<Integer> lFollowing) {
+	public void setlFollowing(ArrayList<Llistes> lFollowing) {
 		this.lFollowing = lFollowing;
 	}
 

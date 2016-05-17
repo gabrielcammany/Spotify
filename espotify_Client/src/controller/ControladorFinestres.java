@@ -190,6 +190,7 @@ public class ControladorFinestres {
 	 * 
 	 */
 	public static void novaOpcio(String opcio) {
+		if(opcio.equals("llistesfollowing"))infoServidor.demanarLlistesFollowing();
 		fReproduccio.actualitzaOpcio(opcio);
 	}
 	

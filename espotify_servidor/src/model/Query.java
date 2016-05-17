@@ -54,7 +54,7 @@ public class Query {
 			return cad7;
 		case 8: //Segons el id de la llista troba el nom de la llista
 			int idLl =((int) obj);
-			String cad8 = "SELECT nom_llista FROM llista WHERE id_llista = "+idLl+";";
+			String cad8 = "SELECT nom_llista, privacitat FROM llista WHERE id_llista = "+idLl+";";
 			return cad8;	
 		case 9: //Demanar les cancons de la llista
 			int idLl2 =((int) obj);
@@ -89,6 +89,7 @@ public class Query {
 			String[] s2 = aux2.split("/");
 			String cad15 = ("SELECT id_usuari_follower FROM usuari_follower WHERE usuari_follower.id_user = "+s2[0]+" AND usuari_follower.id_follower = "+s2[1]);
 			return cad15;
+
 		}
 			
 			

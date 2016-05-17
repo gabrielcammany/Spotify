@@ -175,7 +175,7 @@ public class FinestraServidor extends JFrame {
 		//Afegim al JTabbedPane i finalment al JPanel
 		jtpMusica.add("Llistat", jpLlistat);
 		jtpMusica.add("Addicio", jpAddicio);
-		jtpMusica.add("Estadístiques", jpEstadistiques);
+		jtpMusica.add("Estadistiques", jpEstadistiques);
 
 
 		jpMusica.add(jtpMusica, BorderLayout.CENTER);

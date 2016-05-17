@@ -115,6 +115,27 @@ public class InfoServidor {
 		
 	}
 	
+	public void demanarLlistesFollowing(){
+		try{
+			try {
+			newSocket();
+			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
+			doStream.writeUTF(User.getId_usuari()+":requestLlistesFollow:");
+			
+			ObjectInputStream objectInput = new ObjectInputStream(sServidor.getInputStream());
+		
+				ArrayList<Llistes> llFollowing = (ArrayList<Llistes>) objectInput.readObject();
+				objectInput.close();
+				doStream.close();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+	}
+	
 	
 	public boolean enviarUsuari(int option, String nom, char[] contrasenya){
 		

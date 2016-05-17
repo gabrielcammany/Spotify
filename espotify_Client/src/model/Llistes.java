@@ -11,6 +11,7 @@ public class Llistes implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private int id_llistes;
 	private String nom_llista;
+	private int privacitat;
 	private ArrayList<Integer> allIdCanco;
 	
 	public int getId_llistes() {
@@ -33,5 +34,11 @@ public class Llistes implements Serializable{
 	}
 	public Llistes(){
 		if(allIdCanco==null)allIdCanco=new ArrayList<Integer>();
+	}
+	public int getPrivacitat() {
+		return privacitat;
+	}
+	public void setPrivacitat(int privacitat) {
+		this.privacitat = privacitat;
 	}
 }
