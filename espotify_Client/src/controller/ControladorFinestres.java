@@ -168,8 +168,8 @@ public class ControladorFinestres {
 	 * rep un ArrayList llistes
 	 * 
 	 */
-	public static void actualitzaLlistesFollowing(/*  rebre array de llistes    */ArrayList<String> alListes){
-		fReproduccio.setLlistesFollowing(/*  pasar array de llistes    */alListes);
+	public static void actualitzaLlistesFollowing(ArrayList<Llistes> llFollowing){
+		fReproduccio.setLlistesFollowing(llFollowing);
 		
 	}
 	

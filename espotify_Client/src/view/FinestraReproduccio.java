@@ -405,10 +405,22 @@ public class FinestraReproduccio extends JFrame{
 	 * Aquesta funcio rep l'array de totes llistes dels usuaris que segueix i els mostra en una taula
 	 */
 	
-	public void setLlistesFollowing(ArrayList<String> alLlistes){
-		JPanel jpLlistat = new JPanel(new BorderLayout());
+	public void setLlistesFollowing(ArrayList<Llistes> llFollowing){
+		JPanel jpLlistesFollowing = new JPanel(new BorderLayout());
+		
+		ArrayList<String> nomLlistes = new ArrayList <String>();
+		
+		for (int i = 0; i < llFollowing.size(); i ++) {
+			nomLlistes.add(llFollowing.get(i).getNom_llista());
+		}
+		
+		JList jlLlistesFollowing = new JList(nomLlistes.toArray());
+		jlLlistesFollowing.setBorder(BorderFactory.createEmptyBorder(5,5,5,30));
+		jlLlistesFollowing.setCellRenderer(new ListRenderer());
+		jlLlistesFollowing.setBackground(new Color(70,70,70));
+		
 
-		//Tabla musica disponible 
+		/*//Tabla musica disponible 
 		Vector<String> columnas = new Vector();
 		
 		columnas.add("Nom llista");
@@ -431,9 +443,10 @@ public class FinestraReproduccio extends JFrame{
 		
 		for(int i=0;i<columnas.size();i++){
 			taulaUsuariFollowing.getColumnModel().getColumn(i).setCellRenderer(new TableRenderer());
-		}
+		}*/
+		jpLlistesFollowing.add(jlLlistesFollowing, BorderLayout.WEST);
 		
-		this.jspLlistesFollowing = new JScrollPane(taulaUsuariFollowing);
+		this.jspLlistesFollowing = new JScrollPane(jpLlistesFollowing);
 		this.jspLlistesFollowing.setBackground(new Color(50,50,50));
 		this.jspLlistesFollowing.getViewport().setBackground(new Color(50,50,50));
 		//this.jspLlistesFollowing.setFocusable(false);
@@ -594,13 +607,7 @@ public class FinestraReproduccio extends JFrame{
 			case "llistesfollowing":
 				setMusicaDisponible(alMusica);//le de posar per desclicar la canco
 				
-				/*provisional: */
-				ArrayList<String> llistes = new ArrayList<String>();
-				llistes.add("Party loca");
-				llistes.add("Portugues");
-				llistes.add("Brasilenherias");
-				setLlistesFollowing(llistes);
-				/*fi provisional: */ 
+				
 				
 				this.jpReproduccio.add(this.jspLlistesFollowing, BorderLayout.CENTER);
 				this.jpReproduccio.setBackground(new Color(50,50,50));

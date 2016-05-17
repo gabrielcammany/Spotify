@@ -125,6 +125,7 @@ public class InfoServidor {
 			ObjectInputStream objectInput = new ObjectInputStream(sServidor.getInputStream());
 		
 				ArrayList<Llistes> llFollowing = (ArrayList<Llistes>) objectInput.readObject();
+				ControladorFinestres.actualitzaLlistesFollowing(llFollowing);
 				objectInput.close();
 				doStream.close();
 			} catch (ClassNotFoundException e) {
