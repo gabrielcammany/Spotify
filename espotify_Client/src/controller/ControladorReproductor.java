@@ -26,6 +26,7 @@ public class ControladorReproductor implements MouseListener {
 	private String nom;
 	private String nomReproduccio;
 	private String artista;
+	private static int enReproduccio;
 
 	
 	public ControladorReproductor(String opcio) {
@@ -35,12 +36,12 @@ public class ControladorReproductor implements MouseListener {
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		Boolean algoSeleccionat = true;
-		
 		try{
+			
 			//mirem si estem a la taula de musica disponible
 			nom = (String) ControladorFinestres.fReproduccio.getTaulaMusica().getValueAt(ControladorFinestres.fReproduccio.getTaulaMusica().getSelectedRow(), 0);
 			artista = (String) ControladorFinestres.fReproduccio.getTaulaMusica().getValueAt(ControladorFinestres.fReproduccio.getTaulaMusica().getSelectedRow(), 3);
-
+			
 		}catch(Exception e1){
 		}
 		if(nom == null){
@@ -60,8 +61,10 @@ public class ControladorReproductor implements MouseListener {
 		if(algoSeleccionat){
 			switch (opcio) {
 			case "play":
-				System.out.println("click play");
-				System.out.println(nom + " " + artista);
+				System.out.println("SELECTED ROW " + ControladorFinestres.fReproduccio.getTaulaMusica().getSelectedRow());
+				enReproduccio = ControladorFinestres.fReproduccio.getTaulaMusica().getSelectedRow();
+			
+				
 				if(ControladorFinestres.getR().getSong().equals(nom + "_" + artista)) {
 					ControladorFinestres.getR().pause();
 				}
@@ -87,17 +90,79 @@ public class ControladorReproductor implements MouseListener {
 						e1.printStackTrace();
 					}
 				}
-				System.out.println("netejoclick--->" +nom);
-				nom = null;
-				System.out.println("limpiaoclick--->" +nom);
+				//nom = null;
 				break;
 				
 				
 			case "next":
-				System.out.println("click next");
+				if (ControladorFinestres.getR().isPlaying()) {
+					ControladorFinestres.getR().endSong();
+					
+					enReproduccio++;
+					if (enReproduccio < ControladorFinestres.fReproduccio.getTaulaMusica().getRowCount()) {
+						
+						nom = (String) ControladorFinestres.fReproduccio.getTaulaMusica().getValueAt(enReproduccio, 0);
+						artista = (String) ControladorFinestres.fReproduccio.getTaulaMusica().getValueAt(enReproduccio, 3);
+					}
+					else {
+						enReproduccio = 0;
+						nom = (String) ControladorFinestres.fReproduccio.getTaulaMusica().getValueAt(enReproduccio, 0);
+						artista = (String) ControladorFinestres.fReproduccio.getTaulaMusica().getValueAt(enReproduccio, 3);
+					}
+					ControladorFinestres.restartReproductor();
+					ControladorFinestres.getR().setPath(nom,artista);
+					
+	
+					JTable taulaMusica = ControladorFinestres.obteTaulaMusica();
+					
+					//Enviem Request al servidor per tal que ens retorni la canço seleccionada
+					try {
+						System.out.println("NEXT: " + nom + " " + artista);
+						ControladorFinestres.getServidor().peticio("requestCanco", nom + "/" + artista );
+						//ControladorFinestres.getR().setRepeat(true);
+						ControladorFinestres.getR().start();
+						playing = true;
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
+				else {
+					System.out.println("NO ESTAS ESCOLTANT CAP CANÇO");
+				}
 				break;
 			case "back":
-				System.out.println("click back");
+				if (ControladorFinestres.getR().isPlaying()) {
+					ControladorFinestres.getR().endSong();
+				
+					enReproduccio--;
+					if (enReproduccio >= 0) {
+						
+						nom = (String) ControladorFinestres.fReproduccio.getTaulaMusica().getValueAt(enReproduccio, 0);
+						artista = (String) ControladorFinestres.fReproduccio.getTaulaMusica().getValueAt(enReproduccio, 3);
+					}
+					else {
+						enReproduccio = ControladorFinestres.fReproduccio.getTaulaMusica().getRowCount() - 1;
+						nom = (String) ControladorFinestres.fReproduccio.getTaulaMusica().getValueAt(enReproduccio, 0);
+						artista = (String) ControladorFinestres.fReproduccio.getTaulaMusica().getValueAt(enReproduccio, 3);
+					}
+					ControladorFinestres.restartReproductor();
+					ControladorFinestres.getR().setPath(nom,artista);
+					
+	
+					JTable taulaMusica = ControladorFinestres.obteTaulaMusica();
+					
+					//Enviem Request al servidor per tal que ens retorni la canço seleccionada
+					try {
+						ControladorFinestres.getServidor().peticio("requestCanco", nom + "/" + artista );
+						//ControladorFinestres.getR().setRepeat(true);
+						ControladorFinestres.getR().start();
+						playing = true;
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+				}
 				break;
 	
 			default:
