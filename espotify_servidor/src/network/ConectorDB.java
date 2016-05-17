@@ -9,13 +9,13 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 
 public class ConectorDB {
-	static String userName;
-	static String password;
-	static String db;
-	static int port;
-	static String url;
-	static Connection conn = null;
-	static Statement s;
+    private static String userName;
+    private static String password;
+    private static String db;
+    private static int port;
+    private static String url;
+    private static Connection conn = null;
+    private static Statement s;
 	
 	public ConectorDB(){
 		

@@ -50,6 +50,7 @@ public class FinestraServidor extends JFrame {
 	private JTextField jtfArtista;
 	private JTextField jtfUbicacio;
 	private JTable taulaMusica;
+	private JTable taulaUsuari;
 	public DefaultTableModel tableModel;
 
 	
@@ -57,18 +58,17 @@ public class FinestraServidor extends JFrame {
 	public JTable getTaulaMusica() {
 		return taulaMusica;
 	}
+	
+	public JTable getTaulaUsuari() {
+		return taulaUsuari;
+	}
 
 	public FinestraServidor() {}
 	
 	public void setControlador(ButtonsController controlador) {
 		this.controlador = controlador;
 	}
-	
-	
-	
-	
-	
-	
+
 	public void creaFinestra(ArrayList<Canco> musica, ArrayList<User> alUsuaris){
 		
 		jfServidor = new JFrame("SPOTYFAI - Servidor");
@@ -135,7 +135,7 @@ public class FinestraServidor extends JFrame {
 			filas.add(fila);
 		}
 		
-		JTable taulaUsuari = new JTable(filas, columnas){
+		taulaUsuari = new JTable(filas, columnas){
 			
 		public boolean isCellEditable (int rowIndex, int vColIndex) {
 			return false;

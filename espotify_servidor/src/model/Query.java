@@ -71,7 +71,7 @@ public class Query {
 		case 12://eliminamos una cancion de la musica disponible.
 			Integer idCanco = ((Integer)obj);
 			
-			String cad12 = ("DELETE FROM canco WHERE canco.id_canco = "+idCanco.toString());
+			String cad12 = ("DELETE FROM canco WHERE canco.id_canco = "+idCanco.toString()+";");
 			return cad12;
 		case 13://eliminamos una cancion de la musica disponible.
 			String aux = ((String)obj);
@@ -82,15 +82,49 @@ public class Query {
 		case 14://eliminamos una cancion de la musica disponible.
 			String aux3 = ((String)obj);
 			
-			String cad14 = ("DELETE FROM usuari_follower WHERE usuari_follower.id_usuari_follower = "+aux3);
+			String cad14 = ("DELETE FROM usuari_follower WHERE usuari_follower.id_usuari_follower = "+aux3+";");
 			return cad14;
 		case 15://eliminamos una cancion de la musica disponible.
 			String aux2 = ((String)obj);
 			String[] s2 = aux2.split("/");
-			String cad15 = ("SELECT id_usuari_follower FROM usuari_follower WHERE usuari_follower.id_user = "+s2[0]+" AND usuari_follower.id_follower = "+s2[1]);
+			String cad15 = ("SELECT id_usuari_follower FROM usuari_follower WHERE usuari_follower.id_user = "+s2[0]+" AND usuari_follower.id_follower = "+s2[1]+";");
 			return cad15;
+		case 16://eliminamos una cancion de todas las listas en las que este
+			
+			int id_anco = ((int)obj);
+			String cad16 = ("SELECT id_canco_llista FROM canco_llista WHERE id_canco = "+id_anco+";");
+			return cad16;
+		case 17://eliminamos una cancion de la musica disponible.
+			int id_canco_llista = ((int)obj);
+			String cad17 = ("DELETE FROM canco_llista WHERE canco_llista.id_canco_llista = "+id_canco_llista+";");
+			return cad17;
+			
+		case 18://eliminamos una cancion de la musica disponible.
+			int id_usuari = ((int)obj);
+			String cad18 = ("DELETE FROM usuari WHERE usuari.id_usuaris = "+id_usuari+";");
+			return cad18;
+		case 19://eliminamos una cancion de la musica disponible.
+			int id_usuari_llista = ((int)obj);
+			String cad19 = ("SELECT id_usuari_llista FROM usuari_llista WHERE id_usuari = "+id_usuari_llista+";");
+			return cad19;
+		case 20://eliminamos una cancion de la musica disponible.
+			int id_usuari_llista_delete = ((int)obj);
+			System.out.println("---->" + id_usuari_llista_delete);
+			String cad20 = ("DELETE FROM usuari_llista WHERE usuari_llista.id_usuari_llista = "+id_usuari_llista_delete+";");
+			return cad20;
+		case 21://eliminamos una cancion de la musica disponible.
+			int id_usuari_foll = ((int)obj);
+			System.out.println("id_usuari_foll---->" + id_usuari_foll);
 
+			String cad21 = ("SELECT id_user_follower FROM usuari_follower WHERE id_user = "+id_usuari_foll+";");
+			return cad21;
+		case 22://eliminamos una cancion de la musica disponible.
+			int id_usuari_foll_delete = ((int)obj);
+			System.out.println("id_usuari_foll_delete---->" + id_usuari_foll_delete);
+			String cad22 = ("DELETE FROM usuari_follower WHERE usuari_follower.id_user_follower = "+id_usuari_foll_delete+";");
+			return cad22;
 		}
+		
 			
 			
 		

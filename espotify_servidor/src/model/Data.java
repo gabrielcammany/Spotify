@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Data {
 
 	private static ArrayList<Sessio> aSessio;
-	private static ArrayList<User> Users;
+	private static ArrayList<User> user;
 	private static ArrayList<Canco> alMusica;
 
 	public static ArrayList<Sessio> getaSessio() {
@@ -17,11 +17,11 @@ public class Data {
 	}
 
 	public static ArrayList<User> getUsers() {
-		return Users;
+		return user;
 	}
 
 	public static void setUsers(ArrayList<User> users) {
-		Users = users;
+		user = users;
 	}
 	
 	public static void addSessio(Sessio s){
@@ -47,6 +47,15 @@ public class Data {
 				alMusica.remove(i);
 			}
 		}
+		
+	}
+	public static void esborraUser (int idUsuari) {
+		for (int i = 0; i < user.size(); i++) {
+			if (user.get(i).getId_usuari() == idUsuari) {
+				user.remove(i);
+			}
+		}
+		
 	}
 	
 
