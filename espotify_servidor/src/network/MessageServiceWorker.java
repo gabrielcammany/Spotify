@@ -118,7 +118,7 @@ public class MessageServiceWorker implements Runnable {
 			
 
 			if (data[1].equals("requestUsuarisFollower")) {
-
+				System.out.println("estamos aqui porque hemos llegado");
 				ArrayList<sUser> usuaris = new ArrayList<sUser>();
 				int i = 0;
 				for(i = 0; i<Data.getaSessio().size(); i++){
@@ -139,10 +139,12 @@ public class MessageServiceWorker implements Runnable {
 				//password = desencripta(aux[1].getBytes());
 				password = aux[1];
 				DataOutputStream d = new DataOutputStream(this.sClient.getOutputStream());
-				d.writeInt(cadenas.registroUsuario(user,password));
+				//d.writeInt(cadenas.registroUsuario(user,password));
 				int i = cadenas.registroUsuario(user,password);
+				d.writeInt(i);
 				Sessio s =new Sessio(i,cadenas.omplirLlistes(i));
 				Data.addSessio(s);
+				
 
 
 				// Tanquem el socket del client

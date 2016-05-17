@@ -288,7 +288,7 @@ public class InfoServidor {
 		
 		ObjectInputStream objectInput = new ObjectInputStream(sServidor.getInputStream());
 		alUsers = (ArrayList<sUser>) objectInput.readObject();
-		
+		doStream.close();
 
 		
 		ControladorFinestres.actualitzaUsuarisFollowing(alUsers);
