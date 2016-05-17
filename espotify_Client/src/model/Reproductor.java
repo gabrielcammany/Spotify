@@ -24,13 +24,15 @@ public class Reproductor extends Thread{
 	private boolean isPlaying;
 	private boolean start;
 	private BasicPlayer player;
+	private boolean repeat;
+	public boolean fi;
 	
 	public Reproductor(String s) {
 		this.path = s;
 		this.song = "";
 		setPlaying(false);
 		setStart(false);
-		
+		setRepeat(false);
 	}
 	
 	public Reproductor(){
@@ -38,32 +40,65 @@ public class Reproductor extends Thread{
 		this.song = "";
 		setPlaying(false);
 		setStart(false);
+		setRepeat(false);
 	}
 	
 	@Override
 	public void run()  {
-		
+	
 		try {
-            FileInputStream fis;
             
-            fis = new FileInputStream(this.path);
-            setPlaying(true);
-            setStart(true);
-            player = new BasicPlayer();
-            
-            InputStream bufferedIn = new BufferedInputStream(fis);
-            player.open(AudioSystem.getAudioInputStream(bufferedIn));
-            while (true) {
-            	//System.out.println("hola");
-            	player.play();  
-            	try {
-					Thread.sleep(1000);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+			if (isRepeat()) {
+				while (true) {
+					fi = false;
+					FileInputStream fis;
+		            fis = new FileInputStream(this.path);
+		            setPlaying(true);
+		            setStart(true);
+		            player = new BasicPlayer();
+		            
+		            InputStream bufferedIn = new BufferedInputStream(fis);
+		            player.open(AudioSystem.getAudioInputStream(bufferedIn));
+		            while (!fi) {
+		            	//System.out.println("hola");
+		            	try {
+		            		player.play();
+		            	}
+		            	catch (BasicPlayerException e){
+		            		fi = true;
+		            	}
+		            	  
+		            	try {
+							Thread.sleep(1000);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+		            }
 				}
-            }
+			}
+			else {
+				FileInputStream fis;
+	            
+	            fis = new FileInputStream(this.path);
+	            setPlaying(true);
+	            setStart(true);
+	            player = new BasicPlayer();
+	            
+	            InputStream bufferedIn = new BufferedInputStream(fis);
+	            player.open(AudioSystem.getAudioInputStream(bufferedIn));
+	            while (true) {
+	            	//System.out.println("hola");
+	            	player.play();  
+	            	try {
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+	            }
+			}
+			
         } catch (BasicPlayerException | UnsupportedAudioFileException | IOException e) {
-            e.printStackTrace();
+            System.out.println("Final de canço");
         }
 	}
 	
@@ -135,6 +170,14 @@ public class Reproductor extends Thread{
 
 	public void setStart(boolean start) {
 		this.start = start;
+	}
+
+	public boolean isRepeat() {
+		return repeat;
+	}
+
+	public void setRepeat(boolean repeat) {
+		this.repeat = repeat;
 	}
 }
 

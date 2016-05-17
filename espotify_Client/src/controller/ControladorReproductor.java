@@ -79,6 +79,7 @@ public class ControladorReproductor implements MouseListener {
 					try {
 						
 						ControladorFinestres.getServidor().peticio("requestCanco", nom + "/" + artista );
+						//ControladorFinestres.getR().setRepeat(true);
 						ControladorFinestres.getR().start();
 						playing = true;
 					} catch (IOException e1) {
