@@ -123,6 +123,28 @@ public class Query {
 			System.out.println("id_usuari_foll_delete---->" + id_usuari_foll_delete);
 			String cad22 = ("DELETE FROM usuari_follower WHERE usuari_follower.id_user_follower = "+id_usuari_foll_delete+";");
 			return cad22;
+		case 23://Inserimos la lista en la tabla lista
+			Llistes l  = ((Llistes)obj);
+			
+			String cad23 = ("INSERT INTO llista(nom_llista,privacitat)VALUES('"+l.getNom_llista()+"','"+l.getPrivacitat()+"')");
+			return cad23;
+		case 24://Buscamos el id de la lista
+			String nomLlista  = ((String)obj);
+			String cad24 = ("SELECT id_llista FROM llista WHERE nom_llista = '"+nomLlista+"';");
+			return cad24;
+		case 25://Buscamos el id de la lista
+			String id  = ((String)obj);
+			String[] idCancons =id.split("/");
+			String cad25 = ("INSERT INTO canco_llista(id_llista,id_canco)VALUES("+idCancons[0]+","+idCancons[1]+");");
+			return cad25;
+		case 26://Buscamos el id de las canco llista para poder eliminarlas
+			Integer idLlista  = ((Integer)obj);
+			String cad26 = ("SELECT id_canco_llista FROM canco_llista WHERE id_llista = "+idLlista+";");
+			return cad26;
+		case 27://Buscamos el id de la usari llista que dice que el usuarioº
+			Integer idLlista2  = ((Integer)obj);
+			String cad27 = ("SELECT id_canco_llista FROM canco_llista WHERE id_llista = "+idLlista2+";");
+			return cad27;
 		}
 		
 			

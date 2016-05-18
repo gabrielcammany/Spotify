@@ -111,7 +111,7 @@ public class MessageServiceWorker implements Runnable {
 						ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
 						
 						objectOutput.writeObject(Data.getaSessio().get(i).getlFollowing());
-						System.out.println("[Servidor]LlistesFollowing n1-->"+Data.getaSessio().get(i).getlFollowing().get(0).getNom_llista());
+						//System.out.println("[Servidor]LlistesFollowing n1-->"+Data.getaSessio().get(i).getlFollowing().get(i).getNom_llista());
 					}
 				}
 			}
