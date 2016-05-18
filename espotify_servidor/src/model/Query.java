@@ -116,7 +116,7 @@ public class Query {
 			int id_usuari_foll = ((int)obj);
 			System.out.println("id_usuari_foll---->" + id_usuari_foll);
 
-			String cad21 = ("SELECT id_user_follower FROM usuari_follower WHERE id_user = "+id_usuari_foll+";");
+			String cad21 = ("SELECT id_user_follower FROM usuari_follower WHERE id_user = "+id_usuari_foll+" OR id_follower = "+id_usuari_foll+";");
 			return cad21;
 		case 22://eliminamos una cancion de la musica disponible.
 			int id_usuari_foll_delete = ((int)obj);
