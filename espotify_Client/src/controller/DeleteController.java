@@ -64,7 +64,7 @@ public class DeleteController implements MouseListener {
 				
 				@Override
 				public void mousePressed(MouseEvent e) {
-					// TODO Auto-generated method stub
+					//
 					
 					String nom = (String) finestraReproduccio.getTaulaFollowing().getValueAt(finestraReproduccio.getTaulaFollowing().getSelectedRow(), 0);
 					

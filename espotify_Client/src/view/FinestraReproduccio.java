@@ -419,6 +419,8 @@ public class FinestraReproduccio extends JFrame{
 		jlLlistesFollowing.setCellRenderer(new ListRenderer());
 		jlLlistesFollowing.setBackground(new Color(70,70,70));
 		
+		jlLlistesFollowing.addMouseListener(new ControladorLlistesMusica(jlLlistesFollowing));
+		
 
 		/*//Tabla musica disponible 
 		Vector<String> columnas = new Vector();
