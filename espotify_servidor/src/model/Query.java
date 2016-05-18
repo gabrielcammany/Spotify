@@ -124,13 +124,10 @@ public class Query {
 			String cad22 = ("DELETE FROM usuari_follower WHERE usuari_follower.id_user_follower = "+id_usuari_foll_delete+";");
 			return cad22;
 		case 23://Inserimos la lista en la tabla lista
-			Llistes l  = ((Llistes)obj);
-			
-			String cad23 = ("INSERT INTO llista(nom_llista,privacitat)VALUES('"+l.getNom_llista()+"','"+l.getPrivacitat()+"')");
+			String cad23 = ("INSERT INTO llista(nom_llista,privacitat)VALUES('"+((Llistes)obj).getNom_llista()+"',"+((Llistes)obj).getPrivacitat()+")");
 			return cad23;
 		case 24://Buscamos el id de la lista
-			String nomLlista  = ((String)obj);
-			String cad24 = ("SELECT id_llista FROM llista WHERE nom_llista = '"+nomLlista+"';");
+			String cad24 = ("SELECT id_llista FROM llista WHERE nom_llista = '"+((Llistes)obj).getNom_llista()+"';");
 			return cad24;
 		case 25://Buscamos el id de la lista
 			String id  = ((String)obj);
@@ -145,6 +142,9 @@ public class Query {
 			Integer idLlista2  = ((Integer)obj);
 			String cad27 = ("SELECT id_canco_llista FROM canco_llista WHERE id_llista = "+idLlista2+";");
 			return cad27;
+		case 28://Inserimos la lista en la tabla lista
+			String cad28 = ("INSERT INTO usuari_llista(id_llista,id_usuari)VALUES('"+((String[])obj)[0]+"',"+((String[])obj)[1]+")");
+			return cad28;
 		}
 		
 			

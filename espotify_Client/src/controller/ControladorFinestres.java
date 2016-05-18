@@ -297,13 +297,8 @@ public class ControladorFinestres {
 	 * 
 	 * @param rep el nom de la llista i si es privada (0=privada)
 	 */
-	public static void crearLlista(String nom, int privada){
-		/*
-		 * 
-		 * CREAR INFO SERVIDOR.REQUESTCREARLLISTA
-		 * 
-		 * 
-		 */
+	public static int crearLlista(String nom, int privada){
+		return infoServidor.creaLlista(nom,privada);
 	}
 	
 }

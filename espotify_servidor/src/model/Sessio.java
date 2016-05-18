@@ -23,10 +23,10 @@ public class Sessio {
 		this.idSessio = idSessio;
 	}
 
-	public ArrayList<Llistes> getLl() {
+	public ArrayList<Llistes> getLPropies() {
 		return lPropies;
 	}
-	public void setLl(ArrayList<Llistes> ll) {
+	public void setLPropies(ArrayList<Llistes> ll) {
 		this.lPropies = ll;
 	}
 	public String getDesconexio() {

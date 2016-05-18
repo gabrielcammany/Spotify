@@ -306,22 +306,25 @@ public class SocketController {
 		return ll;
 	}
 	
-	public void crearLlistes(Llistes l){
+	public void crearLlistes(Llistes l,String id_usuari){
+		String[] info = new String[2];
 		ConectorDB.insertQuery(new Query().queryList(23, l));
-		ResultSet rs1 = conn.selectQuery(new Query().queryList(24,l.getNom_llista()));
-		Integer idLlista = 0;
+		ResultSet rs1 = conn.selectQuery(new Query().queryList(24,l));
+		int idLlista = 0;
 		try {
 			while(rs1.next()){
 				idLlista = rs1.getInt("id_llista");
 			}
-			for(int i = 0; i< l.getAllIdCanco().size();i++){
-				ConectorDB.insertQuery(new Query().queryList(25, idLlista.toString().concat("/")+l.getAllIdCanco().get(i)));
-			}
+			System.out.println("###"+idLlista);
+			info[0] = String.valueOf(idLlista);
+			info[1] = id_usuari;
+			ConectorDB.insertQuery(new Query().queryList(28,info));
 			//faltara que se actualizen las listas
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+
 	
 	}
 }

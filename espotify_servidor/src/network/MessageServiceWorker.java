@@ -91,6 +91,37 @@ public class MessageServiceWorker implements Runnable {
 				//objectOutput.writeObject(usuaris);
 			}
 			
+			if (data[1].equals("creaLlista")) {
+				int realitzat = 0;
+				System.out.println("crea Llista");
+				int i=0;
+				for(Sessio u : Data.getaSessio()){
+					if(u.getIdSessio() == Integer.parseInt(data[0])){
+						for(Llistes l: u.getLPropies()){
+							if(l.getNom_llista().equals(data[2])){
+								break;
+							}else{
+								Llistes llista = new Llistes();
+								llista.setNom_llista(data[2]);
+								llista.setPrivacitat(Integer.parseInt(data[3]));
+								llista.setId_llistes(0);
+								cadenas.crearLlistes(llista,data[0]);
+								realitzat = 1;
+								break;
+							}
+						}
+						if(realitzat==1)Data.getaSessio().get(i).setLPropies(cadenas.omplirLlistes(u.getIdSessio()));
+						break;
+					}
+					i++;
+					
+				}
+				
+				DataOutputStream d = new DataOutputStream(this.sClient.getOutputStream());
+				d.writeInt(realitzat);
+				//ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
+				//objectOutput.writeObject(usuaris);
+			}
 			
 			if (data[1].equals("requestFollow")) {
 				
@@ -168,13 +199,11 @@ public class MessageServiceWorker implements Runnable {
 					Data.addSessio(s);
 					//System.out.println(s.getLl().get(0).getNom_llista());
 					ObjectOutputStream objectOutput  = new ObjectOutputStream(this.sClient.getOutputStream());
-					List<Llistes> list = s.getLl();
+					List<Llistes> list = s.getLPropies();
 					Llistes[] llistes = new Llistes[list.size()];
 					llistes = list.toArray(llistes);
 					
-					for(Llistes l : s.getLl()) System.out.println(l.getAllIdCanco().get(0));
-				
-					objectOutput.writeObject(s.getLl());
+					objectOutput.writeObject(s.getLPropies());
 					//Llista[] llista = 
 					//objectOutput.writeObject("hello world");
 					//objectOutput.writeObject(s.getLl());

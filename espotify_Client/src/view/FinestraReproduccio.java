@@ -19,6 +19,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
@@ -370,7 +371,7 @@ public class FinestraReproduccio extends JFrame{
 
 		JTextField jtfPrivadaSN = new JTextField(5);
 		//jtfPrivadaSN.setText("Privada (S/N)");
-		PromptSupport.setPrompt("Privada (S/N)", jtfNomLlista);
+		PromptSupport.setPrompt("Privada (S/N)", jtfPrivadaSN);
 
 		
 		JButton jbCrearLlista = new JButton();		
@@ -380,14 +381,28 @@ public class FinestraReproduccio extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				//si premen crear
-				if(!jtfNomLlista.getText().isEmpty() && jtfPrivadaSN.getText().isEmpty()){
-					if(jtfPrivadaSN.equals('s') || jtfPrivadaSN.equals('S')){
+				if(!jtfNomLlista.getText().isEmpty() && !jtfPrivadaSN.getText().isEmpty()){
+					System.out.println(jtfPrivadaSN.getText());
+					if(jtfPrivadaSN.getText().equals("s") || jtfPrivadaSN.getText().equals("S")){
 						//si es privada es 0
-						ControladorFinestres.crearLlista(jtfNomLlista.getText(), 0);
+						System.out.println("he entrat aquiii");	
+						if(ControladorFinestres.crearLlista(jtfNomLlista.getText(), 1) == 1){
+							JOptionPane.showMessageDialog(jpCrearLlista, "La llista s'ha inserit correctament ", "Informacio", JOptionPane.INFORMATION_MESSAGE);
+						}else{
+							JOptionPane.showMessageDialog(jpCrearLlista, "Hi ha hagut un error al inserir. ", "Error", JOptionPane.INFORMATION_MESSAGE);
+						}
+						
 					}
-					if(jtfPrivadaSN.equals('n') || jtfPrivadaSN.equals('N')){
-						ControladorFinestres.crearLlista(jtfNomLlista.getText(), 1);
+					if(jtfPrivadaSN.getText().equals("n") || jtfPrivadaSN.getText().equals("N")){
+						System.out.println("he entrat aquiii");	
+						if(ControladorFinestres.crearLlista(jtfNomLlista.getText(), 0) == 1){
+							JOptionPane.showMessageDialog(jpCrearLlista, "La llista s'ha inserit correctament ", "Informacio", JOptionPane.INFORMATION_MESSAGE);
+						}else{
+							JOptionPane.showMessageDialog(jpCrearLlista, "Hi ha hagut un error al inserir. ", "Error", JOptionPane.INFORMATION_MESSAGE);
+						}
 					}
+					jtfPrivadaSN.setText("");
+					jtfNomLlista.setText("");
 				}				
 			}
 		});

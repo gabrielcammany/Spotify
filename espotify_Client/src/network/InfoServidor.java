@@ -173,7 +173,7 @@ public class InfoServidor {
 				try {
 					ArrayList<Llistes> all = (ArrayList<Llistes>)o.readObject();
 					
-					for(Llistes a:all)System.out.println("[llistes]--> "+a.getAllIdCanco().get(1));
+					//for(Llistes a:all)System.out.println("[llistes]--> "+a.getAllIdCanco().get(1));
 					User.setlPropies(all);
 				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
@@ -333,6 +333,29 @@ public class InfoServidor {
 			e2.printStackTrace();
 		}
 	}	
+
+	public int creaLlista(String nom, int privada){
+		newSocket();
+		int trobat = 0;
+		ArrayList <User> alUsers = new ArrayList<User>();
+		try {
+			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
+			doStream.writeUTF(User.getId_usuari()+":creaLlista:" + nom + ":" + privada);
+			DataInputStream input3 = new DataInputStream(sServidor.getInputStream());
+			trobat = input3.readInt();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try{
+			sServidor.close();
+		}catch(IOException e2){
+			e2.printStackTrace();
+		}
+		return trobat;
+	}
+
+
 }
 			/*
 	public String algo(String s){
