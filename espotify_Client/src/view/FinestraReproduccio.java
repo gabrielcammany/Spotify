@@ -298,6 +298,7 @@ public class FinestraReproduccio extends JFrame{
 		columnas.add("Genere");
 		columnas.add("Album");
 		columnas.add("Artistes");
+		columnas.add("Estrelles");
 
    
 		Vector filas = new Vector();
@@ -308,6 +309,13 @@ public class FinestraReproduccio extends JFrame{
 			fila.add(alMusica.get(i).getGenere());
 			fila.add(alMusica.get(i).getAlbum());
 			fila.add(alMusica.get(i).getArtista());
+			int estrelles = Integer.parseInt(alMusica.get(i).getEstrelles());
+			int nVotacio = Integer.parseInt(alMusica.get(i).getnVotacio());
+			if(nVotacio != 0) {
+				fila.add( Integer.toString (estrelles/nVotacio));
+			} else {
+				fila.add("0");
+			}
 			
 			filas.add(fila);
 		}

@@ -15,11 +15,20 @@ public class Canco implements Serializable, Comparable<Canco> {
 	private String path;
 	private String nReproduccio;
 	private String estrelles;
+	private String nVotacio;
 	private int reproduccions;
 	private int idCanco;
 	
 	public int getidCanco() {
 		return idCanco;
+	}
+	
+	public String getnVotacio() {
+		return nVotacio;
+	}
+	
+	public void setnVotacio(String nVotacio) {
+		this.nVotacio = nVotacio;
 	}
 	
 	public String getnReproduccio() {
