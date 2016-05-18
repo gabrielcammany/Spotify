@@ -3,14 +3,16 @@ package controller;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
+import model.User;
+import network.InfoServidor;
+
 public class CloseWindowController extends WindowAdapter {
-
-
 
 	@Override
 	public void windowClosing(WindowEvent e) {
-		// TODO Auto-generated method stub
-		System.out.println("cierra sesionnn");
+		
+		//Demanem que el servidor es carregui la sessio
+		ControladorFinestres.getInfoServidor().closeSessio();
 	}
 	
 

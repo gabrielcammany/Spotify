@@ -112,7 +112,7 @@ public class MessageServiceWorker implements Runnable {
 						
 						objectOutput.writeObject(Data.getaSessio().get(i).getlFollowing());
 						objectOutput.close();
-						break;
+						//break;
 						//System.out.println("[Servidor]LlistesFollowing n1-->"+Data.getaSessio().get(i).getlFollowing().get(i).getNom_llista());
 					}
 				}
@@ -193,6 +193,14 @@ public class MessageServiceWorker implements Runnable {
 				ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
 				objectOutput.writeObject(Data.getAlMusica());
 
+			}
+			
+			if(data[1].equals("deleteSessio")){
+				for(Sessio s : Data.getaSessio()){
+					if(Integer.parseInt(data[0]) == s.getIdSessio())Data.getaSessio().remove(s);
+					break;
+				}
+				System.out.println("[Servidor] Sessio amb id '"+data[0]+"' ha set eliminada.");
 			}
 			
 			

@@ -318,7 +318,21 @@ public class InfoServidor {
 			e2.printStackTrace();
 		}
 	}
-	
+	public void closeSessio(){
+		newSocket();
+		try {
+			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
+			doStream.writeUTF(User.getId_usuari()+":deleteSessio:");
+			doStream.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try{
+			sServidor.close();
+		}catch(IOException e2){
+			e2.printStackTrace();
+		}
+	}	
 }
 			/*
 	public String algo(String s){
