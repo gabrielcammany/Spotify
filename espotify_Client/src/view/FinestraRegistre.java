@@ -33,7 +33,7 @@ import net.miginfocom.swing.MigLayout;
 
 
 @SuppressWarnings("serial")
-public class Finestra_Registre extends JPanel{
+public class FinestraRegistre extends JPanel{
 	
 	private JFrame jfRegistre;
 	private JButton jbRegistre;
@@ -46,7 +46,7 @@ public class Finestra_Registre extends JPanel{
 	
 	
 	
-	public Finestra_Registre() {
+	public FinestraRegistre() {
 		
 		
 

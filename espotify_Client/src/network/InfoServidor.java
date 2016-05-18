@@ -71,7 +71,7 @@ public class InfoServidor {
 			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
 			doStream.writeUTF("Sessio:");
 			System.out.println("Envio sesion");
-			
+			sServidor.close();
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -93,7 +93,7 @@ public class InfoServidor {
 			doStream.close();
 			if(trobat!= 0) ControladorFinestres.mostraPopUp(1,nickname);
 			if(trobat ==0) ControladorFinestres.mostraPopUp(0,nickname);
-			
+			sServidor.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -107,7 +107,7 @@ public class InfoServidor {
 			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
 			doStream.writeUTF(User.getId_usuari()+":unFollow:"+nickname);
 			
-			doStream.close();
+			sServidor.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -129,6 +129,7 @@ public class InfoServidor {
 				ControladorFinestres.actualitzaLlistesFollowing(llFollowing);
 				objectInput.close();
 				doStream.close();
+				sServidor.close();
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -178,8 +179,10 @@ public class InfoServidor {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				sServidor.close();
 				return true;
 			}
+			sServidor.close();
 			return false;
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
@@ -205,12 +208,17 @@ public class InfoServidor {
 			
 			
 			ControladorFinestres.actualitzaMusicaDisponible(alMusica);
-
+			
 		} catch (IOException e) {
 			System.out.println("exc1");
 		}
 		
-	}
+		try{
+			sServidor.close();
+		}catch(IOException e2){
+			e2.printStackTrace();
+		}
+		}
 	
 	public void peticioUsuaris() throws UnknownHostException, IOException, ClassNotFoundException {
 		newSocket();
@@ -225,7 +233,11 @@ public class InfoServidor {
 		//for(User c : alUsers)System.out.println(c.getNickname());
 
 		//controladorFinestres.actualitzaUsuarisFollowing(alUsers);
-		//sServer.close();
+		try{
+			sServidor.close();
+		}catch(IOException e2){
+			e2.printStackTrace();
+		}
 	}
 	
 	/**
@@ -235,10 +247,8 @@ public class InfoServidor {
 	 */
 	
 	public void peticio(String request, String obj) throws IOException {
+		newSocket();
 		try {
-
-			newSocket();
-
 			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
 			doStream.writeUTF(User.getId_usuari()+":requestCanco:"+obj.replace(" ", ""));
 			String[] s = obj.split("/");
@@ -257,7 +267,11 @@ public class InfoServidor {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		sServidor.close();
+		try{
+			sServidor.close();
+		}catch(IOException e2){
+			e2.printStackTrace();
+		}
 	}
 
 	public void peticioFollow(String nickname){
@@ -274,7 +288,11 @@ public class InfoServidor {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		try{
+			sServidor.close();
+		}catch(IOException e2){
+			e2.printStackTrace();
+		}
 
 		//sServidor.close();
 	}
@@ -294,7 +312,11 @@ public class InfoServidor {
 
 		
 		ControladorFinestres.actualitzaUsuarisFollowing(alUsers);
-		//sServidor.close();
+		try{
+			sServidor.close();
+		}catch(IOException e2){
+			e2.printStackTrace();
+		}
 	}
 	
 }

@@ -8,19 +8,19 @@ public class sUser implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	private String nickname;
-	private int id_usuari;
+	private int idUsuari;
 	
 
 
 	public int getId_usuari() {
-		return id_usuari;
+		return idUsuari;
 	}
 	
 	
 
 
 	public void setId_usuari(int id_usuari) {
-		this.id_usuari = id_usuari;
+		this.idUsuari = id_usuari;
 	}
 
 
@@ -37,7 +37,7 @@ public class sUser implements Serializable{
 	public sUser(){}
 	public sUser(String usuario,int id){
 		this.nickname = usuario;
-		this.id_usuari = id;
+		this.idUsuari = id;
 	}
 	
 	

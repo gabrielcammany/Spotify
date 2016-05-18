@@ -111,6 +111,8 @@ public class MessageServiceWorker implements Runnable {
 						ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
 						
 						objectOutput.writeObject(Data.getaSessio().get(i).getlFollowing());
+						objectOutput.close();
+						break;
 						//System.out.println("[Servidor]LlistesFollowing n1-->"+Data.getaSessio().get(i).getlFollowing().get(i).getNom_llista());
 					}
 				}
@@ -125,8 +127,10 @@ public class MessageServiceWorker implements Runnable {
 					if(Integer.parseInt(data[0]) == Data.getaSessio().get(i).getIdSessio()){
 						Data.getaSessio().get(i).setlUserFollow(cadenas.selectSUsers(Integer.parseInt(data[0])));
 						ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
-						
+					System.out.println("lelelelel--> "+Data.getaSessio().get(i).getlUserFollow().get(0).getNickname());
 						objectOutput.writeObject(Data.getaSessio().get(i).getlUserFollow());
+						//objectOutput.close();
+						break;
 					}
 				}
 				
@@ -145,7 +149,7 @@ public class MessageServiceWorker implements Runnable {
 				Sessio s =new Sessio(i,cadenas.omplirLlistes(i));
 				Data.addSessio(s);
 				
-
+				d.close();
 
 				// Tanquem el socket del client
 				//sClient.close();

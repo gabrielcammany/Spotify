@@ -6,6 +6,7 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.WindowEvent;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Vector;
@@ -27,6 +28,7 @@ import javax.swing.table.TableCellRenderer;
 
 import org.jdesktop.xswingx.PromptSupport;
 
+import controller.CloseWindowController;
 import controller.ControladorBotons;
 import controller.ControladorFinestres;
 import controller.ControladorLlistar;
@@ -70,52 +72,63 @@ public class FinestraReproduccio extends JFrame{
 	private DefaultTableModel tableModel;
 	
 	
-	public FinestraReproduccio() throws ClassNotFoundException{
+	public FinestraReproduccio(){
+		
+		
 		
 		//inicialitzem
 		if(jspLlistatDisponible == null){
 			jspLlistatDisponible = new JScrollPane();
+			this.jspLlistatDisponible.setBackground(new Color(50,50,50));
 			
 		}
 		if(jspUsuarisFollowing == null){
 			jspUsuarisFollowing = new JScrollPane();
+			this.jspUsuarisFollowing.setBackground(new Color(50,50,50));
+
 		}
 		if(jspLlistatPropia == null){
 			jspLlistatPropia = new JScrollPane();
+			this.jspLlistatPropia.setBackground(new Color(50,50,50));
+
 		}
 		if(jspLlistesFollowing == null){
 			jspLlistesFollowing = new JScrollPane();
+			this.jspLlistesFollowing.setBackground(new Color(50,50,50));
+
 		}
 		
 		jfReproduccio = new JFrame();
+		
 		jfReproduccio.setVisible(true);
 		jfReproduccio.setSize(800, 700);
 		jfReproduccio.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jfReproduccio.setLocationRelativeTo(null);
 		jfReproduccio.setBackground(new Color(24,24,24));
+		jfReproduccio.addWindowListener(new CloseWindowController());
 		
 		
 		//panell general
 		this.jpReproduccio = new JPanel(new BorderLayout());
 		this.jpReproduccio.setBackground(new Color(24,24,24));
 		
-		
 		//barra del nort
 		JPanel jpUsuari = new JPanel(new BorderLayout());
 		jpUsuari.setBackground(new Color(40,40,40));
 		jpUsuari.setBorder(BorderFactory.createLineBorder(Color.black));
 		//adalt a la dreta
-		//nom usuari
+		/*//nom usuari
 		JLabel jlUsuari = new JLabel("");
 		jlUsuari.setForeground(new Color(164,164,164));
 		jlUsuari.setBorder(BorderFactory.createEmptyBorder(10,10,10,10)); 
 		//introduir-lo
-		jpUsuari.add(jlUsuari,  BorderLayout.LINE_END);
+		jpUsuari.add(jlUsuari,  BorderLayout.LINE_END);*/
 		
-		//adalt a l'esquera
-		JPanel jpAdaltEsquerra = new JPanel(new MigLayout("wrap"));
-		jpAdaltEsquerra.setBackground(new Color(40,40,40));
 		
+		/*
+		//logo
+		JPanel jpBuscarFollow = new JPanel(new MigLayout("wrap"));
+		jpBuscarFollow.setBackground(new Color(40,40,40));
 		//logo adalt a l'esquerra
 		ImageIcon imLogo = new ImageIcon("Images/logo.png");
 		JLabel jlLogo = new JLabel();
@@ -123,27 +136,31 @@ public class FinestraReproduccio extends JFrame{
 		ImageIcon icLogo = new ImageIcon(imLogo.getImage().getScaledInstance(25, 25, Image.SCALE_DEFAULT));
 		jlLogo.setIcon(icLogo);
 		jlLogo.setBorder(new EmptyBorder(1, 5, 0, 10));
-		jpAdaltEsquerra.add(jlLogo,"dock west");
+		jpBuscarFollow.add(jlLogo,"dock west");
 		
-		//buscar (no fa res)
-		/*ImageIcon imBuscar = new ImageIcon("Images/buscar.png");
+		//buscar (no fa res) 
+		ImageIcon imBuscar = new ImageIcon("Images/buscar.png");
 		JLabel jlBuscar = new JLabel();
 		jlBuscar.setForeground(new Color(164,164,164));
 		ImageIcon icBuscar = new ImageIcon(imBuscar.getImage().getScaledInstance(200, 30, Image.SCALE_DEFAULT));
-		jlBuscar.setIcon(icBuscar);*/
+		jlBuscar.setIcon(icBuscar);
+		
+		
+		//text i boto de seguir usuari
+		JPanel jpBuscarUsuari = new JPanel(new MigLayout("wrap"));
+		jpBuscarUsuari.setBackground(new Color(40,40,40));
 		JTextField jtfBuscar = new JTextField(15);
 		jtfBuscar.setBackground(new Color(251,251,251));
 		jtfBuscar.setForeground(new Color(50,50,50));
 		jtfBuscar.setText("Buscar");
 		jtfBuscar.setFocusable(false);
 		
-		
-		
-		jpAdaltEsquerra.add(jtfBuscar,"dock west");
+		jpBuscarUsuari.add(jtfBuscar,"dock west");
 
+		jpUsuari.add(jpBuscarUsuari, BorderLayout.LINE_START);
+		jpUsuari.add(jpBuscarFollow, BorderLayout.LINE_END);
+		*/
 		
-		jpUsuari.add(jpAdaltEsquerra, BorderLayout.LINE_START);
-
 		//afegim la barra d'adalt al panell
 		jpReproduccio.add(bucarUsuari(), BorderLayout.NORTH);
 		
@@ -319,10 +336,9 @@ public class FinestraReproduccio extends JFrame{
 		//jtpLlistatPropia.setFocusable(false);
 		
 		
-		jtpLlistatPropia.addTab("Crear llista", new JScrollPane());
+		jtpLlistatPropia.addTab("Crear llista", CrearlLlista());
 		jtpLlistatPropia.addTab("Visualitzar llistes", new JScrollPane(setVisualitzarLlistes()));	
-		jtpLlistatPropia.addTab("Eliminar llista", new JScrollPane());
-		jtpLlistatPropia.addTab("Votar cancons", new JScrollPane());
+		jtpLlistatPropia.addTab("Eliminar llista", EliminarLlista());
 		
 		this.jspLlistatPropia = new JScrollPane(jtpLlistatPropia);
 		this.jspLlistatPropia.setBackground(new Color(50,50,50));
@@ -330,6 +346,29 @@ public class FinestraReproduccio extends JFrame{
 		//this.jspLlistatPropia.setFocusable(false);
 		
 	}
+	
+	/**
+	 * Aquesta funcio permetra crear una llista i dir si es privada i retornara un scrollPane
+	 */
+	public JScrollPane CrearlLlista(){
+		JScrollPane jspCrearLlista = new JScrollPane();
+		jspCrearLlista.setBackground(new Color(50,50,50));
+		jspCrearLlista.getViewport().setBackground(new Color(50,50,50));
+		
+		return jspCrearLlista;
+	}
+	
+	/**
+	 * Aquesta funcio permetra esborrar llistes
+	 */
+	public JScrollPane EliminarLlista(){
+		JScrollPane jspEliminarLlista = new JScrollPane();
+		jspEliminarLlista.setBackground(new Color(50,50,50));
+		jspEliminarLlista.getViewport().setBackground(new Color(50,50,50));
+		
+		return jspEliminarLlista;
+	}
+	
 	
 	public JPanel setVisualitzarLlistes(){
 		
@@ -474,6 +513,7 @@ public class FinestraReproduccio extends JFrame{
 
 		
 		jpLlistesFollowing.add(jlLlistesFollowing, BorderLayout.WEST);
+		jpLlistesFollowing.setBackground(new Color(50,50,50));
 		
 		this.jspLlistesFollowing = new JScrollPane(jpLlistesFollowing);
 		this.jspLlistesFollowing.setBackground(new Color(50,50,50));
@@ -510,26 +550,47 @@ public class FinestraReproduccio extends JFrame{
 	}
 	
 	public JPanel bucarUsuari() {
-		JPanel jpBuscaUsuari = new JPanel(new BorderLayout());
 		
-		JTextField jtBusca = new JTextField();
-		PromptSupport.setPrompt("Nom usuari...", jtBusca);
+		JPanel jpLogo = new JPanel(new MigLayout("wrap"));
+		jpLogo.setBackground(new Color(40,40,40));
+		//logo adalt a l'esquerra
+		ImageIcon imLogo = new ImageIcon("Images/logo.png");
+		JLabel jlLogo = new JLabel();
+		jlLogo.setForeground(new Color(40,40,40));
+		ImageIcon icLogo = new ImageIcon(imLogo.getImage().getScaledInstance(25, 25, Image.SCALE_DEFAULT));
+		jlLogo.setIcon(icLogo);
+		jlLogo.setBorder(new EmptyBorder(1, 5, 0, 10));
+		jpLogo.add(jlLogo,"dock west");
+		
+		JPanel jpBuscaUsuari = new JPanel(new BorderLayout());
+		jpBuscaUsuari.setBackground(new Color(40,40,40));
+		
+		JTextField jtBusca = new JTextField(20);
+		//jtBusca.setForeground(Color.WHITE);
+		//jtBusca.setBackground(new Color(40,40,40));
 		
 		JButton jbBusca = new JButton();
-		jbBusca.setText("Busca");
+		jbBusca.setText("Buscar");
 		
 		//Afegim el controlador al boto de buscar
 		ControladorBotons controladorBusca = new ControladorBotons(jtBusca);
 		jbBusca.addMouseListener(controladorBusca);
 		
-		JPanel jpSuperior = new JPanel (new GridLayout (1, 2));
-		jpSuperior.add(jtBusca);
-		jpSuperior.add(jbBusca);
-		jpBuscaUsuari.add(jpSuperior, BorderLayout.NORTH);
-		 
+		JPanel jpBuscar = new JPanel (new BorderLayout());
+		jpBuscar.setBackground(new Color(40,40,40));
+		jpBuscar.add(jtBusca, BorderLayout.LINE_START);
+		jpBuscar.add(jbBusca, BorderLayout.LINE_END);
 		
+		JPanel jpSuperior = new JPanel (new BorderLayout());
+		JPanel auxColor = new JPanel();
+		auxColor.setBackground(new Color(40,40,40));
+		jpSuperior.add(jpLogo, BorderLayout.LINE_START);
+		jpSuperior.add(auxColor, BorderLayout.CENTER);
+		jpSuperior.add(jpBuscar, BorderLayout.LINE_END);
+		jpBuscaUsuari.add(jpSuperior, BorderLayout.NORTH);
 		return jpBuscaUsuari;
 	}
+	
 	public JTable getTaulaFollowing() {
 		return jtLlistatFollowing;
 	}
@@ -565,11 +626,16 @@ public class FinestraReproduccio extends JFrame{
 			//String[]data = new String[4];
 			if (!alUser.get(i).getNickname().isEmpty()){
 				data[0] = alUser.get(i).getNickname();
-			
 				tableModel.insertRow(i, data);
+				
 			}
-		
-	
+		}
+		if(alUser != null){
+			for(int i = alUser.size(); i < tableModel.getRowCount(); i++) {
+				
+				tableModel.removeRow(i);
+				
+			}
 		}
 		
 		
@@ -648,7 +714,6 @@ public class FinestraReproduccio extends JFrame{
 				setMusicaDisponible(alMusica);//le de posar per desclicar la canco
 				
 				//setUsuarisFollowing(new ArrayList<>());
-			
 				this.jpReproduccio.add(this.jspUsuarisFollowing, BorderLayout.CENTER);
 				this.jpReproduccio.setBackground(new Color(50,50,50));
 				this.jpReproduccio.validate();

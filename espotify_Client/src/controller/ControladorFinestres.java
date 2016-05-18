@@ -16,8 +16,8 @@ import model.User;
 import model.sUser;
 import network.InfoServidor;
 import view.FinestraReproduccio;
-import view.Finestra_Registre;
-import view.Finestra_login;
+import view.FinestraRegistre;
+import view.FinestraLogin;
 /**
  * Controlador encarregat de gestionar la relacion entre les diferents finestres 
  * (Login, Registre, finestra principal)
@@ -25,8 +25,8 @@ import view.Finestra_login;
  *
  */
 public class ControladorFinestres {
-	public static Finestra_login fLogin;
-	public static Finestra_Registre fRegistre;
+	public static FinestraLogin fLogin;
+	public static FinestraRegistre fRegistre;
 	public static FinestraReproduccio fReproduccio;
 	private static InfoServidor infoServidor;
 	private static User user;
@@ -46,7 +46,7 @@ public class ControladorFinestres {
 	}
 	
 	public ControladorFinestres (InfoServidor infoServidor) {
-		fLogin = new Finestra_login();
+		fLogin = new FinestraLogin();
 		ControladorFinestres.infoServidor = infoServidor;
 		setR(new Reproductor(""));
 		/*Thread t = new Thread(){
@@ -71,7 +71,7 @@ public class ControladorFinestres {
 	public static void nouRegistre() {
 		//tanquem finestra de login
 		fLogin.tancaFinestraLogin();
-		fRegistre = new Finestra_Registre();
+		fRegistre = new FinestraRegistre();
 		
 		fRegistre.getjbRegistre().addActionListener(new ActionListener() {
  

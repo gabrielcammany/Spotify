@@ -7,6 +7,11 @@ import javax.swing.JTextField;
 
 import network.InfoServidor;
 
+
+/**
+ * control del buscar usuari a fer follow
+ *
+ */
 public class ControladorBotons implements MouseListener{
 	
 	JTextField jtNomUsuariBusca;
@@ -14,13 +19,17 @@ public class ControladorBotons implements MouseListener{
 	public ControladorBotons (JTextField jtNomUsuariBusca) {
 		this.jtNomUsuariBusca = jtNomUsuariBusca;
 	}
+	
+	/**
+	 * control del buscar usuari a fer follow
+	 *@param rep un mouse event del boto buscar usuari
+	 */
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		
-		new InfoServidor().demanaUser(jtNomUsuariBusca.getText());
-
-		
-		
+		//si el text field de buscar usuari a fer follow no esta buit enviarem una pericio de busqueda
+		if(!jtNomUsuariBusca.getText().isEmpty()){
+			new InfoServidor().demanaUser(jtNomUsuariBusca.getText());
+		}
 	}
 
 	@Override

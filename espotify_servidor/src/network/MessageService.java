@@ -22,7 +22,7 @@ public class MessageService {
 	public MessageService(ButtonsController controller) {
 		this.controller = controller;
 		try {
-			sServer = new ServerSocket(PORT);
+			sServer = new ServerSocket(PORT,100);
 			
 		} catch(BindException e) {
 			
