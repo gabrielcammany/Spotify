@@ -233,6 +233,26 @@ public class ControladorFinestres {
 		fReproduccio.actualitzaLlistaSeleccionada(musicaLlista);
 	}
 	
+	public static void actualitzaTablaLlistesFollowing (int indexSeleccio) {
+		Llistes llistaSeleccionada = new Llistes();
+
+		llistaSeleccionada = User.getlFollowing().get(indexSeleccio);
+		
+		ArrayList<Canco> musicaLlista = new ArrayList<Canco>();
+		
+		
+		for (int i = 0; i < llistaSeleccionada.getAllIdCanco().size(); i++) {
+			for (int j = 0; j < alMusic.size(); j++) {
+				
+				if(llistaSeleccionada.getAllIdCanco().get(i) == alMusic.get(j).getidCanco()) {
+					musicaLlista.add(alMusic.get(j));
+					
+				}
+			}
+		}
+		fReproduccio.actualitzaLlistaFollowingSeleccionada(musicaLlista);
+	}
+	
 	
 	public static void mostraPopUp(int option, String nickname) {
 		switch (option){

@@ -30,6 +30,7 @@ import org.jdesktop.xswingx.PromptSupport;
 import controller.ControladorBotons;
 import controller.ControladorFinestres;
 import controller.ControladorLlistar;
+import controller.ControladorLlistesFollowing;
 import controller.ControladorLlistesMusica;
 import controller.ControladorReproductor;
 import controller.DeleteController;
@@ -61,7 +62,9 @@ public class FinestraReproduccio extends JFrame{
 	private JTable taulaMusicaLlista;
 	private ArrayList<User> alUsers;
 	private JPanel jpVisualitzarLlistes;
+	private JPanel jpLlistesFollowing;
 	private ArrayList<Canco> alMusica;
+	JPanel jpLlistatFollowing;
 	
 	private JTable jtLlistatFollowing;
 	private DefaultTableModel tableModel;
@@ -398,6 +401,53 @@ public class FinestraReproduccio extends JFrame{
 		//jpVisualitzarLlistes.repaint();
 		jpVisualitzarLlistes.validate();
 	}
+	
+	
+	public void actualitzaLlistaFollowingSeleccionada (ArrayList<Canco> musicaLlista) {
+
+		Vector<String> columnas = new Vector();
+
+		columnas.add("Nom canco");
+		columnas.add("Genere");
+		columnas.add("Album");
+		columnas.add("Artistes");
+
+
+		Vector filas = new Vector();
+		for (int i = 0; i <musicaLlista.size(); i ++) {
+			Vector<String> fila = new Vector();
+
+			fila.add(musicaLlista.get(i).getNom());
+			fila.add(musicaLlista.get(i).getGenere());
+			fila.add(musicaLlista.get(i).getAlbum());
+			fila.add(musicaLlista.get(i).getArtista());
+
+			filas.add(fila);
+		}
+		System.out.println(columnas);
+		taulaMusicaLlista = new JTable(filas, columnas){
+		
+		public boolean isCellEditable (int rowIndex, int vColIndex) {
+			return false;
+		}};
+		
+		for(int i=0;i<columnas.size();i++){
+			taulaMusicaLlista.getColumnModel().getColumn(i).setCellRenderer(new TableRenderer());
+		}
+		
+		
+		//sense aixo es quedara el primer jpanel(border.center)
+		BorderLayout layout =  (BorderLayout) jpLlistesFollowing.getLayout();
+		if (layout.getLayoutComponent(BorderLayout.CENTER) != null){
+			jpLlistesFollowing.remove(layout.getLayoutComponent(BorderLayout.CENTER));
+		}	
+		
+		
+		jpLlistesFollowing.add(new JScrollPane(taulaMusicaLlista), BorderLayout.CENTER);
+		jpLlistesFollowing.setBackground(new Color(50,50,50));
+		jpLlistesFollowing.validate();
+		
+	}
 		
 	
 	
@@ -406,7 +456,7 @@ public class FinestraReproduccio extends JFrame{
 	 */
 	
 	public void setLlistesFollowing(ArrayList<Llistes> llFollowing){
-		JPanel jpLlistesFollowing = new JPanel(new BorderLayout());
+		jpLlistesFollowing = new JPanel(new BorderLayout());
 		
 		ArrayList<String> nomLlistes = new ArrayList <String>();
 		
@@ -419,33 +469,10 @@ public class FinestraReproduccio extends JFrame{
 		jlLlistesFollowing.setCellRenderer(new ListRenderer());
 		jlLlistesFollowing.setBackground(new Color(70,70,70));
 		
-		jlLlistesFollowing.addMouseListener(new ControladorLlistesMusica(jlLlistesFollowing));
+		jlLlistesFollowing.addMouseListener(new ControladorLlistesFollowing(jlLlistesFollowing));
 		
 
-		/*//Tabla musica disponible 
-		Vector<String> columnas = new Vector();
 		
-		columnas.add("Nom llista");
-		columnas.add("Nom usuari");
-   
-		Vector filas = new Vector();
-		 
-		  for (int i = 0; i <alLlistes.size(); i ++) {
-
-			Vector<String> fila = new Vector();
-			fila.add(alLlistes.get(i).toString());
-			filas.add(fila);
-		}
-
-		JTable taulaUsuariFollowing = new JTable(filas, columnas){
-		
-		public boolean isCellEditable (int rowIndex, int vColIndex) {
-			return false;
-		}};
-		
-		for(int i=0;i<columnas.size();i++){
-			taulaUsuariFollowing.getColumnModel().getColumn(i).setCellRenderer(new TableRenderer());
-		}*/
 		jpLlistesFollowing.add(jlLlistesFollowing, BorderLayout.WEST);
 		
 		this.jspLlistesFollowing = new JScrollPane(jpLlistesFollowing);
@@ -512,7 +539,7 @@ public class FinestraReproduccio extends JFrame{
 	}
 	
 	public JPanel llistatFollowing(ArrayList <sUser> alUser) {
-		JPanel jpLlistatFollowing = new JPanel(new BorderLayout());
+		jpLlistatFollowing = new JPanel(new BorderLayout());
 
 		
 		Vector<String> columnas = new Vector<String>();

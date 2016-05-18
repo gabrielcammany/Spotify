@@ -123,8 +123,9 @@ public class InfoServidor {
 			doStream.writeUTF(User.getId_usuari()+":requestLlistesFollow:");
 			
 			ObjectInputStream objectInput = new ObjectInputStream(sServidor.getInputStream());
-		
+				
 				ArrayList<Llistes> llFollowing = (ArrayList<Llistes>) objectInput.readObject();
+				User.setlFollowing(llFollowing);
 				ControladorFinestres.actualitzaLlistesFollowing(llFollowing);
 				objectInput.close();
 				doStream.close();

@@ -6,8 +6,17 @@ public class User{
 	private static String nickname;
 	private static int id_usuari;
 	private static ArrayList<Llistes> lPropies;
+	private static ArrayList<Llistes> lFollowing;
 
-
+	public static ArrayList<Llistes> getlFollowing() {
+		return lFollowing;
+	}
+	
+	public static void setlFollowing(ArrayList<Llistes> lFollowing) {
+		User.lFollowing = lFollowing;
+	}
+	
+	
 	public static int getId_usuari() {
 		return id_usuari;
 	}
