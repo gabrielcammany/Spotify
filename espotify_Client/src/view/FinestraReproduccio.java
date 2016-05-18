@@ -6,6 +6,8 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -18,6 +20,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -41,6 +44,7 @@ import model.Llistes;
 import model.User;
 import model.sUser;
 import net.miginfocom.swing.MigLayout;
+import network.InfoServidor;
 
 
 /**
@@ -66,7 +70,8 @@ public class FinestraReproduccio extends JFrame{
 	private JPanel jpVisualitzarLlistes;
 	private JPanel jpLlistesFollowing;
 	private ArrayList<Canco> alMusica;
-	JPanel jpLlistatFollowing;
+	private JScrollPane jspCrearLlista;
+	private JPanel jpLlistatFollowing;
 	
 	private JTable jtLlistatFollowing;
 	private DefaultTableModel tableModel;
@@ -336,7 +341,7 @@ public class FinestraReproduccio extends JFrame{
 		//jtpLlistatPropia.setFocusable(false);
 		
 		
-		jtpLlistatPropia.addTab("Crear llista", CrearlLlista());
+		jtpLlistatPropia.addTab("Crear llista",new JScrollPane(CrearlLlista()));
 		jtpLlistatPropia.addTab("Visualitzar llistes", new JScrollPane(setVisualitzarLlistes()));	
 		jtpLlistatPropia.addTab("Eliminar llista", EliminarLlista());
 		
@@ -350,12 +355,48 @@ public class FinestraReproduccio extends JFrame{
 	/**
 	 * Aquesta funcio permetra crear una llista i dir si es privada i retornara un scrollPane
 	 */
-	public JScrollPane CrearlLlista(){
-		JScrollPane jspCrearLlista = new JScrollPane();
+	public JPanel CrearlLlista(){
+		jspCrearLlista = new JScrollPane();
 		jspCrearLlista.setBackground(new Color(50,50,50));
 		jspCrearLlista.getViewport().setBackground(new Color(50,50,50));
 		
-		return jspCrearLlista;
+		JPanel jpCrearLlista = new JPanel(new MigLayout("al center center, wrap, gapy 10"));
+		jpCrearLlista.setBackground(new Color(50,50,50));
+		
+		JTextField jtfNomLlista = new JTextField(15);
+		//jtfNomLlista.setText("Nom llista");
+		PromptSupport.setPrompt("Nom Llista", jtfNomLlista);
+
+
+		JTextField jtfPrivadaSN = new JTextField(5);
+		//jtfPrivadaSN.setText("Privada (S/N)");
+		PromptSupport.setPrompt("Privada (S/N)", jtfNomLlista);
+
+		
+		JButton jbCrearLlista = new JButton();		
+		jbCrearLlista.setText("Crear Llista");
+		
+		jbCrearLlista.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//si premen crear
+				if(!jtfNomLlista.getText().isEmpty() && jtfPrivadaSN.getText().isEmpty()){
+					if(jtfPrivadaSN.equals('s') || jtfPrivadaSN.equals('S')){
+						//si es privada es 0
+						ControladorFinestres.crearLlista(jtfNomLlista.getText(), 0);
+					}
+					if(jtfPrivadaSN.equals('n') || jtfPrivadaSN.equals('N')){
+						ControladorFinestres.crearLlista(jtfNomLlista.getText(), 1);
+					}
+				}				
+			}
+		});
+		
+		jpCrearLlista.add(jtfNomLlista, "span 2, grow, wrap");
+		jpCrearLlista.add(jtfPrivadaSN, "span 2, grow, wrap");
+		jpCrearLlista.add(jbCrearLlista, "span 2, grow, wrap");
+		
+		return jpCrearLlista;
 	}
 	
 	/**

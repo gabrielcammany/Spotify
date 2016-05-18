@@ -291,4 +291,19 @@ public class ControladorFinestres {
 		ControladorFinestres.r = r;
 	}
 	
+	
+	/*
+	 * crida a info servidor per crear una llista
+	 * 
+	 * @param rep el nom de la llista i si es privada (0=privada)
+	 */
+	public static void crearLlista(String nom, int privada){
+		/*
+		 * 
+		 * CREAR INFO SERVIDOR.REQUESTCREARLLISTA
+		 * 
+		 * 
+		 */
+	}
+	
 }
