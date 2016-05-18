@@ -232,6 +232,10 @@ public class MessageServiceWorker implements Runnable {
 				System.out.println("[Servidor] Sessio amb id '"+data[0]+"' ha set eliminada.");
 			}
 			
+			if(data[1].equals("votaCanco")) {
+				cadenas.votaCanco(data[2], data[3]);
+			}
+			
 			
 		} catch (IOException e) { 
 			e.printStackTrace();

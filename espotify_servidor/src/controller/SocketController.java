@@ -118,11 +118,14 @@ public class SocketController {
 				Canco c = new Canco();
 				c.setIdCanco(responseServer.getInt("id_canco"));
 				c.setNom(responseServer.getString("nom"));
+				c.setGenere(responseServer.getString("genere"));
 				c.setAlbum(responseServer.getString("album"));
 				c.setArtista(responseServer.getString("artista"));
 				c.setPath(responseServer.getString("ubicacio"));
 				c.setEstrelles(responseServer.getString("num_estrelles"));
 				c.setnReproduccio(responseServer.getString("num_reproduccio"));
+				c.setnVotacio(responseServer.getString("nVotacio"));
+				
 				System.out.println("[Servidor]id_canco '"+c.getIdCanco()+"'.");
 				//System.out.println("[Servidor] "+c.getNom()+" amb path: "+c.getPath()+" num reproduccions: "+c.getnReproduccio());
 				alMusica.add(c);
@@ -324,7 +327,24 @@ public class SocketController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		
+	}
+	public void votaCanco (String nomCanco , String estrelles) {
+		Canco c = null;
+		for (int i = 0; i < Data.getAlMusica().size(); i ++) {
+			if(Data.getAlMusica().get(i).getNom().equals(nomCanco)) {
+				c = Data.getAlMusica().get(i);
+			}
+		}
+		Query q= new Query();
+		int estrellesVotacio = Integer.parseInt(estrelles); 
+		int nEstrelles = Integer.parseInt(c.getEstrelles())+estrellesVotacio;
+		int nVotacio = Integer.parseInt(c.getnVotacio())+1;
+		c.setEstrelles(Integer.toString(nEstrelles));
+		c.setnVotacio(Integer.toString(nVotacio));
+		String response = q.queryList(29,c);
+		
+		conn.updateQuery(response);
 	
 	}
 }

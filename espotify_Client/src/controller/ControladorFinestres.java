@@ -301,4 +301,8 @@ public class ControladorFinestres {
 		return infoServidor.creaLlista(nom,privada);
 	}
 	
+	public static void votacio (int estrelles, String nomCanco) {
+		infoServidor.realitzaVotacio(estrelles, nomCanco);
+	}
+	
 }

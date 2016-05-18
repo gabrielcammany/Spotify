@@ -354,6 +354,26 @@ public class InfoServidor {
 		}
 		return trobat;
 	}
+	
+	public void realitzaVotacio(int estrelles, String nomCanco) {
+		newSocket();
+		DataOutputStream doStream;
+		try {
+			doStream = new DataOutputStream(sServidor.getOutputStream());
+			doStream.writeUTF(User.getId_usuari()+":votaCanco:"+nomCanco+":"+Integer.toString(estrelles));
+			
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		try {
+			sServidor.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 
 }

@@ -138,14 +138,21 @@ public class Query {
 			Integer idLlista  = ((Integer)obj);
 			String cad26 = ("SELECT id_canco_llista FROM canco_llista WHERE id_llista = "+idLlista+";");
 			return cad26;
-		case 27://Buscamos el id de la usari llista que dice que el usuarioº
+		case 27://Buscamos el id de la usari llista que dice que el usuario
 			Integer idLlista2  = ((Integer)obj);
 			String cad27 = ("SELECT id_canco_llista FROM canco_llista WHERE id_llista = "+idLlista2+";");
 			return cad27;
 		case 28://Inserimos la lista en la tabla lista
 			String cad28 = ("INSERT INTO usuari_llista(id_llista,id_usuari)VALUES('"+((String[])obj)[0]+"',"+((String[])obj)[1]+")");
 			return cad28;
+		case 29: //Actualizar nEstrelles i nVotacio
+			String nomCanco =((Canco) obj).getNom();
+			String nVotacio= ((Canco) obj).getnVotacio();
+			String nEstrelles = ((Canco) obj).getEstrelles();
+			String cad29 = "UPDATE canco SET nVotacio ='"+nVotacio+"', num_estrelles = '" + nEstrelles +"' WHERE nom = '"+nomCanco+"';";
+			return cad29;
 		}
+		
 		
 			
 			

@@ -13,11 +13,17 @@ public class Canco implements Serializable, Comparable<Canco> {
 	private String album;
 	private String artista;
 	private String path;
+	private String nVotacio;
 	private String nReproduccio;
 	private String estrelles;
 	private int reproduccions;
 	
-	
+	public String getnVotacio() {
+		return nVotacio;
+	}
+	public void setnVotacio(String nVotacio){
+		this.nVotacio = nVotacio;
+	}
 	public String getnReproduccio() {
 		return nReproduccio;
 	}

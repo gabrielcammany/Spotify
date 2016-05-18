@@ -40,6 +40,7 @@ import controller.ControladorLlistesFollowing;
 import controller.ControladorLlistesMusica;
 import controller.ControladorReproductor;
 import controller.DeleteController;
+import controller.VotarController;
 import model.Canco;
 import model.Llistes;
 import model.User;
@@ -451,9 +452,6 @@ public class FinestraReproduccio extends JFrame{
 	 */
 	public void actualitzaLlistaSeleccionada(ArrayList<Canco> musicaLlista ){
 		
-		
-		
-		
 		Vector<String> columnas = new Vector();
 
 		columnas.add("Nom canco");
@@ -490,6 +488,8 @@ public class FinestraReproduccio extends JFrame{
 		if (layout.getLayoutComponent(BorderLayout.CENTER) != null){
 			jpVisualitzarLlistes.remove(layout.getLayoutComponent(BorderLayout.CENTER));
 		}	
+		
+		taulaMusicaLlista.addMouseListener(new VotarController(this));
 		
 		jpVisualitzarLlistes.add(new JScrollPane(taulaMusicaLlista), BorderLayout.CENTER);
 		jpVisualitzarLlistes.setBackground(new Color(50,50,50));
@@ -719,6 +719,7 @@ public class FinestraReproduccio extends JFrame{
 		
 		return jpLlistatFollowing;
 	}
+	
 	
 	
 	/**
