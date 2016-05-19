@@ -24,6 +24,7 @@ public class VotarController extends MouseAdapter {
 	private JMenuItem estrella3;
 	private JMenuItem estrella4;
 	private JMenuItem estrella5;
+	private JMenuItem eliminar;
 	private FinestraReproduccio finestraReproduccio;
 	
 	public VotarController(FinestraReproduccio finestraReproduccio) {
@@ -41,6 +42,7 @@ public class VotarController extends MouseAdapter {
             // han apretat el boto dret
 			
 			popupMenu = new JPopupMenu();
+			eliminar = new JMenuItem("Eliminar");
 	        estrella1 = new JMenuItem("1 estrella");
 	        estrella2 = new JMenuItem("2 estrella");
 	        estrella3 = new JMenuItem("3 estrella");
@@ -48,6 +50,7 @@ public class VotarController extends MouseAdapter {
 	        estrella5 = new JMenuItem("5 estrella");
 	        
 	       //afegim al menu
+	        popupMenu.add(eliminar);
 	        popupMenu.add(estrella1);
 	        popupMenu.add(estrella2);
 	        popupMenu.add(estrella3);
@@ -65,6 +68,7 @@ public class VotarController extends MouseAdapter {
 	        
 	        String nomCanco = (String) finestraReproduccio.getTaulaLlistaMusicaFollowing().getValueAt(finestraReproduccio.getTaulaLlistaMusicaFollowing().getSelectedRow(), 0);
 	        
+	        eliminar.addMouseListener(new DeleteController(finestraReproduccio, "llistaPropia"));
 	        estrella1.addMouseListener(new EstrellesController(finestraReproduccio,1, nomCanco));
 	        estrella2.addMouseListener(new EstrellesController(finestraReproduccio,2, nomCanco));
 	        estrella3.addMouseListener(new EstrellesController(finestraReproduccio,3, nomCanco));

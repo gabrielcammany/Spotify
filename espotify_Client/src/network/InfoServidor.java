@@ -382,6 +382,26 @@ public class InfoServidor {
 			e.printStackTrace();
 		}
 	}
+	
+	public void eliminarCancoLlista(String nom, String nomLlista) {
+		newSocket();
+		DataOutputStream doStream;
+		try {
+			doStream = new DataOutputStream(sServidor.getOutputStream());
+			doStream.writeUTF(User.getId_usuari()+":eliminaCancoLlista:"+nom+":"+nomLlista);
+			
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+
+		try {
+			sServidor.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 
 }

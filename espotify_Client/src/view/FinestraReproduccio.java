@@ -74,10 +74,12 @@ public class FinestraReproduccio extends JFrame{
 	private ArrayList<Canco> alMusica;
 	private JScrollPane jspCrearLlista;
 	private JPanel jpLlistatFollowing;
+	private JList jlLlistes;
 	
 	private JTable jtLlistatFollowing;
 	private DefaultTableModel tableModel;
-	
+
+	public JList getLlistesPropies(){ return jlLlistes;};
 	
 	public FinestraReproduccio(){
 		
@@ -461,7 +463,7 @@ public class FinestraReproduccio extends JFrame{
 	
 	public JPanel setVisualitzarLlistes(){
 		
-		JList jlLlistes = new JList(ControladorFinestres.getlistesPropies().toArray());
+		jlLlistes = new JList(ControladorFinestres.getlistesPropies().toArray());
 		jlLlistes.setBorder(BorderFactory.createEmptyBorder(5,5,5,30));
 		jlLlistes.setCellRenderer(new ListRenderer());
 		jlLlistes.setBackground(new Color(70,70,70));
@@ -733,7 +735,7 @@ public class FinestraReproduccio extends JFrame{
 		
 		
 		jtLlistatFollowing.setModel(tableModel);
-		jtLlistatFollowing.addMouseListener(new DeleteController(this));
+		jtLlistatFollowing.addMouseListener(new DeleteController(this, "llistaFollowing"));
 
 		
 		

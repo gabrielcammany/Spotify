@@ -8,6 +8,7 @@ import model.Canco;
 import model.Data;
 import model.Llistes;
 import model.Query;
+import model.Sessio;
 import model.User;
 import model.sUser;
 import network.ConectorDB;
@@ -345,6 +346,48 @@ public class SocketController {
 		String response = q.queryList(29,c);
 		
 		conn.updateQuery(response);
+	
+	}
+	
+	public void eliminaCancoLlista(String idUsuari, String nom, String nomLlista) {
+		Canco c = null;
+		int idLlista = 0;
+		int idSessio = 0;
+		for (int i = 0; i < Data.getAlMusica().size(); i ++) {
+			if(Data.getAlMusica().get(i).getNom().equals(nom)) {
+				c = Data.getAlMusica().get(i);
+			}
+		}
+
+		for(int i = 0; i<Data.getaSessio().size();i++){
+			if(Data.getaSessio().get(i).getIdSessio()==Integer.parseInt(idUsuari))idSessio = i;		
+			break;
+		}
+		for (int i = 0; i < Data.getaSessio().get(idSessio).getLPropies().size(); i ++) {
+			if(Data.getaSessio().get(idSessio).getLPropies().get(i).getNom_llista().equals(nomLlista)) {
+				idLlista = Data.getaSessio().get(idSessio).getLPropies().get(i).getId_llistes();
+			}
+		}
+
+		ResultSet rs3 = conn.selectQuery(new Query().queryList(30, Integer.toString(c.getIdCanco()).concat("/"+idLlista)));
+		try {
+			ArrayList<Integer> ids = new ArrayList<Integer>();
+			while (rs3.next()) {
+				idLlista = rs3.getInt("id_canco_llista");
+				System.out.println("ID LLISTA: " + idLlista);
+				ids.add(idLlista);			
+			}
+			for (int i = 0; i<ids.size(); i++ ) {
+				conn.deleteQuery(new Query().queryList(31, ids.get(i)));
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		
 	
 	}
 }

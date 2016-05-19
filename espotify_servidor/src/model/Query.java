@@ -151,7 +151,21 @@ public class Query {
 			String nEstrelles = ((Canco) obj).getEstrelles();
 			String cad29 = "UPDATE canco SET nVotacio ='"+nVotacio+"', num_estrelles = '" + nEstrelles +"' WHERE nom = '"+nomCanco+"';";
 			return cad29;
+			
+		case 30: //Elimina canco de una llista publica d'un usuari
+			String pre = ((String)obj);
+			String[] ids = pre.split("/");
+			String cad30 = "SELECT id_canco_llista FROM canco_llista WHERE id_llista =" + ids[1]+" AND id_canco = "+ids[0]+";";
+			
+			return cad30;
+			
+		case 31://eliminamos una cancion de la musica disponible.
+			int id_canco_llista_delete = ((int)obj);
+			String cad31 = ("DELETE FROM canco_llista WHERE canco_llista.id_canco_llista = "+id_canco_llista_delete+";");
+			return cad31;
+			
 		}
+		
 		
 		
 			

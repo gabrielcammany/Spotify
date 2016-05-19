@@ -158,7 +158,6 @@ public class MessageServiceWorker implements Runnable {
 					if(Integer.parseInt(data[0]) == Data.getaSessio().get(i).getIdSessio()){
 						Data.getaSessio().get(i).setlUserFollow(cadenas.selectSUsers(Integer.parseInt(data[0])));
 						ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
-					System.out.println("lelelelel--> "+Data.getaSessio().get(i).getlUserFollow().get(0).getNickname());
 						objectOutput.writeObject(Data.getaSessio().get(i).getlUserFollow());
 						//objectOutput.close();
 						break;
@@ -234,6 +233,12 @@ public class MessageServiceWorker implements Runnable {
 			
 			if(data[1].equals("votaCanco")) {
 				cadenas.votaCanco(data[2], data[3]);
+			}
+			
+			if(data[1].equals("eliminaCancoLlista")) {
+				System.out.println("ANTES");
+				cadenas.eliminaCancoLlista(data[0], data[2], data[3]);
+				System.out.println("DESPUES");
 			}
 			
 			
