@@ -246,6 +246,17 @@ public class ControladorReproductor implements MouseListener {
 
 		default:
 			break;
+		case "repeat":
+			System.out.println("click repeat");
+			ImageIcon icp = new ImageIcon(im.getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT));
+			if (e.getSource() instanceof JLabel) {
+				JLabel aux = (JLabel)e.getSource();
+				aux.setForeground(new Color(164,164,164));
+				aux.setFocusable(true);
+				aux.setFocusTraversalKeysEnabled(true);
+				aux.setIcon(icp);
+			}
+			break;
 		}
 	}
 
@@ -310,10 +321,20 @@ public class ControladorReproductor implements MouseListener {
 					aux.setIcon(icb);
 				}
 				break;
+			case "repeat":
+				System.out.println("descclick repeat");
+				ImageIcon icp = new ImageIcon(im.getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT));
+				if (e.getSource() instanceof JLabel) {
+					JLabel aux = (JLabel)e.getSource();
+					aux.setForeground(new Color(164,164,164));
+					aux.setIcon(icp);
+				}
+				break;
 	
 			default:
 				break;
 			}
+			
 		}
 	}
 

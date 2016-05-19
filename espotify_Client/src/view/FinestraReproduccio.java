@@ -221,7 +221,7 @@ public class FinestraReproduccio extends JFrame{
 		jpBarraReproduccio.setBorder(BorderFactory.createLineBorder(Color.black));
 		
 		//conte play, pause, next i back
-		JPanel jpBarraRepro = new JPanel(new MigLayout());
+		JPanel jpBarraRepro = new JPanel(new MigLayout("al center"));
 		jpBarraRepro.setBackground(new Color(40,40,40));
 		
 		//next
@@ -230,6 +230,8 @@ public class FinestraReproduccio extends JFrame{
 		jlNext.setForeground(new Color(164,164,164));
 		ImageIcon icNext = new ImageIcon(imNext.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
 		jlNext.setIcon(icNext);
+		jlNext.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
+
 		
 		//back
 		ImageIcon imBack = new ImageIcon("Images/back-button1.png");
@@ -237,6 +239,7 @@ public class FinestraReproduccio extends JFrame{
 		jlBack.setForeground(new Color(164,164,164));
 		ImageIcon icBack = new ImageIcon(imBack.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
 		jlBack.setIcon(icBack);
+		jlBack.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
 				
 		//play
 		ImageIcon imPlay = new ImageIcon("Images/play.png");
@@ -246,6 +249,8 @@ public class FinestraReproduccio extends JFrame{
 		jlPlay.setFocusable(true);
 		jlPlay.setFocusTraversalKeysEnabled(true);
 		jlPlay.setIcon(icPlay);
+		jlPlay.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
+
 		
 		/*//pause, canvia de play a pause
 		ImageIcon imPausa = new ImageIcon("Images/pausa.png");
@@ -259,6 +264,10 @@ public class FinestraReproduccio extends JFrame{
 		jlPlay.addMouseListener(new ControladorReproductor("play"));
 		jlBack.addMouseListener(new ControladorReproductor("back"));
 		jlNext.addMouseListener(new ControladorReproductor("next"));
+		
+		//conte sonido y repeat
+		JPanel jpBarraRepetir = new JPanel(new MigLayout("al center"));
+		jpBarraRepetir.setBackground(new Color(40,40,40));
 		//sonido
 		ImageIcon imSonido = new ImageIcon("Images/sonido.png");
 		JLabel jlSonido = new JLabel();
@@ -267,13 +276,28 @@ public class FinestraReproduccio extends JFrame{
 		jlSonido.setFocusable(true);
 		jlSonido.setFocusTraversalKeysEnabled(true);
 		jlSonido.setIcon(icSonido);
-		
+		//repeat
+		ImageIcon imRepetir = new ImageIcon("Images/repeat.png");
+		JLabel jlRepetir = new JLabel();
+		jlRepetir.setForeground(new Color(164,164,164));
+		ImageIcon icRepetir = new ImageIcon(imRepetir.getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT));
+		jlRepetir.setFocusable(true);
+		jlRepetir.setFocusTraversalKeysEnabled(true);
+		jlRepetir.setIcon(icRepetir);
+		jlRepetir.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
+		jlRepetir.addMouseListener(new ControladorReproductor("repeat"));
+
+
 		jpBarraRepro.add(jlBack,"dock west");
 		jpBarraRepro.add(jlPlay,"dock west");
 		jpBarraRepro.add(jlNext,"dock west");
 		
+		jpBarraRepetir.add(jlRepetir,"dock west");
+		jpBarraRepetir.add(jlSonido,"dock west");
+
+		
 		jpBarraReproduccio.add(jpBarraRepro,BorderLayout.WEST);
-		jpBarraReproduccio.add(jlSonido,BorderLayout.EAST);
+		jpBarraReproduccio.add(jpBarraRepetir,BorderLayout.EAST);
 				
 		jpReproduccio.add(jpBarraReproduccio, BorderLayout.SOUTH);		
 		
