@@ -61,11 +61,11 @@ public class ControladorReproductor implements MouseListener {
 		if(algoSeleccionat){
 			switch (opcio) {
 			case "play":
-				System.out.println("SELECTED ROW " + ControladorFinestres.fReproduccio.getTaulaMusica().getSelectedRow());
+				//System.out.println("SELECTED ROW " + ControladorFinestres.fReproduccio.getTaulaMusica().getSelectedRow());
 				enReproduccio = ControladorFinestres.fReproduccio.getTaulaMusica().getSelectedRow();
 			
 				
-				if(ControladorFinestres.getR().getSong().equals(nom + "_" + artista)) {
+				if(ControladorFinestres.getR().getSong().equals(nom + "_" + artista) && ControladorFinestres.getR().isStart()) {
 					ControladorFinestres.getR().pause();
 				}
 				else {
@@ -164,7 +164,14 @@ public class ControladorReproductor implements MouseListener {
 					}
 				}
 				break;
-	
+			case "repeat":
+				if (ControladorFinestres.getR().isRepeat()) {
+					ControladorFinestres.getR().setRepeat(false);
+				}
+				else {
+					ControladorFinestres.getR().setRepeat(true);
+				}
+				
 			default:
 				break;
 			}

@@ -45,11 +45,12 @@ public class Reproductor extends Thread{
 	
 	@Override
 	public void run()  {
-	
+		boolean first = true;
 		try {
             
-			if (isRepeat()) {
-				while (true) {
+			//if (isRepeat()) {
+				while (isRepeat() || first) {
+					first = false;
 					fi = false;
 					FileInputStream fis;
 		            fis = new FileInputStream(this.path);
@@ -75,8 +76,8 @@ public class Reproductor extends Thread{
 						}
 		            }
 				}
-			}
-			else {
+			//}
+			/*else {
 				FileInputStream fis;
 	            
 	            fis = new FileInputStream(this.path);
@@ -95,11 +96,16 @@ public class Reproductor extends Thread{
 						e.printStackTrace();
 					}
 	            }
-			}
+			}*/
 			
         } catch (BasicPlayerException | UnsupportedAudioFileException | IOException e) {
-            System.out.println("Final de canço");
+            
         }
+		setStart(false);
+        setPlaying(false);
+        File f = new File("./temp/" + this.song + ".mp3");
+        f.delete();
+    	System.out.println("Final de canço");
 	}
 	
 	public void pause(){
@@ -177,6 +183,7 @@ public class Reproductor extends Thread{
 	}
 
 	public void setRepeat(boolean repeat) {
+		System.out.println(repeat);
 		this.repeat = repeat;
 	}
 }

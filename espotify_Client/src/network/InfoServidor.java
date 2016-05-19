@@ -319,6 +319,14 @@ public class InfoServidor {
 		}
 	}
 	public void closeSessio(){
+		File file = new File("./temp/");
+		if (file.isDirectory()) {
+			File files[] = file.listFiles();
+			for (int i = 0; i <files.length; i++) {
+				File delfile = files[i];
+				delfile.delete();
+			}
+		}
 		newSocket();
 		try {
 			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
