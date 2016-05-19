@@ -32,6 +32,7 @@ import javax.swing.table.TableCellRenderer;
 
 import org.jdesktop.xswingx.PromptSupport;
 
+import controller.AddCancoLlistaController;
 import controller.CloseWindowController;
 import controller.ControladorBotons;
 import controller.ControladorFinestres;
@@ -355,6 +356,8 @@ public class FinestraReproduccio extends JFrame{
 		for(int i=0;i<columnas.size();i++){
 			taulaMusica.getColumnModel().getColumn(i).setCellRenderer(new TableRenderer());
 		}
+		
+		taulaMusica.addMouseListener(new AddCancoLlistaController(this));
 		//JScrollPane jspAux = new JScrollPane(taulaMusica);	
 		this.jspLlistatDisponible = new JScrollPane(taulaMusica);	
 		this.jspLlistatDisponible.setBackground(new Color(50,50,50));
@@ -362,6 +365,7 @@ public class FinestraReproduccio extends JFrame{
 		this.jspLlistatDisponible.setFocusable(false);
 
 	}
+	
 	
 	public void setUsuaris(ArrayList<User> alUsers) {
 		this.alUsers = alUsers;	
