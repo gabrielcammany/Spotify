@@ -32,7 +32,7 @@ import javax.swing.table.TableCellRenderer;
 
 import org.jdesktop.xswingx.PromptSupport;
 
-import controller.AddCancoLlistaController;
+import controller.CancoLlistaController;
 import controller.CloseWindowController;
 import controller.ControladorBotons;
 import controller.ControladorFinestres;
@@ -357,7 +357,7 @@ public class FinestraReproduccio extends JFrame{
 			taulaMusica.getColumnModel().getColumn(i).setCellRenderer(new TableRenderer());
 		}
 		
-		taulaMusica.addMouseListener(new AddCancoLlistaController(this));
+		taulaMusica.addMouseListener(new CancoLlistaController(this,alMusica));
 		//JScrollPane jspAux = new JScrollPane(taulaMusica);	
 		this.jspLlistatDisponible = new JScrollPane(taulaMusica);	
 		this.jspLlistatDisponible.setBackground(new Color(50,50,50));
@@ -383,7 +383,7 @@ public class FinestraReproduccio extends JFrame{
 		
 		jtpLlistatPropia.addTab("Crear llista",new JScrollPane(CrearlLlista()));
 		jtpLlistatPropia.addTab("Visualitzar llistes", new JScrollPane(setVisualitzarLlistes()));	
-		jtpLlistatPropia.addTab("Eliminar llista", EliminarLlista());
+		//jtpLlistatPropia.addTab("Eliminar llista", EliminarLlista());
 		
 		this.jspLlistatPropia = new JScrollPane(jtpLlistatPropia);
 		this.jspLlistatPropia.setBackground(new Color(50,50,50));
@@ -456,7 +456,7 @@ public class FinestraReproduccio extends JFrame{
 	/**
 	 * Aquesta funcio permetra esborrar llistes
 	 */
-	public JScrollPane EliminarLlista(){
+	public JScrollPane ElisminarLlista(){
 		JScrollPane jspEliminarLlista = new JScrollPane();
 		jspEliminarLlista.setBackground(new Color(50,50,50));
 		jspEliminarLlista.getViewport().setBackground(new Color(50,50,50));

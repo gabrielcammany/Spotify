@@ -91,6 +91,20 @@ public class MessageServiceWorker implements Runnable {
 				//objectOutput.writeObject(usuaris);
 			}
 			
+			if(data[1].equals("addCancoLlista")){
+				
+				System.out.println("Afegir canco llista");
+				if(cadenas.afegeixCanco(data[2], data[3], data[0])){
+					DataOutputStream d = new DataOutputStream(this.sClient.getOutputStream());
+					d.writeInt(1);
+				}else{
+					DataOutputStream d = new DataOutputStream(this.sClient.getOutputStream());
+					d.writeInt(0);
+				}
+				
+				
+			}
+			
 			if (data[1].equals("creaLlista")) {
 				int realitzat = 0;
 				System.out.println("crea Llista");

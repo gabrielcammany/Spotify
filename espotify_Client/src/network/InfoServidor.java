@@ -80,6 +80,26 @@ public class InfoServidor {
 		
 	}
 	
+	public boolean afegeixCancoLlista(int idcanco, int idLlista){
+		try {
+			newSocket();
+			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
+			doStream.writeUTF(User.getId_usuari() + ":addCancoLlista:" + idcanco + ":" + idLlista);
+			System.out.println("Add canco llista amb id " + idcanco + "a la llista " + idLlista);
+			DataInputStream input3 = new DataInputStream(sServidor.getInputStream());
+			int trobat = input3.readInt();
+			doStream.close();
+			//if(trobat!= 0) ControladorFinestres.mostraPopUp(1,nickname);
+			//if(trobat ==0) ControladorFinestres.mostraPopUp(0,nickname);
+			
+			sServidor.close();
+			if(trobat==1){return true;}return false;
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return false;
+	}
+	
 	public void demanaUser(String nickname){
 		
 		try {

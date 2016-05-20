@@ -330,6 +330,33 @@ public class SocketController {
 		}
 		
 	}
+	
+	public boolean afegeixCanco(String idCanco, String idLlista,String idUsuari){
+		int CancoiLlista[] = new int[2];
+		CancoiLlista[0] = Integer.parseInt(idCanco);
+		CancoiLlista[1] = Integer.parseInt(idLlista);
+		boolean trobada = true;
+		for(Sessio s : Data.getaSessio()){
+			if(String.valueOf(s.getIdSessio()).equals(idUsuari)){
+				for(Llistes l: s.getLPropies()){
+					if(String.valueOf((l.getId_llistes())).equals(idLlista)){
+						for(Integer i:l.getAllIdCanco()){
+							if(i == Integer.parseInt(idCanco)){
+								trobada = false;
+								break;
+							}
+						}
+						break;
+					}
+				}
+				break;
+			}
+		}
+		if(trobada){ConectorDB.insertQuery(new Query().queryList(32, CancoiLlista));return true;}
+		return false;
+		
+		
+	}
 	public void votaCanco (String nomCanco , String estrelles) {
 		Canco c = null;
 		for (int i = 0; i < Data.getAlMusica().size(); i ++) {

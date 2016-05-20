@@ -163,6 +163,10 @@ public class Query {
 			int id_canco_llista_delete = ((int)obj);
 			String cad31 = ("DELETE FROM canco_llista WHERE canco_llista.id_canco_llista = "+id_canco_llista_delete+";");
 			return cad31;
+		case 32://eliminamos una cancion de la musica disponible.
+			int cancoillista[] = ((int[])obj);
+			String cad32 = ("INSERT INTO canco_llista(id_llista,id_canco)VALUES("+cancoillista[1]+","+cancoillista[0]+ ")");
+			return cad32;
 			
 		}
 		
