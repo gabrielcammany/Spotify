@@ -13,7 +13,9 @@ import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -21,6 +23,7 @@ import org.jdesktop.xswingx.PromptSupport;
 
 import controller.ButtonsController;
 import controller.DeleteController;
+import controller.GestioController;
 import model.Canco;
 import model.Data;
 import model.User;
@@ -29,7 +32,7 @@ import net.miginfocom.swing.MigLayout;
 
 /**
  * Creem la interficie del seervido composada per la "Gestio dels usuaris" i 
- * la "GestiÃ³ de mÃºsica"
+ * la gestio de musica
  * @author jorgemelguizo
  *
  *
@@ -38,6 +41,7 @@ import net.miginfocom.swing.MigLayout;
 @SuppressWarnings("serial")
 public class FinestraServidor extends JFrame {
 	
+	private GestioController gestioController;
 	private JPanel jpUsuari;
 	public JPanel jpMusica;
 	private Estadistica estadistica;
@@ -63,7 +67,9 @@ public class FinestraServidor extends JFrame {
 		return taulaUsuari;
 	}
 
-	public FinestraServidor() {}
+	public FinestraServidor(GestioController gestioController) {
+		this.gestioController = gestioController;
+	}
 	
 	public void setControlador(ButtonsController controlador) {
 		this.controlador = controlador;
@@ -114,23 +120,28 @@ public class FinestraServidor extends JFrame {
 		columnas.add("Data registre");
 		columnas.add("Ultim acces");
 		columnas.add("Numero de llistes");
-		columnas.add("Numero de llistes");
 		columnas.add("Numero de cancos");
 		columnas.add("Numero follower");
 		columnas.add("Numero following");
 		
 		Vector<Vector<String>> filas = new Vector<Vector<String>>();
 		
+		DefaultTableCellRenderer Alinear = new DefaultTableCellRenderer();
+		Alinear.setHorizontalAlignment(SwingConstants.CENTER);
+		
 		for (int i = 0; i < allUsers.size(); i ++) {
 			Vector<String> fila = new Vector<String>();
 			fila.add(((User)(allUsers.get(i))).getNickname());
 			fila.add(((User)(allUsers.get(i))).getData_reg());
 			fila.add(((User)(allUsers.get(i))).getData_ult());
-			fila.add("no esta hecho");
-			fila.add("no esta hecho");
-			fila.add("no esta hecho");
-			fila.add("no esta hecho");
-			fila.add("no esta hecho");
+			int numLlistes = gestioController.quantesLlistes(allUsers.get(i).getId_usuari());
+			fila.add(Integer.toString(numLlistes));
+			int numCancons = gestioController.quantesCancons(allUsers.get(i).getId_usuari());
+			fila.add(Integer.toString(numCancons));
+			int numFollowers = gestioController.quantsFollowers(allUsers.get(i).getId_usuari());
+			fila.add(Integer.toString(numFollowers));
+			int numFollowing = gestioController.quantsFollowing(allUsers.get(i).getId_usuari());
+			fila.add(Integer.toString(numFollowing));
 			
 			filas.add(fila);
 		}

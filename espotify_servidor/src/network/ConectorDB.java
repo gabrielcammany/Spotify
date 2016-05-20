@@ -99,7 +99,7 @@ public class ConectorDB {
              s =(Statement) conn.createStatement();
              rs = s.executeQuery (query);
              if (!rs.isBeforeFirst()){
-            	 System.out.println("[SERVER] Usuari no disponible.");
+            	 //System.out.println("[SERVER] Usuari no disponible.");
             	
              } 
              if(rs == null)return null;

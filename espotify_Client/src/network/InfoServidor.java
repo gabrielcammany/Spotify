@@ -347,12 +347,20 @@ public class InfoServidor {
 			doStream.writeUTF(User.getId_usuari()+":requestFollow:"+nickname);
 			DataInputStream input = new DataInputStream(sServidor.getInputStream());
 			int trobat = input.readInt();
-
-			if(trobat ==0) System.out.println("adeu");ControladorFinestres.mostraPopUp(0,nickname);
-			if(trobat == -1) System.out.println("hola");ControladorFinestres.mostraPopUp(2,nickname);
-			if(trobat!=-1){
-				User.getlUsersFollowing().add(new sUser(nickname, trobat));
-				ControladorFinestres.mostraPopUp(3,nickname);
+			System.out.println("TROBAT??? :" + trobat);
+			if(trobat ==0){
+				System.out.println("adeu");
+				ControladorFinestres.mostraPopUp(0,nickname);
+			} else {
+				if(trobat == -1) {
+					System.out.println("hola");
+					ControladorFinestres.mostraPopUp(2,nickname);
+				} else {
+					if(trobat!=-1){
+						User.getlUsersFollowing().add(new sUser(nickname, trobat));
+						ControladorFinestres.mostraPopUp(3,nickname);
+					}
+				}
 			}
 		
 		} catch (IOException e) {

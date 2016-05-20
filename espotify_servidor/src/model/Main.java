@@ -3,6 +3,7 @@ package model;
 import javax.swing.SwingUtilities;
 
 import controller.ButtonsController;
+import controller.GestioController;
 import network.ConectorDB;
 import network.JsonConfig;
 import view.FinestraServidor;
@@ -16,11 +17,11 @@ public class Main {
 				
 				
 				ConectorDB conn = new ConectorDB(JsonConfig.creaJson());
-
+				GestioController gestioController = new GestioController(conn);
 				// Creem la VISTA
 				MainWindow view = new MainWindow();
 				//User user = new User();
-				FinestraServidor viewF = new FinestraServidor();
+				FinestraServidor viewF = new FinestraServidor(gestioController);
 				// Creem el CONTROLADOR
 				// Establim la relacio CONTROLADOR->VISTA
 				ButtonsController controller = new ButtonsController(view, viewF);

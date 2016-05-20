@@ -177,6 +177,26 @@ public class Query {
 			String cad34 = ("DELETE FROM usuari_llista WHERE usuari_llista.id_llista = "+idllistaD+";");
 			return cad34;
 			
+		case 35:
+			int idUsuariQL = ((int) obj);
+			String cad35 = ("SELECT id_usuari FROM usuari_llista WHERE id_usuari = "+idUsuariQL+";");
+			return cad35;
+			
+		case 36:
+			int idUsuariQFollowers = ((int)obj);
+			String cad36 = ("SELECT id_follower FROM usuari_follower WHERE id_follower = "+idUsuariQFollowers+";");
+			return cad36;
+			
+		case 37:
+			int idUsuariQFollowing = ((int)obj);
+			String cad37 = ("SELECT id_user FROM usuari_follower WHERE id_user = " + idUsuariQFollowing+";");
+			return cad37;
+			
+		case 38:
+			int idUsuariQCanco = ((int)obj);
+			String cad38 = ("SELECT id_canco FROM canco_llista, usuari_llista WHERE canco_llista.id_llista = usuari_llista.id_llista AND usuari_llista.id_usuari = "+idUsuariQCanco+";");		
+			return cad38;
+			
 		}
 		
 		
