@@ -4,15 +4,14 @@ import java.awt.Component;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
 
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 
 import model.Canco;
+import model.Llistes;
 import model.User;
-import network.InfoServidor;
 import view.FinestraReproduccio;
 
 public class DeleteController implements MouseListener {
@@ -42,7 +41,24 @@ public class DeleteController implements MouseListener {
 			String nomLlista = (String) User.getlPropies().get(finestraReproduccio.getLlistesPropies().getSelectedIndex()).getNom_llista();
 			System.out.println("QUIERES BORRAR UNA CANCION DE UNA LISTA " + nom + nomLlista);
 			ControladorFinestres.getInfoServidor().eliminarCancoLlista(nom, nomLlista);
-		
+			for(Llistes l: User.getlPropies()){
+				if(l.getNom_llista().equals(nomLlista)){
+					for(Canco i:ControladorFinestres.getAlMusic()){
+						if(i.getNom().equals(nom)){
+							for(Integer num:l.getAllIdCanco()){
+								if(i.getidCanco() == num){
+									l.getAllIdCanco().remove(num);
+									break;
+								}
+							}
+							break;
+						}
+						
+					}
+					break;
+				}
+			}
+			finestraReproduccio.getTableModel().fireTableDataChanged();
 		}else {
 		
 			if (SwingUtilities.isRightMouseButton(e))
@@ -79,7 +95,7 @@ public class DeleteController implements MouseListener {
 						String nom = (String) finestraReproduccio.getTaulaFollowing().getValueAt(finestraReproduccio.getTaulaFollowing().getSelectedRow(), 0);
 						ControladorFinestres.getInfoServidor().unfollow(nom);
 						System.out.println("JODER");			
-
+						
 						finestraReproduccio.getModel().removeRow(finestraReproduccio.getTaulaFollowing().getSelectedRow());
 						finestraReproduccio.getModel().fireTableDataChanged();
 

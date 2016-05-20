@@ -42,7 +42,6 @@ public class CancoLlistaController extends MouseAdapter {
 			//afegim al menu
 			popupMenu.add(afegir);
 			popupMenu.add(submenu);	
-			
 			for(Llistes l: User.getlPropies()){
 				JMenuItem aux = new JMenuItem(l.getNom_llista());
 				submenu.add(aux);
@@ -57,7 +56,9 @@ public class CancoLlistaController extends MouseAdapter {
 							for(Canco c: al){
 								if(nomCanco.equals(c.getNom()) && artista.equals(c.getArtista())){
 									if(ControladorFinestres.getInfoServidor().afegeixCancoLlista(c.getidCanco(), l.getId_llistes())){
-										JOptionPane.showMessageDialog(finestraReproduccio,"S'ha inserit la llista correctament" , "Informacio", JOptionPane.ERROR_MESSAGE);
+										JOptionPane.showMessageDialog(finestraReproduccio,"S'ha inserit la llista correctament" , "Informacio", JOptionPane.INFORMATION_MESSAGE);
+										l.getAllIdCanco().add(c.getidCanco());
+										finestraReproduccio.getTableModel().fireTableDataChanged();
 									}else{
 										JOptionPane.showMessageDialog(finestraReproduccio, "Hi ha hagut un error a inserir", "Error", JOptionPane.ERROR_MESSAGE);
 									}
@@ -67,7 +68,6 @@ public class CancoLlistaController extends MouseAdapter {
 					}
 				});
 			}
-
 			// agafem l'event source
 			Component b=(Component)e.getSource();
 

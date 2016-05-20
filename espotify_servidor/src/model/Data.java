@@ -7,6 +7,7 @@ public class Data {
 	private static ArrayList<Sessio> aSessio;
 	private static ArrayList<User> user;
 	private static ArrayList<Canco> alMusica;
+	private static ArrayList<sLlista> update;
 
 	public static ArrayList<Sessio> getaSessio() {
 		return aSessio;

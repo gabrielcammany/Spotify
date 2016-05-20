@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 
 import javax.swing.BorderFactory;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -75,12 +76,13 @@ public class FinestraReproduccio extends JFrame{
 	private ArrayList<Canco> alMusica;
 	private JScrollPane jspCrearLlista;
 	private JPanel jpLlistatFollowing;
-	private JList jlLlistes;
+	private JList<String> jlLlistes;
+	private DefaultListModel<String> model;
 	
 	private JTable jtLlistatFollowing;
 	private DefaultTableModel tableModel;
 
-	public JList getLlistesPropies(){ return jlLlistes;};
+	public JList<String> getLlistesPropies(){ return jlLlistes;};
 	
 	public FinestraReproduccio(){
 		
@@ -319,7 +321,7 @@ public class FinestraReproduccio extends JFrame{
 		//JPanel jpLlistat = new JPanel(new BorderLayout());
 		this.alMusica = alMusica;
 		//Tabla musica disponible 
-		Vector<String> columnas = new Vector();
+		Vector columnas = new Vector();
 		
 		columnas.add("Nom canco");
 		columnas.add("Genere");
@@ -330,7 +332,7 @@ public class FinestraReproduccio extends JFrame{
    
 		Vector filas = new Vector();
 		for (int i = 0; i <alMusica.size(); i ++) {
-			Vector<String> fila = new Vector();
+			Vector fila = new Vector();
 			
 			fila.add(alMusica.get(i).getNom());
 			fila.add(alMusica.get(i).getGenere());
@@ -347,7 +349,7 @@ public class FinestraReproduccio extends JFrame{
 			filas.add(fila);
 		}
 	
-		taulaMusica = new JTable(filas, columnas){
+		taulaMusica = new JTable( filas, columnas){
 		
 		public boolean isCellEditable (int rowIndex, int vColIndex) {
 			return false;
@@ -424,18 +426,23 @@ public class FinestraReproduccio extends JFrame{
 					System.out.println(jtfPrivadaSN.getText());
 					if(jtfPrivadaSN.getText().equals("s") || jtfPrivadaSN.getText().equals("S")){
 						//si es privada es 0
-						System.out.println("he entrat aquiii");	
-						if(ControladorFinestres.crearLlista(jtfNomLlista.getText(), 1) == 1){
+						int idLlista = ControladorFinestres.crearLlista(jtfNomLlista.getText(), 0);
+						if(idLlista != 0){
 							JOptionPane.showMessageDialog(jpCrearLlista, "La llista s'ha inserit correctament ", "Informacio", JOptionPane.INFORMATION_MESSAGE);
+							if(jtfPrivadaSN.getText().equals("s"))
+							User.getlPropies().add(new Llistes(jtfNomLlista.getText(),idLlista,0));
+							getModel().fireTableDataChanged();
 						}else{
 							JOptionPane.showMessageDialog(jpCrearLlista, "Hi ha hagut un error al inserir. ", "Error", JOptionPane.INFORMATION_MESSAGE);
 						}
 						
 					}
 					if(jtfPrivadaSN.getText().equals("n") || jtfPrivadaSN.getText().equals("N")){
-						System.out.println("he entrat aquiii");	
-						if(ControladorFinestres.crearLlista(jtfNomLlista.getText(), 0) == 1){
+						int idLlista = ControladorFinestres.crearLlista(jtfNomLlista.getText(), 1);
+						if(idLlista !=0){
 							JOptionPane.showMessageDialog(jpCrearLlista, "La llista s'ha inserit correctament ", "Informacio", JOptionPane.INFORMATION_MESSAGE);
+							User.getlPropies().add(new Llistes(jtfNomLlista.getText(),idLlista,1));
+							getModel().fireTableDataChanged();
 						}else{
 							JOptionPane.showMessageDialog(jpCrearLlista, "Hi ha hagut un error al inserir. ", "Error", JOptionPane.INFORMATION_MESSAGE);
 						}
@@ -467,7 +474,11 @@ public class FinestraReproduccio extends JFrame{
 	
 	public JPanel setVisualitzarLlistes(){
 		
-		jlLlistes = new JList(ControladorFinestres.getlistesPropies().toArray());
+		model = new DefaultListModel<String>();
+		for(String s:ControladorFinestres.getlistesPropies()){
+			model.addElement(s);
+		}
+		jlLlistes = new JList<String>(model);
 		jlLlistes.setBorder(BorderFactory.createEmptyBorder(5,5,5,30));
 		jlLlistes.setCellRenderer(new ListRenderer());
 		jlLlistes.setBackground(new Color(70,70,70));
@@ -479,59 +490,63 @@ public class FinestraReproduccio extends JFrame{
 		
 		//jpVisualitzarLlistes.setFocusable(false);
 		
-		jlLlistes.addMouseListener(new ControladorLlistesMusica(jlLlistes));
+		jlLlistes.addMouseListener(new ControladorLlistesMusica(jlLlistes,this));
 			
 		return jpVisualitzarLlistes;
 	}
 	
+	public void setModel(DefaultListModel<String> model) {
+		this.model = model;
+	}
+
 	/**
 	 * Aquesta funcio rep l'array de totes les cançons de la llista seleccionada
 	 * 
 	 */
 	public void actualitzaLlistaSeleccionada(ArrayList<Canco> musicaLlista ){
-		
-		Vector<String> columnas = new Vector();
+				
+		Vector<String> columnas = new Vector<String>();
 
 		columnas.add("Nom canco");
 		columnas.add("Genere");
 		columnas.add("Album");
 		columnas.add("Artistes");
 
-
-		Vector filas = new Vector();
-		for (int i = 0; i <musicaLlista.size(); i ++) {
-			Vector<String> fila = new Vector();
-
-			fila.add(musicaLlista.get(i).getNom());
-			fila.add(musicaLlista.get(i).getGenere());
-			fila.add(musicaLlista.get(i).getAlbum());
-			fila.add(musicaLlista.get(i).getArtista());
-
-			filas.add(fila);
-		}
-		System.out.println(columnas);
+		Vector<String> filas = new Vector<String>();
 		taulaMusicaLlista = new JTable(filas, columnas){
-		
-		public boolean isCellEditable (int rowIndex, int vColIndex) {
+			public boolean isCellEditable (int rowIndex, int vColIndex) {
 			return false;
 		}};
+		
+		tableModel = (DefaultTableModel)taulaMusicaLlista.getModel();
+		tableModel.setRowCount(0);
+		
+		String[] data = new String[4];
+		for (int i = 0; i < musicaLlista.size(); i ++) {
+
+			if (!musicaLlista.get(i).getNom().isEmpty()){
+				data[0] = musicaLlista.get(i).getNom();
+				data[1] = musicaLlista.get(i).getGenere();
+				data[2] = musicaLlista.get(i).getAlbum();
+				data[3] = musicaLlista.get(i).getArtista();
+				tableModel.addRow(data);
+			}
+		}
+
 		
 		for(int i=0;i<columnas.size();i++){
 			taulaMusicaLlista.getColumnModel().getColumn(i).setCellRenderer(new TableRenderer());
 		}
-		
-		
-		//sense aixo es quedara el primer jpanel(border.center)
-		BorderLayout layout =  (BorderLayout) jpVisualitzarLlistes.getLayout();
-		if (layout.getLayoutComponent(BorderLayout.CENTER) != null){
+		BorderLayout layout = (BorderLayout) jpVisualitzarLlistes.getLayout();
+		if(layout.getLayoutComponent(BorderLayout.CENTER)!= null){
 			jpVisualitzarLlistes.remove(layout.getLayoutComponent(BorderLayout.CENTER));
-		}	
+		}
 		
+		taulaMusicaLlista.setModel(tableModel);
+		tableModel.fireTableDataChanged();
 		taulaMusicaLlista.addMouseListener(new VotarController(this));
-		
 		jpVisualitzarLlistes.add(new JScrollPane(taulaMusicaLlista), BorderLayout.CENTER);
 		jpVisualitzarLlistes.setBackground(new Color(50,50,50));
-		//jpVisualitzarLlistes.repaint();
 		jpVisualitzarLlistes.validate();
 	}
 	
@@ -619,7 +634,7 @@ public class FinestraReproduccio extends JFrame{
 	 * Aquesta funcio rep l'array de tots els usuaris que segueix i els mostra en una taua
 	 */
 	
-	public void setUsuarisFollowing(ArrayList<sUser> alUsuari){
+	public void setUsuarisFollowing(){
 		//podem escollir entre llistar els usuaris que seguim o buscar un usuari per seguir-lo/seixar-lo de seguir
 		JTabbedPane jtpFollowing = new JTabbedPane();
 		//buscar un nou usuari
@@ -635,7 +650,7 @@ public class FinestraReproduccio extends JFrame{
 		
 
 		//this.jspUsuarisFollowing = new JScrollPane(taulaUsuariFollowing);	
-		this.jspUsuarisFollowing = new JScrollPane(llistatFollowing(alUsuari));
+		this.jspUsuarisFollowing = new JScrollPane(llistatFollowing(User.getlUsersFollowing()));
 		this.jspUsuarisFollowing.setBackground(new Color(50,50,50));
 		this.jspUsuarisFollowing.getViewport().setBackground(new Color(50,50,50));
 		//jspUsuarisFollowing.setFocusable(false);
@@ -667,7 +682,7 @@ public class FinestraReproduccio extends JFrame{
 		jbBusca.setText("Buscar");
 		
 		//Afegim el controlador al boto de buscar
-		ControladorBotons controladorBusca = new ControladorBotons(jtBusca);
+		ControladorBotons controladorBusca = new ControladorBotons(jtBusca,jpReproduccio);
 		jbBusca.addMouseListener(controladorBusca);
 		
 		JPanel jpBuscar = new JPanel (new BorderLayout());
@@ -690,7 +705,7 @@ public class FinestraReproduccio extends JFrame{
 	}
 	
 	public DefaultTableModel getModel() {
-		return tableModel;
+		return getTableModel();
 	}
 	
 	public JPanel llistatFollowing(ArrayList <sUser> alUser) {
@@ -709,9 +724,9 @@ public class FinestraReproduccio extends JFrame{
 		}};
 		
 		
-		tableModel = (DefaultTableModel)jtLlistatFollowing.getModel();
-		tableModel.setRowCount(0);
-		tableModel.setRowCount(alUser.size());
+		setTableModel((DefaultTableModel)jtLlistatFollowing.getModel());
+		getTableModel().setRowCount(0);
+		getTableModel().setRowCount(alUser.size());
 		System.out.println(alUser.size());
 		
 		String[]data = new String[1];
@@ -720,14 +735,14 @@ public class FinestraReproduccio extends JFrame{
 			//String[]data = new String[4];
 			if (!alUser.get(i).getNickname().isEmpty()){
 				data[0] = alUser.get(i).getNickname();
-				tableModel.insertRow(i, data);
+				getTableModel().insertRow(i, data);
 				
 			}
 		}
 		if(alUser != null){
-			for(int i = alUser.size(); i < tableModel.getRowCount(); i++) {
+			for(int i = alUser.size(); i < getTableModel().getRowCount(); i++) {
 				
-				tableModel.removeRow(i);
+				getTableModel().removeRow(i);
 				
 			}
 		}
@@ -738,7 +753,7 @@ public class FinestraReproduccio extends JFrame{
 		//tableModel.addRow(data);
 		
 		
-		jtLlistatFollowing.setModel(tableModel);
+		jtLlistatFollowing.setModel(getTableModel());
 		jtLlistatFollowing.addMouseListener(new DeleteController(this, "llistaFollowing"));
 
 		
@@ -750,7 +765,7 @@ public class FinestraReproduccio extends JFrame{
 		//jtLlistatFollowing.setBackground(new Color(184,184,184));
 		
 		JScrollPane jspLlistat = new JScrollPane(jtLlistatFollowing);
-		tableModel.fireTableDataChanged();
+		getTableModel().fireTableDataChanged();
 		
 		jpLlistatFollowing.add(jspLlistat, BorderLayout.CENTER);
 		jpLlistatFollowing.add(jtTitol, BorderLayout.PAGE_START );
@@ -828,6 +843,14 @@ public class FinestraReproduccio extends JFrame{
 	
 	public JTable getTaulaLlistaMusicaFollowing() {
 		return taulaMusicaLlista;
+	}
+
+	public DefaultTableModel getTableModel() {
+		return tableModel;
+	}
+
+	public void setTableModel(DefaultTableModel tableModel) {
+		this.tableModel = tableModel;
 	}
 	
 }

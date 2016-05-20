@@ -7,6 +7,7 @@ public class User{
 	private static int id_usuari;
 	private static ArrayList<Llistes> lPropies;
 	private static ArrayList<Llistes> lFollowing;
+	private static ArrayList<sUser> lUsersFollowing;
 
 	public static ArrayList<Llistes> getlFollowing() {
 		return lFollowing;
@@ -55,6 +56,14 @@ public class User{
 
 	public static void setlPropies(ArrayList<Llistes> lPropies) {
 		User.lPropies = lPropies;
+	}
+
+	public static ArrayList<sUser> getlUsersFollowing() {
+		return lUsersFollowing;
+	}
+
+	public static void setlUsersFollowing(ArrayList<sUser> lUsersFollowing) {
+		User.lUsersFollowing = lUsersFollowing;
 	}
 	
 	

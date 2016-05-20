@@ -79,7 +79,7 @@ public class MessageServiceWorker implements Runnable {
 				}
 			}
 
-			if (data[1].equals("UserRequest")) {
+			/* (data[1].equals("UserRequest")) {
 
 				System.out.println("request usuaris");
 				int idTrobat= 0 ;
@@ -89,7 +89,7 @@ public class MessageServiceWorker implements Runnable {
 				d.writeInt(idTrobat);
 				//ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
 				//objectOutput.writeObject(usuaris);
-			}
+			}*/
 			
 			if(data[1].equals("addCancoLlista")){
 				
@@ -113,18 +113,25 @@ public class MessageServiceWorker implements Runnable {
 					if(u.getIdSessio() == Integer.parseInt(data[0])){
 						for(Llistes l: u.getLPropies()){
 							if(l.getNom_llista().equals(data[2])){
+								System.out.println("Lhe trobat");
 								break;
 							}else{
 								Llistes llista = new Llistes();
 								llista.setNom_llista(data[2]);
 								llista.setPrivacitat(Integer.parseInt(data[3]));
 								llista.setId_llistes(0);
-								cadenas.crearLlistes(llista,data[0]);
-								realitzat = 1;
+								realitzat = cadenas.crearLlistes(llista,data[0]);
 								break;
 							}
 						}
-						if(realitzat==1)Data.getaSessio().get(i).setLPropies(cadenas.omplirLlistes(u.getIdSessio()));
+						if(u.getLPropies().isEmpty()){
+							Llistes llista = new Llistes();
+							llista.setNom_llista(data[2]);
+							llista.setPrivacitat(Integer.parseInt(data[3]));
+							llista.setId_llistes(0);
+							realitzat = cadenas.crearLlistes(llista,data[0]);
+						}
+						if(realitzat!=0)Data.getaSessio().get(i).setLPropies(cadenas.omplirLlistes(u.getIdSessio()));
 						break;
 					}
 					i++;
@@ -145,7 +152,25 @@ public class MessageServiceWorker implements Runnable {
 						id = u.getId_usuari();
 					}
 				}
-				cadenas.hacerFollow(Integer.parseInt(data[0]),id);
+				for(Sessio s:Data.getaSessio()){
+					if(s.getIdSessio() == Integer.parseInt(data[0])){
+						for(sUser u:s.getlUserFollow()){
+							if(u.getNickname().toLowerCase().equals(data[2].toLowerCase())){
+								id = -1;
+								break;
+							}
+						}
+						break;
+					}
+				}
+				DataOutputStream d = new DataOutputStream(this.sClient.getOutputStream());
+				if(id==0){
+					d.writeInt(0);
+				}else if(id == -1){
+					d.writeInt(-1);
+				}else{
+					d.writeInt(cadenas.hacerFollow(Integer.parseInt(data[0]),id));
+				}
 				
 			}
 			if(data[1].equals("requestLlistesFollow")){
@@ -163,7 +188,16 @@ public class MessageServiceWorker implements Runnable {
 				}
 			}
 			
+			if(data[1].equals("eliminaLlista")){
+				cadenas.eliminaLlista(Integer.parseInt(data[2]),Integer.parseInt(data[0]));
+			}
 
+			if(data[1].equals("actualitzaMusicaLlista")){
+				ArrayList<Integer> result =  cadenas.actualitzaMusicaLlista(Integer.parseInt(data[2]));
+				ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
+				objectOutput.writeObject(result);
+			}
+			
 			if (data[1].equals("requestUsuarisFollower")) {
 				System.out.println("estamos aqui porque hemos llegado");
 				ArrayList<sUser> usuaris = new ArrayList<sUser>();
@@ -250,9 +284,7 @@ public class MessageServiceWorker implements Runnable {
 			}
 			
 			if(data[1].equals("eliminaCancoLlista")) {
-				System.out.println("ANTES");
 				cadenas.eliminaCancoLlista(data[0], data[2], data[3]);
-				System.out.println("DESPUES");
 			}
 			
 			

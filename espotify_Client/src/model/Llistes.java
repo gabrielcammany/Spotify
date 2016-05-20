@@ -32,6 +32,14 @@ public class Llistes implements Serializable{
 	public void setAllIdCanco(ArrayList<Integer> allIdCanco) {
 		this.allIdCanco = allIdCanco;
 	}
+	
+	public Llistes(String nom, int id, int privacitat){
+		if(allIdCanco==null)allIdCanco=new ArrayList<Integer>();
+		this.nom_llista = nom;
+		this.id_llistes = id;
+		this.privacitat = privacitat;
+	}
+	
 	public Llistes(){
 		if(allIdCanco==null)allIdCanco=new ArrayList<Integer>();
 	}

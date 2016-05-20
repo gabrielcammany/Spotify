@@ -42,12 +42,12 @@ public class InfoServidor {
 
 		private ControladorLlistar controladorLlistar;
 		private FileInputStream fSongServ;
-		private Socket sServidor ;
+		private static Socket sServidor ;
 		private BufferedOutputStream bos;
 		
 		public InfoServidor(){}
 		
-		public void newSocket(){
+		public static void newSocket(){
 			try {
 				sServidor = new Socket("localhost", 34567);
 			} catch (UnknownHostException e) {
@@ -100,7 +100,7 @@ public class InfoServidor {
 		return false;
 	}
 	
-	public void demanaUser(String nickname){
+	/*public void demanaUser(String nickname){
 		
 		try {
 			System.out.println("[Client]Request user '"+nickname+"'.");
@@ -111,14 +111,14 @@ public class InfoServidor {
 			DataInputStream input3 = new DataInputStream(sServidor.getInputStream());
 			int trobat = input3.readInt();
 			doStream.close();
-			if(trobat!= 0) ControladorFinestres.mostraPopUp(1,nickname);
+			if(trobat != 0) ControladorFinestres.mostraPopUp(1,nickname);
 			if(trobat ==0) ControladorFinestres.mostraPopUp(0,nickname);
 			sServidor.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
-	}
+	}*/
 	
 	public void unfollow(String nickname){
 		
@@ -146,7 +146,6 @@ public class InfoServidor {
 				
 				ArrayList<Llistes> llFollowing = (ArrayList<Llistes>) objectInput.readObject();
 				User.setlFollowing(llFollowing);
-				ControladorFinestres.actualitzaLlistesFollowing(llFollowing);
 				objectInput.close();
 				doStream.close();
 				sServidor.close();
@@ -240,6 +239,51 @@ public class InfoServidor {
 		}
 		}
 	
+	public boolean eliminaLlista(String id){
+		int eliminada = 0;
+		System.out.println(id);
+		newSocket();
+		try {
+			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
+			System.out.println(User.getId_usuari()+":eliminaLlista:" + id);
+			doStream.writeUTF(User.getId_usuari()+":eliminaLlista:" + id);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try{
+			sServidor.close();
+		}catch(IOException e2){
+			e2.printStackTrace();
+		}
+		return true;
+	}
+	
+	public static ArrayList<Integer> actualitzaMusicaLListaFollowing(int id){
+		int actualizada = 0;
+		newSocket();
+		ArrayList<Integer> musica = new ArrayList<Integer>();
+		try {
+			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
+			System.out.println(User.getId_usuari()+":actualitzaMusicaLlista:" + id);
+			doStream.writeUTF(User.getId_usuari()+":actualitzaMusicaLlista:" + id);
+			ObjectInputStream inStream = new ObjectInputStream(sServidor.getInputStream());
+			musica = (ArrayList<Integer>)inStream.readObject();
+		} catch (IOException | ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		try{
+			sServidor.close();
+		}catch(IOException e2){
+			e2.printStackTrace();
+		}
+		return musica;
+		
+	}
+	
 	public void peticioUsuaris() throws UnknownHostException, IOException, ClassNotFoundException {
 		newSocket();
 		ArrayList <User> alUsers = new ArrayList<User>();
@@ -301,8 +345,15 @@ public class InfoServidor {
 		try {
 			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
 			doStream.writeUTF(User.getId_usuari()+":requestFollow:"+nickname);
-			
-			System.out.println("estas seguin a '"+nickname+"'.");	
+			DataInputStream input = new DataInputStream(sServidor.getInputStream());
+			int trobat = input.readInt();
+
+			if(trobat ==0) System.out.println("adeu");ControladorFinestres.mostraPopUp(0,nickname);
+			if(trobat == -1) System.out.println("hola");ControladorFinestres.mostraPopUp(2,nickname);
+			if(trobat!=-1){
+				User.getlUsersFollowing().add(new sUser(nickname, trobat));
+				ControladorFinestres.mostraPopUp(3,nickname);
+			}
 		
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -330,7 +381,6 @@ public class InfoServidor {
 		alUsers = (ArrayList<sUser>) objectInput.readObject();
 		doStream.close();
 
-		
 		ControladorFinestres.actualitzaUsuarisFollowing(alUsers);
 		try{
 			sServidor.close();
@@ -369,6 +419,7 @@ public class InfoServidor {
 		try {
 			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
 			doStream.writeUTF(User.getId_usuari()+":creaLlista:" + nom + ":" + privada);
+			
 			DataInputStream input3 = new DataInputStream(sServidor.getInputStream());
 			trobat = input3.readInt();
 		} catch (IOException e) {

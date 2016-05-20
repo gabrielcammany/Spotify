@@ -36,6 +36,14 @@ public class ControladorFinestres {
 	private static ArrayList<Canco> alMusic;
 	
 
+	public static ArrayList<Canco> getAlMusic() {
+		return alMusic;
+	}
+
+	public static void setAlMusic(ArrayList<Canco> alMusic) {
+		ControladorFinestres.alMusic = alMusic;
+	}
+
 	public ControladorFinestres(){
 		
 	}
@@ -49,6 +57,7 @@ public class ControladorFinestres {
 		fLogin = new FinestraLogin();
 		ControladorFinestres.infoServidor = infoServidor;
 		setR(new Reproductor(""));
+		
 		/*Thread t = new Thread(){
 			@Override
 			public void run(){
@@ -131,9 +140,10 @@ public class ControladorFinestres {
 		
 		//infoServidor =new InfoServidor();
 		//infoServidor.demanaSessio();
-		infoServidor.peticioMusica();
 		infoServidor.peticioFollowers();
+		infoServidor.peticioMusica();
 		infoServidor.peticioUsuaris();
+		infoServidor.demanarLlistesFollowing();
 	}
 	
 	/*
@@ -181,7 +191,8 @@ public class ControladorFinestres {
 	 */
 
 	public static  void actualitzaUsuarisFollowing(ArrayList<sUser> alUsuari){
-		fReproduccio.setUsuarisFollowing(alUsuari);
+		User.setlUsersFollowing(alUsuari);
+		fReproduccio.setUsuarisFollowing();
 		
 	}
 	
@@ -190,7 +201,10 @@ public class ControladorFinestres {
 	 * 
 	 */
 	public static void novaOpcio(String opcio) {
-		if(opcio.equals("llistesfollowing"))infoServidor.demanarLlistesFollowing();
+		if(opcio.equals("llistesfollowing") ){
+			if(User.getlFollowing() == null)infoServidor.demanarLlistesFollowing();
+			ControladorFinestres.actualitzaLlistesFollowing(User.getlFollowing());
+		}
 		fReproduccio.actualitzaOpcio(opcio);
 	}
 	
@@ -207,7 +221,7 @@ public class ControladorFinestres {
 	}
 	
 	public static ArrayList<String> getlistesPropies() {
-		ArrayList<String> nomsLlistes = new ArrayList();
+		ArrayList<String> nomsLlistes = new ArrayList<String>();
 		for (int i = 0; i<User.getlPropies().size(); i++) {
 			nomsLlistes.add(User.getlPropies().get(i).getNom_llista());	
 		}
@@ -223,8 +237,6 @@ public class ControladorFinestres {
 		for (int i = 0; i < llistaSeleccionada.getAllIdCanco().size(); i ++) {
 			for (int j = 0; j < alMusic.size(); j++) {
 				if(llistaSeleccionada.getAllIdCanco().get(i) == alMusic.get(j).getidCanco()) {
-					System.out.println("TROBADA");
-					System.out.println(alMusic.get(j).getidCanco());
 					musicaLlista.add(alMusic.get(j));
 				}
 			}
@@ -232,25 +244,35 @@ public class ControladorFinestres {
 		
 		fReproduccio.actualitzaLlistaSeleccionada(musicaLlista);
 	}
-	
-	public static void actualitzaTablaLlistesFollowing (int indexSeleccio) {
-		Llistes llistaSeleccionada = new Llistes();
 
-		llistaSeleccionada = User.getlFollowing().get(indexSeleccio);
-		
-		ArrayList<Canco> musicaLlista = new ArrayList<Canco>();
-		
-		
-		for (int i = 0; i < llistaSeleccionada.getAllIdCanco().size(); i++) {
-			for (int j = 0; j < alMusic.size(); j++) {
-				
-				if(llistaSeleccionada.getAllIdCanco().get(i) == alMusic.get(j).getidCanco()) {
-					musicaLlista.add(alMusic.get(j));
+	public static boolean actualitzaTablaLlistesFollowing (int indexSeleccio) {
+
+		ArrayList<Integer> result = InfoServidor.actualitzaMusicaLListaFollowing(User.getlFollowing().get(indexSeleccio).getId_llistes());
+		if(result != null){
+			User.getlFollowing().get(indexSeleccio).setAllIdCanco(result);
+			Llistes llistaSeleccionada = User.getlFollowing().get(indexSeleccio);
+
+			ArrayList<Canco> musicaLlista = new ArrayList<Canco>();
+
+			
+			for (int i = 0; i < llistaSeleccionada.getAllIdCanco().size(); i++) {
+				for (int j = 0; j < alMusic.size(); j++) {
 					
+					if(llistaSeleccionada.getAllIdCanco().get(i) == alMusic.get(j).getidCanco()) {
+						musicaLlista.add(alMusic.get(j));
+						
+					}
 				}
 			}
+			fReproduccio.actualitzaLlistaFollowingSeleccionada(musicaLlista);
+			return true;
+		}else{
+			JOptionPane.showMessageDialog(fReproduccio,"La llista ja no existeix" , "Error", JOptionPane.ERROR_MESSAGE);
+			User.getlFollowing().remove(indexSeleccio);
+			return false;
 		}
-		fReproduccio.actualitzaLlistaFollowingSeleccionada(musicaLlista);
+		
+		
 	}
 	
 	
@@ -279,6 +301,18 @@ public class ControladorFinestres {
 					
 					
 				}
+			case 2:
+				JOptionPane.showMessageDialog(fReproduccio,
+					    "Ja segueixes a aquest usuari",
+					    "Error",
+					    JOptionPane.ERROR_MESSAGE);
+				break;
+
+			case 3:
+				JOptionPane.showMessageDialog(fReproduccio,
+					    "Enhorabona! Segueixes a " + nickname,
+					    "Informacio",
+					    JOptionPane.INFORMATION_MESSAGE);
 				break;
 		}
 	}

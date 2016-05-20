@@ -3,6 +3,7 @@ package controller;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import model.Canco;
 import model.Data;
@@ -193,7 +194,7 @@ public class SocketController {
 
 		return aUsers;
 	}
-
+	
 	public int songRequest(String nCanco, String nArtista){
 		ArrayList<Canco> allMusic = Data.getAlMusica();
 		int size = Data.getAlMusica().size();
@@ -229,10 +230,13 @@ public class SocketController {
 		return i;
 	}
 	
-	public void hacerFollow(Integer idUser,Integer idFollow){
+	public int hacerFollow(Integer idUser,Integer idFollow){
 		String aux = idUser.toString().concat("/"+idFollow.toString());
 		conn.insertQuery(new Query().queryList(13, aux));
+		return 1;
 	}
+	
+	
 	
 	public void unfollow(Integer idSesio,String nom){
 		int id = 0;
@@ -251,15 +255,21 @@ public class SocketController {
 	}
 	public ArrayList<Llistes> omplirLlistesFollowing(ArrayList<sUser> lUserFollow ){
 		int size = lUserFollow.size();
-		int iUser = 0;
 		
 		ArrayList<Llistes> llFollowers =new ArrayList<Llistes>();
-		while(iUser<size){
-			ArrayList<Llistes> ll  = omplirLlistes(lUserFollow.get(iUser).getId_usuari());
-			for(Llistes l : ll)if(l.getPrivacitat() !=(1))ll.remove(l);
-			
-			for(Llistes l : ll)llFollowers.add(l);
-			iUser++;
+		for(int i = 0;i<size;i++){
+			ArrayList<Llistes> ll  = omplirLlistes(lUserFollow.get(i).getId_usuari());
+			if(ll != null){
+				System.out.println("####UNA ");
+				Iterator<Llistes> iter = ll.iterator();
+				while (iter.hasNext()) {
+				    Llistes str = iter.next();
+				    if(str.getPrivacitat() != 1){
+						iter.remove();
+					}
+				}
+				for(Llistes l : ll)llFollowers.add(l);
+			}
 		}
 		return llFollowers;
 	}
@@ -272,37 +282,38 @@ public class SocketController {
 		System.out.println(" " + id_user);
 		ResultSet responseServer = conn.selectQuery(q.queryList(7,id_user));
 
-		if(responseServer == null) return ll;
+		if(responseServer == null) return null;
 		
 		try {
 
 			while (responseServer.next()) {
-				Llistes al = new Llistes();
-				ArrayList<Integer> aCancons = new ArrayList<Integer>();
-				int idACanco = 0 ;
-
-				al.setId_llistes(responseServer.getInt("id_llista"));
-				
-
-				ResultSet responseServer2 = conn.selectQuery(q.queryList(8,al.getId_llistes()));
-				while (responseServer2.next()) {
-					al.setNom_llista(responseServer2.getString("nom_llista"));
+				if(responseServer != null){
+					Llistes al = new Llistes();
+					ArrayList<Integer> aCancons = new ArrayList<Integer>();
+					int idACanco = 0 ;
+	
+					al.setId_llistes(responseServer.getInt("id_llista"));
 					
-					al.setPrivacitat(responseServer2.getInt("privacitat"));
-				
-				}
-				System.out.println("[omplirLlistes]# "+al.getNom_llista());
-				
-				ResultSet responseServer3 = conn.selectQuery(q.queryList(9,al.getId_llistes()));
-				while (responseServer3.next()) {
+	
+					ResultSet responseServer2 = conn.selectQuery(q.queryList(8,al.getId_llistes()));
+					while (responseServer2.next()) {
+						al.setNom_llista(responseServer2.getString("nom_llista"));
+						
+						al.setPrivacitat(responseServer2.getInt("privacitat"));
 					
-					aCancons.add(responseServer3.getInt("id_canco"));
-					System.out.println("[SERVIDOR][Llista]id_canco '"+aCancons.get(idACanco));
-					idACanco++;
+					}
+					System.out.println("[omplirLlistes]# "+al.getNom_llista());
+					
+					ResultSet responseServer3 = conn.selectQuery(q.queryList(9,al.getId_llistes()));
+					while (responseServer3.next()) {
+						
+						aCancons.add(responseServer3.getInt("id_canco"));
+						System.out.println("[SERVIDOR][Llista]id_canco '"+aCancons.get(idACanco));
+						idACanco++;
+					}
+					al.setAllIdCanco(aCancons);
+					ll.add(al);
 				}
-				al.setAllIdCanco(aCancons);
-				ll.add(al);
-
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -310,7 +321,7 @@ public class SocketController {
 		return ll;
 	}
 	
-	public void crearLlistes(Llistes l,String id_usuari){
+	public int crearLlistes(Llistes l,String id_usuari){
 		String[] info = new String[2];
 		ConectorDB.insertQuery(new Query().queryList(23, l));
 		ResultSet rs1 = conn.selectQuery(new Query().queryList(24,l));
@@ -328,6 +339,7 @@ public class SocketController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return idLlista;
 		
 	}
 	
@@ -374,6 +386,39 @@ public class SocketController {
 		
 		conn.updateQuery(response);
 	
+	}
+	
+	public ArrayList<Integer> actualitzaMusicaLlista(int id){
+		ArrayList<Integer> songs = new ArrayList<Integer>();
+		ResultSet responseServer = conn.selectQuery(new Query().queryList(9,id));
+		if(responseServer != null){
+			try {
+				while (responseServer.next()) {
+					songs.add(responseServer.getInt("id_canco"));
+				}
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else{
+			return null;
+		}
+		return songs;
+	}
+	
+	public void eliminaLlista(int id, int idUsuari){
+		conn.deleteQuery(new Query().queryList(31, id));
+		conn.deleteQuery(new Query().queryList(33, id));
+		conn.deleteQuery(new Query().queryList(34, id));
+		for(Sessio s:Data.getaSessio()){
+			if(s.getIdSessio() == idUsuari ){
+				for(Llistes l:s.getLPropies()){
+					if(l.getId_llistes() == id){
+						s.getLPropies().remove(l);
+					}
+				}
+			}
+		}
 	}
 	
 	public void eliminaCancoLlista(String idUsuari, String nom, String nomLlista) {
