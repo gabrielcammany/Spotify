@@ -233,7 +233,7 @@ public class FinestraReproduccio extends JFrame{
 		ImageIcon imNext = new ImageIcon("Images/next-button1.png");
 		JLabel jlNext = new JLabel();
 		jlNext.setForeground(new Color(164,164,164));
-		ImageIcon icNext = new ImageIcon(imNext.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
+		ImageIcon icNext = new ImageIcon(imNext.getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT));
 		jlNext.setIcon(icNext);
 		jlNext.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
 
@@ -242,7 +242,7 @@ public class FinestraReproduccio extends JFrame{
 		ImageIcon imBack = new ImageIcon("Images/back-button1.png");
 		JLabel jlBack = new JLabel();
 		jlBack.setForeground(new Color(164,164,164));
-		ImageIcon icBack = new ImageIcon(imBack.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
+		ImageIcon icBack = new ImageIcon(imBack.getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT));
 		jlBack.setIcon(icBack);
 		jlBack.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
 				
