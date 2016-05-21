@@ -2,12 +2,16 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.GridLayout;
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Vector;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -24,6 +28,8 @@ import org.jdesktop.xswingx.PromptSupport;
 import controller.ButtonsController;
 import controller.DeleteController;
 import controller.GestioController;
+import controller.MusicController;
+import controller.ReproductorController;
 import model.Canco;
 import model.Data;
 import model.User;
@@ -56,7 +62,7 @@ public class FinestraServidor extends JFrame {
 	private JTable taulaMusica;
 	private JTable taulaUsuari;
 	public DefaultTableModel tableModel;
-
+	private ReproductorController reproductorController;
 	
 	
 	public JTable getTaulaMusica() {
@@ -76,6 +82,8 @@ public class FinestraServidor extends JFrame {
 	}
 
 	public void creaFinestra(ArrayList<Canco> musica, ArrayList<User> alUsuaris){
+		
+		this.reproductorController = new ReproductorController();
 		
 		jfServidor = new JFrame("SPOTYFAI - Servidor");
 		
@@ -173,6 +181,7 @@ public class FinestraServidor extends JFrame {
 		
 		//****** Opcio Llistat ******
 		jpLlistat.add(LlistarMusica(), BorderLayout.CENTER);
+		jpLlistat.add(botonsReproduccio(), BorderLayout.LINE_END);
 		
 	
 		//****** Opcio Addicio ******
@@ -194,6 +203,31 @@ public class FinestraServidor extends JFrame {
 		
 			
 		return jpMusica;
+	}
+	
+	
+	private JPanel botonsReproduccio() {
+		JPanel jpBotons = new JPanel (new GridLayout(1,2));
+		ImageIcon imPlay = new ImageIcon("Images/playd.png");
+		JLabel jlPlay= new JLabel();
+		//jlPlay.setForeground(new Color(164,164,164));
+		ImageIcon icPlay = new ImageIcon(imPlay.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
+		jlPlay.setIcon(icPlay);
+		jlPlay.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
+		
+		ImageIcon imPaused = new ImageIcon("Images/paused.png");
+		JLabel jlPaused= new JLabel();
+		//jlPlay.setForeground(new Color(164,164,164));
+		ImageIcon icPaused = new ImageIcon(imPaused.getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
+		jlPaused.setIcon(icPaused);
+		jlPaused.setBorder(BorderFactory.createEmptyBorder(1,1,1,1));
+		
+		jlPlay.addMouseListener(new MusicController("play", reproductorController, this));
+		jlPaused.addMouseListener(new MusicController("pause", reproductorController, this));
+		
+		jpBotons.add(jlPlay);
+		jpBotons.add(jlPaused);
+		return jpBotons;
 	}
 	
 	/**
