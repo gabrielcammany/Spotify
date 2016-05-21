@@ -41,11 +41,9 @@ public class MessageService {
 			public void run(){
 				while(true){
 					try {
-						System.out.println("Esperant..."+(i));
 						Socket sClient = sServer.accept();
 						msWorker = new MessageServiceWorker(sClient);
 						new Thread(msWorker).start();
-						System.out.println("Esperant..."+(i++));
 					} catch (IOException e) {
 						e.printStackTrace();
 					}

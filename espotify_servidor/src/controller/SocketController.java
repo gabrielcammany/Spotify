@@ -17,7 +17,7 @@ import network.ConectorDB;
 
 public class SocketController {
 
-	private ConectorDB conn;
+	private static ConectorDB conn;
 	private User user;
 
 	
@@ -38,7 +38,7 @@ public class SocketController {
 	public void registroAddCanco(String descripcio) {
 		Query q = new Query();
 		String cad = q.queryList(10, descripcio);
-		conn.insertQuery(cad);
+		ConectorDB.insertQuery(cad);
 	}
 
 
@@ -72,16 +72,20 @@ public class SocketController {
 	public int verifyUser(String usuario, String password){
 		int id = 0;
 		for(Object u : Data.getUsers()){
-			System.out.println("Inside of the loop");
 			if(((User)u).getNickname().toLowerCase().equals(usuario.toLowerCase())){
 				if(((User)u).getPassword().equals(password)) {
 					id = ((User)u).getId_usuari();
-					System.out.println("Verify user returns id: " + id);
+					if(!Data.getaSessio().isEmpty()){
+						for(Sessio s:Data.getaSessio()){
+							if(s.getIdSessio() == id){
+								return -1;
+							}
+						}
+					}
 					return id;
 				}
 			}
 		}
-		System.out.println("Verify user returns id: " + id);
 		return id;
 	}
 
@@ -128,7 +132,6 @@ public class SocketController {
 				c.setnReproduccio(responseServer.getString("num_reproduccio"));
 				c.setnVotacio(responseServer.getString("nVotacio"));
 				
-				System.out.println("[Servidor]id_canco '"+c.getIdCanco()+"'.");
 				//System.out.println("[Servidor] "+c.getNom()+" amb path: "+c.getPath()+" num reproduccions: "+c.getnReproduccio());
 				alMusica.add(c);
 			}
@@ -136,8 +139,6 @@ public class SocketController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		int size = alMusica.size();
-		for(int i = 0;i<size;i++)System.out.println("Canco numero "+i+" -->"+alMusica.get(i).getNom());
 
 		return alMusica;
 	}
@@ -155,8 +156,6 @@ public class SocketController {
 				u.setId_usuari(responseServer.getInt("id_follower"));
 				for(User user : Data.getUsers())if(u.getId_usuari()==user.getId_usuari())u.setNickname(user.getNickname());
 				aux.add(u);
-
-				System.out.println("[Servidor] Usuari ' "+u.getId_usuari()+" '");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -184,8 +183,6 @@ public class SocketController {
 				u.setData_ult(responseServer.getString("data_ult"));
 				aUsers.add(u);
 
-				System.out.println("[Servidor] Usuari ' "+u.getNickname()+" '");
-
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -208,8 +205,6 @@ public class SocketController {
 			comparaCanco = comparaCanco.replace(" ", "");
 			comparaArtista = comparaArtista.replace(" ", "");
 			
-			System.out.println("COMPARACION: pasan -> " + nCanco+ "  comparo -> "+ comparaCanco);
-			System.out.println("COMPARACION: pasan -> " + nArtista+ "  comparo -> "+ comparaArtista);
 			
 			//if(allMusic.get(i).getNom().equals(nCanco) && allMusic.get(i).getArtista().replace(" ", "").equals(nArtista))trobat=true;
 			if(comparaCanco.equals(nCanco) && comparaArtista.equals(nArtista))trobat=true;
@@ -221,7 +216,6 @@ public class SocketController {
 		Canco c = allMusic.get(i);
 		Integer nRep = Integer.parseInt(c.getnReproduccio())+1;
 		c.setnReproduccio(nRep.toString());
-		System.out.println("QUE LE LLEGA  "+ c.getNom() + " " +c.getArtista());
 		allMusic.set(i,c);
 		Data.setAlMusica(allMusic);
 		String response = q.queryList(6,c);
@@ -232,43 +226,39 @@ public class SocketController {
 	
 	public int hacerFollow(Integer idUser,Integer idFollow){
 		String aux = idUser.toString().concat("/"+idFollow.toString());
-		conn.insertQuery(new Query().queryList(13, aux));
+		ConectorDB.insertQuery(new Query().queryList(13, aux));
 		return 1;
 	}
 	
 	
 	
-	public void unfollow(Integer idSesio,String nom){
+	public void unfollow(String idSesio,String nom){
 		int id = 0;
 		for(User u : Data.getUsers())if(u.getNickname().toLowerCase().equals(nom.toLowerCase()))id = u.getId_usuari();
-		ResultSet rs = conn.selectQuery(new Query().queryList(15, idSesio.toString().concat("/"+id)));
-		try {
-			int id2 =  0;
-			while (rs.next())id2 = rs.getInt("id_user_follower");
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		conn.deleteQuery(new Query().queryList(14, id));
+		String[] data= new String[2];
+		data[0] = idSesio;
+		data[1] = String.valueOf(id);
+		conn.deleteQuery(new Query().queryList(14, data));
 		
 		
 	}
 	public ArrayList<Llistes> omplirLlistesFollowing(ArrayList<sUser> lUserFollow ){
-		int size = lUserFollow.size();
-		
-		ArrayList<Llistes> llFollowers =new ArrayList<Llistes>();
-		for(int i = 0;i<size;i++){
-			ArrayList<Llistes> ll  = omplirLlistes(lUserFollow.get(i).getId_usuari());
-			if(ll != null){
-				System.out.println("####UNA ");
-				Iterator<Llistes> iter = ll.iterator();
-				while (iter.hasNext()) {
-				    Llistes str = iter.next();
-				    if(str.getPrivacitat() != 1){
-						iter.remove();
+		ArrayList<Llistes> llFollowers = new ArrayList<Llistes>();
+		if(!lUserFollow.isEmpty()){
+
+			int size = lUserFollow.size();
+			for(int i = 0;i<size;i++){
+				ArrayList<Llistes> ll  = omplirLlistes(lUserFollow.get(i).getId_usuari());
+				if(ll != null){
+					Iterator<Llistes> iter = ll.iterator();
+					while (iter.hasNext()) {
+					    Llistes str = iter.next();
+					    if(str.getPrivacitat() != 1){
+							iter.remove();
+						}
 					}
+					for(Llistes l : ll)llFollowers.add(l);
 				}
-				for(Llistes l : ll)llFollowers.add(l);
 			}
 		}
 		return llFollowers;
@@ -277,9 +267,6 @@ public class SocketController {
 	public ArrayList<Llistes> omplirLlistes(int id_user){
 		ArrayList<Llistes> ll = new ArrayList<Llistes>();
 		Query q =new Query();
-		
-		System.out.println("id_user --> ");
-		System.out.println(" " + id_user);
 		ResultSet responseServer = conn.selectQuery(q.queryList(7,id_user));
 
 		if(responseServer == null) return null;
@@ -302,7 +289,6 @@ public class SocketController {
 						al.setPrivacitat(responseServer2.getInt("privacitat"));
 					
 					}
-					System.out.println("[omplirLlistes]# "+al.getNom_llista());
 					
 					ResultSet responseServer3 = conn.selectQuery(q.queryList(9,al.getId_llistes()));
 					while (responseServer3.next()) {
@@ -330,7 +316,6 @@ public class SocketController {
 			while(rs1.next()){
 				idLlista = rs1.getInt("id_llista");
 			}
-			System.out.println("###"+idLlista);
 			info[0] = String.valueOf(idLlista);
 			info[1] = id_usuari;
 			ConectorDB.insertQuery(new Query().queryList(28,info));
@@ -415,6 +400,14 @@ public class SocketController {
 				for(Llistes l:s.getLPropies()){
 					if(l.getId_llistes() == id){
 						s.getLPropies().remove(l);
+						break;
+					}
+				}
+			}else{
+				for(Llistes l:s.getlFollowing()){
+					if(l.getId_llistes() == id){
+						s.getlFollowing().remove(l);
+						break;
 					}
 				}
 			}
@@ -438,6 +431,7 @@ public class SocketController {
 		for (int i = 0; i < Data.getaSessio().get(idSessio).getLPropies().size(); i ++) {
 			if(Data.getaSessio().get(idSessio).getLPropies().get(i).getNom_llista().equals(nomLlista)) {
 				idLlista = Data.getaSessio().get(idSessio).getLPropies().get(i).getId_llistes();
+				break;
 			}
 		}
 
@@ -446,7 +440,6 @@ public class SocketController {
 			ArrayList<Integer> ids = new ArrayList<Integer>();
 			while (rs3.next()) {
 				idLlista = rs3.getInt("id_canco_llista");
-				System.out.println("ID LLISTA: " + idLlista);
 				ids.add(idLlista);			
 			}
 			for (int i = 0; i<ids.size(); i++ ) {

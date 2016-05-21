@@ -103,10 +103,13 @@ public class ControladorFinestres {
 	 */
 	public static void Login() throws ClassNotFoundException, UnknownHostException, IOException {
 		//InfoServidor info = new InfoServidor();
-		if((infoServidor.enviarUsuari(2, fLogin.getjtfUsuari().getText(), fLogin.getjtfPassword().getPassword()))){
+		int resultat = (infoServidor.enviarUsuari(2, fLogin.getjtfUsuari().getText(), fLogin.getjtfPassword().getPassword()));
+		if(resultat == 1){
 			//infoServidor.demanaSessio();
 			Reproduccio();
-		} else {
+		} else if(resultat == -1){
+			fLogin.mostraMissatgeError("Ja estas conectat.");
+		}else if(resultat == 0){
 			fLogin.mostraMissatgeError("L'usuari no existeix.");
 		}
 		
@@ -142,8 +145,6 @@ public class ControladorFinestres {
 		//infoServidor.demanaSessio();
 		infoServidor.peticioFollowers();
 		infoServidor.peticioMusica();
-		infoServidor.peticioUsuaris();
-		infoServidor.demanarLlistesFollowing();
 	}
 	
 	/*
@@ -202,7 +203,6 @@ public class ControladorFinestres {
 	 */
 	public static void novaOpcio(String opcio) {
 		if(opcio.equals("llistesfollowing") ){
-			if(User.getlFollowing() == null)infoServidor.demanarLlistesFollowing();
 			ControladorFinestres.actualitzaLlistesFollowing(User.getlFollowing());
 		}
 		fReproduccio.actualitzaOpcio(opcio);
@@ -217,7 +217,7 @@ public class ControladorFinestres {
 	}
 	
 	public static void restartReproductor() {
-		setR(new Reproductor(""));
+		setR(new Reproductor());
 	}
 	
 	public static ArrayList<String> getlistesPropies() {
@@ -249,6 +249,7 @@ public class ControladorFinestres {
 
 		ArrayList<Integer> result = InfoServidor.actualitzaMusicaLListaFollowing(User.getlFollowing().get(indexSeleccio).getId_llistes());
 		if(result != null){
+			System.out.println("Hi ha algo");
 			User.getlFollowing().get(indexSeleccio).setAllIdCanco(result);
 			Llistes llistaSeleccionada = User.getlFollowing().get(indexSeleccio);
 

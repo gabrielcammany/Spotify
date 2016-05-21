@@ -4,9 +4,13 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.swing.JOptionPane;
+
 import com.google.gson.JsonObject;
 import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
+
+import controller.DeleteController;
 
 public class ConectorDB {
     private static String userName;
@@ -40,22 +44,23 @@ public class ConectorDB {
 		ConectorDB.url += db;
 	}
 
-    public void connect() {
+    public boolean connect() {
         try {
             Class.forName("com.mysql.jdbc.Connection");
             conn = (Connection) DriverManager.getConnection(url, userName, password);
             if (conn != null) {
                 System.out.println("Conexio a base de dades "+url+" ... Ok");
             }
-        }
-        catch(SQLException ex) {
+            return true;
+        }catch(com.mysql.jdbc.exceptions.jdbc4.CommunicationsException e) {
+            JOptionPane.showMessageDialog(DeleteController.getFs(), "No tens connexio a internet", "Error", JOptionPane.ERROR_MESSAGE);
+        }catch(SQLException e){
             System.out.println("Problema al connecta-nos a la BBDD --> "+url);
-            ex.printStackTrace();
+        	e.printStackTrace();
+        }catch(ClassNotFoundException e){
+        	
         }
-        catch(ClassNotFoundException ex) {
-            System.out.println(ex);
-        }
-
+        return false;
     }
     
     public static void insertQuery(String query){

@@ -2,13 +2,11 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Vector;
@@ -22,14 +20,14 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
+import javax.swing.JSlider;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
 
 import org.jdesktop.xswingx.PromptSupport;
 
@@ -41,6 +39,7 @@ import controller.ControladorLlistar;
 import controller.ControladorLlistesFollowing;
 import controller.ControladorLlistesMusica;
 import controller.ControladorReproductor;
+import controller.ControladorSlider;
 import controller.DeleteController;
 import controller.VotarController;
 import model.Canco;
@@ -48,7 +47,6 @@ import model.Llistes;
 import model.User;
 import model.sUser;
 import net.miginfocom.swing.MigLayout;
-import network.InfoServidor;
 
 
 /**
@@ -78,6 +76,7 @@ public class FinestraReproduccio extends JFrame{
 	private JPanel jpLlistatFollowing;
 	private JList<String> jlLlistes;
 	private DefaultListModel<String> model;
+	private JSlider posicio;
 	
 	private JTable jtLlistatFollowing;
 	private DefaultTableModel tableModel;
@@ -128,50 +127,6 @@ public class FinestraReproduccio extends JFrame{
 		JPanel jpUsuari = new JPanel(new BorderLayout());
 		jpUsuari.setBackground(new Color(40,40,40));
 		jpUsuari.setBorder(BorderFactory.createLineBorder(Color.black));
-		//adalt a la dreta
-		/*//nom usuari
-		JLabel jlUsuari = new JLabel("");
-		jlUsuari.setForeground(new Color(164,164,164));
-		jlUsuari.setBorder(BorderFactory.createEmptyBorder(10,10,10,10)); 
-		//introduir-lo
-		jpUsuari.add(jlUsuari,  BorderLayout.LINE_END);*/
-		
-		
-		/*
-		//logo
-		JPanel jpBuscarFollow = new JPanel(new MigLayout("wrap"));
-		jpBuscarFollow.setBackground(new Color(40,40,40));
-		//logo adalt a l'esquerra
-		ImageIcon imLogo = new ImageIcon("Images/logo.png");
-		JLabel jlLogo = new JLabel();
-		jlLogo.setForeground(new Color(164,164,164));
-		ImageIcon icLogo = new ImageIcon(imLogo.getImage().getScaledInstance(25, 25, Image.SCALE_DEFAULT));
-		jlLogo.setIcon(icLogo);
-		jlLogo.setBorder(new EmptyBorder(1, 5, 0, 10));
-		jpBuscarFollow.add(jlLogo,"dock west");
-		
-		//buscar (no fa res) 
-		ImageIcon imBuscar = new ImageIcon("Images/buscar.png");
-		JLabel jlBuscar = new JLabel();
-		jlBuscar.setForeground(new Color(164,164,164));
-		ImageIcon icBuscar = new ImageIcon(imBuscar.getImage().getScaledInstance(200, 30, Image.SCALE_DEFAULT));
-		jlBuscar.setIcon(icBuscar);
-		
-		
-		//text i boto de seguir usuari
-		JPanel jpBuscarUsuari = new JPanel(new MigLayout("wrap"));
-		jpBuscarUsuari.setBackground(new Color(40,40,40));
-		JTextField jtfBuscar = new JTextField(15);
-		jtfBuscar.setBackground(new Color(251,251,251));
-		jtfBuscar.setForeground(new Color(50,50,50));
-		jtfBuscar.setText("Buscar");
-		jtfBuscar.setFocusable(false);
-		
-		jpBuscarUsuari.add(jtfBuscar,"dock west");
-
-		jpUsuari.add(jpBuscarUsuari, BorderLayout.LINE_START);
-		jpUsuari.add(jpBuscarFollow, BorderLayout.LINE_END);
-		*/
 		
 		//afegim la barra d'adalt al panell
 		jpReproduccio.add(bucarUsuari(), BorderLayout.NORTH);
@@ -274,13 +229,26 @@ public class FinestraReproduccio extends JFrame{
 		JPanel jpBarraRepetir = new JPanel(new MigLayout("al center"));
 		jpBarraRepetir.setBackground(new Color(40,40,40));
 		//sonido
-		ImageIcon imSonido = new ImageIcon("Images/sonido.png");
+		ImageIcon imSonido = new ImageIcon("Images/medium_volume_filled.png");
 		JLabel jlSonido = new JLabel();
 		jlSonido.setForeground(new Color(164,164,164));
-		ImageIcon icSonido = new ImageIcon(imSonido.getImage().getScaledInstance(150, 40, Image.SCALE_DEFAULT));
+		ImageIcon icSonido = new ImageIcon(imSonido.getImage().getScaledInstance(30, 30, Image.SCALE_DEFAULT));
 		jlSonido.setFocusable(true);
 		jlSonido.setFocusTraversalKeysEnabled(true);
 		jlSonido.setIcon(icSonido);
+
+		JSlider volume = new JSlider(JSlider.HORIZONTAL,
+				0, 100, 50);
+		volume.addChangeListener(new ControladorSlider(volume,true));
+		volume.setBackground(new Color(40,40,40));
+		//Turn on labels at major tick marks.
+		volume.setMajorTickSpacing(10);
+		volume.setPreferredSize(new Dimension(150,20));
+		volume.setMinorTickSpacing(1);
+		volume.setPaintTicks(false);
+		volume.setPaintLabels(false);
+
+
 		//repeat
 		ImageIcon imRepetir = new ImageIcon("Images/repeat.png");
 		JLabel jlRepetir = new JLabel();
@@ -292,13 +260,25 @@ public class FinestraReproduccio extends JFrame{
 		jlRepetir.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 		jlRepetir.addMouseListener(new ControladorReproductor("repeat"));
 
-
+		setPosicio(new JSlider(JSlider.HORIZONTAL,
+				0, 100, 0));
+		getPosicio().addChangeListener(new ControladorSlider(getPosicio(),false));
+		getPosicio().setBackground(new Color(40,40,40));
+		//Turn on labels at major tick marks.
+		getPosicio().setPreferredSize(new Dimension(450,20));
+		getPosicio().setMajorTickSpacing(10);
+		getPosicio().setMinorTickSpacing(1);
+		getPosicio().setPaintTicks(false);
+		getPosicio().setPaintLabels(false);
+		
 		jpBarraRepro.add(jlBack,"dock west");
 		jpBarraRepro.add(jlPlay,"dock west");
 		jpBarraRepro.add(jlNext,"dock west");
+		jpBarraRepro.add(getPosicio(),"dock west");
 		
 		jpBarraRepetir.add(jlRepetir,"dock west");
 		jpBarraRepetir.add(jlSonido,"dock west");
+		jpBarraRepetir.add(volume,"dock west");
 
 		
 		jpBarraReproduccio.add(jpBarraRepro,BorderLayout.WEST);
@@ -431,7 +411,7 @@ public class FinestraReproduccio extends JFrame{
 							JOptionPane.showMessageDialog(jpCrearLlista, "La llista s'ha inserit correctament ", "Informacio", JOptionPane.INFORMATION_MESSAGE);
 							if(jtfPrivadaSN.getText().equals("s"))
 							User.getlPropies().add(new Llistes(jtfNomLlista.getText(),idLlista,0));
-							getModel().fireTableDataChanged();
+							getTableModel().fireTableDataChanged();
 						}else{
 							JOptionPane.showMessageDialog(jpCrearLlista, "Hi ha hagut un error al inserir. ", "Error", JOptionPane.INFORMATION_MESSAGE);
 						}
@@ -442,7 +422,7 @@ public class FinestraReproduccio extends JFrame{
 						if(idLlista !=0){
 							JOptionPane.showMessageDialog(jpCrearLlista, "La llista s'ha inserit correctament ", "Informacio", JOptionPane.INFORMATION_MESSAGE);
 							User.getlPropies().add(new Llistes(jtfNomLlista.getText(),idLlista,1));
-							getModel().fireTableDataChanged();
+							getTableModel().fireTableDataChanged();
 						}else{
 							JOptionPane.showMessageDialog(jpCrearLlista, "Hi ha hagut un error al inserir. ", "Error", JOptionPane.INFORMATION_MESSAGE);
 						}
@@ -491,7 +471,7 @@ public class FinestraReproduccio extends JFrame{
 		//jpVisualitzarLlistes.setFocusable(false);
 		
 		jlLlistes.addMouseListener(new ControladorLlistesMusica(jlLlistes,this));
-			
+		
 		return jpVisualitzarLlistes;
 	}
 	
@@ -699,82 +679,61 @@ public class FinestraReproduccio extends JFrame{
 		jpBuscaUsuari.add(jpSuperior, BorderLayout.NORTH);
 		return jpBuscaUsuari;
 	}
-	
+
 	public JTable getTaulaFollowing() {
 		return jtLlistatFollowing;
 	}
-	
-	public DefaultTableModel getModel() {
-		return getTableModel();
+
+	public DefaultListModel<String> getModel() {
+		return model;
 	}
-	
+
 	public JPanel llistatFollowing(ArrayList <sUser> alUser) {
 		jpLlistatFollowing = new JPanel(new BorderLayout());
 
-		
+
 		Vector<String> columnas = new Vector<String>();
 		columnas.add ("Nom usuari");
-		
-		
+
+
 		Vector<String> filas = new Vector<String>();
 		jtLlistatFollowing = new JTable(filas, columnas){
-		
-		public boolean isCellEditable (int rowIndex, int vColIndex) {
-			return false;
-		}};
-		
-		
-		setTableModel((DefaultTableModel)jtLlistatFollowing.getModel());
-		getTableModel().setRowCount(0);
-		getTableModel().setRowCount(alUser.size());
-		System.out.println(alUser.size());
-		
-		String[]data = new String[1];
-		for (int i = 0; i < alUser.size(); i ++) {
+			public boolean isCellEditable (int rowIndex, int vColIndex) {
+				return false;
+			}
+		};
 
-			//String[]data = new String[4];
-			if (!alUser.get(i).getNickname().isEmpty()){
-				data[0] = alUser.get(i).getNickname();
-				getTableModel().insertRow(i, data);
-				
-			}
+
+		tableModel = (DefaultTableModel)jtLlistatFollowing.getModel();
+		tableModel.setRowCount(0);
+		
+		for (int i = 0; i < alUser.size(); i ++) {
+			Vector<String> data = new Vector<String>();
+			data.add(alUser.get(i).getNickname());
+			tableModel.addRow(data);
 		}
-		if(alUser != null){
-			for(int i = alUser.size(); i < getTableModel().getRowCount(); i++) {
-				
-				getTableModel().removeRow(i);
-				
-			}
-		}
-		
-		
-		//data[0] = alUser.get(i).getNickname();
-		//data[0] = "aaaaa";
-		//tableModel.addRow(data);
-		
-		
-		jtLlistatFollowing.setModel(getTableModel());
+		tableModel.fireTableDataChanged();
+		jtLlistatFollowing.setModel(tableModel);
 		jtLlistatFollowing.addMouseListener(new DeleteController(this, "llistaFollowing"));
 
-		
-		
+
+
 		JLabel jtTitol = new JLabel ("Usuaris que segueixes");
 		jtTitol.setFont(new Font("Arial", Font.PLAIN, 16));
 		jtTitol.setBackground(new Color(184,184,184));
-		
+
 		//jtLlistatFollowing.setBackground(new Color(184,184,184));
-		
+
 		JScrollPane jspLlistat = new JScrollPane(jtLlistatFollowing);
-		getTableModel().fireTableDataChanged();
-		
+
 		jpLlistatFollowing.add(jspLlistat, BorderLayout.CENTER);
 		jpLlistatFollowing.add(jtTitol, BorderLayout.PAGE_START );
-		
+
 		return jpLlistatFollowing;
 	}
-	
-	
-	
+
+
+
 	/**
 	 * Aquesta funcio rep l'string de la opcio que es vol fer i 
 	 * actualitza el que es mostra en la pantalla de reproduccio
@@ -821,9 +780,9 @@ public class FinestraReproduccio extends JFrame{
 				
 				
 			case "usuarisfollowing":
-				setMusicaDisponible(alMusica);//le de posar per desclicar la canco
+				//setMusicaDisponible(alMusica);//le de posar per desclicar la canco
 				
-				//setUsuarisFollowing(new ArrayList<>());
+				setUsuarisFollowing();
 				this.jpReproduccio.add(this.jspUsuarisFollowing, BorderLayout.CENTER);
 				this.jpReproduccio.setBackground(new Color(50,50,50));
 				this.jpReproduccio.validate();
@@ -851,6 +810,14 @@ public class FinestraReproduccio extends JFrame{
 
 	public void setTableModel(DefaultTableModel tableModel) {
 		this.tableModel = tableModel;
+	}
+
+	public JSlider getPosicio() {
+		return posicio;
+	}
+
+	public void setPosicio(JSlider posicio) {
+		this.posicio = posicio;
 	}
 	
 }

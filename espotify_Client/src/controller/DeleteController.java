@@ -24,7 +24,6 @@ public class DeleteController implements MouseListener {
 	public DeleteController(FinestraReproduccio finestraReproduccio, String ubicacio) {
 		this.finestraReproduccio = finestraReproduccio;
 		this.ubicacio = ubicacio;
-		System.out.println("UBICACIO: ");
 	}
 	
 	@Override
@@ -39,7 +38,6 @@ public class DeleteController implements MouseListener {
 		if (ubicacio.equals("llistaPropia")) {
 			String nom = (String) finestraReproduccio.getTaulaLlistaMusicaFollowing().getValueAt(finestraReproduccio.getTaulaLlistaMusicaFollowing().getSelectedRow(), 0);	
 			String nomLlista = (String) User.getlPropies().get(finestraReproduccio.getLlistesPropies().getSelectedIndex()).getNom_llista();
-			System.out.println("QUIERES BORRAR UNA CANCION DE UNA LISTA " + nom + nomLlista);
 			ControladorFinestres.getInfoServidor().eliminarCancoLlista(nom, nomLlista);
 			for(Llistes l: User.getlPropies()){
 				if(l.getNom_llista().equals(nomLlista)){
@@ -58,6 +56,7 @@ public class DeleteController implements MouseListener {
 					break;
 				}
 			}
+			finestraReproduccio.getTableModel().removeRow(finestraReproduccio.getTaulaLlistaMusicaFollowing().getSelectedRow());
 			finestraReproduccio.getTableModel().fireTableDataChanged();
 		}else {
 		
@@ -96,8 +95,8 @@ public class DeleteController implements MouseListener {
 						ControladorFinestres.getInfoServidor().unfollow(nom);
 						System.out.println("JODER");			
 						
-						finestraReproduccio.getModel().removeRow(finestraReproduccio.getTaulaFollowing().getSelectedRow());
-						finestraReproduccio.getModel().fireTableDataChanged();
+						finestraReproduccio.getTableModel().removeRow(finestraReproduccio.getTaulaFollowing().getSelectedRow());
+						finestraReproduccio.getTableModel().fireTableDataChanged();
 
 
 					}

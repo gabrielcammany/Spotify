@@ -53,7 +53,6 @@ public class MessageServiceWorker implements Runnable {
 			data = aux[0].split(":");
 			if (data[1].equals("requestCanco")){
 				ObjectOutputStream objectOutput  = new ObjectOutputStream(this.sClient.getOutputStream());
-				System.out.println("He recibido la peticion de cancion: "+ data[2] + " " + aux[1]);
 
 				int response = cadenas.songRequest(data[2],aux[1]);
 				if(response== -1){
@@ -93,7 +92,6 @@ public class MessageServiceWorker implements Runnable {
 			
 			if(data[1].equals("addCancoLlista")){
 				
-				System.out.println("Afegir canco llista");
 				if(cadenas.afegeixCanco(data[2], data[3], data[0])){
 					DataOutputStream d = new DataOutputStream(this.sClient.getOutputStream());
 					d.writeInt(1);
@@ -107,13 +105,11 @@ public class MessageServiceWorker implements Runnable {
 			
 			if (data[1].equals("creaLlista")) {
 				int realitzat = 0;
-				System.out.println("crea Llista");
 				int i=0;
 				for(Sessio u : Data.getaSessio()){
 					if(u.getIdSessio() == Integer.parseInt(data[0])){
 						for(Llistes l: u.getLPropies()){
 							if(l.getNom_llista().equals(data[2])){
-								System.out.println("Lhe trobat");
 								break;
 							}else{
 								Llistes llista = new Llistes();
@@ -176,7 +172,6 @@ public class MessageServiceWorker implements Runnable {
 			if(data[1].equals("requestLlistesFollow")){
 				for(int i= 0;i<Data.getaSessio().size();i++){
 					if(Integer.parseInt(data[0]) == Data.getaSessio().get(i).getIdSessio()){
-						System.out.println("[Servidor]Consulta llistes following...");
 						Data.getaSessio().get(i).setlFollowing(cadenas.omplirLlistesFollowing(Data.getaSessio().get(i).getlUserFollow()));
 						ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
 						
@@ -199,7 +194,6 @@ public class MessageServiceWorker implements Runnable {
 			}
 			
 			if (data[1].equals("requestUsuarisFollower")) {
-				System.out.println("estamos aqui porque hemos llegado");
 				ArrayList<sUser> usuaris = new ArrayList<sUser>();
 				int i = 0;
 				for(i = 0; i<Data.getaSessio().size(); i++){
@@ -217,7 +211,6 @@ public class MessageServiceWorker implements Runnable {
 
 			if(data[0].equals("user")){
 				user = data[1];
-				System.out.println(aux[1]);
 				//password = desencripta(aux[1].getBytes());
 				password = aux[1];
 				DataOutputStream d = new DataOutputStream(this.sClient.getOutputStream());
@@ -235,11 +228,10 @@ public class MessageServiceWorker implements Runnable {
 			if(data[0].equals("userLog")){
 				user = data[1];
 				password = aux[1];
-				System.out.println("----------------------------------------------------------");
 				DataOutputStream d = new DataOutputStream(this.sClient.getOutputStream());
 				int i = cadenas.verifyUser(user,password);
 				d.writeInt(i);
-				if(i != 0){
+				if(i > 0){
 					
 					Sessio s =new Sessio(i,cadenas.omplirLlistes(i));
 					
@@ -263,14 +255,12 @@ public class MessageServiceWorker implements Runnable {
 
 			}
 			if(data[1].equals("unFollow")){
-				DataInputStream input = new DataInputStream(sClient.getInputStream());
-				String nom = input.readUTF();
-				cadenas.unfollow(Integer.parseInt(data[0]),nom);
-				ObjectOutputStream objectOutput  = new ObjectOutputStream(sClient.getOutputStream());
-				objectOutput.writeObject(Data.getAlMusica());
+				cadenas.unfollow(data[0],data[2]);
 
 			}
-			
+			if(data[1].equals("requestNomLlistesFollow")){
+				
+			}
 			if(data[1].equals("deleteSessio")){
 				for(Sessio s : Data.getaSessio()){
 					if(Integer.parseInt(data[0]) == s.getIdSessio())Data.getaSessio().remove(s);

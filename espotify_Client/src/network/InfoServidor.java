@@ -19,8 +19,11 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.swing.JOptionPane;
+
 import controller.ControladorFinestres;
 import controller.ControladorLlistar;
+import controller.DeleteController;
 import model.Canco;
 import model.Llistes;
 import model.User;
@@ -50,6 +53,13 @@ public class InfoServidor {
 		public static void newSocket(){
 			try {
 				sServidor = new Socket("localhost", 34567);
+			}catch (java.net.ConnectException e){
+				if(ControladorFinestres.fLogin.isActive()){
+					JOptionPane.showMessageDialog(ControladorFinestres.fLogin, "No tens connexio al Servidor", "Error", JOptionPane.ERROR_MESSAGE);
+				}else{
+					JOptionPane.showMessageDialog(ControladorFinestres.fReproduccio, "No tens connexio al Servidor", "Error", JOptionPane.ERROR_MESSAGE);
+				}
+					
 			} catch (UnknownHostException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -121,29 +131,34 @@ public class InfoServidor {
 	}*/
 	
 	public void unfollow(String nickname){
-		
+
+		newSocket();
 		try {
-			newSocket();
 			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
 			doStream.writeUTF(User.getId_usuari()+":unFollow:"+nickname);
 			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
 			sServidor.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	public void demanarLlistesFollowing(){
 		try{
 			try {
-			newSocket();
-			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
-			doStream.writeUTF(User.getId_usuari()+":requestLlistesFollow:");
-			
-			ObjectInputStream objectInput = new ObjectInputStream(sServidor.getInputStream());
-				
+				newSocket();
+				DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
+				doStream.writeUTF(User.getId_usuari()+":requestLlistesFollow:");
+
+				ObjectInputStream objectInput = new ObjectInputStream(sServidor.getInputStream());
+
 				ArrayList<Llistes> llFollowing = (ArrayList<Llistes>) objectInput.readObject();
 				User.setlFollowing(llFollowing);
 				objectInput.close();
@@ -159,16 +174,16 @@ public class InfoServidor {
 	}
 	
 	
-	public boolean enviarUsuari(int option, String nom, char[] contrasenya){
+	public int enviarUsuari(int option, String nom, char[] contrasenya){
 		
 		try {
 			newSocket();
 			String algo;
 			System.out.println("[CLIENT] - Peticio de connexio...");
 			System.out.println("NOM -> " + nom + " CONTRA: " +String.valueOf(contrasenya) + " OPCION: " + option);
-			
 
 			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
+
 			int id = 0;
 			//algo = algo(String.valueOf(contrasenya));
 			algo = String.valueOf(contrasenya);
@@ -184,8 +199,7 @@ public class InfoServidor {
 
 				break;
 			}
-			System.out.println("ID --> " + id);
-			if(id!=0){
+			if(id>0){
 				User.setId_usuari(id);
 				User.setNickname(nom);
 				ObjectInputStream o = new ObjectInputStream(sServidor.getInputStream());
@@ -199,16 +213,21 @@ public class InfoServidor {
 					e.printStackTrace();
 				}
 				sServidor.close();
-				return true;
+				return 1;
+			}
+			if(id == -1){
+				return id;
 			}
 			sServidor.close();
-			return false;
+			return 0;
+		}catch(java.lang.NullPointerException e){
+			return -2;
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			//e.printStackTrace();
 		}
-		return false;
+		return 0;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -283,27 +302,6 @@ public class InfoServidor {
 		return musica;
 		
 	}
-	
-	public void peticioUsuaris() throws UnknownHostException, IOException, ClassNotFoundException {
-		newSocket();
-		ArrayList <User> alUsers = new ArrayList<User>();
-		
-		DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
-		doStream.writeUTF(User.getId_usuari()+":requestUsuaris");
-		//ObjectInputStream objectInput = new ObjectInputStream(sServidor.getInputStream());
-
-		//alUsers = (ArrayList<User>) objectInput.readObject();
-		//Object o = objectInput.readObject();
-		//for(User c : alUsers)System.out.println(c.getNickname());
-
-		//controladorFinestres.actualitzaUsuarisFollowing(alUsers);
-		try{
-			sServidor.close();
-		}catch(IOException e2){
-			e2.printStackTrace();
-		}
-	}
-	
 	/**
 	 * Funcio encarregada de enviar al servidor les diferens peticions del client, cal observar que el segon parametre 
 	 * es de la clase objecte ja que, segons la peticio, haurem de rebre diferents objectes.
@@ -316,9 +314,7 @@ public class InfoServidor {
 			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
 			doStream.writeUTF(User.getId_usuari()+":requestCanco:"+obj.replace(" ", ""));
 			String[] s = obj.split("/");
-			System.out.println("Path    ./espotify_Client/temp/" + s[0] + "_" + s[1] + ".mp3");
 			InputStream llegada = sServidor.getInputStream();
-			System.out.println(s[0] + " " + s[1] + " ES ESTE");
 			File f = new File("./temp/" + s[0] + "_" + s[1] + ".mp3");
 
 			FileOutputStream desti = new FileOutputStream(f);
@@ -347,13 +343,10 @@ public class InfoServidor {
 			doStream.writeUTF(User.getId_usuari()+":requestFollow:"+nickname);
 			DataInputStream input = new DataInputStream(sServidor.getInputStream());
 			int trobat = input.readInt();
-			System.out.println("TROBAT??? :" + trobat);
 			if(trobat ==0){
-				System.out.println("adeu");
 				ControladorFinestres.mostraPopUp(0,nickname);
 			} else {
 				if(trobat == -1) {
-					System.out.println("hola");
 					ControladorFinestres.mostraPopUp(2,nickname);
 				} else {
 					if(trobat!=-1){
@@ -408,7 +401,7 @@ public class InfoServidor {
 		newSocket();
 		try {
 			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
-			doStream.writeUTF(User.getId_usuari()+":deleteSessio:");
+			doStream.writeUTF(User.getId_usuari()+":deleteSessio");
 			doStream.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -481,6 +474,38 @@ public class InfoServidor {
 			e.printStackTrace();
 		}
 	}
+
+	/*public ArrayList<String> demanarNomLlistesFollowing() {
+		ArrayList<String> nomLlistes = new ArrayList<String>();
+		try{
+			try {
+			newSocket();
+			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
+			doStream.writeUTF(User.getId_usuari()+":requestNomLlistesFollow");
+			
+			ObjectInputStream objectInput = new ObjectInputStream(sServidor.getInputStream());
+				
+			ArrayList<String> llFollowing = (ArrayList<String>) objectInput.readObject();
+			objectInput.close();
+			doStream.close();
+			sServidor.close();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		for(String s:nomLlistes){
+			for(Llistes l:User.getlFollowing()){
+				if(!l.getNom_llista().toLowerCase().equals(s.toLowerCase())){
+					User.getlFollowing().remove(l);
+				}
+			}
+		}
+		return nomLlistes;
+		
+	}*/
 
 
 }

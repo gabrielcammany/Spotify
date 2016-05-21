@@ -25,7 +25,7 @@ import view.FinestraServidor;
 public class DeleteController implements MouseListener {
 	// VISTA
 	private JFrame jf;
-	private FinestraServidor fs;
+	private static FinestraServidor fs;
 	private JPopupMenu popupMenu;
 	private JMenuItem deleteItem;
 	private String nom;
@@ -33,7 +33,7 @@ public class DeleteController implements MouseListener {
 	
 	public DeleteController(JFrame jf, FinestraServidor fs){
 		this.jf = jf;
-		this.fs = fs;
+		this.setFs(fs);
 	}
 
 	@Override
@@ -71,14 +71,14 @@ public class DeleteController implements MouseListener {
 					
 					
 					 try{
-			        	 nom = (String) fs.getTaulaMusica().getValueAt(fs.getTaulaMusica().getSelectedRow(), 0);
+			        	 nom = (String) getFs().getTaulaMusica().getValueAt(getFs().getTaulaMusica().getSelectedRow(), 0);
 			        	 deleteCanco(nom);
 					 }catch(Exception e1){
 			        	 System.out.println("catch taula musica not select");
 					 }
 		        	 if (nom == null){
 		        		try{
-		        			nom = (String) fs.getTaulaUsuari().getValueAt(fs.getTaulaUsuari().getSelectedRow(), 0);
+		        			nom = (String) getFs().getTaulaUsuari().getValueAt(getFs().getTaulaUsuari().getSelectedRow(), 0);
 		        			deleteUser(nom);
 		        		}catch(Exception e2){
 				        	System.out.println("catch taula usuari not select");
@@ -170,8 +170,8 @@ public class DeleteController implements MouseListener {
         	System.out.println("-------------------------------------------------------------------");
         	System.out.println("[Servidor]Canco '"+nom+"' deleted.");
         	Data.esborraCanco(id);
-        	fs.tableModel.removeRow(fs.getTaulaMusica().getSelectedRow());
-        	fs.tableModel.fireTableDataChanged();
+        	getFs().tableModel.removeRow(getFs().getTaulaMusica().getSelectedRow());
+        	getFs().tableModel.fireTableDataChanged();
         }catch(Exception e1){
         	System.out.println("Catch borrar canco");
         }
@@ -241,5 +241,13 @@ public class DeleteController implements MouseListener {
         	System.out.println("Catch borrar user");
         }
 		
+	}
+
+	public static FinestraServidor getFs() {
+		return fs;
+	}
+
+	public static void setFs(FinestraServidor fs) {
+		DeleteController.fs = fs;
 	}
 }

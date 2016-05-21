@@ -21,11 +21,11 @@ public class Main {
 				// Creem la VISTA
 				MainWindow view = new MainWindow();
 				//User user = new User();
+				Data.inicialitza();
 				FinestraServidor viewF = new FinestraServidor(gestioController);
 				// Creem el CONTROLADOR
 				// Establim la relacio CONTROLADOR->VISTA
-				ButtonsController controller = new ButtonsController(view, viewF);
-				conn.connect();
+				ButtonsController controller = new ButtonsController(view, viewF,conn);
 				// Establim la "relacio" VISTA->CONTROLADOR
 				view.registerController(controller);
 				

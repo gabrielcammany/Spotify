@@ -160,7 +160,6 @@ public class FinestraLogin extends JFrame {
 	public void mostraMissatgeError(String s) {
 		JOptionPane.showMessageDialog(jtfUsuari, s, "Error", JOptionPane.ERROR_MESSAGE);
 	}
-	
 	public void tancaFinestraLogin() {
 		jfLog.dispose();
 	}

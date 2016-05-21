@@ -10,6 +10,9 @@ import java.io.InputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
+import com.sun.media.sound.JavaSoundAudioClip;
+
+import controller.ControladorFinestres;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 import javazoom.jlgui.basicplayer.BasicPlayer;
@@ -19,25 +22,38 @@ import javazoom.jlgui.basicplayer.BasicPlayerException;
 
 public class Reproductor extends Thread{
 	
-	private String path;
-	private String song;
+	private static String path;
+	private static String song;
 	private boolean isPlaying;
 	private boolean start;
 	private BasicPlayer player;
+	private static File file;
+	private double volum;
+	private long bytes = 0;
+	private Thread t;
+	private long temp = 0 ;
+	private boolean comptar = true;
+	
+	public BasicPlayer getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(BasicPlayer player) {
+		this.player = player;
+	}
+
 	private boolean repeat;
 	public boolean fi;
 	
 	public Reproductor(String s) {
-		this.path = s;
-		this.song = "";
+		Reproductor.path = s;
+		Reproductor.song = "";
 		setPlaying(false);
 		setStart(false);
 		setRepeat(false);
 	}
 	
 	public Reproductor(){
-		this.path = "";
-		this.song = "";
 		setPlaying(false);
 		setStart(false);
 		setRepeat(false);
@@ -46,23 +62,17 @@ public class Reproductor extends Thread{
 	@Override
 	public void run()  {
 		boolean first = true;
-		try {
-            
 			//if (isRepeat()) {
 				while (isRepeat() || first) {
 					first = false;
 					fi = false;
-					FileInputStream fis;
-		            fis = new FileInputStream(this.path);
-		            setPlaying(true);
-		            setStart(true);
-		            player = new BasicPlayer();
-		            
-		            InputStream bufferedIn = new BufferedInputStream(fis);
-		            player.open(AudioSystem.getAudioInputStream(bufferedIn));
 		            while (!fi) {
 		            	//System.out.println("hola");
 		            	try {
+		            		
+		            		file = new File("./temp/" + Reproductor.song + ".mp3");
+		            		//player.setGain(50);
+		            		start = true;
 		            		player.play();
 		            	}
 		            	catch (BasicPlayerException e){
@@ -97,13 +107,9 @@ public class Reproductor extends Thread{
 					}
 	            }
 			}*/
-			
-        } catch (BasicPlayerException | UnsupportedAudioFileException | IOException e) {
-            
-        }
 		setStart(false);
         setPlaying(false);
-        File f = new File("./temp/" + this.song + ".mp3");
+        File f = new File("./temp/" + Reproductor.song + ".mp3");
         f.delete();
     	System.out.println("Final de canço");
 	}
@@ -111,16 +117,20 @@ public class Reproductor extends Thread{
 	public void pause(){
 		try {
 			if (isPlaying()) {
+				System.out.println("He pausaaaaaaaaaaaaaaaaaaaaaaat");
+				comptar = false;
 				player.pause();
 				setPlaying(false);
 			}
 			else {
 				setPlaying(true);
+				comptar = true;
+				getThread().start();
 				player.resume();
 			}
 			
 			
-		} catch (BasicPlayerException e) {
+		} catch (BasicPlayerException  e) {
 			e.printStackTrace();
 		}
 	}
@@ -129,15 +139,43 @@ public class Reproductor extends Thread{
 		return path;
 	}
 
+	public void restart(){
+		try {
+    		FileInputStream fis = new FileInputStream(Reproductor.path);
+            fis.skip(bytes);
+            setPlaying(true);
+            setStart(true);
+            player = new BasicPlayer();
+            BufferedInputStream bufferedIn = new BufferedInputStream(fis);
+			player.open(AudioSystem.getAudioInputStream(bufferedIn));
+		} catch (BasicPlayerException | UnsupportedAudioFileException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public void setPath(String nom, String artista) {
 		
 		
 		//nom.replaceAll("\\s", "");
 		//artista.replaceAll("\\s", "");
-		this.song = (nom + "_" + artista);
+		Reproductor.song = (nom + "_" + artista);
 		//System.out.println(nom.replaceAll("\\s", "") + "_" + artista.replaceAll("\\s", ""));
-		this.path = "temp/" + nom + "_" + artista + ".mp3";
+		Reproductor.path = "temp/" + nom + "_" + artista + ".mp3";
 		//System.out.println(this.path);
+		try {
+    		FileInputStream fis;
+            fis = new FileInputStream(Reproductor.path);
+            fis.skip(bytes);
+            setPlaying(true);
+            setStart(true);
+            player = new BasicPlayer();
+            BufferedInputStream bufferedIn = new BufferedInputStream(fis);
+			player.open(AudioSystem.getAudioInputStream(bufferedIn));
+		} catch (BasicPlayerException | UnsupportedAudioFileException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public boolean isPlaying() {
@@ -148,12 +186,24 @@ public class Reproductor extends Thread{
 		this.isPlaying = isPlaying;
 	}
 	
+	public void endSong2(){
+		setPlaying(false);
+		setStart(false);
+		try {
+			player.stop();
+			stop();
+		} catch (BasicPlayerException e) {
+			System.out.println("##############################");// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	public void endSong() {
 		setPlaying(false);
 		setStart(false);
 		//String name = this.song.replaceAll(" ", "");
-		File f = new File("./temp/" + this.song + ".mp3");
-		System.out.println("PATH: " + this.song);
+		File f = new File("./temp/" + Reproductor.song + ".mp3");
+		System.out.println("PATH: " + Reproductor.song);
 		try {
 			
 			player.stop();
@@ -167,7 +217,7 @@ public class Reproductor extends Thread{
 	}
 	
 	public String getSong() {
-		return this.song;
+		return Reproductor.song;
 	}
 
 	public boolean isStart() {
@@ -185,6 +235,35 @@ public class Reproductor extends Thread{
 	public void setRepeat(boolean repeat) {
 		System.out.println(repeat);
 		this.repeat = repeat;
+	}
+
+	public File getFile() {
+		return file;
+	}
+
+
+	public long getBytes() {
+		return bytes;
+	}
+
+	public void setBytes(long bytes) {
+		this.bytes = bytes;
+	}
+
+	public double getVolum() {
+		return volum;
+	}
+
+	public void setVolum(double volum) {
+		this.volum = volum;
+	}
+
+	public Thread getThread() {
+		return t;
+	}
+
+	public void setThread(Thread t) {
+		this.t = t;
 	}
 }
 

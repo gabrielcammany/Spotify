@@ -62,12 +62,11 @@ public class ControladorLlistesMusica implements MouseListener{
 					    if (str.getNom_llista().equals(lista.getSelectedValue())){
 					    	System.out.println("ELIMINAR LA LLISTA " + str.getNom_llista());
 							iter.remove();
+							finestrareproduccio.getModel().removeElementAt(lista.getSelectedIndex());
 							ControladorFinestres.getInfoServidor().eliminaLlista(String.valueOf(str.getId_llistes()));
 						}
 					
 					}
-					
-					finestrareproduccio.getModel().fireTableDataChanged();
 
 
 				}

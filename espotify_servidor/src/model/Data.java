@@ -7,7 +7,6 @@ public class Data {
 	private static ArrayList<Sessio> aSessio;
 	private static ArrayList<User> user;
 	private static ArrayList<Canco> alMusica;
-	private static ArrayList<sLlista> update;
 
 	public static ArrayList<Sessio> getaSessio() {
 		return aSessio;
@@ -15,6 +14,13 @@ public class Data {
 
 	public static void setaSessio(ArrayList<Sessio> aSessio) {
 		Data.aSessio = aSessio;
+	}
+	
+	public static void inicialitza(){
+		aSessio = new ArrayList<Sessio>();
+		user =  new ArrayList<User>();
+		alMusica =  new ArrayList<Canco>();
+		
 	}
 
 	public static ArrayList<User> getUsers() {
@@ -26,7 +32,6 @@ public class Data {
 	}
 	
 	public static void addSessio(Sessio s){
-		if(aSessio == null)aSessio = new ArrayList<Sessio> ();
 		Data.aSessio.add(s);
 	}
 	

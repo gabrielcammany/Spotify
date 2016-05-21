@@ -21,11 +21,11 @@ public class ButtonsController implements ActionListener {
 	private	ErrorLog vError =new ErrorLog();
 	// NETWORK
 	private MessageService mService;
-	
+	private ConectorDB conn;
 	
 	public ButtonsController(){}
-	public ButtonsController( MainWindow view, FinestraServidor viewF) {
-
+	public ButtonsController( MainWindow view, FinestraServidor viewF, ConectorDB conn) {
+		this.conn = conn;
 		this.view = view;
 		this.viewF = viewF;
 		this.viewF.setControlador(this);
@@ -50,10 +50,12 @@ public class ButtonsController implements ActionListener {
 	
 	public void actionPerformed(ActionEvent event) {
 		if (event.getActionCommand().equals("START")) {
-			Data.setAlMusica((new SocketController().selectSongs()));
-			// Iniciem el servei
-			mService.startService();
-			view.changeButtonsStateStarted();
+			if(conn.connect()){
+				Data.setAlMusica((new SocketController().selectSongs()));
+				// Iniciem el servei
+				mService.startService();
+				view.changeButtonsStateStarted();
+			}
 		} else if (event.getActionCommand().equals("STOP")) {
 			// Aturem el servei
 			mService.stopService();
