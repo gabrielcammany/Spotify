@@ -69,10 +69,27 @@ public class Reproductor extends Thread{
 		            while (!fi) {
 		            	//System.out.println("hola");
 		            	try {
-		            		
+		            		t = new Thread(){
+		            			public void run(){
+		            				while(true){
+		            					if(comptar){
+		            						if(!(((float)(file.length()/100)) > temp)){
+		            							ControladorFinestres.fReproduccio.getPosicio().setValue(ControladorFinestres.fReproduccio.getPosicio().getValue()+1);
+		            						}
+		            						temp = temp + 1520;
+		            						try {
+		            							Thread.sleep(1000);
+		            						} catch (InterruptedException e) {
+		            							// TODO Auto-generated catch block
+		            							e.printStackTrace();
+		            						}
+		            					}
+		            				}
+		            			}
+		            		};
+		            		t.start();
 		            		file = new File("./temp/" + Reproductor.song + ".mp3");
 		            		//player.setGain(50);
-		            		start = true;
 		            		player.play();
 		            	}
 		            	catch (BasicPlayerException e){
@@ -109,23 +126,19 @@ public class Reproductor extends Thread{
 			}*/
 		setStart(false);
         setPlaying(false);
-        File f = new File("./temp/" + Reproductor.song + ".mp3");
-        f.delete();
-    	System.out.println("Final de canço");
 	}
 	
 	public void pause(){
 		try {
 			if (isPlaying()) {
 				System.out.println("He pausaaaaaaaaaaaaaaaaaaaaaaat");
-				comptar = false;
 				player.pause();
+				comptar = true;
 				setPlaying(false);
 			}
 			else {
 				setPlaying(true);
 				comptar = true;
-				getThread().start();
 				player.resume();
 			}
 			
@@ -190,8 +203,9 @@ public class Reproductor extends Thread{
 		setPlaying(false);
 		setStart(false);
 		try {
+			t.interrupt();
 			player.stop();
-			stop();
+			interrupt();
 		} catch (BasicPlayerException e) {
 			System.out.println("##############################");// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -205,10 +219,10 @@ public class Reproductor extends Thread{
 		File f = new File("./temp/" + Reproductor.song + ".mp3");
 		System.out.println("PATH: " + Reproductor.song);
 		try {
-			
+			t.interrupt();
 			player.stop();
 			f.delete();
-			stop();
+			interrupt();
 			
 		} catch (BasicPlayerException e) {
 			// TODO Auto-generated catch block

@@ -63,7 +63,7 @@ public class ControladorReproductor implements MouseListener {
 				enReproduccio = ControladorFinestres.fReproduccio.getTaulaMusica().getSelectedRow();
 			
 				
-				if(ControladorFinestres.getR().getSong().equals(nom + "_" + artista) && ControladorFinestres.getR().isStart()) {
+				if(ControladorFinestres.getR().getSong().equals(nom + "_" + artista) || ControladorFinestres.getR().isStart()) {
 					ControladorFinestres.getR().pause();
 				}
 				else {
@@ -71,7 +71,7 @@ public class ControladorReproductor implements MouseListener {
 						ControladorFinestres.getR().endSong2();
 					}
 					ControladorFinestres.restartReproductor();
-					
+					System.out.println("OBRIM DE NOU");
 	
 					ControladorFinestres.obteTaulaMusica();
 					

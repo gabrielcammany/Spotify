@@ -274,7 +274,7 @@ public class FinestraReproduccio extends JFrame{
 		jpBarraRepro.add(jlBack,"dock west");
 		jpBarraRepro.add(jlPlay,"dock west");
 		jpBarraRepro.add(jlNext,"dock west");
-		jpBarraRepro.add(getPosicio(),"dock west");
+		//jpBarraRepro.add(getPosicio(),"dock west");
 		
 		jpBarraRepetir.add(jlRepetir,"dock west");
 		jpBarraRepetir.add(jlSonido,"dock west");

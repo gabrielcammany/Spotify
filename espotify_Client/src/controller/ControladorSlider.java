@@ -23,6 +23,7 @@ public class ControladorSlider implements ChangeListener{
 	
 	@Override
 	public void stateChanged(ChangeEvent event) {
+		
 			if(barra){
 				if(ControladorFinestres.getR().isPlaying()){
 					try {
@@ -35,14 +36,14 @@ public class ControladorSlider implements ChangeListener{
 					ControladorFinestres.getR().setVolum((float)slider.getValue()/100);
 				}
 				
-			}else{
-				if((ControladorFinestres.getR().isPlaying())){
+			/*}else{
+				if((ControladorFinestres.getR().isAlive())){
 					ControladorFinestres.getR().endSong2();
 					ControladorFinestres.setR(new Reproductor());
 					ControladorFinestres.getR().setBytes((long) ((float)(((float)slider.getValue()/100))*((ControladorFinestres.getR().getFile().length()))));
 					ControladorFinestres.getR().restart();
 					ControladorFinestres.getR().start();
-					}
+					}*/
 
 			}
 		
