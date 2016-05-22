@@ -4,15 +4,11 @@ import java.awt.Component;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.util.ArrayList;
 
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.SwingUtilities;
 
-import model.Canco;
-import network.InfoServidor;
 import view.FinestraReproduccio;
 
 public class VotarController extends MouseAdapter {
@@ -66,14 +62,15 @@ public class VotarController extends MouseAdapter {
 	        //el mostrem
 	        popupMenu.show(b,e.getX(),e.getY());
 	        
-	        String nomCanco = (String) finestraReproduccio.getTaulaLlistaMusicaFollowing().getValueAt(finestraReproduccio.getTaulaLlistaMusicaFollowing().getSelectedRow(), 0);
-	        
-	        eliminar.addMouseListener(new DeleteController(finestraReproduccio, "llistaPropia"));
-	        estrella1.addMouseListener(new EstrellesController(finestraReproduccio,1, nomCanco));
-	        estrella2.addMouseListener(new EstrellesController(finestraReproduccio,2, nomCanco));
-	        estrella3.addMouseListener(new EstrellesController(finestraReproduccio,3, nomCanco));
-	        estrella4.addMouseListener(new EstrellesController(finestraReproduccio,4, nomCanco));
-	        estrella5.addMouseListener(new EstrellesController(finestraReproduccio,5, nomCanco));
+	        if(finestraReproduccio.getTaulaLlistaMusicaFollowing().getSelectedRowCount() != 0){
+		        String nomCanco = (String) finestraReproduccio.getTaulaLlistaMusicaFollowing().getValueAt(finestraReproduccio.getTaulaLlistaMusicaFollowing().getSelectedRow(), 0);
+		        eliminar.addMouseListener(new DeleteController(finestraReproduccio, "llistaPropia"));
+		        estrella1.addMouseListener(new EstrellesController(finestraReproduccio,1, nomCanco));
+		        estrella2.addMouseListener(new EstrellesController(finestraReproduccio,2, nomCanco));
+		        estrella3.addMouseListener(new EstrellesController(finestraReproduccio,3, nomCanco));
+		        estrella4.addMouseListener(new EstrellesController(finestraReproduccio,4, nomCanco));
+		        estrella5.addMouseListener(new EstrellesController(finestraReproduccio,5, nomCanco));
+	        }
         }
 	}
 

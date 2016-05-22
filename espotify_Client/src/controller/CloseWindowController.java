@@ -3,9 +3,6 @@ package controller;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import model.User;
-import network.InfoServidor;
-
 public class CloseWindowController extends WindowAdapter {
 
 	@Override

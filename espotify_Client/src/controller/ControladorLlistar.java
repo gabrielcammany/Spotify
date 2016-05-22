@@ -6,8 +6,6 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JLabel;
 
-import model.User;
-
 /**
  * Controlador encarregat de gestionar quina musica llistar 
  * (disponible, propia, following)

@@ -15,9 +15,9 @@ import model.Reproductor;
 import model.User;
 import model.sUser;
 import network.InfoServidor;
-import view.FinestraReproduccio;
-import view.FinestraRegistre;
 import view.FinestraLogin;
+import view.FinestraRegistre;
+import view.FinestraReproduccio;
 /**
  * Controlador encarregat de gestionar la relacion entre les diferents finestres 
  * (Login, Registre, finestra principal)

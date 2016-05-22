@@ -1,7 +1,6 @@
 package controller;
 
 import java.awt.Component;
-import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -49,7 +48,6 @@ public class CancoLlistaController extends MouseAdapter {
 					@Override
 					public void mousePressed(MouseEvent e) {
 						//Recuperem el nom de la canco que l'usuari vol afegir
-						System.out.println("###########"+l.getNom_llista());
 						if(finestraReproduccio.getTaulaMusica().getSelectedRow() != -1){
 							String nomCanco = (String) finestraReproduccio.getTaulaMusica().getValueAt(finestraReproduccio.getTaulaMusica().getSelectedRow(), 0);
 							String artista = (String) finestraReproduccio.getTaulaMusica().getValueAt(finestraReproduccio.getTaulaMusica().getSelectedRow(),3);
@@ -71,8 +69,6 @@ public class CancoLlistaController extends MouseAdapter {
 			// agafem l'event source
 			Component b=(Component)e.getSource();
 
-			// afafem la localitzacio del punt en la pantalla
-			Point p=b.getLocationOnScreen();
 
 			//el mostrem
 			popupMenu.show(b,e.getX(),e.getY());

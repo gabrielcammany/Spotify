@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 
 import model.Data;
 import model.Query;
-import model.User;
 import network.ConectorDB;
 import network.MessageService;
 import view.ErrorLog;

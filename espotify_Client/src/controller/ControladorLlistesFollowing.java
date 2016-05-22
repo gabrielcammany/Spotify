@@ -4,16 +4,12 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JList;
 
-import com.sun.glass.events.MouseEvent;
-
 public class ControladorLlistesFollowing implements MouseListener  {
 	
 
-		private String seleccio;
-		private JList lista;
+		private JList<String> lista;
 		
-		public ControladorLlistesFollowing(JList lista) {
-			
+		public ControladorLlistesFollowing(JList<String> lista) {
 			this.lista = lista;			
 		}
 		

@@ -1,14 +1,10 @@
 package controller;
 
-import java.io.IOException;
-
 import javax.swing.JSlider;
-import javax.swing.JTable;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import javazoom.jlgui.basicplayer.BasicPlayerException;
-import model.Reproductor;
 
 public class ControladorSlider implements ChangeListener{
 

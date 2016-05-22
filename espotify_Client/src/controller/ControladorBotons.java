@@ -8,7 +8,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import model.User;
-import network.InfoServidor;
 
 
 /**

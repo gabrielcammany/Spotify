@@ -17,9 +17,7 @@ import view.FinestraReproduccio;
 
 public class ControladorLlistesMusica implements MouseListener{
 	
-
-	private String seleccio;
-	private JList lista;
+	private JList<String> lista;
 	private FinestraReproduccio finestrareproduccio;
 	
 	@Override
@@ -91,7 +89,7 @@ public class ControladorLlistesMusica implements MouseListener{
 			});
 		}
 	}
-	public ControladorLlistesMusica(JList lista,FinestraReproduccio finestrareproduccio) {
+	public ControladorLlistesMusica(JList<String> lista,FinestraReproduccio finestrareproduccio) {
 		this.lista = lista;
 		this.finestrareproduccio = finestrareproduccio; 
 		

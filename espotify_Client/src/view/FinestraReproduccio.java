@@ -26,7 +26,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
 
 import org.jdesktop.xswingx.PromptSupport;

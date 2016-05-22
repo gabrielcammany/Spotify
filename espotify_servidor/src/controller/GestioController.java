@@ -2,13 +2,9 @@ package controller;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.sql.Connection;
-import java.sql.ResultSetMetaData;
-import network.ConectorDB;
-import java.sql.DriverManager;
 
 import model.Query;
+import network.ConectorDB;
 public class GestioController {
 	
 	ConectorDB con;
