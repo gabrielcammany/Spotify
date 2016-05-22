@@ -136,6 +136,32 @@ public class FinestraRegistre extends JPanel{
 		});
 		
 	}
+
+	public boolean validaPassword (String password) {
+
+	  int iCar = 0,digit=0,lletra = 0;
+
+
+	  if(password.length()>=6){
+		  for(iCar=0;iCar<password.length();iCar++){
+			  if (Character.isLetter(password.charAt(iCar)))lletra++;
+			  if(Character.isDigit(password.charAt(iCar)))digit++;
+		  }
+	  }else{
+		  ControladorFinestres.mostraPopUp(4, null);
+		  return false;
+	  }
+	  if(lletra>0 && digit >0)return true;
+	  if(digit == 0){
+		  ControladorFinestres.mostraPopUp(5, null);
+		  return false;
+	  }
+	  if(lletra == 0){
+		  ControladorFinestres.mostraPopUp(6, null);
+		  return false;
+	  }
+	  return false;
+	}
 	
 	
 	public void tancaFinestraRegistre() {

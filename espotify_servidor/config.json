@@ -4,6 +4,7 @@
     "pass": "sinminus",
     "url": "jdbc:mysql://projectdpo.ddns.net",
     "database": "bd_espotifi",
-    "port": 3306
+    "port": 3306,
+   	"portSocket": 34567
   }
 }

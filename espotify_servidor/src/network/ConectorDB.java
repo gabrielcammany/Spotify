@@ -20,7 +20,11 @@ public class ConectorDB {
     private static String url;
     private static Connection conn = null;
     private static Statement s;
+    private static int portSocket;
 	
+	public static int getPortSocket() {
+		return portSocket;
+	}
 	public ConectorDB(){
 		
 	}
@@ -33,6 +37,7 @@ public class ConectorDB {
 		ConectorDB.url = o.get("url").getAsString();
 		ConectorDB.url += ":"+ConectorDB.port+"/";
 		ConectorDB.url += ConectorDB.db;
+		ConectorDB.portSocket = o.get("portSocket").getAsInt();
 	}
 
     public boolean connect() {

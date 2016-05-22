@@ -12,7 +12,7 @@ import controller.ButtonsController;
 
 public class MessageService {
 	private ServerSocket sServer;
-	private static final int PORT = 34567;
+	private static final int PORT = ConectorDB.getPortSocket();
 	// Relacio amb el fil dexecucio que escolta les peticions de connexio
 	private MessageServiceWorker msWorker;
 	// Relacio amb el controlador per notificar les recepcions de missatges

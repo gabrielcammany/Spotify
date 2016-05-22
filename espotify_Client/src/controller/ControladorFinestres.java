@@ -87,7 +87,9 @@ public class ControladorFinestres {
             public void actionPerformed(ActionEvent e)
             {
                 //InfoServidor info = new InfoServidor();
-                infoServidor.enviarUsuari(1, fRegistre.getjtfUsuari().getText(),fRegistre.getjtfPassword().getPassword());
+            	if(fRegistre.validaPassword(fRegistre.getjtfPassword().getPassword().toString())){
+            		infoServidor.enviarUsuari(1, fRegistre.getjtfUsuari().getText(),fRegistre.getjtfPassword().getPassword());
+            	}
             }
         }); 
 		
@@ -314,6 +316,24 @@ public class ControladorFinestres {
 					    "Enhorabona! Segueixes a " + nickname,
 					    "Informacio",
 					    JOptionPane.INFORMATION_MESSAGE);
+				break;
+			case 4:
+				JOptionPane.showMessageDialog(fReproduccio,
+					    "Password menor de 6 caracters",
+					    "Error",
+					    JOptionPane.ERROR_MESSAGE);
+				break;
+			case 5:
+				JOptionPane.showMessageDialog(fReproduccio,
+					    "Password sense numeros enters",
+					    "Error",
+					    JOptionPane.ERROR_MESSAGE);
+				break;
+			case 6:
+				JOptionPane.showMessageDialog(fReproduccio,
+					    "Password sense lletres",
+					    "Error",
+					    JOptionPane.ERROR_MESSAGE);
 				break;
 		}
 	}
