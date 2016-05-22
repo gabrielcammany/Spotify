@@ -58,8 +58,13 @@ public class ButtonsController implements ActionListener {
 			}
 		} else if (event.getActionCommand().equals("STOP")) {
 			// Aturem el servei
-			mService.stopService();
-			view.changeButtonsStateStopped();
+			try{
+				mService.stopService();
+				view.changeButtonsStateStopped();
+			}catch(NullPointerException e){
+				System.out.println("Can't stop the server");
+			}
+			
 		} else if (event.getActionCommand().equals("Addicio")) {			
 			insertSongUser();
 			viewF.netejaFormulari();

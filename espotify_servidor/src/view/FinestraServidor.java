@@ -62,6 +62,8 @@ public class FinestraServidor extends JFrame {
 	private JTable taulaMusica;
 	private JTable taulaUsuari;
 	public DefaultTableModel tableModel;
+	public DefaultTableModel tableModelUsuari;
+
 	private ReproductorController reproductorController;
 	
 	
@@ -80,6 +82,12 @@ public class FinestraServidor extends JFrame {
 	public void setControlador(ButtonsController controlador) {
 		this.controlador = controlador;
 	}
+	
+	/**
+	 * 	Aquesta funcio es la encarregada de printar tota la pantalla del servidor
+	 * 
+	 * @param ArrayList<Canco> musica, ArrayList<User> alUsuaris
+	 */
 
 	public void creaFinestra(ArrayList<Canco> musica, ArrayList<User> alUsuaris){
 		
@@ -112,10 +120,10 @@ public class FinestraServidor extends JFrame {
 		
 		jfServidor.add(jtpServidor);
 	}
+	
 	/**
 	 * La finestra de l'usuari et mostra els usuaris de la BBDD
 	 * 
-	 * @author jorgemelguizo
 	 * 
 	 **/
 	
@@ -133,41 +141,81 @@ public class FinestraServidor extends JFrame {
 		columnas.add("Numero following");
 		
 		Vector<Vector<String>> filas = new Vector<Vector<String>>();
+		taulaUsuari = new JTable(filas, columnas){
+		public boolean isCellEditable (int rowIndex, int vColIndex) {
+			return false;
+		}};
+		
+		tableModelUsuari = (DefaultTableModel) taulaUsuari.getModel();
+		tableModelUsuari.setRowCount(0);
 		
 		DefaultTableCellRenderer Alinear = new DefaultTableCellRenderer();
 		Alinear.setHorizontalAlignment(SwingConstants.CENTER);
-		
+		ArrayList<User> usuari = Data.getUsers();
+		/*
 		for (int i = 0; i < allUsers.size(); i ++) {
 			Vector<String> fila = new Vector<String>();
 			fila.add(((User)(allUsers.get(i))).getNickname());
 			fila.add(((User)(allUsers.get(i))).getData_reg());
 			fila.add(((User)(allUsers.get(i))).getData_ult());
+			
 			int numLlistes = gestioController.quantesLlistes(allUsers.get(i).getId_usuari());
 			fila.add(Integer.toString(numLlistes));
+			
 			int numCancons = gestioController.quantesCancons(allUsers.get(i).getId_usuari());
 			fila.add(Integer.toString(numCancons));
+			
 			int numFollowers = gestioController.quantsFollowers(allUsers.get(i).getId_usuari());
 			fila.add(Integer.toString(numFollowers));
+			
 			int numFollowing = gestioController.quantsFollowing(allUsers.get(i).getId_usuari());
 			fila.add(Integer.toString(numFollowing));
 			
 			filas.add(fila);
+		}*/
+		for (int i = 0; i < usuari.size(); i ++) {
+
+			String[]data = new String[7];
+			
+			data[0] = usuari.get(i).getNickname();
+			data[1] = usuari.get(i).getData_reg();
+			data[2] = usuari.get(i).getData_ult();
+			int numLlistes = gestioController.quantesLlistes(usuari.get(i).getId_usuari());
+			data[3] = Integer.toString(numLlistes);
+			
+			int numCancons = gestioController.quantesCancons(usuari.get(i).getId_usuari());
+			data[4] = (Integer.toString(numCancons));
+			
+			int numFollowers = gestioController.quantsFollowers(usuari.get(i).getId_usuari());
+			data[5] = (Integer.toString(numFollowers));
+			
+			int numFollowing = gestioController.quantsFollowing(usuari.get(i).getId_usuari());
+			data[6] = (Integer.toString(numFollowing));
+			
+			tableModelUsuari.addRow(data);
+	
+			
 		}
 		
-		taulaUsuari = new JTable(filas, columnas){
+		taulaUsuari.setModel(tableModelUsuari);
 			
-		public boolean isCellEditable (int rowIndex, int vColIndex) {
-			return false;
-		}};
 		taulaUsuari.addMouseListener(new DeleteController(jfServidor, this));
 			
 
 		JScrollPane jspUsuari = new JScrollPane(taulaUsuari);
+		tableModelUsuari.fireTableDataChanged();
 		
 		jpUsuari.add(jspUsuari, BorderLayout.CENTER);
 		
 		return jpUsuari;
 	}
+	
+	/**
+	 * Aquesta funcio es la encarregada fa el JPanel encarregat de printa la finestra servidor
+	 * 
+	 * @return JPanel 
+	 * 
+	 */
 	
 	public JPanel FinestraMusica(){
 		jpMusica = new JPanel(new BorderLayout());
@@ -205,6 +253,13 @@ public class FinestraServidor extends JFrame {
 		return jpMusica;
 	}
 	
+	
+	/**
+	 * Es el JPanel amb els botons de reproduccio (play i pause)
+	 * 
+	 * @return JPanel
+	 */
+
 	
 	private JPanel botonsReproduccio() {
 		JPanel jpBotons = new JPanel (new GridLayout(1,2));
@@ -293,10 +348,7 @@ public class FinestraServidor extends JFrame {
 	
 	public JPanel AddicioMusica(){
 		
-		/*
-		 * 
-		 * FALTA MIGLAYOUT
-		 */
+	
 		JPanel jpAddicio = new JPanel(new MigLayout("al center center, wrap, gapy 10"));
 
 		jtfcanco = new JTextField(15);
@@ -404,6 +456,9 @@ public class FinestraServidor extends JFrame {
 		return jtfUbicacio.getText();
 	}
 	
+	/**
+	 * Aquesta funcio posa tots els camps del formulari en blanc
+	 */
 	public void netejaFormulari() {
 		jtfcanco.setText(null);
 		jtfGenere.setText(null);
