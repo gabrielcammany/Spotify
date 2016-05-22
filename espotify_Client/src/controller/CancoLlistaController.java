@@ -16,6 +16,10 @@ import model.Llistes;
 import model.User;
 import view.FinestraReproduccio;
 
+/**
+ * controlador de llistar cancons
+ *
+ */
 public class CancoLlistaController extends MouseAdapter {
 	private FinestraReproduccio finestraReproduccio;
 	JMenuItem afegir;

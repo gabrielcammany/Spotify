@@ -11,6 +11,10 @@ import javax.swing.SwingUtilities;
 
 import view.FinestraReproduccio;
 
+/**
+ * 
+ *  controlador de votar
+ */
 public class VotarController extends MouseAdapter {
 	
 	

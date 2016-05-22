@@ -5,6 +5,10 @@ import java.awt.event.MouseEvent;
 
 import view.FinestraReproduccio;
 
+/**
+ * controlador de les estrelles
+ *
+ */
 public class EstrellesController extends MouseAdapter {
 	private int estrelles;
 	private FinestraReproduccio fReproduccio;

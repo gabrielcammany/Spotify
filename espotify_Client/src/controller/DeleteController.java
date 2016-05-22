@@ -14,6 +14,10 @@ import model.Llistes;
 import model.User;
 import view.FinestraReproduccio;
 
+/**
+ * controlador d'esborrar
+ *
+ */
 public class DeleteController implements MouseListener {
 	
 	private String ubicacio;

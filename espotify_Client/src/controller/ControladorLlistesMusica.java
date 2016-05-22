@@ -15,6 +15,11 @@ import model.Llistes;
 import model.User;
 import view.FinestraReproduccio;
 
+/**
+ * 
+ * controlador llistes de musica
+ *
+ */
 public class ControladorLlistesMusica implements MouseListener{
 	
 	private JList<String> lista;

@@ -3,7 +3,11 @@ package controller;
 import java.awt.event.MouseListener;
 
 import javax.swing.JList;
-
+/**
+ * 
+ * controlador lllistes following
+ *
+ */
 public class ControladorLlistesFollowing implements MouseListener  {
 	
 

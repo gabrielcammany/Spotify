@@ -6,6 +6,11 @@ import javax.swing.event.ChangeListener;
 
 import javazoom.jlgui.basicplayer.BasicPlayerException;
 
+/**
+ * 
+ * controlador del volum
+ *
+ */
 public class ControladorSlider implements ChangeListener{
 
 	JSlider slider;
