@@ -39,7 +39,7 @@ public class ControladorLlistar implements MouseListener {
 			break;
 		case "llistesfollowing":
 			System.out.println("click llistesfollowing");
-			if(User.getlFollowing() == null)ControladorFinestres.getInfoServidor().demanarLlistesFollowing();
+			ControladorFinestres.getInfoServidor().demanarLlistesFollowing();
 			ControladorFinestres.novaOpcio(opcio);
 			break;
 		case "usuarisfollowing":

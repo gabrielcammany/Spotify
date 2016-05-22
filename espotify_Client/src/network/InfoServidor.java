@@ -1,29 +1,24 @@
 package network;
 
-import java.awt.List;
 import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.EOFException;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Iterator;
 
 import javax.swing.JOptionPane;
 
 import controller.ControladorFinestres;
 import controller.ControladorLlistar;
-import controller.DeleteController;
 import model.Canco;
 import model.Llistes;
 import model.User;
@@ -136,7 +131,11 @@ public class InfoServidor {
 		try {
 			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
 			doStream.writeUTF(User.getId_usuari()+":unFollow:"+nickname);
-			
+			for(int i = 0;i<User.getlUsersFollowing().size();i++){
+				if(User.getlUsersFollowing().get(i).getNickname().toLowerCase().equals(nickname.toLowerCase())){
+					User.getlUsersFollowing().remove(i);
+				}
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -155,7 +154,7 @@ public class InfoServidor {
 			try {
 				newSocket();
 				DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
-				doStream.writeUTF(User.getId_usuari()+":requestLlistesFollow:");
+				doStream.writeUTF(User.getId_usuari()+":requestLlistesFollow");
 
 				ObjectInputStream objectInput = new ObjectInputStream(sServidor.getInputStream());
 
@@ -339,24 +338,28 @@ public class InfoServidor {
 		int result = 0;
 		
 		try {
+			System.out.println("Peticio de follow");
 			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
 			doStream.writeUTF(User.getId_usuari()+":requestFollow:"+nickname);
 			DataInputStream input = new DataInputStream(sServidor.getInputStream());
 			int trobat = input.readInt();
-			if(trobat ==0){
+			System.out.println(trobat);
+			if(trobat == 0){
 				ControladorFinestres.mostraPopUp(0,nickname);
 			} else {
-				if(trobat == -1) {
-					ControladorFinestres.mostraPopUp(2,nickname);
-				} else {
-					if(trobat!=-1){
-						User.getlUsersFollowing().add(new sUser(nickname, trobat));
-						ControladorFinestres.mostraPopUp(3,nickname);
-					}
-				}
+				User.getlUsersFollowing().add(new sUser(nickname, trobat));
+
+				JOptionPane.showMessageDialog(ControladorFinestres.fReproduccio,
+					    "Enhorabona! Segueixes a " + nickname,
+					    "Informacio",
+					    JOptionPane.INFORMATION_MESSAGE);
+				ObjectInputStream objectInput = new ObjectInputStream(sServidor.getInputStream());
+
+				ArrayList<Llistes> llFollowing = (ArrayList<Llistes>) objectInput.readObject();
+				User.setlFollowing(llFollowing);
 			}
 		
-		} catch (IOException e) {
+		} catch (IOException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

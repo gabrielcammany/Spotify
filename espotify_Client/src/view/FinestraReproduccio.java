@@ -301,7 +301,7 @@ public class FinestraReproduccio extends JFrame{
 		//JPanel jpLlistat = new JPanel(new BorderLayout());
 		this.alMusica = alMusica;
 		//Tabla musica disponible 
-		Vector columnas = new Vector();
+		Vector<String> columnas = new Vector<String>();
 		
 		columnas.add("Nom canco");
 		columnas.add("Genere");
@@ -309,31 +309,35 @@ public class FinestraReproduccio extends JFrame{
 		columnas.add("Artistes");
 		columnas.add("Estrelles");
 
-   
-		Vector filas = new Vector();
-		for (int i = 0; i <alMusica.size(); i ++) {
-			Vector fila = new Vector();
-			
-			fila.add(alMusica.get(i).getNom());
-			fila.add(alMusica.get(i).getGenere());
-			fila.add(alMusica.get(i).getAlbum());
-			fila.add(alMusica.get(i).getArtista());
-			int estrelles = Integer.parseInt(alMusica.get(i).getEstrelles());
-			int nVotacio = Integer.parseInt(alMusica.get(i).getnVotacio());
-			if(nVotacio != 0) {
-				fila.add( Integer.toString (estrelles/nVotacio));
-			} else {
-				fila.add("0");
-			}
-			
-			filas.add(fila);
-		}
-	
+		Vector<String> filas = new Vector<String>();
 		taulaMusica = new JTable( filas, columnas){
 		
 		public boolean isCellEditable (int rowIndex, int vColIndex) {
 			return false;
 		}};		
+		
+		tableModel = (DefaultTableModel)taulaMusica.getModel();
+		tableModel.setRowCount(0);
+		
+		String[] data = new String[5];
+		for (int i = 0; i < alMusica.size(); i ++) {
+
+			if (!alMusica.get(i).getNom().isEmpty()){
+				data[0] = alMusica.get(i).getNom();
+				data[1] = alMusica.get(i).getGenere();
+				data[2] = alMusica.get(i).getAlbum();
+				data[3] = alMusica.get(i).getArtista();
+				data[4] = alMusica.get(i).getEstrelles();
+				tableModel.addRow(data);
+			}
+		}
+
+		for(int i=0;i<columnas.size();i++){
+			taulaMusica.getColumnModel().getColumn(i).setCellRenderer(new TableRenderer());
+		}
+		
+		taulaMusica.setModel(tableModel);
+		tableModel.fireTableDataChanged();
 		
 		for(int i=0;i<columnas.size();i++){
 			taulaMusica.getColumnModel().getColumn(i).setCellRenderer(new TableRenderer());
@@ -533,7 +537,7 @@ public class FinestraReproduccio extends JFrame{
 	
 	public void actualitzaLlistaFollowingSeleccionada (ArrayList<Canco> musicaLlista) {
 
-		Vector<String> columnas = new Vector();
+		Vector<String> columnas = new Vector<String>();
 
 		columnas.add("Nom canco");
 		columnas.add("Genere");
@@ -541,36 +545,39 @@ public class FinestraReproduccio extends JFrame{
 		columnas.add("Artistes");
 
 
-		Vector filas = new Vector();
-		for (int i = 0; i <musicaLlista.size(); i ++) {
-			Vector<String> fila = new Vector();
-
-			fila.add(musicaLlista.get(i).getNom());
-			fila.add(musicaLlista.get(i).getGenere());
-			fila.add(musicaLlista.get(i).getAlbum());
-			fila.add(musicaLlista.get(i).getArtista());
-
-			filas.add(fila);
-		}
-		System.out.println(columnas);
+		Vector<String> filas = new Vector<String>();
 		taulaMusicaLlista = new JTable(filas, columnas){
 		
 		public boolean isCellEditable (int rowIndex, int vColIndex) {
 			return false;
 		}};
-		
+
+		tableModel = (DefaultTableModel)taulaMusicaLlista.getModel();
+		tableModel.setRowCount(0);
+
+		String[] data = new String[4];
+		for (int i = 0; i < musicaLlista.size(); i ++) {
+
+			if (!musicaLlista.get(i).getNom().isEmpty()){
+				data[0] = musicaLlista.get(i).getNom();
+				data[1] = musicaLlista.get(i).getGenere();
+				data[2] = musicaLlista.get(i).getAlbum();
+				data[3] = musicaLlista.get(i).getArtista();
+				tableModel.addRow(data);
+			}
+		}
+		System.out.println(columnas);
 		for(int i=0;i<columnas.size();i++){
 			taulaMusicaLlista.getColumnModel().getColumn(i).setCellRenderer(new TableRenderer());
 		}
 		
-		
-		//sense aixo es quedara el primer jpanel(border.center)
 		BorderLayout layout =  (BorderLayout) jpLlistesFollowing.getLayout();
 		if (layout.getLayoutComponent(BorderLayout.CENTER) != null){
 			jpLlistesFollowing.remove(layout.getLayoutComponent(BorderLayout.CENTER));
 		}	
 		
-		
+		taulaMusicaLlista.setModel(tableModel);
+		tableModel.fireTableDataChanged();
 		jpLlistesFollowing.add(new JScrollPane(taulaMusicaLlista), BorderLayout.CENTER);
 		jpLlistesFollowing.setBackground(new Color(50,50,50));
 		jpLlistesFollowing.validate();

@@ -238,6 +238,17 @@ public class SocketController {
 		String[] data= new String[2];
 		data[0] = idSesio;
 		data[1] = String.valueOf(id);
+		for(Sessio s:Data.getaSessio()){
+			if(s.getIdSessio() == Integer.parseInt(idSesio)){
+				for(int i = 0;i<s.getlUserFollow().size();i++){
+					if(s.getlUserFollow().get(i).getNickname().toLowerCase().equals(nom.toLowerCase())){
+						s.getlUserFollow().remove(i);
+					}
+				}
+				
+			}
+		}
+		
 		conn.deleteQuery(new Query().queryList(14, data));
 		
 		
@@ -245,7 +256,7 @@ public class SocketController {
 	public ArrayList<Llistes> omplirLlistesFollowing(ArrayList<sUser> lUserFollow ){
 		ArrayList<Llistes> llFollowers = new ArrayList<Llistes>();
 		if(!lUserFollow.isEmpty()){
-
+			System.out.println("esta buit!!!!!!!!!!!!!!!!!!");
 			int size = lUserFollow.size();
 			for(int i = 0;i<size;i++){
 				ArrayList<Llistes> ll  = omplirLlistes(lUserFollow.get(i).getId_usuari());
@@ -275,6 +286,7 @@ public class SocketController {
 
 			while (responseServer.next()) {
 				if(responseServer != null){
+					System.out.println("demana llistes");
 					Llistes al = new Llistes();
 					ArrayList<Integer> aCancons = new ArrayList<Integer>();
 					int idACanco = 0 ;
@@ -294,7 +306,6 @@ public class SocketController {
 					while (responseServer3.next()) {
 						
 						aCancons.add(responseServer3.getInt("id_canco"));
-						System.out.println("[SERVIDOR][Llista]id_canco '"+aCancons.get(idACanco));
 						idACanco++;
 					}
 					al.setAllIdCanco(aCancons);

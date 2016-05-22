@@ -159,6 +159,7 @@ public class ControladorFinestres {
 		//infoServidor =new InfoServidor();
 		//infoServidor.demanaSessio();
 		infoServidor.peticioFollowers();
+		infoServidor.demanarLlistesFollowing();
 		infoServidor.peticioMusica();
 	}
 	
@@ -296,7 +297,7 @@ public class ControladorFinestres {
 		switch (option){
 			case 0:
 				JOptionPane.showMessageDialog(fReproduccio,
-					    "Usuari no trobat",
+					    "Error a seguir a l'Usuari",
 					    "Error",
 					    JOptionPane.ERROR_MESSAGE);
 				break;
@@ -317,12 +318,6 @@ public class ControladorFinestres {
 					
 					
 				}
-			case 2:
-				JOptionPane.showMessageDialog(fReproduccio,
-					    "Ja segueixes a aquest usuari",
-					    "Error",
-					    JOptionPane.ERROR_MESSAGE);
-				break;
 
 			case 3:
 				JOptionPane.showMessageDialog(fReproduccio,

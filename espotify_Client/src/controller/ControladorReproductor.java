@@ -8,6 +8,7 @@ import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -62,12 +63,29 @@ public class ControladorReproductor implements MouseListener {
 		if(algoSeleccionat){
 			switch (opcio) {
 			case "play":
-				System.out.println("SELECTED ROW " + ControladorFinestres.fReproduccio.getTaulaMusica().getSelectedRow());
 				
 				taula = ControladorFinestres.fReproduccio.getTableModel();
-				System.out.println("NUM FILES" + taula.getRowCount());
-				enReproduccio = ControladorFinestres.fReproduccio.getTaulaMusica().getSelectedRow();
-			
+				enReproduccio = ControladorFinestres.fReproduccio.getTaulaMusica().getSelectedRowCount();
+				if(ControladorFinestres.fReproduccio.getTaulaMusica().getSelectedRowCount() == 0){
+					System.out.println("No esta a la taula de musica");
+					if(ControladorFinestres.fReproduccio.getTaulaLlistaMusicaFollowing().getSelectedRowCount() == 0){
+						System.out.println("Ni aquesta");
+						if(ControladorFinestres.fReproduccio.getTaulaFollowing().getSelectedRowCount() == 0){
+							System.out.println("Ni aquesta altres");
+							JOptionPane.showMessageDialog(ControladorFinestres.fReproduccio, "No has seleccionat cap canço", "Error", JOptionPane.ERROR_MESSAGE);
+						}else{
+							enReproduccio = ControladorFinestres.fReproduccio.getTaulaFollowing().getSelectedRow();
+						}
+					}else{
+						enReproduccio = ControladorFinestres.fReproduccio.getTaulaLlistaMusicaFollowing().getSelectedRow();
+					}
+				}else{
+					enReproduccio = ControladorFinestres.fReproduccio.getTaulaMusica().getSelectedRow();
+				}
+				
+				taula = ControladorFinestres.fReproduccio.getTableModel();
+				
+				
 				
 				if(ControladorFinestres.getR().getSong().equals(nom + "_" + artista) && ControladorFinestres.getR().isStart()) {
 					ControladorFinestres.getR().pause();
@@ -101,17 +119,17 @@ public class ControladorReproductor implements MouseListener {
 			case "next":
 				if (ControladorFinestres.getR().isPlaying()) {
 					ControladorFinestres.getR().endSong();
-					
 					enReproduccio++;
-					if (enReproduccio < ControladorFinestres.fReproduccio.getTableModel().getRowCount()) {
-						
-						nom = (String) ControladorFinestres.fReproduccio.getTableModel().getValueAt(enReproduccio, 0);
-						artista = (String) ControladorFinestres.fReproduccio.getTableModel().getValueAt(enReproduccio, 3);
+					if (enReproduccio < taula.getRowCount()) {
+
+						System.out.println("@@@@@@@asdasdasd@@@@@@@@");
+						nom = (String) taula.getValueAt(enReproduccio, 0);
+						artista = (String) taula.getValueAt(enReproduccio, 3);
 					}
 					else {
 						enReproduccio = 0;
-						nom = (String) ControladorFinestres.fReproduccio.getTableModel().getValueAt(enReproduccio, 0);
-						artista = (String) ControladorFinestres.fReproduccio.getTableModel().getValueAt(enReproduccio, 3);
+						nom = (String) taula.getValueAt(enReproduccio, 0);
+						artista = (String) taula.getValueAt(enReproduccio, 3);
 					}
 					ControladorFinestres.restartReproductor();
 					ControladorFinestres.getR().setPath(nom,artista);
