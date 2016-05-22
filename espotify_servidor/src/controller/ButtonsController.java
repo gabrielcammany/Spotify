@@ -72,7 +72,6 @@ public class ButtonsController implements ActionListener {
 	}
 	
 	public void creaFinestra() {
-		System.out.println("########################################################");
 		Data.setUsers(new SocketController().selectUsers());
 		viewF.creaFinestra(Data.getAlMusica(),Data.getUsers());
 	}

@@ -57,7 +57,6 @@ public class MessageServiceWorker implements Runnable {
 			diStream = new DataInputStream(this.sClient.getInputStream());
 
 			String newMessage = diStream.readUTF();
-			System.out.println(newMessage);
 			aux = newMessage.split("/");
 			data = aux[0].split(":");
 			if (data[1].equals("requestCanco")){
@@ -89,7 +88,6 @@ public class MessageServiceWorker implements Runnable {
 
 			/* (data[1].equals("UserRequest")) {
 
-				System.out.println("request usuaris");
 				int idTrobat= 0 ;
 				for(User u : Data.getUsers())if(u.getNickname().toLowerCase().equals(data[2].toLowerCase()))idTrobat =u.getId_usuari();
 				System.out.println("Hola tete "+idTrobat);
@@ -170,7 +168,6 @@ public class MessageServiceWorker implements Runnable {
 					}
 				}
 				DataOutputStream d = new DataOutputStream(this.sClient.getOutputStream());
-				System.out.println(id);
 				if(id > 0){
 					d.writeInt(cadenas.hacerFollow(Integer.parseInt(data[0]),id));
 					for(Sessio s:Data.getaSessio()){
@@ -200,7 +197,6 @@ public class MessageServiceWorker implements Runnable {
 			if(data[1].equals("requestLlistesFollow")){
 				for(Sessio s:Data.getaSessio()){
 					if(Integer.parseInt(data[0]) == s.getIdSessio()){
-						System.out.println("he entrat");
 						s.setlFollowing(cadenas.omplirLlistesFollowing(s.getlUserFollow()));
 						ObjectOutputStream objectOutput;
 						try {
@@ -270,7 +266,6 @@ public class MessageServiceWorker implements Runnable {
 					s.setlUserFollow(cadenas.selectSUsers(i));
 					s.setlFollowing(cadenas.omplirLlistesFollowing(s.getlUserFollow()));
 					Data.addSessio(s);
-					//System.out.println(s.getLl().get(0).getNom_llista());
 					ObjectOutputStream objectOutput  = new ObjectOutputStream(this.sClient.getOutputStream());
 					List<Llistes> list = s.getLPropies();
 					Llistes[] llistes = new Llistes[list.size()];
@@ -311,7 +306,6 @@ public class MessageServiceWorker implements Runnable {
 					if(Integer.parseInt(data[0]) == s.getIdSessio())Data.getaSessio().remove(s);
 					break;
 				}
-				System.out.println("[Servidor] Sessio amb id '"+data[0]+"' ha set eliminada.");
 			}
 			
 			if(data[1].equals("votaCanco")) {
@@ -354,7 +348,6 @@ public class MessageServiceWorker implements Runnable {
             Musica m =new Musica();
             ArrayList<Canco> al = new ArrayList<Canco>();
             al = m.getMusica();
-            System.out.println();
             System.out.println("@@ hola tete 2 @@");
             try{
                 ObjectOutputStream objectOutput = new ObjectOutputStream(sClient.getOutputStream());

@@ -79,14 +79,13 @@ public class DeleteController implements MouseListener {
 			        	 nom = (String) getFs().getTaulaMusica().getValueAt(getFs().getTaulaMusica().getSelectedRow(), 0);
 			        	 deleteCanco(nom);
 					 }catch(Exception e1){
-			        	 System.out.println("catch taula musica not select");
 					 }
 		        	 if (nom == null){
 		        		try{
 		        			nom = (String) getFs().getTaulaUsuari().getValueAt(getFs().getTaulaUsuari().getSelectedRow(), 0);
 		        			deleteUser(nom);
 		        		}catch(Exception e2){
-				        	System.out.println("catch taula usuari not select");
+
 				        }
 		        	 }
 				}
@@ -161,7 +160,6 @@ public class DeleteController implements MouseListener {
 	        		int i= 0;
 					while (res.next()){
 						ll.add(res.getInt("id_canco_llista"));				
-						System.out.println("[Servidor] Response server: '"+ll.get(i)+"'." );
 						i++;
 					}
 					int j = 0;
@@ -172,13 +170,10 @@ public class DeleteController implements MouseListener {
 				} catch (SQLException e99) {
 					e99.printStackTrace();
 			}
-        	System.out.println("-------------------------------------------------------------------");
-        	System.out.println("[Servidor]Canco '"+nom+"' deleted.");
         	Data.esborraCanco(id);
         	getFs().tableModel.removeRow(getFs().getTaulaMusica().getSelectedRow());
         	getFs().tableModel.fireTableDataChanged();
         }catch(Exception e1){
-        	System.out.println("Catch borrar canco");
         }
 	}
 	
@@ -196,7 +191,6 @@ public class DeleteController implements MouseListener {
         	for(User u : Data.getUsers()) if (u.getNickname().equals(nom)) id = u.getId_usuari();
         	
         	conn.deleteQuery(new Query().queryList(18,id));
-        	System.out.println("[Servidor] usuari eliminat -> " + nom);
         	ResultSet res = conn.selectQuery(new Query().queryList(19, id));
         	try {
         		//esborrem llistes del usuari a eliminar
@@ -204,7 +198,6 @@ public class DeleteController implements MouseListener {
         		int i= 0;
 				while (res.next()){
 					ll.add(res.getInt("id_usuari_llista"));				
-					System.out.println("[Servidor] Response server user: '"+ll.get(i)+"'." );
 					i++;
 				}
 				int j = 0;
@@ -219,7 +212,6 @@ public class DeleteController implements MouseListener {
         		int k= 0;
 				while (res2.next()){
 					ll2.add(res2.getInt("id_user_follower"));				
-					System.out.println("[Servidor] Response server follower: '"+ll2.get(k)+"'." );
 					k++;
 				}
 				int z = 0;
@@ -231,8 +223,6 @@ public class DeleteController implements MouseListener {
 			} catch (SQLException e99) {
 				e99.printStackTrace();
 			}
-        	System.out.println("-------------------------------------------------------------------");
-        	System.out.println("[Servidor]Uusari '"+nom+"' deleted.");
         	Data.esborraUser(id);
         	
         	/*
@@ -243,7 +233,6 @@ public class DeleteController implements MouseListener {
         	*/
         	
         }catch(Exception e1){
-        	System.out.println("Catch borrar user");
         }
 		
 	}

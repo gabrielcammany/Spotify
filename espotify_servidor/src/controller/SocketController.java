@@ -63,18 +63,14 @@ public class SocketController {
 			
 			ConectorDB.insertQuery(response);
 
-			System.out.println("User: '"+user.getNickname()+"' Inserit correctament.");
 			ArrayList<User> users = selectUsers();
 			for(User u : users) if(u.getNickname().equals(usuario)) user.setId_usuari(u.getId_usuari());
 			
-			System.out.println("Returning id --> " + user.getId_usuari());
 			return user.getId_usuari();
 			//return verifyUser(usuario, password);
 		}else{
-			System.out.println("[Servidor] L'usari '"+user.getNickname()+"' ja es troba registrat.");
 			return result;
 		}
-		//System.out.println(user.verifyUser(user));
 
 	}
 
@@ -119,7 +115,6 @@ public class SocketController {
 				while (responseServer.next()) {
 					i++;
 					nickname = responseServer.getString("nickname");
-					System.out.println("[Servidor] Response server: '"+nickname+"'." );
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -155,7 +150,6 @@ public class SocketController {
 				c.setnReproduccio(responseServer.getString("num_reproduccio"));
 				c.setnVotacio(responseServer.getString("nVotacio"));
 				
-				//System.out.println("[Servidor] "+c.getNom()+" amb path: "+c.getPath()+" num reproduccions: "+c.getnReproduccio());
 				alMusica.add(c);
 			}
 		} catch (SQLException e) {
@@ -309,7 +303,6 @@ public class SocketController {
 	public ArrayList<Llistes> omplirLlistesFollowing(ArrayList<sUser> lUserFollow ){
 		ArrayList<Llistes> llFollowers = new ArrayList<Llistes>();
 		if(!lUserFollow.isEmpty()){
-			System.out.println("esta buit!!!!!!!!!!!!!!!!!!");
 			int size = lUserFollow.size();
 			for(int i = 0;i<size;i++){
 				ArrayList<Llistes> ll  = omplirLlistes(lUserFollow.get(i).getId_usuari());
@@ -344,7 +337,6 @@ public class SocketController {
 
 			while (responseServer.next()) {
 				if(responseServer != null){
-					System.out.println("demana llistes");
 					Llistes al = new Llistes();
 					ArrayList<Integer> aCancons = new ArrayList<Integer>();
 					int idACanco = 0 ;
