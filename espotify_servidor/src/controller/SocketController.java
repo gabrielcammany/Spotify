@@ -13,6 +13,7 @@ import model.Sessio;
 import model.User;
 import model.sUser;
 import network.ConectorDB;
+import network.JsonConfig;
 
 
 public class SocketController {
@@ -22,8 +23,7 @@ public class SocketController {
 
 	
 	public SocketController() {
-		//json donde estas!!!
-		conn = new ConectorDB("dpo_root", "sinminus", "bd_espotifi", 3306);
+		conn = new ConectorDB(JsonConfig.creaJson());
 	}
 	
 	public User getUsuariActual() {

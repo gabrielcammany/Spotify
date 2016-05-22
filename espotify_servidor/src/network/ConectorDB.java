@@ -34,15 +34,6 @@ public class ConectorDB {
 		ConectorDB.url += ":"+ConectorDB.port+"/";
 		ConectorDB.url += ConectorDB.db;
 	}
-	
-	public ConectorDB(String usr, String pass, String db, int port) {
-		ConectorDB.userName = usr;
-		ConectorDB.password = pass;
-		ConectorDB.db = db;
-		ConectorDB.port = port;
-		ConectorDB.url += ":"+port+"/";
-		ConectorDB.url += db;
-	}
 
     public boolean connect() {
         try {

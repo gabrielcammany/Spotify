@@ -12,7 +12,7 @@ public class CloseWindowController extends WindowAdapter {
 	public void windowClosing(WindowEvent e) {
 		
 		//Demanem que el servidor es carregui la sessio
-		ControladorFinestres.getR().getThread().stop();
+		//ControladorFinestres.getR().getThread().stop();
 		ControladorFinestres.getInfoServidor().closeSessio();
 	}
 	

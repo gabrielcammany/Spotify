@@ -11,7 +11,6 @@ import com.google.gson.JsonSyntaxException;
 
 public class JsonConfig {
 	static Gson gson = null;
-	
 	public JsonConfig () {};
 	
 	public static JsonObject creaJson() {

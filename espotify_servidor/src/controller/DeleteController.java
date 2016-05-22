@@ -20,6 +20,7 @@ import model.Data;
 import model.Query;
 import model.User;
 import network.ConectorDB;
+import network.JsonConfig;
 import view.FinestraServidor;
 
 public class DeleteController implements MouseListener {
@@ -29,7 +30,7 @@ public class DeleteController implements MouseListener {
 	private JPopupMenu popupMenu;
 	private JMenuItem deleteItem;
 	private String nom;
-	private ConectorDB conn = new ConectorDB("dpo_root", "sinminus", "bd_espotifi", 3306);
+	private ConectorDB conn = new ConectorDB(JsonConfig.creaJson());
 	
 	public DeleteController(JFrame jf, FinestraServidor fs){
 		this.jf = jf;
