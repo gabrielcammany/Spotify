@@ -18,6 +18,7 @@ import model.Llistes;
 import model.Sessio;
 import model.User;
 import model.sUser;
+import view.FinestraServidor;
 
 /**
  * 
@@ -306,6 +307,12 @@ public class MessageServiceWorker implements Runnable {
 					if(Integer.parseInt(data[0]) == s.getIdSessio())Data.getaSessio().remove(s);
 					break;
 				}
+				for(User usuari:Data.getUsers()){
+					if(usuari.getId_usuari() == Integer.parseInt(data[0])){
+						usuari.setData_ult(data[2]);
+					}
+				}
+				FinestraServidor.tableModelUsuari.fireTableDataChanged();
 			}
 			
 			if(data[1].equals("votaCanco")) {

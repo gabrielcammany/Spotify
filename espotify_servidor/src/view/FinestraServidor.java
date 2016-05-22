@@ -60,7 +60,7 @@ public class FinestraServidor extends JFrame {
 	private JTable taulaMusica;
 	private JTable taulaUsuari;
 	public DefaultTableModel tableModel;
-	public DefaultTableModel tableModelUsuari;
+	public static DefaultTableModel tableModelUsuari;
 
 	private ReproductorController reproductorController;
 	

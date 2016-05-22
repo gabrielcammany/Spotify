@@ -201,7 +201,7 @@ public class Query {
 			
 			System.out.println("---> "+ data [0]+ "     " +data [1]);
 			
-			String cad39 = ("UPDATE 'usuari' SET 'data_ult' = '" + data[0] +" ' WHERE 'usuari'.'id_usuaris' = "+ data[1] + ";");		
+			String cad39 = ("UPDATE `usuari` SET `data_ult` = '"+data[0]+"' WHERE `usuari`.`id_usuaris` = "+ data[1] + ";");
 			return cad39;
 		default:
 			break;
