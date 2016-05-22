@@ -9,6 +9,7 @@ import java.io.IOException;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 
 /**
@@ -21,11 +22,13 @@ import javax.swing.JTable;
 public class ControladorReproductor implements MouseListener {
 	
 	private String opcio;
+	private boolean play = false;
+	private boolean playing = false;
 	private String nom;
 	private String nomReproduccio;
 	private String artista;
 	private static int enReproduccio;
-
+	private static DefaultTableModel taula;
 	
 	public ControladorReproductor(String opcio) {
 		this.opcio = opcio;
@@ -59,28 +62,33 @@ public class ControladorReproductor implements MouseListener {
 		if(algoSeleccionat){
 			switch (opcio) {
 			case "play":
-				//System.out.println("SELECTED ROW " + ControladorFinestres.fReproduccio.getTaulaMusica().getSelectedRow());
+				System.out.println("SELECTED ROW " + ControladorFinestres.fReproduccio.getTaulaMusica().getSelectedRow());
+				
+				taula = ControladorFinestres.fReproduccio.getTableModel();
+				System.out.println("NUM FILES" + taula.getRowCount());
 				enReproduccio = ControladorFinestres.fReproduccio.getTaulaMusica().getSelectedRow();
 			
 				
-				if(ControladorFinestres.getR().getSong().equals(nom + "_" + artista) || ControladorFinestres.getR().isStart()) {
+				if(ControladorFinestres.getR().getSong().equals(nom + "_" + artista) && ControladorFinestres.getR().isStart()) {
 					ControladorFinestres.getR().pause();
 				}
 				else {
 					if (ControladorFinestres.getR().isStart()) {
-						ControladorFinestres.getR().endSong2();
+						ControladorFinestres.getR().endSong();
 					}
 					ControladorFinestres.restartReproductor();
-					System.out.println("OBRIM DE NOU");
+					ControladorFinestres.getR().setPath(nom,artista);
+					
 	
-					ControladorFinestres.obteTaulaMusica();
+					JTable taulaMusica = ControladorFinestres.obteTaulaMusica();
 					
 					//Enviem Request al servidor per tal que ens retorni la canço seleccionada
 					try {
+						
 						ControladorFinestres.getServidor().peticio("requestCanco", nom + "/" + artista );
 						//ControladorFinestres.getR().setRepeat(true);
-						ControladorFinestres.getR().setPath(nom,artista);
 						ControladorFinestres.getR().start();
+						playing = true;
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -95,21 +103,21 @@ public class ControladorReproductor implements MouseListener {
 					ControladorFinestres.getR().endSong();
 					
 					enReproduccio++;
-					if (enReproduccio < ControladorFinestres.fReproduccio.getTaulaMusica().getRowCount()) {
+					if (enReproduccio < ControladorFinestres.fReproduccio.getTableModel().getRowCount()) {
 						
-						nom = (String) ControladorFinestres.fReproduccio.getTaulaMusica().getValueAt(enReproduccio, 0);
-						artista = (String) ControladorFinestres.fReproduccio.getTaulaMusica().getValueAt(enReproduccio, 3);
+						nom = (String) ControladorFinestres.fReproduccio.getTableModel().getValueAt(enReproduccio, 0);
+						artista = (String) ControladorFinestres.fReproduccio.getTableModel().getValueAt(enReproduccio, 3);
 					}
 					else {
 						enReproduccio = 0;
-						nom = (String) ControladorFinestres.fReproduccio.getTaulaMusica().getValueAt(enReproduccio, 0);
-						artista = (String) ControladorFinestres.fReproduccio.getTaulaMusica().getValueAt(enReproduccio, 3);
+						nom = (String) ControladorFinestres.fReproduccio.getTableModel().getValueAt(enReproduccio, 0);
+						artista = (String) ControladorFinestres.fReproduccio.getTableModel().getValueAt(enReproduccio, 3);
 					}
 					ControladorFinestres.restartReproductor();
 					ControladorFinestres.getR().setPath(nom,artista);
 					
 	
-					ControladorFinestres.obteTaulaMusica();
+					JTable taulaMusica = ControladorFinestres.obteTaulaMusica();
 					
 					//Enviem Request al servidor per tal que ens retorni la canço seleccionada
 					try {
@@ -117,6 +125,7 @@ public class ControladorReproductor implements MouseListener {
 						ControladorFinestres.getServidor().peticio("requestCanco", nom + "/" + artista );
 						//ControladorFinestres.getR().setRepeat(true);
 						ControladorFinestres.getR().start();
+						playing = true;
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -132,26 +141,42 @@ public class ControladorReproductor implements MouseListener {
 				
 					enReproduccio--;
 					if (enReproduccio >= 0) {
+						if (taula.getRowCount() != 0) {
+							System.out.println("SI QUE ENTRA AQUI BACK");
+							nom = (String) taula.getValueAt(enReproduccio, 0);
+							artista = (String) taula.getValueAt(enReproduccio, 3);
+						}
+						else{
+							nom = (String) ControladorFinestres.fReproduccio.getTaulaMusica().getValueAt(enReproduccio, 0);
+							artista = (String) ControladorFinestres.fReproduccio.getTaulaMusica().getValueAt(enReproduccio, 3);
+						}
 						
-						nom = (String) ControladorFinestres.fReproduccio.getTaulaMusica().getValueAt(enReproduccio, 0);
-						artista = (String) ControladorFinestres.fReproduccio.getTaulaMusica().getValueAt(enReproduccio, 3);
 					}
 					else {
-						enReproduccio = ControladorFinestres.fReproduccio.getTaulaMusica().getRowCount() - 1;
-						nom = (String) ControladorFinestres.fReproduccio.getTaulaMusica().getValueAt(enReproduccio, 0);
-						artista = (String) ControladorFinestres.fReproduccio.getTaulaMusica().getValueAt(enReproduccio, 3);
+						if (taula.getRowCount() != 0) {
+							enReproduccio = taula.getRowCount() - 1;
+							nom = (String) taula.getValueAt(enReproduccio, 0);
+							artista = (String) taula.getValueAt(enReproduccio, 3);
+						}
+						else {
+							enReproduccio = ControladorFinestres.fReproduccio.getTaulaMusica().getRowCount() - 1;
+							nom = (String) ControladorFinestres.fReproduccio.getTaulaMusica().getValueAt(enReproduccio, 0);
+							artista = (String) ControladorFinestres.fReproduccio.getTaulaMusica().getValueAt(enReproduccio, 3);
+						}
 					}
 					ControladorFinestres.restartReproductor();
 					ControladorFinestres.getR().setPath(nom,artista);
 					
 	
-					ControladorFinestres.obteTaulaMusica();
+					JTable taulaMusica = ControladorFinestres.obteTaulaMusica();
 					
 					//Enviem Request al servidor per tal que ens retorni la canço seleccionada
 					try {
+						System.out.println("BACK: " + nom + " " + artista);
 						ControladorFinestres.getServidor().peticio("requestCanco", nom + "/" + artista );
 						//ControladorFinestres.getR().setRepeat(true);
 						ControladorFinestres.getR().start();
+						playing = true;
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -266,6 +291,8 @@ public class ControladorReproductor implements MouseListener {
 	public void mouseReleased(MouseEvent e) {
 		// desclic
 		Boolean algoSeleccionat = true;
+		Boolean esFollowing = false;
+		
 		try{
 			//mirem si estem a la taula de musica disponible
 			nom = (String) ControladorFinestres.fReproduccio.getTaulaMusica().getValueAt(ControladorFinestres.fReproduccio.getTaulaMusica().getSelectedRow(), 0);

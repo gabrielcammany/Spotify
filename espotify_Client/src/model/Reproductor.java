@@ -10,9 +10,6 @@ import java.io.InputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
 
-import com.sun.media.sound.JavaSoundAudioClip;
-
-import controller.ControladorFinestres;
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.Player;
 import javazoom.jlgui.basicplayer.BasicPlayer;
@@ -20,40 +17,33 @@ import javazoom.jlgui.basicplayer.BasicPlayerException;
 
 
 
+/**
+ * @author IvanRomero
+ *
+ */
 public class Reproductor extends Thread{
 	
-	private static String path;
-	private static String song;
+	
+	private double volum;
+	private String path;
+	private String song;
 	private boolean isPlaying;
 	private boolean start;
 	private BasicPlayer player;
-	private static File file;
-	private double volum;
-	private long bytes = 0;
-	private Thread t;
-	private long temp = 0 ;
-	private boolean comptar = true;
-	
-	public BasicPlayer getPlayer() {
-		return player;
-	}
-
-	public void setPlayer(BasicPlayer player) {
-		this.player = player;
-	}
-
 	private boolean repeat;
 	public boolean fi;
 	
 	public Reproductor(String s) {
-		Reproductor.path = s;
-		Reproductor.song = "";
+		this.path = s;
+		this.song = "";
 		setPlaying(false);
 		setStart(false);
 		setRepeat(false);
 	}
 	
 	public Reproductor(){
+		this.path = "";
+		this.song = "";
 		setPlaying(false);
 		setStart(false);
 		setRepeat(false);
@@ -62,34 +52,23 @@ public class Reproductor extends Thread{
 	@Override
 	public void run()  {
 		boolean first = true;
+		try {
+            
 			//if (isRepeat()) {
 				while (isRepeat() || first) {
 					first = false;
 					fi = false;
+					FileInputStream fis;
+		            fis = new FileInputStream(this.path);
+		            setPlaying(true);
+		            setStart(true);
+		            player = new BasicPlayer();
+		            
+		            InputStream bufferedIn = new BufferedInputStream(fis);
+		            player.open(AudioSystem.getAudioInputStream(bufferedIn));
 		            while (!fi) {
 		            	//System.out.println("hola");
 		            	try {
-		            		t = new Thread(){
-		            			public void run(){
-		            				while(true){
-		            					if(comptar){
-		            						if(!(((float)(file.length()/100)) > temp)){
-		            							ControladorFinestres.fReproduccio.getPosicio().setValue(ControladorFinestres.fReproduccio.getPosicio().getValue()+1);
-		            						}
-		            						temp = temp + 1520;
-		            						try {
-		            							Thread.sleep(1000);
-		            						} catch (InterruptedException e) {
-		            							// TODO Auto-generated catch block
-		            							e.printStackTrace();
-		            						}
-		            					}
-		            				}
-		            			}
-		            		};
-		            		t.start();
-		            		file = new File("./temp/" + Reproductor.song + ".mp3");
-		            		//player.setGain(50);
 		            		player.play();
 		            	}
 		            	catch (BasicPlayerException e){
@@ -124,26 +103,30 @@ public class Reproductor extends Thread{
 					}
 	            }
 			}*/
+			
+        } catch (BasicPlayerException | UnsupportedAudioFileException | IOException e) {
+            
+        }
 		setStart(false);
         setPlaying(false);
+        File f = new File("./temp/" + this.song + ".mp3");
+        f.delete();
+    	System.out.println("Final de canço");
 	}
 	
 	public void pause(){
 		try {
 			if (isPlaying()) {
-				System.out.println("He pausaaaaaaaaaaaaaaaaaaaaaaat");
 				player.pause();
-				comptar = true;
 				setPlaying(false);
 			}
 			else {
 				setPlaying(true);
-				comptar = true;
 				player.resume();
 			}
 			
 			
-		} catch (BasicPlayerException  e) {
+		} catch (BasicPlayerException e) {
 			e.printStackTrace();
 		}
 	}
@@ -152,43 +135,15 @@ public class Reproductor extends Thread{
 		return path;
 	}
 
-	public void restart(){
-		try {
-    		FileInputStream fis = new FileInputStream(Reproductor.path);
-            fis.skip(bytes);
-            setPlaying(true);
-            setStart(true);
-            player = new BasicPlayer();
-            BufferedInputStream bufferedIn = new BufferedInputStream(fis);
-			player.open(AudioSystem.getAudioInputStream(bufferedIn));
-		} catch (BasicPlayerException | UnsupportedAudioFileException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
 	public void setPath(String nom, String artista) {
 		
 		
 		//nom.replaceAll("\\s", "");
 		//artista.replaceAll("\\s", "");
-		Reproductor.song = (nom + "_" + artista);
+		this.song = (nom + "_" + artista);
 		//System.out.println(nom.replaceAll("\\s", "") + "_" + artista.replaceAll("\\s", ""));
-		Reproductor.path = "temp/" + nom + "_" + artista + ".mp3";
+		this.path = "temp/" + nom + "_" + artista + ".mp3";
 		//System.out.println(this.path);
-		try {
-    		FileInputStream fis;
-            fis = new FileInputStream(Reproductor.path);
-            fis.skip(bytes);
-            setPlaying(true);
-            setStart(true);
-            player = new BasicPlayer();
-            BufferedInputStream bufferedIn = new BufferedInputStream(fis);
-			player.open(AudioSystem.getAudioInputStream(bufferedIn));
-		} catch (BasicPlayerException | UnsupportedAudioFileException | IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 
 	public boolean isPlaying() {
@@ -199,30 +154,17 @@ public class Reproductor extends Thread{
 		this.isPlaying = isPlaying;
 	}
 	
-	public void endSong2(){
-		setPlaying(false);
-		setStart(false);
-		try {
-			t.interrupt();
-			player.stop();
-			interrupt();
-		} catch (BasicPlayerException e) {
-			System.out.println("##############################");// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
 	public void endSong() {
 		setPlaying(false);
 		setStart(false);
 		//String name = this.song.replaceAll(" ", "");
-		File f = new File("./temp/" + Reproductor.song + ".mp3");
-		System.out.println("PATH: " + Reproductor.song);
+		File f = new File("./temp/" + this.song + ".mp3");
+		System.out.println("PATH: " + this.song);
 		try {
-			t.interrupt();
+			
 			player.stop();
 			f.delete();
-			interrupt();
+			stop();
 			
 		} catch (BasicPlayerException e) {
 			// TODO Auto-generated catch block
@@ -231,7 +173,7 @@ public class Reproductor extends Thread{
 	}
 	
 	public String getSong() {
-		return Reproductor.song;
+		return this.song;
 	}
 
 	public boolean isStart() {
@@ -251,17 +193,12 @@ public class Reproductor extends Thread{
 		this.repeat = repeat;
 	}
 
-	public File getFile() {
-		return file;
+	public BasicPlayer getPlayer() {
+		return player;
 	}
 
-
-	public long getBytes() {
-		return bytes;
-	}
-
-	public void setBytes(long bytes) {
-		this.bytes = bytes;
+	public void setPlayer(BasicPlayer player) {
+		this.player = player;
 	}
 
 	public double getVolum() {
@@ -271,13 +208,7 @@ public class Reproductor extends Thread{
 	public void setVolum(double volum) {
 		this.volum = volum;
 	}
-
-	public Thread getThread() {
-		return t;
-	}
-
-	public void setThread(Thread t) {
-		this.t = t;
-	}
+	
+	
 }
 
