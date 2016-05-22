@@ -12,7 +12,7 @@ import view.FinestraReproduccio;
 public class EstrellesController extends MouseAdapter {
 	private int estrelles;
 	private FinestraReproduccio fReproduccio;
-	String nomCanco;
+	private String nomCanco;
 	
 	
 	public EstrellesController(FinestraReproduccio fReproduccio, int estrelles, String nomCanco) {

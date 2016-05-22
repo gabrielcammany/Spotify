@@ -13,11 +13,11 @@ import view.FinestraServidor;
  *
  */
 public class MusicController extends MouseAdapter {
-	ReproductorController reproductorController;
-	FinestraServidor finestraServidor;
-	String opcio;
-	String nom;
-	String artista;
+	private ReproductorController reproductorController;
+	private FinestraServidor finestraServidor;
+	private String opcio;
+	private String nom;
+	private String artista;
 	
 	public MusicController(String opcio, ReproductorController reproductorController, FinestraServidor finestraServidor) {
 		this.reproductorController = reproductorController;

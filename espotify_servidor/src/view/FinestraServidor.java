@@ -47,7 +47,7 @@ public class FinestraServidor extends JFrame {
 	
 	private GestioController gestioController;
 	private JPanel jpUsuari;
-	public JPanel jpMusica;
+	private JPanel jpMusica;
 	private Estadistica estadistica;
 	private ButtonsController controlador;
 	private JFrame jfServidor;

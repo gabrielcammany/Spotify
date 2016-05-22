@@ -13,7 +13,7 @@ import javazoom.jlgui.basicplayer.BasicPlayerException;
  */
 public class ControladorSlider implements ChangeListener{
 
-	JSlider slider;
+	private JSlider slider;
 	boolean barra;
 	 
 	public ControladorSlider(JSlider slider, boolean barra){

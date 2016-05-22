@@ -22,10 +22,10 @@ import view.FinestraReproduccio;
  */
 public class CancoLlistaController extends MouseAdapter {
 	private FinestraReproduccio finestraReproduccio;
-	JMenuItem afegir;
-	JMenu submenu;
-	JPopupMenu popupMenu;
-	ArrayList<Canco> al;
+	private JMenuItem afegir;
+	private JMenu submenu;
+	private JPopupMenu popupMenu;
+	private ArrayList<Canco> al;
 	
 	public CancoLlistaController(FinestraReproduccio finestraReproduccio, ArrayList<Canco> a) {
 		this.finestraReproduccio = finestraReproduccio;

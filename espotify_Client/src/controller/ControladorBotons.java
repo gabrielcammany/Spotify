@@ -16,8 +16,8 @@ import model.User;
  */
 public class ControladorBotons implements MouseListener{
 	
-	JTextField jtNomUsuariBusca;
-	JPanel repro;
+	private JTextField jtNomUsuariBusca;
+	private JPanel repro;
 	
 	public ControladorBotons (JTextField jtNomUsuariBusca, JPanel repro) {
 		this.jtNomUsuariBusca = jtNomUsuariBusca;
