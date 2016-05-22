@@ -3,6 +3,10 @@ package model;
 import java.io.Serializable;
 import java.util.ArrayList;
 
+/**
+ * clase llistes
+ *
+ */
 public class Llistes implements Serializable{
 	
 	/**

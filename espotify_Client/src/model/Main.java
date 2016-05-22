@@ -6,6 +6,11 @@ import controller.ControladorFinestres;
 import network.InfoServidor;
 
 
+/**
+ * 
+ * el main del client
+ *
+ */
 public class  Main {
 	/*public static void main(String[] args) {
 	    launch(args);

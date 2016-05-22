@@ -25,6 +25,11 @@ import model.Llistes;
 import model.User;
 import model.sUser;
 
+/**
+ * 
+ * Clase per connectar amb el servidor
+ *
+ */
 @SuppressWarnings("unused")
 public class InfoServidor {
 		public final static int FILE_SIZE = 6022386;
@@ -69,14 +74,15 @@ public class InfoServidor {
 		}
 		
 
-		
+		/**
+		 * Funcio per demanar una sesio per l'usuari
+		 */
 	public void demanaSessio(){
 		
 		try {
 			newSocket();
 			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
 			doStream.writeUTF("Sessio:");
-			System.out.println("Envio sesion");
 			sServidor.close();
 			
 		} catch (IOException e) {
@@ -86,6 +92,12 @@ public class InfoServidor {
 		
 	}
 	
+	/**
+	 * Funcio per afegir cancons a la llista
+	 * @param idcanco
+	 * @param idLlista
+	 * @return si ha estat correcte
+	 */
 	public boolean afegeixCancoLlista(int idcanco, int idLlista){
 		try {
 			newSocket();
@@ -126,6 +138,10 @@ public class InfoServidor {
 		
 	}*/
 	
+	/**
+	 * Funcio per demanar un unfollow
+	 * @param nickname
+	 */
 	public void unfollow(String nickname){
 
 		newSocket();
@@ -149,7 +165,9 @@ public class InfoServidor {
 		}
 
 	}
-
+/**
+ * Funcio per demanar llistes 
+ */
 	public void demanarLlistesFollowing(){
 		try{
 			try {
@@ -173,14 +191,18 @@ public class InfoServidor {
 		}
 	}
 	
-	
+	/**
+	 * Funcio per enviar usuari registrat
+	 * @param option
+	 * @param nom
+	 * @param contrasenya
+	 * @return
+	 */
 	public int enviarUsuari(int option, String nom, char[] contrasenya){
 		
 		try {
 			newSocket();
 			String algo;
-			System.out.println("[CLIENT] - Peticio de connexio...");
-			System.out.println("NOM -> " + nom + " CONTRA: " +String.valueOf(contrasenya) + " OPCION: " + option);
 
 			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
 
@@ -230,9 +252,12 @@ public class InfoServidor {
 		return 0;
 	}
 	
+	/**
+	 * Funcio per demanar musica
+	 * @throws ClassNotFoundException
+	 */
 	@SuppressWarnings("unchecked")
 	public void peticioMusica() throws ClassNotFoundException{
-		System.out.println("[CLIENT] - Peticio de musica..."); 
 		newSocket();
 		try {
 			
@@ -258,17 +283,21 @@ public class InfoServidor {
 		}
 		}
 	
+	/**
+	 * funcio per eliminar llista
+	 * @param id
+	 * @return si ha estat correcte
+	 */
 	public boolean eliminaLlista(String id){
 		int eliminada = 0;
 		System.out.println(id);
 		newSocket();
 		try {
 			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
-			System.out.println(User.getId_usuari()+":eliminaLlista:" + id);
 			doStream.writeUTF(User.getId_usuari()+":eliminaLlista:" + id);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 
 		try{
@@ -279,25 +308,29 @@ public class InfoServidor {
 		return true;
 	}
 	
+	/**
+	 * funcio per acualitza la musica
+	 * @param id
+	 * @return array amb id de cancons
+	 */
 	public static ArrayList<Integer> actualitzaMusicaLListaFollowing(int id){
 		int actualizada = 0;
 		newSocket();
 		ArrayList<Integer> musica = new ArrayList<Integer>();
 		try {
 			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
-			System.out.println(User.getId_usuari()+":actualitzaMusicaLlista:" + id);
 			doStream.writeUTF(User.getId_usuari()+":actualitzaMusicaLlista:" + id);
 			ObjectInputStream inStream = new ObjectInputStream(sServidor.getInputStream());
 			musica = (ArrayList<Integer>)inStream.readObject();
 		} catch (IOException | ClassNotFoundException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
 
 		try{
 			sServidor.close();
 		}catch(IOException e2){
-			e2.printStackTrace();
+			//e2.printStackTrace();
 		}
 		return musica;
 		
@@ -307,7 +340,6 @@ public class InfoServidor {
 	 * es de la clase objecte ja que, segons la peticio, haurem de rebre diferents objectes.
 	 * @param request
 	 */
-	
 	public void peticio(String request, String obj) throws IOException {
 		newSocket();
 		try {
@@ -334,6 +366,10 @@ public class InfoServidor {
 		}
 	}
 
+	/**
+	 * fucnio per seguir
+	 * @param nickname
+	 */
 	public void peticioFollow(String nickname){
 		newSocket();
 		int result = 0;
@@ -373,6 +409,12 @@ public class InfoServidor {
 		//sServidor.close();
 	}
 	
+	/**
+	 * funcio per demanar followers
+	 * @throws UnknownHostException
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
 	@SuppressWarnings("unchecked")
 	public void peticioFollowers() throws UnknownHostException, IOException, ClassNotFoundException {
 		newSocket();
@@ -421,6 +463,12 @@ public class InfoServidor {
 		return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
 	}
 	
+	/**
+	 * funcio per crear llista
+	 * @param nom
+	 * @param privada
+	 * @return id llista
+	 */
 	public int creaLlista(String nom, int privada){
 		newSocket();
 		int trobat = 0;
@@ -443,6 +491,11 @@ public class InfoServidor {
 		return trobat;
 	}
 	
+	/**
+	 * funcio per realitzar la votacio
+	 * @param estrelles
+	 * @param nomCanco
+	 */
 	public void realitzaVotacio(int estrelles, String nomCanco) {
 		newSocket();
 		DataOutputStream doStream;

@@ -15,7 +15,7 @@ import javazoom.jlgui.basicplayer.BasicPlayerException;
 
 
 /**
- * @author IvanRomero
+ * Clase per reproduir
  *
  */
 public class Reproductor extends Thread{

@@ -2,6 +2,11 @@ package model;
 
 import java.io.Serializable;
 
+/**
+ * 
+ * clase canco
+ *
+ */
 
 public class Canco implements Serializable, Comparable<Canco> {
 	/**

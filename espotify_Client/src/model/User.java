@@ -2,6 +2,11 @@ package model;
 
 import java.util.ArrayList;
 
+/**
+ * 
+ * clase usuari
+ *
+ */
 public class User{
 	private static String nickname;
 	private static int id_usuari;

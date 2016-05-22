@@ -2,6 +2,11 @@ package model;
 
 import java.io.Serializable;
 
+/**
+ * 
+ * Clse de l'usuari  (sense paswd)
+ *
+ */
 public class sUser implements Serializable{
 	/**
 	 * 
