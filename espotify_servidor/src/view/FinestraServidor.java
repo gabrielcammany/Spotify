@@ -36,9 +36,8 @@ import net.miginfocom.swing.MigLayout;
 
 
 /**
- * Creem la interficie del seervido composada per la "Gestio dels usuaris" i 
+ * Creem la interficie del seervidor composada per la "Gestio dels usuaris" i 
  * la gestio de musica
- * @author jorgemelguizo
  *
  *
  * 

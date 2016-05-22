@@ -9,6 +9,11 @@ import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonSyntaxException;
 
+/**
+ * 
+ * Clase per configurar el Json
+ *
+ */
 public class JsonConfig {
 	static Gson gson = null;
 	public JsonConfig () {};

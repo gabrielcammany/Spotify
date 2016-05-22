@@ -11,6 +11,11 @@ import view.ErrorLog;
 import view.FinestraServidor;
 import view.MainWindow;
 
+/**
+ * 
+ * Clase ButtonsController pels botons de la finestra del servidor
+ *
+ */
 
 public class ButtonsController implements ActionListener {
 	// VISTA
@@ -30,10 +35,11 @@ public class ButtonsController implements ActionListener {
 		this.viewF.setControlador(this);
 		this.mService = new MessageService(this);
 		
-		
-		
 	}
 	
+	/**
+	 * Funcion para añadir la cancion
+	 */
 	public void insertSongUser(){
 		String add = ("'"+viewF.getAddCanco()+"','"+viewF.getAddAlbum()+"','"+viewF.getAddArtista()+"','"+viewF.getAddGenere()+"','"+viewF.getAddUbicacio()+"','0','0','0'");
 		Query q =new Query();

@@ -15,7 +15,11 @@ import model.sUser;
 import network.ConectorDB;
 import network.JsonConfig;
 
-
+/**
+ * 
+ * Clase per controlar tots els sockets
+ *
+ */
 public class SocketController {
 
 	private static ConectorDB conn;
@@ -41,7 +45,12 @@ public class SocketController {
 		ConectorDB.insertQuery(cad);
 	}
 
-
+	/**
+	 * Funcio per registrar un usuari
+	 * @param usuario
+	 * @param password
+	 * @return idUser
+	 */
 	public int registroUsuario(String usuario, String password){
 		user =new User(usuario,password);
 
@@ -69,6 +78,12 @@ public class SocketController {
 
 	}
 
+	/**
+	 * Funcio per verificar un usuari
+	 * @param usuario
+	 * @param password
+	 * @return idUsuari o incorrecte
+	 */
 	public int verifyUser(String usuario, String password){
 		int id = 0;
 		for(Object u : Data.getUsers()){
@@ -90,6 +105,11 @@ public class SocketController {
 	}
 
 
+	/**
+	 * Funcio que demana un usuari
+	 * @param query
+	 * @return l'usuari demanat
+	 */
 	public String selectUser(String query){
 		ResultSet responseServer = conn.selectQuery(query);
 		String nickname= null;
@@ -109,7 +129,10 @@ public class SocketController {
 		return "-1";
 	}
 
-
+/**
+ * Funcio per demanar cancons
+ * @return les cancons demanades
+ */
 	public ArrayList<Canco> selectSongs(){
 
 		Query q = new Query();
@@ -142,7 +165,11 @@ public class SocketController {
 
 		return alMusica;
 	}
-	
+	/**
+	 * Funcio per demanar usuaris
+	 * @param id
+	 * @return usuaris demanats per id
+	 */
 	public ArrayList<sUser> selectSUsers (int id){
 		ArrayList<sUser> aux = new ArrayList<sUser>();
 		Query q = new Query();
@@ -165,6 +192,11 @@ public class SocketController {
 		return aux;
 	}
 	
+	/**
+	 * Funcio per demanar tots els usuaris
+	 * @param id
+	 * @return usuaris
+	 */
 	public ArrayList<User> selectUsers(){
 		Query q = new Query();
 		ResultSet responseServer;
@@ -192,6 +224,12 @@ public class SocketController {
 		return aUsers;
 	}
 	
+	/**
+	 * peticio de canco
+	 * @param nCanco
+	 * @param nArtista
+	 * @return id canco
+	 */
 	public int songRequest(String nCanco, String nArtista){
 		ArrayList<Canco> allMusic = Data.getAlMusica();
 		int size = Data.getAlMusica().size();
@@ -223,7 +261,12 @@ public class SocketController {
 		
 		return i;
 	}
-	
+	/**
+	 * Funcio per fer follow
+	 * @param idUser
+	 * @param idFollow
+	 * @return ok o ko
+	 */
 	public int hacerFollow(Integer idUser,Integer idFollow){
 		String aux = idUser.toString().concat("/"+idFollow.toString());
 		ConectorDB.insertQuery(new Query().queryList(13, aux));
@@ -231,7 +274,11 @@ public class SocketController {
 	}
 	
 	
-	
+	/**
+	 * Funcio per fer unfollow
+	 * @param idSesio
+	 * @param nom
+	 */
 	public void unfollow(String idSesio,String nom){
 		int id = 0;
 		for(User u : Data.getUsers())if(u.getNickname().toLowerCase().equals(nom.toLowerCase()))id = u.getId_usuari();
@@ -253,6 +300,12 @@ public class SocketController {
 		
 		
 	}
+	
+	/**
+	 * Funcio per omplir les llistes dels usuaris seguits
+	 * @param lUserFollow
+	 * @return arrau de llistes 
+	 */
 	public ArrayList<Llistes> omplirLlistesFollowing(ArrayList<sUser> lUserFollow ){
 		ArrayList<Llistes> llFollowers = new ArrayList<Llistes>();
 		if(!lUserFollow.isEmpty()){
@@ -275,6 +328,11 @@ public class SocketController {
 		return llFollowers;
 	}
 
+	/**
+	 * Funcio per omplir totes llistes 
+	 * @param lUserFollow
+	 * @return arrau de llistes 
+	 */
 	public ArrayList<Llistes> omplirLlistes(int id_user){
 		ArrayList<Llistes> ll = new ArrayList<Llistes>();
 		Query q =new Query();
@@ -318,6 +376,12 @@ public class SocketController {
 		return ll;
 	}
 	
+	/**
+	 * funcio per crear llista
+	 * @param l
+	 * @param id_usuari
+	 * @return idLlista
+	 */
 	public int crearLlistes(Llistes l,String id_usuari){
 		String[] info = new String[2];
 		ConectorDB.insertQuery(new Query().queryList(23, l));
@@ -338,7 +402,13 @@ public class SocketController {
 		return idLlista;
 		
 	}
-	
+	/**
+	 * funcio per afegir canco
+	 * @param idCanco
+	 * @param idLlista
+	 * @param idUsuari
+	 * @return boolean de comprovacio
+	 */
 	public boolean afegeixCanco(String idCanco, String idLlista,String idUsuari){
 		int CancoiLlista[] = new int[2];
 		CancoiLlista[0] = Integer.parseInt(idCanco);
@@ -461,9 +531,10 @@ public class SocketController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		
-		
 	
+	}
+
+	public void updateData(String id, String dada){
+		conn.updateQuery(new Query().queryList(39, dada.concat("/"+id)));
 	}
 }

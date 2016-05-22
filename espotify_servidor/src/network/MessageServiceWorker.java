@@ -19,6 +19,11 @@ import model.Sessio;
 import model.User;
 import model.sUser;
 
+/**
+ * 
+ * Clase encarregada de triar el missatge amb el que es cominica el client
+ *
+ */
 public class MessageServiceWorker implements Runnable {
 
 	private Socket sClient;
@@ -36,7 +41,11 @@ public class MessageServiceWorker implements Runnable {
 		
 	}
 
-	// Escolta peticions de connexio i llegeix els missatjges dels clients
+	
+	
+	/**
+	 * Escolta peticions de connexio i llegeix els missatjges dels clients
+	 */
 	public void run() {
 
 		String[] aux;
@@ -297,6 +306,7 @@ public class MessageServiceWorker implements Runnable {
 				
 			}
 			if(data[1].equals("deleteSessio")){
+				cadenas.updateData(data[0], data[2].concat(":"+data[3]+":"+data[4]));
 				for(Sessio s : Data.getaSessio()){
 					if(Integer.parseInt(data[0]) == s.getIdSessio())Data.getaSessio().remove(s);
 					break;
@@ -327,6 +337,10 @@ public class MessageServiceWorker implements Runnable {
 	}
 
 	// Operacio privada per generar la data de recepcio dels missatges
+	/**
+	 * Coge el tiempo actual
+	 * @return
+	 */
 	public String getCurrentTime() {
 		return new SimpleDateFormat("HH:mm:ss").format(Calendar.getInstance().getTime());
 	}

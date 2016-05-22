@@ -11,7 +11,10 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 import controller.ButtonsController;
-
+/**
+ *Aquesta classe es la finestra per posar en funcionament el servidor 
+ *
+ */
 
 @SuppressWarnings("serial")
 public class MainWindow extends JFrame{

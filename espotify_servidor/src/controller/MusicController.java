@@ -7,6 +7,11 @@ import javax.swing.JOptionPane;
 
 import view.FinestraServidor;
 
+/**
+ * 
+ * Clase per reproduir les cancons del servidor
+ *
+ */
 public class MusicController extends MouseAdapter {
 	ReproductorController reproductorController;
 	FinestraServidor finestraServidor;
@@ -18,18 +23,13 @@ public class MusicController extends MouseAdapter {
 		this.reproductorController = reproductorController;
 		this.finestraServidor = finestraServidor;
 		this.opcio = opcio;
-		
-		
 
-		
-		
 	}
 	
 	@Override
 	public void mousePressed(MouseEvent e) {
 		// TODO Auto-generated method stub
 		super.mousePressed(e);
-		System.out.println("entra");
 		
 		nom = (String) finestraServidor.getTaulaMusica().getValueAt(finestraServidor.getTaulaMusica().getSelectedRow(), 0);
 		artista = (String) finestraServidor.getTaulaMusica().getValueAt(finestraServidor.getTaulaMusica().getSelectedRow(), 3);
@@ -47,9 +47,6 @@ public class MusicController extends MouseAdapter {
 			}
 
 		}
-		
-		
-		
 		
 	}
 	

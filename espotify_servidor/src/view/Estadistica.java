@@ -9,6 +9,11 @@ import javax.swing.JPanel;
 
 import model.Canco;
 
+/**
+ * 
+ * Aquesta clase es per crear les estadistiques de las cancons
+ *
+ */
 @SuppressWarnings("serial")
 public class Estadistica extends JPanel  {
 	private ArrayList <String> valors;
@@ -52,7 +57,9 @@ public class Estadistica extends JPanel  {
 	
 	
 	
-	
+	/**
+	 * Encarregat de dibuixar les barres
+	 */
 	public void paintComponent(Graphics g) {
 		super.paintComponents(g);
 	

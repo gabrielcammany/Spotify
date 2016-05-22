@@ -9,7 +9,11 @@ import javax.swing.JOptionPane;
 
 import controller.ButtonsController;
 
-
+/**
+ * 
+ * Clase encarregada d'activar el servidor i els seus sockets
+ *
+ */
 public class MessageService {
 	private ServerSocket sServer;
 	private static final int PORT = ConectorDB.getPortSocket();
@@ -35,6 +39,9 @@ public class MessageService {
 	}
 	
 	// Inicia el servei per la recepcio de missatges
+	/**
+	 * Funcio que inicia el socket de comunicacio amb el client 
+	 */
 	public void startService() {
 		Thread t = new Thread(){
 			@Override
@@ -61,6 +68,9 @@ public class MessageService {
 	
 	}
 	
+	/**
+	 * Funcio que tanca el socket de comunicacio amb el client 
+	 */
 	public void stopService() {
 		try {
 			msWorker.stopListening();

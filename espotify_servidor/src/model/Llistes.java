@@ -2,12 +2,13 @@ package model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-
+/**
+ * 
+ * Clase llista
+ *
+ */
 public class Llistes implements Serializable{
-	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private int id_llistes;
 	private String nom_llista;

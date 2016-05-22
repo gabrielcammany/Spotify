@@ -2,6 +2,11 @@ package controller;
 
 import model.Reproductor;
 
+/**
+ * 
+ * Clase que posa a reproduir les cancons que li pasis
+ *
+ */
 public class ReproductorController {
 
 	private Reproductor reproductor;

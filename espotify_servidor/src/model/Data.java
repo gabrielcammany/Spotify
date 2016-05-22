@@ -1,7 +1,11 @@
 package model;
 
 import java.util.ArrayList;
-
+/**
+ * 
+ * Clase on es guarda la informacio amb permanencia de les cancons, usuari i la sesio
+ *
+ */
 public class Data {
 
 	private static ArrayList<Sessio> aSessio;

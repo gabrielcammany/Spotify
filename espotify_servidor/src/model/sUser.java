@@ -2,6 +2,12 @@ package model;
 
 import java.io.Serializable;
 
+
+/**
+ * 
+ * Clase de los usuarios enviados al cliente, solo tienen informacion visual (sin pswd)
+ *
+ */
 public class sUser implements Serializable{
 	/**
 	 * 

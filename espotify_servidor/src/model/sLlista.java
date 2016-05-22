@@ -1,8 +1,14 @@
 package model;
 
+/**
+ * 
+ * Clase nomes guarda nom i id de la llista
+ *
+ */
 public class sLlista {
 	private String nom;
 	private int id_llista;
+	
 	public int getId_llista() {
 		return id_llista;
 	}

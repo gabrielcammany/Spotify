@@ -1,5 +1,11 @@
 package model;
 
+
+/**
+ * 
+ *Clase usuario
+ *
+ */
 public class User{
 	private String nickname;
 	private String password;

@@ -12,7 +12,9 @@ import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.swing.JOptionPane;
 
@@ -403,7 +405,7 @@ public class InfoServidor {
 		newSocket();
 		try {
 			DataOutputStream doStream = new DataOutputStream(sServidor.getOutputStream());
-			doStream.writeUTF(User.getId_usuari()+":deleteSessio");
+			doStream.writeUTF(User.getId_usuari()+":deleteSessio:"+getCurrentTime());
 			doStream.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -415,6 +417,10 @@ public class InfoServidor {
 		}
 	}	
 
+	public String getCurrentTime() {
+		return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
+	}
+	
 	public int creaLlista(String nom, int privada){
 		newSocket();
 		int trobat = 0;

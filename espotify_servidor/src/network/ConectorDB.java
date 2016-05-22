@@ -11,7 +11,11 @@ import com.mysql.jdbc.Connection;
 import com.mysql.jdbc.Statement;
 
 import controller.DeleteController;
-
+/**
+ * 
+ * Aquesta clase es la encarregada de connectar amb la base de dades
+ *
+ */
 public class ConectorDB {
     private static String userName;
     private static String password;
@@ -40,6 +44,10 @@ public class ConectorDB {
 		ConectorDB.portSocket = o.get("portSocket").getAsInt();
 	}
 
+	/**
+	 * Funcio que connecta amb la base de dades
+	 * @return boolean de si s'ha pogut connectar o no
+	 */
     public boolean connect() {
         try {
             Class.forName("com.mysql.jdbc.Connection");
@@ -59,6 +67,10 @@ public class ConectorDB {
         return false;
     }
     
+    /**
+     * Funcio de les querys d'inserir
+     * @param query que es vol inserir
+     */
     public static void insertQuery(String query){
         try {
         	System.out.println(query);
@@ -72,7 +84,10 @@ public class ConectorDB {
         }
         
     }
-    
+    /**
+     * Funcio que actualitza taules
+     * @param query que es vol actualitzar
+     */
     public void updateQuery(String query){
     	 try {
              s =(Statement) conn.createStatement();
@@ -82,7 +97,10 @@ public class ConectorDB {
              System.out.println("Problema al Modificar --> " + ex.getSQLState());
          }
     }
-    
+    /**
+     * Funcio de la query que es vol eliminar
+     * @param query per eliminar
+     */
     public void deleteQuery(String query){
     	 try {
              s =(Statement) conn.createStatement();
@@ -93,7 +111,11 @@ public class ConectorDB {
          }
     	
     }
-    
+    /**
+     * Funcio per fer el select de la taula
+     * @param query que es vol executtar
+     * @return ResultSet
+     */
     public ResultSet selectQuery(String query){
     	ResultSet rs = null;
     	 try {
@@ -109,12 +131,14 @@ public class ConectorDB {
          }
 		return rs;
     }
-    
+    /**
+     * Funcio per desconnectar de la base de dades
+     */
     public void disconnect(){
     	try {
 			conn.close();
 		} catch (SQLException e) {
-			System.out.println("Problema al tancar la connexi� --> " + e.getSQLState());
+			System.out.println("Problema al tancar la connexio --> " + e.getSQLState());
 		}
     }
 

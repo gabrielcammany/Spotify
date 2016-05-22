@@ -21,6 +21,12 @@ import network.ConectorDB;
 import network.JsonConfig;
 import view.FinestraServidor;
 
+/**
+ * 
+ * 
+ * Clase per borrar canco o usuari
+ *
+ */
 public class DeleteController implements MouseListener {
 	// VISTA
 	private JFrame jf;

@@ -1,5 +1,10 @@
 package view;
 
+/**
+ * 
+ * Per pasarli els errors i que els mostri
+ *
+ */
 public class ErrorLog {
 	
 	public ErrorLog(){}
@@ -11,7 +16,7 @@ public class ErrorLog {
 			    "Error",
 			    JOptionPane.ERROR_MESSAGE);*/
 		
-		//PESTAÑA DE ERROR!!
+		//PESTAï¿½A DE ERROR!!
 	}
 
 }

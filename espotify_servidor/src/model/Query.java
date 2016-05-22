@@ -4,7 +4,15 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+/**
+ * 
+ * Clase query
+ *
+ */
 public class Query {
+	
+	
+	public Query(){}
 	
 	/**
 	 * Funcio encarregada de generar el codi MySQL per enviar-ho a la Base de dades
@@ -13,8 +21,6 @@ public class Query {
 	 * @param user Usuari del qual s'enviaran o consultaran les dades
 	 * @return      Cadena de caracters amb el codi a enviar
 	 */
-	public Query(){}
-	
 	public String queryList(int option,Object obj){
 		
 		switch(option){
@@ -189,17 +195,19 @@ public class Query {
 			int idUsuariQCanco = ((int)obj);
 			String cad38 = ("SELECT id_canco FROM canco_llista, usuari_llista WHERE canco_llista.id_llista = usuari_llista.id_llista AND usuari_llista.id_usuari = "+idUsuariQCanco+";");		
 			return cad38;
+		case 39:
+			String dades = ((String)obj);
+			String[] data = dades.split("/");
+			
+			System.out.println("---> "+ data [0]+ "     " +data [1]);
+			
+			String cad39 = ("UPDATE 'usuari' SET 'data_ult' = '" + data[0] +" ' WHERE 'usuari'.'id_usuaris' = "+ data[1] + ";");		
+			return cad39;
+		default:
+			break;
 			
 		}
 		
-		
-		
-			
-			
-		
 		return null;
-		
-		
 	}
-
 }

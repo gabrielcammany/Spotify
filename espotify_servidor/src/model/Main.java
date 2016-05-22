@@ -8,7 +8,11 @@ import network.ConectorDB;
 import network.JsonConfig;
 import view.FinestraServidor;
 import view.MainWindow;
-
+/**
+ * 
+ * Es el main del servidor
+ *
+ */
 public class Main {
 	
 	public static void main(String[] args) {

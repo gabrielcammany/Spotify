@@ -1,7 +1,9 @@
 
 package model;
 import java.util.ArrayList;
-
+/**
+ * Clase Sesio del client
+ */
 public class Sessio {
 	private ArrayList<Llistes> lPropies;
 	private ArrayList<Llistes> lFollowing;

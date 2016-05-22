@@ -10,7 +10,11 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 
 import javazoom.jlgui.basicplayer.BasicPlayer;
 import javazoom.jlgui.basicplayer.BasicPlayerException;
-
+/**
+ * 
+ * Clase reproductor (BasicPlayer)
+ *
+ */
 public class Reproductor extends Thread{
 	private static String path;
 	private static String song;
@@ -99,6 +103,11 @@ public class Reproductor extends Thread{
 		}
 	}
 	
+	/**
+	 * Funcio que selecciona el path de la canco
+	 * @param nom
+	 * @param artista
+	 */
 	public void setPath(String nom, String artista) {
 		
 		Reproductor.song = (nom + "_" + artista);
