@@ -87,8 +87,21 @@ public class ControladorFinestres {
             public void actionPerformed(ActionEvent e)
             {
                 //InfoServidor info = new InfoServidor();
-            	if(fRegistre.validaPassword(fRegistre.getjtfPassword().getPassword().toString())){
+            	if(fRegistre.validaPassword(fRegistre.getjtfPassword().getText())){
+            		
             		infoServidor.enviarUsuari(1, fRegistre.getjtfUsuari().getText(),fRegistre.getjtfPassword().getPassword());
+            		try {
+						ControladorFinestres.Reproduccio();
+					} catch (ClassNotFoundException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (UnknownHostException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
             	}
             }
         }); 

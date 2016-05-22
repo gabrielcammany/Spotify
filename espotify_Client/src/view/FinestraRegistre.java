@@ -42,6 +42,7 @@ public class FinestraRegistre extends JPanel{
 	private ImageIcon imagen;
 	
 	
+	
 
 	
 	
@@ -113,7 +114,7 @@ public class FinestraRegistre extends JPanel{
 		
 		jfRegistre.requestFocus();
 		
-		jbRegistre.addActionListener(new ActionListener() {
+		/*jbRegistre.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -133,16 +134,40 @@ public class FinestraRegistre extends JPanel{
 				}
 				
 			}
-		});
+		});*/
 		
 	}
 
 	public boolean validaPassword (String password) {
 
 	  int iCar = 0,digit=0,lletra = 0;
-
-
-	  if(password.length()>=6){
+	  boolean correcte = true;
+	  
+	  if (password.length() < 6) {
+		  ControladorFinestres.mostraPopUp(4, null);
+		  correcte = false;
+	  }
+	  
+	  for(iCar=0;iCar<password.length();iCar++){
+		  if (Character.isLetter(password.charAt(iCar)))lletra++;
+		  if(Character.isDigit(password.charAt(iCar)))digit++;
+	  }
+	  
+	  if(digit == 0){
+		  ControladorFinestres.mostraPopUp(5, null);
+		  correcte = false;
+	  }
+	  if(lletra == 0){
+		  ControladorFinestres.mostraPopUp(6, null);
+		  correcte = false;
+	  }
+	  
+	  System.out.println("pass: " + password);
+	  System.out.println(correcte);
+	  
+	  return correcte;
+ 
+	  /*if(password.length()>=6){
 		  for(iCar=0;iCar<password.length();iCar++){
 			  if (Character.isLetter(password.charAt(iCar)))lletra++;
 			  if(Character.isDigit(password.charAt(iCar)))digit++;
@@ -160,7 +185,7 @@ public class FinestraRegistre extends JPanel{
 		  ControladorFinestres.mostraPopUp(6, null);
 		  return false;
 	  }
-	  return false;
+	  return false;*/
 	}
 	
 	
